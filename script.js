@@ -66,4 +66,3 @@ const urlfetch = () => {
 window.onload = function onload() {
   urlfetch();
 };
-
