@@ -54,7 +54,7 @@ function request() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   return fetch(url)
     .then(response => response.json())
-    .then(response => response.results) 
+    .then(response => response.results)
     .then((response) => {
       return response.map((element) => {
         const newObj = needInfo(element);
