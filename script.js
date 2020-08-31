@@ -99,9 +99,11 @@ window.onload = function onload() {
   for (let index = 0; index < localStorage.length; index += 1) {
     arrayN[index] = JSON.parse(localStorage[`items${index + 1}`]);
   }
-  arrayN.map(el => cartItem.appendChild(createCartItemElement({
+  arrayN.map((el) => {
+    cartItem.appendChild(createCartItemElement({
       sku: el.sku,
       name: el.name,
       salePrice: el.salePrice,
-    })));
+    })); 
+  });
 };
