@@ -7,8 +7,7 @@ function createProductImageElement(imageSource) {
 }
 
 function cartItemClickListener(event) {
-  const mainList = document.querySelector('.cart__items');
-  mainList.removeChild(event.target);
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
