@@ -1,5 +1,10 @@
-
-
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+}
+// ------------
 function postElementinSection(object) {
   const mySection = document.getElementsByClassName('items')[0];
   mySection.appendChild(createProductItemElement(object));
@@ -15,28 +20,7 @@ function createMyObject(object) {
     postElementinSection(myObject);
   });
 }
-
-
-
-// fetch(endpoint)
-// .then((response) => response.json())
-// .then((object) => {
-//   if (object.error) {
-//     throw new Error(object.error);
-//   } else {
-//     handleRates(object.rates);
-//   }
-// })
-// .catch((error) => handleError(error))
-
-function createProductImageElement(imageSource) {
-  const img = document.createElement('img');
-  img.className = 'item__image';
-  img.src = imageSource;
-  return img;
-}
-//------------
-
+// ---------------
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
