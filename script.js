@@ -3,6 +3,7 @@ const apiInfo = {
   endpoint: '$computador',
 };
 const url = `${apiInfo.api}${apiInfo.endpoint}`;
+const container = document.querySelector('.container');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -45,7 +46,7 @@ function appendItems(array) {
 function cartItemClickListener(event) {
   fetch(url)
     .then(response => response.json())
-    .then(object => appendItems(object.results));
+    .then(object => appendItems(object.results))
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -55,5 +56,22 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+function findItemById(id) {
+  fetch(url)
+    .then(response => response.json())
+    .then(object => object.results.find(item => item.id.includes(id)))
+    .then(({ id, title, price }) => {
+      const cartList = document.querySelector('.cart__items');
+      cartList.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
+    });
+}
+
+container.addEventListener('click', (e) => {
+  if (e.target.classList.contains('item__add')) {
+    const idElement = e.target.parentNode.firstChild.innerHTML;
+    findItemById(idElement);
+  }
+})
 
 window.onload = function onload() { cartItemClickListener(); };
