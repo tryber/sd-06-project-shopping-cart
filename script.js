@@ -1,3 +1,4 @@
+let acc = 0;
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -20,7 +21,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  
   return section;
 }
 
@@ -42,18 +43,21 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const APIReq = () => {
+  const items = document.querySelector('#item');
+  items.innerHTML = '<h1>Loading...</h1>'
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
   .then(res => res.json())
   .then((data) => {
-    const items = document.querySelector('#item');
+    items.innerHTML = ''
     data.results.map(el => items.appendChild(createProductItemElement({
       sku: el.id, name: el.title, image: el.thumbnail })));
   });
 };
 
-function addItems(event) {
+async function addItems(event) {
   const id = event.target.parentNode.firstChild.innerText;
-  fetch(`https://api.mercadolibre.com/items/${id}`)
+  const price = document.querySelector('#pricesT')
+  await fetch(`https://api.mercadolibre.com/items/${id}`)
   .then(res => res.json())
   .then((data) => {
     if (data.error) {
@@ -64,6 +68,8 @@ function addItems(event) {
       sku: data.id,
       name: data.title,
       salePrice: data.price }));
+      acc += data.price
+      price.innerText = `Preço total: $${acc}`;
   }).catch(() => console.log('erro ocorrido'));
 }
 
@@ -72,8 +78,12 @@ window.onload = function onload() {
   const items = document.querySelector('#item');
   const cartItem = document.querySelector('#cart-items');
   items.addEventListener('click', addItems);
+
   const empty = document.querySelector('#getEmpy');
   empty.addEventListener('click', () => {
+    const price = document.querySelector('#pricesT');
     cartItem.innerHTML = '';
+    acc = 0;
+    price.innerText = `Preço total: $${acc}`;
   });
 };
