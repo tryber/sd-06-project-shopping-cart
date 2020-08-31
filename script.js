@@ -32,25 +32,11 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
+function cartItemClickListener() {
   // coloque seu código aqui
-   console.log(event);
   const eventItem = document.querySelector('.cart_item').value;
   eventItem.appendChild(cartItem).addEventListener('click', cartItemClickListener);
-  const handlerMergeUrl = `${apiInfo.endpoint}computador`;
-
 }
-
-const handlerStrutor = () => {
-  const url = "https://api.mercadolibre.com/sites/MLB/search?q=computer";
-  fetch(url)
-.then(response => response.json())
-.then((object) => {
-  const arrayComputer = object.results;
-  console.log(arrayComputer);
-  handlersectionsComputer(arrayComputer);
-});
-};
 
 function handlersectionsComputer(arrayComputer) {
   arrayComputer.forEach((product) => {
@@ -59,6 +45,17 @@ function handlersectionsComputer(arrayComputer) {
     section.appendChild(productNewPay);
   });
 }
+
+function handlerStrutor() {
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computer';
+  fetch(url)
+.then(response => response.json())
+.then((object) => {
+  const arrayComputer = object.results;
+  console.log(arrayComputer);
+  handlersectionsComputer(arrayComputer);
+});
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
