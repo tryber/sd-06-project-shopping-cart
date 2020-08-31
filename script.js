@@ -9,15 +9,18 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-// funcs to clean our cart
+// funcs to delete our items or empty our cart
 function cartItemClickListener(event) {
   const selectedItem = event.target;
   selectedItem.remove();
+  const cartParentElement = document.querySelector('.cart__items');
+  localStorage.setItem('cartStorage', cartParentElement.innerHTML);
 }
 
 const emptyCart = () => {
-  const productsCart = document.querySelector('.cart__items');
-  productsCart.innerHTML = '';
+  const cartParentElement = document.querySelector('.cart__items');
+  cartParentElement.innerHTML = '';
+  localStorage.removeItem('cartStorage');
 };
 
 // create cart list item
@@ -41,6 +44,7 @@ const fetchProduct = (productId) => {
       cartList.appendChild(
         createCartItemElement({ sku: data.id, name: data.title, salePrice: data.price }),
       );
+      console.log(localStorage.setItem('cartStorage', cartList.innerHTML));
     });
 };
 
@@ -92,18 +96,26 @@ const mblProducts = (results) => {
   });
 };
 
-// fetch product list from mercado livre's api on window load and calls mblProducts function
 window.onload = function onload() {
+  // fetch product list from mercado livre's api on window load and calls mblProducts function
   const endpoint = 'sites/MLB/search?q=$computador';
-
   const fetchComputer = (url) => {
     fetch(url)
       .then(response => response.json())
       .then(data => mblProducts(data.results));
   };
-
   fetchComputer(`${base}${endpoint}`);
 
-  // add event to delete all cart items
+  // add event to empty our cart
   document.querySelector('.empty-cart').addEventListener('click', emptyCart);
+
+  // call local storage to load saved our cart
+  const loadCart = () => {
+    const cartParentElement = document.querySelector('.cart__items');
+    cartParentElement.innerHTML = localStorage.getItem('cartStorage');
+    // const cartParentChild = document.querySelectorAll('.cart__items');
+    // cartParentChild.addEventListener('click', cartItemClickListener);
+    // console.log(cartParentChild.length)  };
+
+  loadCart();
 };
