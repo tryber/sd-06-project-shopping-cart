@@ -1,7 +1,3 @@
-window.onload = function onload() {
-  returnUrl = urlfetch();
-};
-
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/',
   endpoint: 'search?q=$computador',
@@ -66,3 +62,8 @@ const urlfetch = () => {
       });
     });
 };
+
+window.onload = function onload() {
+  urlfetch();
+};
+
