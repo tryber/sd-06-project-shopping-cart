@@ -1,11 +1,14 @@
 window.onload = function onload() {
-  urlfetch();
+  return urlfetch();
 };
 
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/',
-  endpoint: 'search?q=$computador'
+  endpoint: 'search?q=$computador',
 };
+
+const url = `${apiInfo.api}${apiInfo.endpoint}`;
+console.log(url);
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -48,9 +51,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-const url = `${apiInfo.api}${apiInfo.endpoint}`;
-console.log(url);
 
 const urlfetch = () => {
   fetch(url)
