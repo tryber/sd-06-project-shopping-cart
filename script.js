@@ -2,32 +2,15 @@ console.log('teste');
 
 window.onload = function onload() { 
   fetchProducts('computador');
+}
 
-};
-
-const fetchProducts = (product) =>  {
+const fetchProducts = (product) => {
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
 
   fetch(endpoint)
     .then(response => response.json())
-    .then(object => object.results.forEach(item => createProductItemElement(item)))
-}
-
-
-function createProductItemElement({ id, title, thumbnail }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', id));
-  section.appendChild(createCustomElement('span', 'item__title', title));
-  section.appendChild(createProductImageElement(thumbnail));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  const itemsDisplaySection = document.querySelector('.items');
-  itemsDisplaySection.appendChild(section);
-
-  return section;
-}
+    .then(object => object.results.forEach(item => createProductItemElement(item)));
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -57,4 +40,19 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+function createProductItemElement({ id, title, thumbnail }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', id));
+  section.appendChild(createCustomElement('span', 'item__title', title));
+  section.appendChild(createProductImageElement(thumbnail));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  const itemsDisplaySection = document.querySelector('.items');
+  itemsDisplaySection.appendChild(section);
+
+  return section;
 }

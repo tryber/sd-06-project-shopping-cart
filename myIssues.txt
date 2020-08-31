@@ -1,0 +1,1 @@
+Req 1: func createProductItemElement criando o elemento e inputando ele.... mais de um escopo?
