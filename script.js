@@ -25,8 +25,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   return section;
 }
-
-const URL_TO_FETCH = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const QUERY = 'computador';
+const URL_TO_FETCH = `https://api.mercadolibre.com/sites/MLB/search?q=${QUERY}`;
 fetch(URL_TO_FETCH)
   .then(response => response.json())
   .then((result) => {
