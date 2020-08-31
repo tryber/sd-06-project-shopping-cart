@@ -1,8 +1,8 @@
 const clearCart = () => {
-    const cartList = document.querySelector('.cart__items');
-    while(cartList.firstChild) {
-      cartList.removeChild(cartList.firstChild);
-    }
+  const cartList = document.querySelector('.cart__items');
+  while(cartList.firstChild) {
+    cartList.removeChild(cartList.firstChild);
+  }
 }
 
 const clearCartbuttonEvent = () => {
