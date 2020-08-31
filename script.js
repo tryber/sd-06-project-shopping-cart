@@ -53,7 +53,7 @@ const sendProductToCart = (retrievedProduct) => {
 
 const requestCartProduct = (itemSku) => {
   const api = 'https://api.mercadolibre.com/';
-  const endpoint = '/items/';
+  const endpoint = 'items/';
   const sku = itemSku;
   const requestURL = `${api}${endpoint}${sku}`;
 
