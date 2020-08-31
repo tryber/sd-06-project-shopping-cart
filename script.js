@@ -1,5 +1,5 @@
 window.onload = function onload() {
-  urlfetch();
+  returnUrl = urlfetch();
 };
 
 const apiInfo = {
