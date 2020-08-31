@@ -63,12 +63,12 @@ const fetchFunc = () => {
     .then(result => result.forEach(resultElement => createProductItemElement(resultElement)));
 };
 
-const clear = () => {
+const clear = (createCartItemElement) => {
   const botao = document.querySelector('.empty-cart');
   botao.addEventListener('click', () => {
-    const sect = document.querySelector('.cart');
     const ol = document.querySelector('.cart__items');
-    sect.removeChild(ol);
+    const item = document.querySelector('.cart__item')
+    ol.innerHTML = '';
   });
 };
 
