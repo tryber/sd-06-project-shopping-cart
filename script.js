@@ -20,7 +20,7 @@ const updateItemsByLocalStorage = () => {
 
 const getSkuFromProductItem = item => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = e => {
+const cartItemClickListener = (e) => {
   e.target.remove();
   updateLocalStorage();
 };
