@@ -75,7 +75,7 @@
   text-align: center;
 }
 
-.total {
+.total-price {
   display: flex;
   flex-flow: row;
 }
