@@ -71,4 +71,5 @@ function getSkuFromProductItem(item) {
 
 window.onload = function onload() {
   fetchFunction();
+  clear();
 };
