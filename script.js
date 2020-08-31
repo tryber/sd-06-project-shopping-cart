@@ -24,6 +24,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const emptyList = () => {
+  const ol = document.querySelector('.cart__items');
+  while (ol.removeChild) {
+    ol.removeChild(ol.lastChild);
+  }
+};
+
 const fetchItemById = (id) => {
   const url = `https://api.mercadolibre.com/items/${id}`;
   fetch(url)
@@ -79,4 +86,5 @@ const resultFetch = (url) => {
 window.onload = function onload() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computadores';
   resultFetch(url);
+  document.querySelector('.empty-cart').addEventListener('click', emptyList);
 };
