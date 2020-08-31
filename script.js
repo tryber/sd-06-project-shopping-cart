@@ -12,19 +12,20 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function queryAtML() {
-  const queryUrl = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+function queryThisAtML(sku) {
+  const queryUrl = `https://api.mercadolibre.com/items/${sku}`;
   fetch(queryUrl)
     .then(response => response.json())
-    .then(response => response.results)
-    .then((items) => {
-      items.forEach(item => document.querySelector('.items')
-        .appendChild(createProductItemElement({
-          sku: item.id,
-          name: item.title,
-          image: item.thumbnail,
-        })));
+    .then((response) => {
+      const cartItems = document.querySelector('.cart__items');
+      const Item = createCartItemElement({
+        sku: response.id,
+        name: response.title,
+        salePrice: response.price,
+      });
+      cartItems.appendChild(Item);
     });
+  return queryUrl;
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -41,9 +42,23 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function queryAtML() {
+  const queryUrl = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  fetch(queryUrl)
+    .then(response => response.json())
+    .then(response => response.results)
+    .then((items) => {
+      items.forEach(item => document.querySelector('.items')
+        .appendChild(createProductItemElement({
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
+        })));
+    });
+}
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  console.log('hello, word!')
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -56,22 +71,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-function queryThisAtML(sku) {
-  const queryUrl = `https://api.mercadolibre.com/items/${sku}`;
-  fetch(queryUrl)
-    .then(response => response.json())
-    .then((response) => {
-      const cartItems = document.querySelector('.cart__items');
-      const Item = createCartItemElement({
-        sku: response.id,
-        name: response.title,
-        salePrice: response.price,
-      });
-      cartItems.appendChild(Item);
-    });
-  return queryUrl;
 }
 
 window.onload = function onload() {
