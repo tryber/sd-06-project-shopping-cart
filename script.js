@@ -76,14 +76,14 @@ function getSkuFromProductItem(item) {
 }
 
 function clearCartItems() {
-  const getOl = document.querySelector(".cart__items");
-  while (getOl.firstChild){
+  const getOl = document.querySelector('.cart__items');
+  while (getOl.firstChild) {
     getOl.removeChild(getOl.firstChild);
   }
 }
 
 window.onload = function onload() {
   getProductList();
-  document.querySelector('.empty-cart').addEventListener('click', () => clearCartItems())
+  document.querySelector('.empty-cart').addEventListener('click', () => clearCartItems());
 };
 
