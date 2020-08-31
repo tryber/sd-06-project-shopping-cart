@@ -36,7 +36,7 @@ function calculateCartTotalPrice() {
     priceElement = document.querySelector('.total-price');
   }
 
-  if (productsSaved) {
+  if (productsSaved[0]) {
     const totalPrice = productsSaved.reduce((start, next) => start + next.salePrice, 0);
     priceElement.innerText = `Preço a pagar: $${totalPrice}`;
   } else {
@@ -105,7 +105,6 @@ function loadCartItems() {
     });
     calculateCartTotalPrice();
   }
-
 }
 
 function saveToLocalStorage({ sku, name, salePrice, image }) {
@@ -203,4 +202,4 @@ async function buildProductsOnScreen() {
 window.onload = function onload() {
   buildProductsOnScreen();
   enableEmptyCartButton();
-}
+};
