@@ -28,11 +28,18 @@ function createCartItemElement({ id, title, price }) {
   return li;
 }
 
-function fetchItemList(id) {
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function fetchItemList(event) {
+  const item = event.target.parentElement;
+  const id = getSkuFromProductItem(item);
   const url = `https://api.mercadolibre.com/items/${id}`;
+
   fetch(url)
     .then(response => response.json())
-    .then(item => createCartItemElement(item));
+    .then(element => createCartItemElement(element));
 }
 
 function createProductItemElement({ id, title, thumbnail }) {
@@ -44,15 +51,11 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-    .addEventListener('click', () => fetchItemList(id));
+    .addEventListener('click', event => fetchItemList(event));
 
   itemsSection.appendChild(section);
   return section;
 }
-
-// function getSkuFromProductItem(item) {
-// return item.querySelector('span.item__sku').innerText;
-// }
 
 function fetchProductList() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
