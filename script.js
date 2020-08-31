@@ -39,11 +39,11 @@ function createItemEventListener() {
 
   fetch(url)
     .then(response => response.json())
-    .then((product) => {
-      const productInfo = createCartItemElement(product);
+    .then((productData) => {
+      const productInfo = createCartItemElement(productData);
 
       cartList.appendChild(productInfo);
-    })
+    });
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
