@@ -37,12 +37,8 @@ function getSkuFromProductItem(item) {
 function appendItems(array) {
   const sectionItems = document.querySelector('.items');
 
-  const arrayOfObj = array.reduce((arr, { id, title, thumbnail }) => (
-    arr.concat({ sku: id, name: title, image: thumbnail })
-  ), []);
-
-  arrayOfObj.forEach(item => (
-    sectionItems.appendChild(createProductItemElement(item))
+  array.forEach(({ id, title, thumbnail }) => (
+    sectionItems.appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail }))
   ));
 }
 
