@@ -6,8 +6,10 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function cartItemClickListener() {
-  console.log('EVENTO DE CLICK OK');
+function cartItemClickListener(event) {
+  const mainList = document.querySelector('.cart__items');
+  console.log(mainList);
+  mainList.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -27,7 +29,6 @@ function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
-
   return e;
 }
 
