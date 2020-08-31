@@ -39,17 +39,17 @@ function handleProductClick(id) {
   .then(response => response.json())
   .then((object) => {
     // console.log(object);
-    document.querySelector('.cart__items').appendChild(createCartItemElement(object))
+    document.querySelector('.cart__items').appendChild(createCartItemElement(object));
   });
-};
+}
 
 function handleProductList(list) {
   list.forEach((element) => {
     document.querySelector('.items').appendChild(createProductItemElement(element)).addEventListener('click', () => {
-      handleProductClick(element.id)
+      handleProductClick(element.id);
     });
   });
-};
+}
 
 function getProductList() {
   fetch(urlOfProductsList)
