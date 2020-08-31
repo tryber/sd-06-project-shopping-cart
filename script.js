@@ -1,3 +1,5 @@
+let cartStorage = [];
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,10 +30,35 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const updateLocalStorage = (cart) => {
+  const cartLocal = cart.map(item => item.innerText);
+  localStorage.setItem('cart', JSON.stringify(cartLocal));
+  if (cartLocal.length === 0) {
+    localStorage.removeItem('cart');
+  }
+};
+
 function cartItemClickListener(event) {
   const cartElements = document.querySelector('.cart__items');
+  cartStorage = cartStorage.filter(element => element.innerText !== event.target.innerText);
   cartElements.removeChild(event.target);
+  updateLocalStorage(cartStorage);
 }
+
+const loadCartFromStorage = () => {
+  if (localStorage.cart !== undefined) {
+    const cartFromStorage = JSON.parse(localStorage.getItem('cart'));
+    const cartElements = document.querySelector('.cart__items');
+    cartFromStorage.forEach((item) => {
+      const li = document.createElement('li');
+      li.className = 'cart__item';
+      li.innerText = item;
+      cartStorage.push(li);
+      li.addEventListener('click', cartItemClickListener);
+      cartElements.appendChild(li);
+    });
+  }
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -48,12 +75,15 @@ const fetchItemBySKU = (sku) => {
   fetch(endpoint)
     .then(response => response.json())
     .then((data) => {
-      cartElements
-        .appendChild(createCartItemElement({
-          sku: data.id,
-          name: data.title,
-          salePrice: data.price,
-        }));
+      const newCartItem = createCartItemElement({
+        sku: data.id,
+        name: data.title,
+        salePrice: data.price,
+      });
+
+      cartElements.appendChild(newCartItem);
+      cartStorage.push(newCartItem);
+      updateLocalStorage(cartStorage);
     });
 };
 
@@ -86,4 +116,7 @@ const fetchItems = (query = 'computador') => {
     });
 };
 
-window.onload = function onload() { fetchItems(); };
+window.onload = function onload() {
+  fetchItems();
+  loadCartFromStorage();
+};
