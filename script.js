@@ -1,4 +1,4 @@
-// window.onload = function onload() { };
+window.onload = function onload() { captureMercadoLivreItem('computador'); };
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,13 +14,13 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id, title, thumbnail }) {
   const section = document.createElement('section');
   section.className = 'item';
 
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__sku', id));
+  section.appendChild(createCustomElement('span', 'item__title', title));
+  section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -42,30 +42,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-fetch("https://api.mercadolibre.com/sites/MLB/search?q=$computador")
+function captureMercadoLivreItem(pesquisa) {
+  const containerElements = document.querySelector('.items');
+  fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$${pesquisa}`)
     .then((response) => response.json())
     .then((object) => {
-      console.log(object.results[0].id);
-      console.log(object.results[0].id);
-      // sku = id
-      const obj = {
-        sku: 'ola',
-        name: 'clayton',
-        image: 'http://mlb-s1-p.mlstatic.com/661738-MLB42595234121_072020-I.jpg'
-      }
-      const containerElemets = document.querySelector('.items');
-      containerElemets.appendChild(createProductItemElement(obj));
-      
-      // if (object.error) {
-      //   throw new Error(object.error);
-      // } else {
-      //   handleRates(object.rates);
-      // }
-    
+      object.results.forEach(product => {
+        containerElements.appendChild(createProductItemElement(product));
+      });
     })
-    // .catch((error) => handleError(error))
+    .catch(() => handleError(pesquisa));
+}
 
-
-// const handleError = (errorMessage) => {
-//   window.alert(errorMessage);
-// }
+const handleError = (itemResearched) => {
+  captureMercadoLivreItem(itemResearched);
+}
