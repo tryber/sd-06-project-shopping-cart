@@ -6,6 +6,11 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+const clearCart = () => {
+  const cartList = document.querySelector('.cart__items');
+  cartList.innerHTML = '';
+};
+
 function cartItemClickListener(event) {
   event.target.parentElement.removeChild(event.target);
 }
@@ -73,4 +78,5 @@ const getProducts = () => {
 
 window.onload = function onload() {
   getProducts();
+  document.querySelector('.empty-cart').addEventListener('click', clearCart);
 };
