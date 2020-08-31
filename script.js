@@ -113,9 +113,11 @@ window.onload = function onload() {
   const loadCart = () => {
     const cartParentElement = document.querySelector('.cart__items');
     cartParentElement.innerHTML = localStorage.getItem('cartStorage');
-    // const cartParentChild = document.querySelectorAll('.cart__items');
-    // cartParentChild.addEventListener('click', cartItemClickListener);
-    // console.log(cartParentChild.length)  };
+    const cartListItems = document.getElementsByTagName('li');
+    for (let i = 0; i < cartListItems.length; i += 1) {
+      cartListItems[i].addEventListener('click', cartItemClickListener);
+    }
+  };
 
   loadCart();
 };
