@@ -49,7 +49,7 @@ function fetchProducts() {
 
   fetch(endpoint)
     .then(response => response.json())
-    .then(object => {
+    .then((object) => {
       const products = object.results;
       products.forEach((element) => {
         const product = createProductItemElement({
