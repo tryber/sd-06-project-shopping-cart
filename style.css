@@ -74,3 +74,14 @@
   font-size: 16pt;
   text-align: center;
 }
+
+li {
+  cursor: pointer;
+  margin-top: 5px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgb( 134 , 130 , 130 );
+}
+
+li:hover {
+  background-color: rgb( 206 , 206 , 173 );
+}
