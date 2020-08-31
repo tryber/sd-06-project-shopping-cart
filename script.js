@@ -1,13 +1,3 @@
-window.onload = function onload() { 
-  fetchObj();
-};
-const api = {
-  api:'https://api.mercadolibre.com/sites/MLB/',
-  endpoint:'search?q=$computador',
-}
-const url = `${api.api}${api.endpoint}`;
-console.log(url);
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -21,8 +11,8 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-//essa de baixo
-function createProductItemElement({ id:sku, title:name, thumbnail:image } ) {
+
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -34,35 +24,45 @@ function createProductItemElement({ id:sku, title:name, thumbnail:image } ) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
+// }
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+// function createCartItemElement({ sku, name, salePrice }) {
+//   const li = document.createElement('li');
+//   li.className = 'cart__item';
+//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+//   li.addEventListener('click', cartItemClickListener);
+//   return li;
+// }
+const api = {
+  api: 'https://api.mercadolibre.com/sites/MLB/',
+  endpoint: 'search?q=$computador',
+};
+
+const url = `${api.api}${api.endpoint}`;
+console.log(url);
+
+const insertElement = (obj) => {
+  obj.forEach((itens) => {
+    const tag = createProductItemElement(itens);
+    document.querySelector('.items').appendChild(tag);
+  });
+};
 
 const fetchObj = () => {
-  
   fetch(url)
-  .then((response) => response.json())
+  .then(response => response.json())
   .then((jsonResponse) => {
     console.log(jsonResponse.results);
     insertElement(jsonResponse.results);
-  })
-}
+  });
+};
 
-const insertElement = (obj) => {
-  obj.forEach(itens =>{
-    const tag = createProductItemElement(itens);
-    document.querySelector('.items').appendChild(tag);
-  })
-}
+window.onload = function onload() {
+  fetchObj();
+};
