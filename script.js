@@ -1,3 +1,8 @@
+function cartItemClickListener(event, cartList) {
+  cartList.removeChild(event);
+  saveCurrentList();
+}
+
 window.onload = function onload() {
   const cartList = document.querySelector('.cart__items');
   cartList.addEventListener('click', () => {
@@ -47,12 +52,7 @@ function getSkuFromProductItem(item) {
 function saveCurrentList() {
   const cartList = document.querySelector('.cart__items');
   const listSaver = cartList.innerHTML;
-  localStorage.setItem("SavedList", listSaver);
-}
-
-function cartItemClickListener(event, cartList) {
-  cartList.removeChild(event);
-  saveCurrentList();
+  localStorage.setItem('SavedList', listSaver);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
