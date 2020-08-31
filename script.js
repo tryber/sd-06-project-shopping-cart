@@ -4,7 +4,7 @@ const api = {
   endpointItem: 'items/',
 };
 
-function cartItemClickListener() {
+function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
