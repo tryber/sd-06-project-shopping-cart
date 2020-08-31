@@ -9,10 +9,16 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// funcs to clean our cart
 function cartItemClickListener(event) {
   const selectedItem = event.target;
   selectedItem.remove();
 }
+
+const emptyCart = () => {
+  const productsCart = document.querySelector('.cart__items');
+  productsCart.innerHTML = '';
+};
 
 // create cart list item
 function createCartItemElement({ sku, name, salePrice }) {
@@ -97,4 +103,7 @@ window.onload = function onload() {
   };
 
   fetchComputer(`${base}${endpoint}`);
+
+  // add event to delete all cart items
+  document.querySelector('.empty-cart').addEventListener('click', emptyCart);
 };
