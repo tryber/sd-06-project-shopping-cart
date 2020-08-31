@@ -65,7 +65,6 @@ function j() {
       k(idProduct);
     });
   });
-
 }
 
 function k(idProduct) {
