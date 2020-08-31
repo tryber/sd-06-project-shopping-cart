@@ -25,6 +25,23 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function calculateCartTotalPrice() {
+  const productsSaved = JSON.parse(localStorage.getItem('products'));
+  let priceElement = document.querySelector('.total-price');
+
+  if (!priceElement) {
+    const createdPriceElement = document.createElement('p');
+    createdPriceElement.className = 'total-price';
+    document.querySelector('.cart').appendChild(createdPriceElement);
+    priceElement = document.querySelector('.total-price');
+  }
+
+  if (productsSaved) {
+    const totalPrice = productsSaved.reduce((start, next) => start + next.salePrice, 0);
+    priceElement.innerText = `Preço a pagar: $${totalPrice}`;
+  }
+}
+
 function addClickedItemToCart(element) {
   document
     .querySelector('.cart__items')
@@ -47,6 +64,7 @@ function cartItemClickListener(event) {
   localStorage.setItem('products', JSON.stringify(cartProducts));
 
   event.target.remove();
+  calculateCartTotalPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -68,7 +86,9 @@ function loadCartItems() {
       const cartItem = createCartItemElement({ sku, name, salePrice });
       addClickedItemToCart(cartItem);
     });
+    calculateCartTotalPrice();
   }
+
 }
 
 function saveToLocalStorage({ sku, name, salePrice }) {
@@ -122,8 +142,9 @@ function buildAvailableProducts(products) {
     productElement
       .querySelector('.item__add')
       .addEventListener('click', () => {
-        addClickedItemToCart(futureCartItem);
         saveToLocalStorage({ sku, name, salePrice });
+        loadCartItems();
+        calculateCartTotalPrice();
       });
 
     container.appendChild(productElement);
@@ -144,6 +165,7 @@ function loading(load = true) {
 
     const loaderText = document.createElement('p');
     loaderText.appendChild(document.createTextNode('loading...'));
+    loaderText.className = 'loading';
 
     loaderContainer.appendChild(loader);
     loaderContainer.appendChild(loaderText);
@@ -164,4 +186,4 @@ async function buildProductsOnScreen() {
 window.onload = function onload() {
   buildProductsOnScreen();
   enableEmptyCartButton();
-};
+}
