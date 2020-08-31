@@ -51,18 +51,17 @@ const renderItem = (arrayOfProducts) => {
     const items = document.querySelector('.items');
     items.appendChild(createProductItemElement(product));
   });
-}
+};
 
 const fetchProduct = () => {
   const endpoint = url;
 
   fetch(endpoint)
-    .then((response) => response.json())
+    .then(response => response.json())
     .then((object) => {
       const resultado = object.results;
       renderItem(resultado);
-    })
-
+    });
 };
 
 window.onload = function onload() {
