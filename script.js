@@ -1,4 +1,5 @@
 let acc = 0;
+let storageNum = 0
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -64,14 +65,23 @@ async function addItems(event) {
       throw new Error(data.error);
     }
     const cartItems = document.querySelector('#cart-items');
+    
     cartItems.appendChild(createCartItemElement({
       sku: data.id,
       name: data.title,
       salePrice: data.price }));
     acc += data.price;
     price.innerText = `Preço total: $${acc}`;
+    const obj = {
+      sku: data.id,
+      name: data.title,
+      salePrice: data.price }
+      localStorage.setItem(`items${storageNum += 1}`, JSON.stringify(obj));
+      
   }).catch(() => console.log('erro ocorrido'));
 }
+
+
 
 window.onload = function onload() {
   APIReq();
@@ -82,8 +92,24 @@ window.onload = function onload() {
   const empty = document.querySelector('#getEmpy');
   empty.addEventListener('click', () => {
     const price = document.querySelector('#pricesT');
+    localStorage.clear()
     cartItem.innerHTML = '';
     acc = 0;
     price.innerText = `Preço total: $${acc}`;
   });
+
+
+  const arrayN = [];
+  for (let index = 0; index < localStorage.length; index ++) {
+    arrayN[index] = JSON.parse(localStorage[`items${index + 1}`]) 
+  } 
+  arrayN.map((el) => {
+    cartItem.appendChild(createCartItemElement({
+      sku: el.sku,
+      name: el.name,
+      salePrice: el.salePrice
+    }))
+      
+  })
 };
+
