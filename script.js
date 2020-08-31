@@ -68,11 +68,10 @@ const fetchFunction = () => {
   });
 };
 
-const clearButton = (createCartItemElement) => {
+const clearButton = () => {
   const button = document.querySelector('.empty-cart');
   button.addEventListener('click', () => {
     const ol = document.querySelector('.cart__items');
-    const item = document.querySelector('.cart__item')
     ol.innerHTML = '';
   });
 };
