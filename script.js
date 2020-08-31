@@ -1,10 +1,12 @@
 const apiInfo = {
-  api: 'https://api.mercadolibre.com/sites/MLB/',
-  endpoint: 'search?q=',
+  url: 'https://api.mercadolibre.com/',
+  products_endpoint: 'sites/MLB/search?q=',
   query: 'computador',
+  item_endpoint: 'items/',
 };
 
-const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
+const urlOfProductsList = `${apiInfo.url}${apiInfo.products_endpoint}${apiInfo.query}`;
+const urlOfProduct = `${apiInfo.url}${apiInfo.item_endpoint}`;
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -32,14 +34,25 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+function handleProductClick(id) {
+  fetch(urlOfProduct + id)
+  .then(response => response.json())
+  .then((object) => {
+    // console.log(object);
+    document.querySelector('.cart__items').appendChild(createCartItemElement(object))
+  });
+};
+
 function handleProductList(list) {
   list.forEach((element) => {
-    document.querySelector('.items').appendChild(createProductItemElement(element));
+    document.querySelector('.items').appendChild(createProductItemElement(element)).addEventListener('click', () => {
+      handleProductClick(element.id)
+    });
   });
-}
+};
 
 function getProductList() {
-  fetch(url)
+  fetch(urlOfProductsList)
     .then(response => response.json())
     .then((object) => {
       handleProductList(object.results);
@@ -54,7 +67,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
