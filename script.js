@@ -13,7 +13,7 @@ const updateLocalStorage = () => {
   console.log(localStorage.getItem('myList'));
 };
 
-const updateItemsByLocalStorage = () => {
+const updateCartByLocalStorage = () => {
   const cartItens = document.querySelector('.cart__items');
   cartItens.innerHTML = localStorage.getItem('myList');
 };
@@ -28,7 +28,7 @@ const cartItemClickListener = (e) => {
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -98,6 +98,6 @@ const clearItems = () => {
 
 window.onload = function onload() {
   fetchProducts();
-  updateItemsByLocalStorage();
+  updateCartByLocalStorage();
   document.querySelector('.empty-cart').addEventListener('click', clearItems);
 };
