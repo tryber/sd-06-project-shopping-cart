@@ -6,6 +6,30 @@ const apiInfo = {
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
+const handleError = (errorMessage) => {
+  window.alert(errorMessage);
+};
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+const localStorageSave = () => {
+  const itemsOnCart = document.querySelector('.cart__items');
+  localStorage.setItem('items', itemsOnCart.innerHTML);
+};
+
+const localStorageLoad = () => {
+  const getCartItens = document.querySelector('.cart__items');
+  const getCart = localStorage.getItem('items');
+  getCartItens.innerHTML = getCart;
+  getCartItens.addEventListener('dblclick', cartItemClickListener);
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -52,24 +76,12 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  //console.log(event.target); // retorna o elemento li todo
-  // let teste = event.target.innerText;
-  // let teste2 = localStorage.getItem('items');
-  // console.log(teste2)
-  //localStorage.removeItem('items', event.target); //passar para string
+  //  console.log(event.target); // retorna o elemento li todo
+  //  let teste = event.target.innerText;
+  //  let teste2 = localStorage.getItem('items');
+  //  console.log(teste2)
+  //  localStorage.removeItem('items', event.target); //passar para string
 }
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
-const handleError = (errorMessage) => {
-  window.alert(errorMessage);
-};
 
 const fetchComputer = () => {
   fetch(url)
@@ -84,21 +96,9 @@ const fetchComputer = () => {
         document.querySelector('.items').appendChild(item);
       });
     })
-    .then(() => localStorageLoad());
-    //.catch(error => handleError(error));
+    .then(() => localStorageLoad())
+    .catch(error => handleError(error));
 };
-
-const localStorageSave = () => {
-  const itemsOnCart = document.querySelector('.cart__items');
-  localStorage.setItem('items', itemsOnCart.innerHTML);
-};
-
-const localStorageLoad = () => {
-  const getCartItens = document.querySelector('.cart__items');
-  const getCart = localStorage.getItem('items');
-  getCartItens.innerHTML = getCart; 
-  getCartItens.addEventListener('dblclick', cartItemClickListener); 
-}
 
 window.onload = () => {
   fetchComputer();
