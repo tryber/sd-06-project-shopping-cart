@@ -5,6 +5,28 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function cartItemClickListener(event) {
+  const element = event.target;
+  document.querySelector('.cart__items').removeChild(element);
+}
+
+function fetchSingleItem(event) {
+  const id_sku = event.target.parentElement.childNodes[0].innerText;
+  return fetch(`https://api.mercadolibre.com/items/${id_sku}`)
+  .then(response => response.json())
+  .then(({ id, title, price }) => ({ id, title, price }));
+}
+
+async function createCartItemElement(event) {
+  const { id ,price, title } = await fetchSingleItem(event);
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', cartItemClickListener);
+  document.querySelector('.cart__items').appendChild(li);
+  return li;
+}
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -31,30 +53,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function fetchSingleItem(event) {
-  const id = event.target.parentElement.childNodes[0].innerText;
-  return fetch(`https://api.mercadolibre.com/items/${id}`)
-  .then(response => response.json())
-  .then(({ id, title, price }) => {
-    return { id, title, price }
-  });
-
-}
-
-async function createCartItemElement(event) {
-  const { id , price, title} = await fetchSingleItem(event);
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
-  document.querySelector('.cart__items').appendChild(li);
-  return li;
-}
-
 function transformObject({ id, title, price, thumbnail }) {
   newObject = {};
   newObject.sku = id;
@@ -68,13 +66,11 @@ function fetchItems(query = 'computador') {
   return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`)
     .then(response => response.json())
     .then(response => response.results)
-    .then((response) => {
-      return response.map((e) => {
+    .then((response) => response.map((e) => {
         const TransformedObj = transformObject(e);
         createProductItemElement(TransformedObj);
         return TransformedObj;
-      });
-    });
+      }));
 }
 
 window.onload = function onload() {
