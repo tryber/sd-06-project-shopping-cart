@@ -1,17 +1,3 @@
-window.onload = function onload() {
-  const data = getData();
-
-};
-
-const getData = () => {
-  const itemBuscado = 'computador';
-  return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${itemBuscado}`).then((resolve) => resolve.json())
-    .then((data) => data.results.forEach(product => {
-      appendItem(createProductItemElement(product));
-    })
-  );
-}
-
 const appendItem = (item) => {
   const parentSection = document.querySelector('.items');
   parentSection.appendChild(item);
@@ -22,6 +8,15 @@ function createProductImageElement(imageSource) {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
+}
+
+const getData = () => {
+  const itemBuscado = 'computador';
+  return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${itemBuscado}`).then((resolve) => resolve.json())
+    .then((data) => data.results.forEach(product => {
+      appendItem(createProductItemElement(product));
+    })
+  );
 }
 
 function createCustomElement(element, className, innerText) {
@@ -58,3 +53,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+window.onload = function onload() {
+  getData();
+};
