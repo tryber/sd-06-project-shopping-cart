@@ -35,7 +35,10 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  // Oliva <3
+  const getOl = document.querySelector('.cart__items');
+  const li = event.target;
+  getOl.removeChild(li)
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
