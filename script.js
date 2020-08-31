@@ -1,4 +1,27 @@
-window.onload = function onload() { };
+window.onload = function onload() {
+  fetchComputer();
+};
+
+
+
+const endpoint = "https://api.mercadolibre.com/sites/MLB/search?q=$computador";
+
+function fetchComputer() {
+  fetch(endpoint)
+    .then((response) => response.json())
+    .then((object) => {
+      object.results.forEach(computer => {
+        console.log(computer)
+        const fatherElement = document.querySelector(".items")
+        fatherElement.appendChild(createProductItemElement(computer))
+        
+      })
+    });
+}
+
+// Adicione o elemento retornado da função createProductItemElement(product)
+// como filho do elemento <section class="items">
+
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,7 +37,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -41,4 +64,3 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-//fazendo o primeiro commit
