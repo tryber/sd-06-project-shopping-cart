@@ -57,4 +57,3 @@ const fetchAPI = () => {
 window.onload = function onload() {
   fetchAPI();
 };
-
