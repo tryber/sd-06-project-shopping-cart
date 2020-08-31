@@ -2,15 +2,14 @@ window.onload = function onload() { };
 
 const URL_TO_FETCH = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 fetch(URL_TO_FETCH)
-.then(response => response.json())  
-.then(result => {
-  const item = document.querySelector('section.items'); 
-  result.results.forEach((element) =>
+.then(response => response.json())
+.then((result) => {
+  const item = document.querySelector('section.items');
+  result.results.forEach(element =>
   item.appendChild(createProductItemElement(element)));
 })
-.catch(err => { 
-  // trata se alguma das promises falhar
-  console.error('Falha na obtenção dos dados', err); 
+.catch((err) => {
+  console.error('Falha na obtenção dos dados', err);
 });
 
 function createProductImageElement(imageSource) {
