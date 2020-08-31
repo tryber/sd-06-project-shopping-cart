@@ -55,13 +55,13 @@ const handleError = (errorMessage) => {
 const handleButtonClick = () => {
   const pageIds = document.querySelectorAll('.item__sku');
   const pageButtons = document.querySelectorAll('.item__add');
-  let endPoint = 'https://api.mercadolibre.com/items/';
+  const endPoint = 'https://api.mercadolibre.com/items/';
   pageButtons.forEach((element, index) => {
     element.addEventListener('click', () => {
-      let myId = pageIds[index].innerText;
-      endPoint = `${endPoint}${myId}`;
-      console.log(endPoint);
-    });
+      const myId = pageIds[index].innerText;
+      let myEndPoint = `${endPoint}${myId}`;
+      console.log(myEndPoint);
+    })
   });
 };
 
