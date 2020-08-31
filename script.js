@@ -56,7 +56,7 @@ const fetchByIDComputer = (endpointParameter) => {
   fetch(endpointParameter)
     .then(response => response.json())
     .then((object) => {
-      const itemOnCart = createCartItemElement ({
+      const itemOnCart = createCartItemElement({
         sku: object.id,
         name: object.title,
         salePrice: object.price,
