@@ -30,7 +30,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
