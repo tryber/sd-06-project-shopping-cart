@@ -53,7 +53,7 @@ const fetchFunction = () => {
       createProductItemElement(item);
     });
   });
-}
+};
 
 window.onload = function onload() {
   fetchFunction();
