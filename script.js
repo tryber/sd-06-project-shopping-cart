@@ -70,5 +70,8 @@ function addItems(event) {
 window.onload = function onload() {
   APIReq();
   const items = document.querySelector('#item');
+  const cartItem = document.querySelector('#cart-items');
   items.addEventListener('click', addItems);
+  const empty = document.querySelector('#getEmpy');
+  empty.addEventListener('click', () => cartItem.innerHTML = '');
 };
