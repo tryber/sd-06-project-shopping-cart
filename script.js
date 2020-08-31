@@ -46,7 +46,7 @@ const APIReq = () => {
   .then(res => res.json())
   .then((data) => {
     const items = document.querySelector('#item');
-    data.results.map((el) => items.appendChild(createProductItemElement({ 
+    data.results.map(el => items.appendChild(createProductItemElement({
       sku: el.id, name: el.title, image: el.thumbnail })));
   });
 };
