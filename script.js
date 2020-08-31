@@ -118,7 +118,6 @@ clearButton.onclick = () => {
 
 function totalPriceHandle() {
   const total = document.createElement('span');
-  total.classList.add('total-price');
   total.classList.add('total');
   total.innerHTML = 0;
   document.querySelector('.total').appendChild(total);
