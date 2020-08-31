@@ -14,6 +14,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const sectionHTML = document.querySelector('.items');
   const section = document.createElement('section');
@@ -31,7 +39,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       const createItem = createCartItemElement(result);
       const ol = document.querySelector('.cart__items');
       ol.appendChild(createItem);
-    })
+    });
   });
   sectionHTML.appendChild(section);
 
@@ -46,20 +54,11 @@ function cartItemClickListener(event) {
   // coloque seu código aquiiii
 }
 
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
-
 const fetchFunc = () => {
   fetch(url)
     .then(response => response.json())
     .then(object => object.results)
-    .then(result => result.forEach(resultElement => createProductItemElement(resultElement)))
+    .then(result => result.forEach(resultElement => createProductItemElement(resultElement)));
 };
 
 window.onload = function onload() {
