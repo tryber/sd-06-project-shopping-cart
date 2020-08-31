@@ -75,7 +75,7 @@ const fetchProduct = (url) => {
           sku: item.id,
           name: item.title,
           image: item.thumbnail,
-        });// usa o forEach para criar a lsta conforme a função prédeterminada
+        });// usa o forEach para criar a lista conforme a função prédeterminada
         document.querySelector('.items').appendChild(products);
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('salvedItens');
       });
