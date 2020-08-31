@@ -12,6 +12,25 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function createCartItemElement({ id, title, price }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', cartItemClickListener);
+
+  const cartSection = document.querySelector('.cart');
+  cartSection.appendChild(li);
+
+  return li;
+}
+
+function fetchItemList(id) {
+  const url = `https://api.mercadolibre.com/items/${id}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(item => createCartItemElement(item));
+}
+
 function createProductItemElement({ id, title, thumbnail }) {
   const section = document.createElement('section');
   const itemsSection = document.querySelector('.items');
@@ -27,25 +46,13 @@ function createProductItemElement({ id, title, thumbnail }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+// return item.querySelector('span.item__sku').innerText;
+// }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ id, title, price }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
-
-  const cartSection = document.querySelector('.cart');
-  cartSection.appendChild(li);
-
-  return li;
-}
+// function cartItemClickListener(event) {
+// coloque seu código aqui
+// }
 
 function fetchProductList() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
@@ -55,14 +62,6 @@ function fetchProductList() {
     .then((object) => {
       object.results.forEach(item => createProductItemElement(item));
     });
-
-}
-
-function fetchItemList(id) {
-  const url = `https://api.mercadolibre.com/items/${id}`;
-  fetch(url)
-    .then(response => response.json())
-    .then(item => createCartItemElement(item))
 }
 
 window.onload = function onload() {
