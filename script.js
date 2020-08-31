@@ -42,16 +42,16 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 //   return li;
 // }
 
-function fetchComputers () {
+function fetchComputers() {
   const section = document.querySelector('.items');
 
-    fetch(url)
-      .then(response => response.json())
-      .then(response => response.results)
-      .then(arrayOfComputers => arrayOfComputers.forEach((computer) => {
-        const product = createProductItemElement(computer);
-        section.appendChild(product);
-      }));
+  fetch(url)
+    .then(response => response.json())
+    .then(response => response.results)
+    .then(arrayOfComputers => arrayOfComputers.forEach((computer) => {
+      const product = createProductItemElement(computer);
+      section.appendChild(product);
+    }));
 }
 
 window.onload = function onload() {
