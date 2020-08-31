@@ -57,18 +57,31 @@ const fetchComputer = () => {
     .then(response => response.json())
     .then((object) => {
       object.results.forEach((element) => {
-        const objectList = {
+        const item = {
           sku: element.id,
           name: element.title,
           image: element.thumbnail,
         };
         const newItem = document.querySelector('.items');
-        newItem.appendChild(createProductItemElement(objectList));
+        const newSection = createProductItemElement(item);
+        newItem.appendChild(newSection);
       });
     })
+    .then(setTimeout(() => handleButtonClick(), 50))// Aguardar um tempo para chamar
     .catch(error => handleError(error));
 };
 
+const handleButtonClick = () => {
+  const pageIds = document.querySelectorAll('.item__sku');
+  const pageButtons =  document.querySelectorAll('.item__add');
+  console.log(pageButtons.length)
+  pageButtons.forEach((element, index) => {
+    element.addEventListener('click', () => {
+      console.log(pageIds[index]);
+    })
+  })
+};
+
 window.onload = () => {
-  fetchComputer();
+  fetchComputer(); 
 };
