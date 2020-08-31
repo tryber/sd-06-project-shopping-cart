@@ -41,11 +41,12 @@ function cartItemClickListener(event) {
 
   const elementSKU = getCartElementSKU(event.target);
 
-  const productIndex = cartProducts.findIndex((item) => item.sku === elementSKU);
+  const productIndex = cartProducts.findIndex(item => item.sku === elementSKU);
 
   cartProducts.splice(productIndex, 1);
   localStorage.setItem('products', JSON.stringify(cartProducts));
-  loadCartItems();
+
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -73,7 +74,7 @@ function loadCartItems() {
 function saveToLocalStorage({ sku, name, salePrice }) {
   const productsSaved = JSON.parse(localStorage.getItem('products')) || [];
 
-  const itemSaved = productsSaved.find((item) => item.sku === sku);
+  const itemSaved = productsSaved.find(item => item.sku === sku);
 
   if (!itemSaved) {
     productsSaved.push({ sku, name, salePrice });
