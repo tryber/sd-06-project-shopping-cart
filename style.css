@@ -1,4 +1,6 @@
-*  {border: 1px solid red;}
+* {
+  border: 1px solid red;
+}
 
 .top-bar {
   align-items: center;
