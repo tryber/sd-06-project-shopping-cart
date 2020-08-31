@@ -39,7 +39,14 @@ function fetchItemList(event) {
 
   fetch(url)
     .then(response => response.json())
-    .then(element => createCartItemElement(element));
+    .then((object) => {
+      if (object.error) {
+        throw new Error(object.error)
+      }
+      document.querySelector('.cart__items').appendChild(createCartItemElement(object));
+    })
+    .catch(error => window.alert(error));
+
 }
 
 function createProductItemElement({ id, title, thumbnail }) {
