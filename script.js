@@ -1,3 +1,9 @@
+function saveCurrentList() {
+  const cartList = document.querySelector('.cart__items');
+  const listSaver = cartList.innerHTML;
+  localStorage.setItem('SavedList', listSaver);
+}
+
 function cartItemClickListener(event, cartList) {
   cartList.removeChild(event);
   saveCurrentList();
@@ -47,12 +53,6 @@ function createProductItemElement({ sku, name, image }) {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-function saveCurrentList() {
-  const cartList = document.querySelector('.cart__items');
-  const listSaver = cartList.innerHTML;
-  localStorage.setItem('SavedList', listSaver);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
