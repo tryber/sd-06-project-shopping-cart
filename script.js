@@ -16,7 +16,7 @@ function createCustomElement(element, className, innerText) {
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
-  const includeHTMLSection = document.querySelector('.items')
+  const includeHTMLSection = document.querySelector('.items');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -44,24 +44,22 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-
-
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/search?q=',
-  endpoint:'$computador'
-}
+  endpoint: '$computador',
+};
 
-const url =`${apiInfo.api}${apiInfo.endpoint}`;
+const url = `${apiInfo.api} ${apiInfo.endpoint}`;
 
 fetchFn = () => {
   const lookingForProduct = url;
   fetch(lookingForProduct)
-   .then(response => response.json())
-   .then(object => object.results)
-   .then(result => result
+    .then(response => response.json())
+    .then(object => object.results)
+    .then(result => result
     .forEach((resultProduct => createProductItemElement(resultProduct))));
-}
+};
 
 window.onload = () => {
   fetchFn();
-}
+};
