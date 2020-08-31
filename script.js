@@ -30,6 +30,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function saveCart() {
+  const cart = document.querySelector('.cart__items');
+  localStorage.setItem('savedCart', cart.innerHTML);
+}
+
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -53,8 +58,8 @@ function createProductItemElement({ sku, name, image }) {
       });
       const cart = document.querySelector('.cart__items');
       cart.appendChild(item);
-      localStorage.setItem(object.id, object.title);
-    });
+    })
+    .then(() => saveCart());
   });
   return section;
 }
@@ -85,6 +90,11 @@ function fetchProducts() {
 // a funcao que chamamos createProductItemElement ja cria
 // a secao de cada item especifico com a classe 'item'
 
+function cartOnload() {
+  const reloadedCart = document.querySelector('.cart__items');
+  const lastCart = localStorage.getItem('savedCart', cart.innerHTML);
+  reloadedCart.appendChild(lastCart);
+}
 
 window.onload = function onload() {
   fetchProducts();
