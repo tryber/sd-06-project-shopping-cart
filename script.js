@@ -1,4 +1,4 @@
-window.onload = function onload() { };
+
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,16 +14,17 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ sku, title, thumbnail }) {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__title', title));
+  section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
-  return section;
+  // return section;
+  document.querySelector('.items').appendChild(section);
 }
 
 function getSkuFromProductItem(item) {
@@ -41,3 +42,29 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+// desestruturando o obj da API e pegando apenas as informações que preciso
+function needInfo({ id, title, price, thumbnail }) {
+  const compInfo = { id, title, price, thumbnail };
+  return compInfo;
+}
+
+// criando requisição
+function request() {
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+  return fetch(url)
+    .then(response => response.json())
+    .then(response => response.results) 
+    .then((response) => {
+      return response.map((element) => {
+        const newObj = needInfo(element);
+        createProductItemElement(newObj);
+        console.log(newObj);
+        return newObj;
+      });
+    });
+}
+
+window.onload = function onload() {
+  request();
+};
