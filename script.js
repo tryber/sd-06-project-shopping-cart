@@ -3,16 +3,6 @@ const appendItem = (item) => {
   createDisplay.appendChild(item);
 };
 
-const fetchDisplay = () => {
-  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
-  const itemSearch = 'computador';
-  fetch(`${url}${itemSearch}`)
-  .then(resolve => resolve.json())
-  .then(data => data.results.forEach((element) => {
-    appendItem(createProductItemElement(element));
-  }));
-};
-
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -25,6 +15,15 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+const fetchDisplay = () => {
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
+  const itemSearch = 'computador';
+  fetch(`${url}${itemSearch}`)
+  .then(resolve => resolve.json())
+  .then(data => data.results.forEach((element) => {
+    appendItem(createProductItemElement(element));
+  }));
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
