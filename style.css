@@ -1,6 +1,6 @@
 body {
   color: rgb( 114 , 114 , 114 );
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .top-bar {
@@ -62,6 +62,7 @@ body {
 .item .item__add {
   background-color: rgb( 179 , 179 , 179 );
   border: 0;
+  color: white;
   cursor: pointer;
   margin: 0;
   padding: 5px;
