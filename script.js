@@ -44,7 +44,7 @@ window.onload = function onload() {
     .then(response => response.json())
     .then((resultJSON) => {
       const result = resultJSON.results;
-      listReturned(result)
+      listReturned(result);
     })
     .catch(error => window.alert(error));
 };
