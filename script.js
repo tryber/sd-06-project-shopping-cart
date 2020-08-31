@@ -81,7 +81,7 @@ function createCartItemElement({ sku, name, salePrice, image }) {
   container.className = 'cart-item-container';
 
   p.className = 'cart__item';
-  p.innerText = `SKU: ${sku} \n\n NAME:\n ${name} \n\n PRICE: $${salePrice}`;
+  p.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
 
   container.appendChild(img);
   container.appendChild(p);
