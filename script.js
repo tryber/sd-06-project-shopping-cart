@@ -52,6 +52,19 @@ const handleError = (errorMessage) => {
   window.alert(errorMessage);
 };
 
+const handleButtonClick = () => {
+  const pageIds = document.querySelectorAll('.item__sku');
+  const pageButtons = document.querySelectorAll('.item__add');
+  let endPoint = 'https://api.mercadolibre.com/items/';
+  pageButtons.forEach((element, index) => {
+    element.addEventListener('click', () => {
+      let myId = pageIds[index].innerText;
+      endPoint = `${endPoint}${myId}`;
+      console.log(endPoint);
+    });
+  });
+};
+
 const fetchComputer = () => {
   fetch(url)
     .then(response => response.json())
@@ -71,17 +84,6 @@ const fetchComputer = () => {
     .catch(error => handleError(error));
 };
 
-const handleButtonClick = () => {
-  const pageIds = document.querySelectorAll('.item__sku');
-  const pageButtons =  document.querySelectorAll('.item__add');
-  console.log(pageButtons.length)
-  pageButtons.forEach((element, index) => {
-    element.addEventListener('click', () => {
-      console.log(pageIds[index]);
-    })
-  })
-};
-
 window.onload = () => {
-  fetchComputer(); 
+  fetchComputer();
 };
