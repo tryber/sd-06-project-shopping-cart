@@ -1,25 +1,19 @@
-.top-bar {
-  align-items: center;
-  display: flex;
-  height: 100px;
-  justify-content: space-around;
-  margin-bottom: 10px;
-  width: 100%;
+ol , li , div , p , button , section , span , img {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.top-bar .input-name-group {
-  align-items: flex-start;
-  display: flex;
-}
-
-.top-bar .input-terms-group {
-  align-items: flex-start;
-  display: flex;
+header , body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
   display: flex;
   justify-content: space-around;
+  padding: 8px;
   width: 100%;
 }
 
@@ -28,12 +22,13 @@
   flex-basis: 70%;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .item {
-  border: 2px solid blue;
+  border: 1px solid black;
   border-radius: 5px;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: auto;
@@ -52,25 +47,90 @@
 }
 
 .item .item__image {
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .item .item__add {
-  background-color: green;
+  background-color: rgb( 82 , 228 , 82 );
   border: 0;
+  border-radius: 8px;
   cursor: pointer;
-  margin: 0;
+  margin: 5px auto;
   padding: 5px;
+  width: 80%;
 }
 
 .cart {
   display: flex;
   flex-basis: 30%;
-  flex-flow: column wrap;
+  flex-flow: column;
+  padding: 8px;
+}
+
+.cart button {
+  background-color: rgb( 199 , 109 , 109 );
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  height: 30px;
+  margin: 0 auto;
+  order: 3;
+  width: 50%;
+}
+
+.cart .total-price {
+  margin: 10px auto;
+  order: 2;
+  text-align: center;
 }
 
 .cart .cart__title {
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
+}
+
+.cart li {
+  list-style: none;
+}
+
+.cart .cart-item-container {
+  align-items: center;
+  border: 1px solid rgb( 0 , 217 , 255 );
+  border-radius: 8px;
+  display: flex;
+  margin: 8px auto;
+  padding: 8px;
+  pointer-events: none;
+  width: 90%;
+}
+
+.cart .cart-item-container img {
+  height: 80px;
+  margin-right: 8px;
+  pointer-events: none;
+}
+
+.cart .cart-item-container p {
+  pointer-events: none;
+}
+
+/* based on https://www.w3schools.com/howto/howto_css_loader.asp */
+.loader {
+  animation: spin 1.4s linear infinite;
+  border: 6px solid rgb( 192 , 191 , 191 ); /* Light grey */
+  border-radius: 50%;
+  border-top: 6px solid rgb( 110 , 243 , 33 ); /* green */
+  height: 30px;
+  margin-right: 8px;
+  width: 30px;
+}
+
+@keyframes spin {
+
+  0% { transform: rotate( 0deg ); }
+
+  100% { transform: rotate( 360deg ); }
 }
