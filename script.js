@@ -38,7 +38,6 @@ const renderCartItem = (event) => {
   fetch(endpoint2)
     .then(response => response.json())
     .then((object) => {
-      console.log(object)
       const cartItem = createCartItemElement(object);
       const ol = document.querySelector('.cart__items');
       ol.appendChild(cartItem);
