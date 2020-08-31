@@ -1,9 +1,9 @@
 const emptyCart = () => {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     const allCart = document.querySelectorAll('.cart__item');
-    allCart.forEach(item => item.parentNode.removeChild(item))
+    allCart.forEach(item => item.parentNode.removeChild(item));
   });
-}
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -68,10 +68,7 @@ const fetchItems = () => {
     .then(response => response.json())
     .then(object => object.results)
     .then(list => list.forEach((item) => {
-      const itemList = createProductItemElement({
-        sku: item.id,
-        name: item.title,
-        image: item.thumbnail });
+      const itemList = createProductItemElement({ sku: item.id, name: item.title, image: item.thumbnail });
       const listItems = document.querySelector('.items');
       listItems.appendChild(itemList);
     }));
