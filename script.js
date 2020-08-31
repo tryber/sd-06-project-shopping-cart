@@ -41,3 +41,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+// requisito 6 Bootão Limpar carrinho de compras
+const buttonClearAll = document.querySelector('.empty-cart');
+function clearAll() {
+  document.getElementsByClassName('cart__items').innerHTML = '';
+}
+buttonClearAll.addEventListener('click', clearAll);
