@@ -45,8 +45,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-let apiEndpoint = 'computador';
-const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=$${apiEndpoint}`;
+const apiQuery = 'computador';
+const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=$${apiQuery}`;
 
 function creatItemList(listItem) {
   const newItem = {};
