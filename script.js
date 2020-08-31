@@ -28,6 +28,11 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function addToStorage() {
+  const list = document.querySelector('.cart__items').innerHTML;
+  localStorage.list = list;
+}
+
 function cartItemClickListener(event) {
   const cart = document.getElementsByClassName('cart__items')[0];
   cart.removeChild(event.target);
@@ -40,11 +45,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-function addToStorage() {
-  const list = document.querySelector('.cart__items').innerHTML;
-  localStorage.list = list;
 }
 
 function addtocart(e) {
