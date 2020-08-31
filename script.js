@@ -72,11 +72,13 @@ async function addCart(sku) {
       document.querySelector('.cart__items').appendChild(li);
       storage();
       sumCart(price);
-    })
-    .catch(error => alert(`${error}`));
+    });
 }
 
 function listProduct() {
+  const container = document.querySelector('.container');
+  const loading = document.querySelector('.loading');
+
   fetch(url)
     .then(response => response.json())
     .then((object) => {
@@ -90,10 +92,9 @@ function listProduct() {
         });
         document.querySelector('.items').appendChild(item);
       });
-    })
-    .catch('Erro');
+      container.removeChild(loading);
+    });
 }
-
 function loadStorage() {
   if (localStorage.Lista) {
     document.querySelector('.cart__items').innerHTML = localStorage.Lista;
