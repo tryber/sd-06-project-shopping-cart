@@ -1,4 +1,6 @@
-window.onload = function onload() { };
+window.onload = function onload() {
+  fetchProduct('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -42,9 +44,26 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// requisito 6 Bootão Limpar carrinho de compras
-const buttonClearAll = document.querySelector('.empty-cart');
+// requisito 6 Botão Limpar carrinho de compras
 function clearAll() {
+  console.log('Apagado!');
   document.getElementsByClassName('cart__items').innerHTML = '';
+  localStorage.clear();
 }
-buttonClearAll.addEventListener('click', clearAll);
+
+const fetchProduct = (url) => {
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      data.results.forEach((item) => {
+        const produtos = createProductItemElement({
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
+        });
+        document.querySelector('.items').appendChild(produtos);
+        document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('itensSalvos');
+      });
+    })
+    .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', clearAll));
+};
