@@ -27,8 +27,7 @@ function createProductItemElement({ sku, name, image }) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const clickedItem = event.target;
-  const cartItems = document.querySelector('.cart__items');
-  cartItems.removeChild(clickedItem);
+  clickedItem.parentNode.removeChild(clickedItem);
 }
 
 
@@ -81,3 +80,7 @@ function getSkuFromProductItem(item) {
 window.onload = function onload() {
   fetchItens();
 };
+
+// const saveCart = document.getElementsByClassName('cart__items')[0];
+// console.log(saveCart);
+// // localStorage.setItem()
