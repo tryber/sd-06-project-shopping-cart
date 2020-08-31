@@ -68,7 +68,7 @@ function addItemToCart(eventElement) {
   const itemID = getSkuFromProductItem(selectedItem);
   const apiItem = `https://api.mercadolibre.com/items/${itemID}`;
   fetch(apiItem).then(response => response.json())
-    .then(data => {
+    .then((data) => {
       itemCreator(data, createCartItemElement, '.cart__items');
     });
 }
