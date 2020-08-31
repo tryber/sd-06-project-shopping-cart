@@ -6,15 +6,15 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
+function cartItemClickListener(event) {
+  console.log(event.target);
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  // li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
@@ -29,7 +29,7 @@ const addItemToCart = (event) => {
   fetch(url)
     .then(response => response.json())
     .then(object => {
-      const productObject = { skul: object.id, name: object.title, salePrice: object.price };
+      const productObject = { sku: object.id, name: object.title, salePrice: object.price };
       const productItem = createCartItemElement(productObject);
       const cartItems = document.querySelector('.cart__items');
       cartItems.appendChild(productItem);
