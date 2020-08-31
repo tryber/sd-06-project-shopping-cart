@@ -1,3 +1,5 @@
+let myCartArray = [];
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -17,28 +19,36 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  const indexOfItem = myCartArray.indexOf(event.target.id);
+  if (indexOfItem > -1) myCartArray.splice(indexOfItem, 1);
+  console.log(myCartArray);
   event.target.remove();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  myCartArray.push(sku);
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.id = sku;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
-function itemClickListener(event) {
-  const itemSku = getSkuFromProductItem(event.target.parentNode);
-  const url = `https://api.mercadolibre.com/items/${itemSku}`;
+function addItemInCart(url) {
   fetch(url)
     .then(jsonReceived => jsonReceived.json())
     .then((object) => {
       const cartList = document.querySelector('ol.cart__items');
-      console.log(object);
       cartList.appendChild(createCartItemElement(object));
     })
     .catch('deu pau no add pro carrinho!');
+}
+
+function itemClickListener(event) {
+  const itemSku = getSkuFromProductItem(event.target.parentNode);
+  const url = `https://api.mercadolibre.com/items/${itemSku}`;
+  addItemInCart(url);
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -56,6 +66,14 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+function loadStoredCart(array) {
+  array.forEach((id) => {
+    const url = `https://api.mercadolibre.com/items/${id}`;
+    addItemInCart(url);
+  });
+  myCartArray = [];
+}
+
 window.onload = function onload() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   fetch(url)
@@ -67,4 +85,19 @@ window.onload = function onload() {
       });
     })
     .catch('deu pau!');
+
+  const storedCart = localStorage.getItem('myCart');
+  if (storedCart) {
+    myCartArray = storedCart.split(',');
+    loadStoredCart(myCartArray);
+  }
 };
+
+window.addEventListener('beforeunload', () => {
+  const myCart = document.querySelectorAll('ol.cart__items li');
+  const array = [];
+  myCart.forEach((item) => {
+    array.push(item.id);
+  });
+  localStorage.setItem('myCart', myCartArray);
+});
