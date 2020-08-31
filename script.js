@@ -6,7 +6,7 @@ function createProductImageElement(imageSource) {
 }
 
 function saveLocalStorage({ id, price, title }) {
-  if (localStorage.length === 0) {
+  if (localStorage.length === 0 || localStorage.cart === '') {
     localStorage.setItem('cart', `${id}, ${title}, ${price}`);
   } else {
     const items = localStorage.getItem('cart');
@@ -14,8 +14,30 @@ function saveLocalStorage({ id, price, title }) {
   }
 }
 
+function removeFromStorage(element) {
+  if (localStorage.cart.split(',').length === 3) {
+    localStorage.clear();
+  } else {
+    const text = element.innerText.split('|');
+    const idSku = text[0].split(':')[1];
+    const itemsArray = localStorage.getItem('cart').split(',');
+    for (let item = 0; item < itemsArray.length; item += 3) {
+      if (itemsArray[item].trim() === idSku.trim()) {
+        itemsArray.splice(itemsArray.indexOf(itemsArray[item]), 3);
+        localStorage.setItem('cart', itemsArray);
+      }
+    }
+  }
+}
+
+function cartItemClickListener(event) {
+  const element = event.target;
+  removeFromStorage(element);
+  document.querySelector('.cart__items').removeChild(element);
+}
+
 function renderShoppingCart() {
-  if (localStorage.length !== 0) {
+  if (localStorage.cart !== '' && localStorage.length !== 0) {
     const itemsArray = localStorage.getItem('cart').split(',');
     for (let item = 0; item < itemsArray.length; item += 3) {
       const li = document.createElement('li');
@@ -25,11 +47,6 @@ function renderShoppingCart() {
       document.querySelector('.cart__items').appendChild(li);
     }
   }
-}
-
-function cartItemClickListener(event) {
-  const element = event.target;
-  document.querySelector('.cart__items').removeChild(element);
 }
 
 function fetchSingleItem(event) {
@@ -47,7 +64,6 @@ async function createCartItemElement(event) {
   li.addEventListener('click', cartItemClickListener);
   saveLocalStorage({ id, price, title });
   document.querySelector('.cart__items').appendChild(li);
-
   return li;
 }
 
