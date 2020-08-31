@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -5,10 +6,43 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
+// }
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  // li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+const addItemToCart = (event) => {
+  const apiUrl = 'https://api.mercadolibre.com/items/';
+  const endpoint = getSkuFromProductItem(event.target.parentElement);
+  const url = `${apiUrl}${endpoint}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(object => {
+      const productObject = { skul: object.id, name: object.title, salePrice: object.price };
+      const productItem = createCartItemElement(productObject);
+      const cartItems = document.querySelector('.cart__items');
+      cartItems.appendChild(productItem);
+    });
+};
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
+  if (element === 'button') {
+    e.addEventListener('click', addItemToCart);
+  }
   return e;
 }
 
@@ -36,22 +70,6 @@ const getProducts = () => {
       itemSection.appendChild(createProductItemElement(resultObj));
     }));
 };
-
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
-
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
 
 window.onload = function onload() {
   getProducts();
