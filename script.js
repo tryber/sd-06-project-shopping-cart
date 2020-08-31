@@ -86,4 +86,3 @@ window.onload = function onload() {
   getProductList();
   document.querySelector('.empty-cart').addEventListener('click', () => clearCartItems());
 };
-
