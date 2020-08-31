@@ -1,4 +1,30 @@
-window.onload = function onload() { };
+window.onload = function onload() { 
+  getProductList();
+};
+
+const apiInfo = {
+  api: 'https://api.mercadolibre.com/sites/MLB/',
+  endpoint: 'search?q=',
+  query: 'computador',
+}
+
+const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`
+
+
+function getProductList() { 
+  fetch(url)
+    .then((response) => response.json())
+    .then((object) => {
+      handleProductList(object.results);
+    })
+}
+
+function handleProductList(list) {
+  list.forEach(element => {
+    document.querySelector('.items').appendChild(createProductItemElement(element));
+  });
+}
+
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,7 +40,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -25,6 +51,17 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+
+const testeProduto = {
+  sku: 'MLB1532299476',
+  name: 'Computador Completo Fácil Intel I3 04 Gb Ddr3 Hd 500 Gb ',
+  image: 'http://mlb-s1-p.mlstatic.com/661738-MLB42595234121_072020-I.jpg',
+}
+
+
+// document.querySelector('.items').appendChild(createProductItemElement(testeProduto));
+
+
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
