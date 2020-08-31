@@ -22,7 +22,10 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  event.target.remove();
+  // event.target.remove();
+  const selectedProduct = event.target;
+  const listOl = document.querySelector('.cart__items');
+  listOl.removeChild(selectedProduct);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
