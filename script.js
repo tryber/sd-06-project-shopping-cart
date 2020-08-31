@@ -66,17 +66,15 @@ function addButtonSetup() {
       fetch(url)
         .then(response => response.json())
         .then((response) => {
-
           const myItemObject = {
             sku: itemsIDArray[i].innerText,
             name: response.title,
             salePrice: response.base_price,
-          }
+          };
 
           const cartItemsOl = document.getElementsByTagName('ol')[0];
           cartItemsOl.appendChild(createCartItemElement(myItemObject));
         });
-
     });
   }
 }
