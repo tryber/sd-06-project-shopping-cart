@@ -89,6 +89,14 @@ const fetchProducts = () => {
     .then(data => handleProductList(data.results));
 };
 
+const handleRemoveAllButton = () => {
+  document.querySelector('.empty-cart').addEventListener('click', function () {
+    const cartItems = document.querySelector('.cart__items');
+    cartItems.innerHTML = '';
+  })
+};
+
 window.onload = () => {
   fetchProducts();
+  handleRemoveAllButton();
 };
