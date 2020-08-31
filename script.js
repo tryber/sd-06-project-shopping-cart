@@ -1,5 +1,5 @@
 window.onload = function onload() { };
-
+// initializing Lets goooo Hello World
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
