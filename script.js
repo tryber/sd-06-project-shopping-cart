@@ -47,7 +47,7 @@ const promise = () => {
     .then(response => response.json())
     .then((object) => {
       const objectResult = object.results;
-      objectResult.forEach(element => {
+      objectResult.forEach((element) => {
         const sku = element.id;
         const name = element.title;
         const image = element.thumbnail;
