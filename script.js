@@ -32,17 +32,17 @@ const fetchDisplay = () => {
   }));
 };
 
+const createItem = (element) => {
+  //inside
+}
+
 const fetchProducts = () => {
-  fetch("https://api.mercadolibre.com/items/$ItemID")
-  .then((resolve) => resolve.json())
-  .then((data) => data.results.forEach((element) => {
+  fetch('https://api.mercadolibre.com/items/$ItemID')
+  .then(resolve => resolve.json())
+  .then(data => data.results.forEach((element) => {
     createItem(createProductItemElement(element));
   }));
 };
-
-const createItem = (element) => {
-
-}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
