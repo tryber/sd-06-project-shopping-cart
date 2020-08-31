@@ -30,8 +30,10 @@ function createProductItemElement({ sku, name, image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-function cartItemClickListener() {
-
+function cartItemClickListener(event) {
+  const itemToRemove = event.target;
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.removeChild(itemToRemove);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
