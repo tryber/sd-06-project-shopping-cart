@@ -13,6 +13,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const clear = () => {
+  const botao = document.querySelector('.empty-cart');
+  botao.addEventListener('click', () => {
+    const ol = document.querySelector('.cart__items');
+    ol.innerHTML = '';
+  });
+};
+
 function cartItemClickListener(event) {
   const item = document.querySelector('.cart__item');
   item.addEventListener('click', () => {
