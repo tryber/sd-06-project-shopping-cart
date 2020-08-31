@@ -1,28 +1,3 @@
-function fetchProducts() {
-  const searchValue = 'computador'
-  const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=$${searchValue}`;
-
-  fetch(endpoint)
-    .then((response) => response.json())
-    .then((object) => {
-      const products = object.results;
-      products.forEach(element => {
-        const product = createProductItemElement({
-          sku: element.id,
-          name: element.title,
-          image: element.thumbnail,
-        });
-        document.querySelector('.items').appendChild(product);
-      });
-    });
-}
-// nesta funcao pegamos a url da API e damos um fetch
-// pegamos o objeto e o transformamos em algo legivel com o .json
-// com o forEach, em cada elemento criamos um objeto novo
-// com sua sku (id), name(title) e image(thumbnail)
-// e depois fazemos um appendchild na secao 'items' do html
-// a funcao que chamamos createProductItemElement ja cria
-// a secao de cada item especifico com a classe 'item'
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -50,7 +25,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   return section;
-
 }
 
 function getSkuFromProductItem(item) {
@@ -68,6 +42,32 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+function fetchProducts() {
+  const searchValue = 'computador';
+  const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=$${searchValue}`;
+
+  fetch(endpoint)
+    .then(response => response.json())
+    .then(object => {
+      const products = object.results;
+      products.forEach((element) => {
+        const product = createProductItemElement({
+          sku: element.id,
+          name: element.title,
+          image: element.thumbnail,
+        });
+        document.querySelector('.items').appendChild(product);
+      });
+    });
+}
+// nesta funcao pegamos a url da API e damos um fetch
+// pegamos o objeto e o transformamos em algo legivel com o .json
+// com o forEach, em cada elemento criamos um objeto novo
+// com sua sku (id), name(title) e image(thumbnail)
+// e depois fazemos um appendchild na secao 'items' do html
+// a funcao que chamamos createProductItemElement ja cria
+// a secao de cada item especifico com a classe 'item'
 
 window.onload = function onload() {
   fetchProducts();
