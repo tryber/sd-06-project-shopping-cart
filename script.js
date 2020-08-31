@@ -49,8 +49,8 @@ function fetchProducts (product) {
   fetch(endpoint)
     .then(response => response.json())
     .then(object => object.results.forEach(item => createProductItemElement(item)));
-};
+}
 
-window.onload = function onload() { 
+window.onload = function onload() {
   fetchProducts('computador');
 };
