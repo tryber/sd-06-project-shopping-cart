@@ -100,10 +100,11 @@ window.onload = function onload() {
     arrayN[index] = JSON.parse(localStorage[`items${index + 1}`]);
   }
   arrayN.map((el) => {
-    return cartItem.appendChild(createCartItemElement({
+    const objt = {
       sku: el.sku,
       name: el.name,
       salePrice: el.salePrice,
-    }));
+    };
+    return cartItem.appendChild(createCartItemElement(objt));
   });
 };
