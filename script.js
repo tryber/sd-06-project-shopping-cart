@@ -1,3 +1,29 @@
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+}
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+function addToCart(product) {
+  const itemCart = document.querySelector('.cart__items');
+  itemCart.appendChild(product);
+}
+
+const fetchProductItem = (sku) => {
+  fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(resolve => resolve.json())
+    .then(data => {
+      const itemProduct = createCartItemElement(data);
+      addToCart(itemProduct);
+    });
+};
+
 function createItem(item) {
   const product = document.querySelector('.items');
   product.appendChild(item);
@@ -39,35 +65,12 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function addToCart(product) {
-  console.log(product)
-  const itemCart = document.querySelector('.cart__items');
-  itemCart.appendChild(product);
-}
-
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
-const fetchProductItem = (sku) => {
-  fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(resolve => resolve.json())
-    .then(data => addToCart(createCartItemElement(data)));
-};
-
 const fetchProducts = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(resolve => resolve.json())
     .then(data => data.results.forEach((element) => {
-      createItem(createProductItemElement(element));
+      const createProduct = createProductItemElement(element);
+      createItem(createProduct);
     }));
 };
 

@@ -1,5 +1,5 @@
-body{
-  background-color: rgb( 237, 237, 237 );
+body {
+  background-color: rgb( 237 , 237 , 237 );
 }
 
 .top-bar {
@@ -37,7 +37,7 @@ body{
 .item {
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, .1 ), 0 -1px 2px 0 rgba( 0, 0, 0, .1 );
+  box-shadow: 1px rgba( 0 , 0 , 0 , .1 );
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -61,7 +61,7 @@ body{
 }
 
 .item .item__add {
-  background-color: rgb( 52, 131, 250 );
+  background-color: rgb( 52 , 131 , 250 );
   border: 0;
   color: white;
   cursor: pointer;
