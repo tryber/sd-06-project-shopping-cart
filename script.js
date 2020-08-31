@@ -31,13 +31,14 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 const renderCartItem = (event) => {
-  const id = event.target.parentNode.firstChild;
+  const id = event.target.parentNode.firstChild.innerHTML;
 
   const endpoint2 = `https://api.mercadolibre.com/items/${id}`;
 
   fetch(endpoint2)
-    .then(responde => responde.json())
+    .then(response => response.json())
     .then((object) => {
+      console.log(object)
       const cartItem = createCartItemElement(object);
       const ol = document.querySelector('.cart__items');
       ol.appendChild(cartItem);
