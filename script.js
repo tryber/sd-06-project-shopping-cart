@@ -53,6 +53,7 @@ function createProductItemElement({ sku, name, image }) {
     .addEventListener('click', () => {
       const loading = document.createElement('h2');
       loading.innerHTML = 'Loading...';
+      loading.className = 'loading';
       document.querySelector('.container').appendChild(loading);
       fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(result => result.json())
