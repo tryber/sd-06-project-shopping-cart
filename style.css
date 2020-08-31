@@ -67,6 +67,7 @@
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  align-items: center;
 }
 
 .cart .cart__title {
@@ -75,4 +76,6 @@
   text-align: center;
 }
 
-/* Iniciando o Projeto */
+.empty-cart {
+  width: 150px;
+}
