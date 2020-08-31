@@ -84,7 +84,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function findItemById(elementId) {
   await fetch(url)
     .then(response => response.json())
-    .then((object) => object.results.find(item => item.id.includes(elementId)))
+    .then(object => object.results.find(item => item.id.includes(elementId)))
     .then(({ id, title, price }) => {
       cartList.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
       totalPrice += price;

@@ -74,6 +74,7 @@
   font-size: 16pt;
   text-align: center;
 }
+
 .total {
   display: flex;
   flex-flow: row;
