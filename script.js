@@ -4,23 +4,6 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-// ------------
-function postElementinSection(object) {
-  const mySection = document.getElementsByClassName('items')[0];
-  mySection.appendChild(createProductItemElement(object));
-}
-
-function createMyObject(object) {
-  object.results.forEach((result) => {
-    myObject = {
-      sku: result.id,
-      name: result.title,
-      image: result.thumbnail,
-    };
-    postElementinSection(myObject);
-  });
-}
-// ---------------
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -39,6 +22,23 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+// ------------
+function postElementinSection(object) {
+  const mySection = document.getElementsByClassName('items')[0];
+  mySection.appendChild(createProductItemElement(object));
+}
+
+function createMyObject(object) {
+  object.results.forEach((result) => {
+    myObject = {
+      sku: result.id,
+      name: result.title,
+      image: result.thumbnail,
+    };
+    postElementinSection(myObject);
+  });
+}
+// ---------------
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
