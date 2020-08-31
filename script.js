@@ -1,4 +1,6 @@
-window.onload = function onload() { };
+window.onload = function onload() {
+  fetchItems();
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -23,7 +25,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
-  return section;
+  document.querySelector('.items').appendChild(section);
 }
 
 function getSkuFromProductItem(item) {
@@ -47,7 +49,7 @@ function transformObject({ id, title, price, thumbnail }) {
   newObject['sku'] = id;
   newObject['name'] = title;
   newObject['salePrice'] = price;
-  newObject['imageSource'] = thumbnail;
+  newObject['image'] = thumbnail;
   return newObject;
 }
 
@@ -57,7 +59,11 @@ function fetchItems(query = 'computador') {
     .then(response => response.results)
     .then(response => {
       return response.map((e) => {
-        return transformObject(e);
+        const TransformedObj = transformObject(e);
+        createProductItemElement(TransformedObj);
+        return TransformedObj;
       });
     });
 }
+
+// console.log(addProductItemElement());
