@@ -1,6 +1,6 @@
 
 const fetchList = () => {
-  fetch("https://api.mercadolibre.com/sites/MLB/search?q=computador")
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((response) => {
     response.results.forEach((item) => {
@@ -12,7 +12,7 @@ const fetchList = () => {
       document.querySelector('.items').appendChild(product);
     });
   });
-}
+};
 
 /* function createProductImageElement(imageSource) {
   const img = document.createElement('img');
