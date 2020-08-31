@@ -53,8 +53,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-
-
 const fetchFunction = () => {
   const functionHTML = document.querySelector('.items');
   fetch(url)
