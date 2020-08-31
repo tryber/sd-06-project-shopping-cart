@@ -20,6 +20,37 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
+function queryAtML() {
+  const queryUrl = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  fetch(queryUrl)
+    .then(response => response.json())
+    .then(response => response.results)
+    .then((items) => {
+      items.forEach(item => document.querySelector('.items')
+        .appendChild(createProductItemElement({
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
+        })));
+    });
+}
+
+function queryThisAtML(sku) {
+  const queryUrl = `https://api.mercadolibre.com/items/${sku}`;
+  fetch(queryUrl)
+    .then(response => response.json())
+    .then((response) => {
+      const cartItems = document.querySelector('.cart__items');
+      const Item = createCartItemElement({
+        sku: response.id,
+        name: response.title,
+        salePrice: response.price, 
+      });
+      cartItems.appendChild(Item);
+    });
+  return queryUrl;
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -40,33 +71,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-function queryThisAtML(sku) {
-  const queryUrl = `https://api.mercadolibre.com/items/${sku}`;
-  fetch(queryUrl)
-    .then(response => response.json())
-    .then((response) => {
-      const cartItems = document.querySelector('.cart__items');
-      const Item = createCartItemElement({ sku: response.id, name: response.title, salePrice: response.price });
-        cartItems.appendChild(Item);
-    });
-  return queryUrl;
-}
-
-function queryAtML() {
-  const queryUrl = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-  fetch(queryUrl)
-    .then(response => response.json())
-    .then(response => response.results)
-    .then((items) => {
-      items.forEach(item => document.querySelector('.items')
-        .appendChild(createProductItemElement({
-          sku: item.id,
-          name: item.title,
-          image: item.thumbnail,
-        })));
-    });
 }
 
 window.onload = function onload() {
