@@ -75,9 +75,8 @@ async function addItems(event) {
     const obj = {
       sku: data.id,
       name: data.title,
-      salePrice: data.price, };
+      salePrice: data.price };
     localStorage.setItem(`items${storageNum += 1}`, JSON.stringify(obj));
-
   }).catch(() => console.log('erro ocorrido'));
 }
 
@@ -96,16 +95,13 @@ window.onload = function onload() {
     price.innerText = `Preço total: $${acc}`;
   });
 
-
   const arrayN = [];
-  for (let index = 0; index < localStorage.length; index +=1 ) {
+  for (let index = 0; index < localStorage.length; index += 1) {
     arrayN[index] = JSON.parse(localStorage[`items${index + 1}`]);
   }
-  arrayN.map((el) => {
-    return cartItem.appendChild(createCartItemElement({
+  arrayN.map(el => cartItem.appendChild(createCartItemElement({
       sku: el.sku,
       name: el.name,
       salePrice: el.salePrice,
-    }));
-  });
+    })));
 };
