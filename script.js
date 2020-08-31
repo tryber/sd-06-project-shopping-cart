@@ -43,7 +43,7 @@ function createProductItemElement({ id, title, thumbnail }) {
   return section;
 }
 
-function fetchProducts (product) {
+function fetchProducts(product) {
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
 
   fetch(endpoint)
