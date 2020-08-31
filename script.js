@@ -1,5 +1,17 @@
 window.onload = function onload() {
+  const cartList = document.querySelector('.cart__items');
+  cartList.addEventListener('click', () => {
+    cartItemClickListener(event.target, cartList);
+  });
 
+  function cartItensHandler() {
+    const savedList = localStorage.getItem('SavedList');
+    if (savedList) {
+      cartList.innerHTML = savedList;
+    }
+  }
+
+  cartItensHandler();
 };
 
 function createProductImageElement(imageSource) {
@@ -32,8 +44,15 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+function saveCurrentList() {
+  const cartList = document.querySelector('.cart__items');
+  const listSaver = cartList.innerHTML;
+  localStorage.setItem("SavedList", listSaver);
+}
+
+function cartItemClickListener(event, cartList) {
+  cartList.removeChild(event);
+  saveCurrentList();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -61,16 +80,21 @@ function itemCreator(item, createFunction, listClassName) {
   const newItem = createFunction(fetchedItemData);
   const itemList = document.querySelector(listClassName);
   itemList.appendChild(newItem);
+  if (createFunction === createCartItemElement) {
+    saveCurrentList();
+  }
 }
 
 function addItemToCart(eventElement) {
-  const selectedItem = eventElement.parentNode;
-  const itemID = getSkuFromProductItem(selectedItem);
-  const apiItem = `https://api.mercadolibre.com/items/${itemID}`;
-  fetch(apiItem).then(response => response.json())
-    .then((data) => {
-      itemCreator(data, createCartItemElement, '.cart__items');
-    });
+  if (eventElement.className === 'item__add') {
+    const selectedItem = eventElement.parentNode;
+    const itemID = getSkuFromProductItem(selectedItem);
+    const apiItem = `https://api.mercadolibre.com/items/${itemID}`;
+    fetch(apiItem).then(response => response.json())
+      .then((data) => {
+        itemCreator(data, createCartItemElement, '.cart__items');
+      });
+  }
 }
 
 async function createItemList() {
