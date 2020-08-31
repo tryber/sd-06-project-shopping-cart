@@ -1,7 +1,22 @@
-const appendItem = (item) => {
+const appendItem = (product) => {
   const parentSection = document.querySelector('.items');
-  parentSection.appendChild(item);
-};
+  parentSection.appendChild(product);
+  product.addEventListener('click', (e) =>  {
+    if (e.target.className === 'item__add') {
+      const sku = e.currentTarget.firstChild.innerText;
+      fetchProductItem(sku);
+    }
+  })
+}
+const fetchProductItem = (sku) => {
+  fetch(`https://api.mercadolibre.com/items/${sku}`).then(resolve => resolve.json())
+  .then(itemCart => addProductToCart(createCartItemElement(itemCart)))
+}
+
+const addProductToCart = (li) => {
+  const ol = document.querySelector('.cart__items')
+  ol.appendChild(li);
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,6 +32,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+
+
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -26,10 +43,12 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
+
+
   return section;
 }
 
-const getData = () => {
+const displayItems = () => {
   const itemBuscado = 'computador';
   return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${itemBuscado}`).then(resolve => resolve.json())
     .then(data => data.results.forEach((product) => {
@@ -46,7 +65,7 @@ function cartItemClickListener(event) {
 
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -55,5 +74,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 window.onload = function onload() {
-  getData();
+  displayItems();
+
 };
