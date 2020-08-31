@@ -36,7 +36,7 @@ function storage() {
 
 async function subCart(price) {
   const p = document.querySelector('.total-price');
-  p.innerText = (Number(p.innerText) - Number(price)).toFixed(2);
+  p.innerText = (Number(p.innerText) - Number(price)).toFixed(0);
   localStorage.price = p.innerText;
 }
 
@@ -50,7 +50,7 @@ async function cartItemClickListener(event) {
 
 async function sumCart(price) {
   const p = document.querySelector('.total-price');
-  p.innerText = (Number(p.innerText) + price).toFixed(2);
+  p.innerText = (Number(p.innerText) + price).toFixed(0);
   localStorage.price = Number(p.innerText);
 }
 
@@ -99,7 +99,7 @@ function loadStorage() {
     document.querySelectorAll('.cart__item').forEach((item) => {
       item.addEventListener('click', cartItemClickListener);
     });
-    const price = Number(localStorage.price).toFixed(2);
+    const price = Number(localStorage.price).toFixed(0);
     document.querySelector('.total-price').innerText = price;
   }
 }
