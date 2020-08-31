@@ -1,4 +1,4 @@
-window.onload = function onload() { };
+// window.onload = function onload() { };
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -41,3 +41,31 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+fetch("https://api.mercadolibre.com/sites/MLB/search?q=$computador")
+    .then((response) => response.json())
+    .then((object) => {
+      console.log(object.results[0].id);
+      console.log(object.results[0].id);
+      // sku = id
+      const obj = {
+        sku: 'ola',
+        name: 'clayton',
+        image: 'http://mlb-s1-p.mlstatic.com/661738-MLB42595234121_072020-I.jpg'
+      }
+      const containerElemets = document.querySelector('.items');
+      containerElemets.appendChild(createProductItemElement(obj));
+      
+      // if (object.error) {
+      //   throw new Error(object.error);
+      // } else {
+      //   handleRates(object.rates);
+      // }
+    
+    })
+    // .catch((error) => handleError(error))
+
+
+// const handleError = (errorMessage) => {
+//   window.alert(errorMessage);
+// }
