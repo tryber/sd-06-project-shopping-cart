@@ -5,6 +5,14 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function cleanCart(event) {
+  localStorage.clear();
+  while (document.querySelector('.cart__items').childNodes.length > 0) {
+    document.querySelector('.cart__items')
+    .removeChild(document.querySelector('.cart__items').childNodes[0]);
+  }
+}
+
 function saveLocalStorage({ id, price, title }) {
   if (localStorage.length === 0 || localStorage.cart === '') {
     localStorage.setItem('cart', `${id}, ${title}, ${price}`);
@@ -120,4 +128,5 @@ function fetchItems(query = 'computador') {
 window.onload = function onload() {
   fetchItems();
   renderShoppingCart();
+  document.querySelector('.empty-cart').addEventListener('click', cleanCart);
 };
