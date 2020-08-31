@@ -18,7 +18,7 @@ function addToCart(product) {
 const fetchProductItem = (sku) => {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(resolve => resolve.json())
-    .then(data => {
+    .then((data) => {
       const itemProduct = createCartItemElement(data);
       addToCart(itemProduct);
     });
