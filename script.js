@@ -43,7 +43,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  return event;
+  // coloque seu código aqui
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -56,6 +56,4 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 window.onload = function onload() {
   fetchListOfProducts();
-  getSkuFromProductItem();
-  createCartItemElement();
 };
