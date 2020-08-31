@@ -48,8 +48,8 @@ const fetchFunction = () => {
   fetch(url)
   .then(response => response.json())
   .then(obj => obj.results)
-  .then(result => {
-    result.forEach(item => {
+  .then((result) => {
+    result.forEach((item) => {
       createProductItemElement(item);
     });
   });
