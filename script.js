@@ -55,7 +55,7 @@ function request() {
   return fetch(url)
     .then(response => response.json())
     .then(response => response.results)
-    .then((response) => response.map((element) => {
+    .then(response => response.map((element) => {
       const newObj = needInfo(element);
       createProductItemElement(newObj);
       console.log(newObj);
