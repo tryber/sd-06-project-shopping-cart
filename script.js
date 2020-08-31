@@ -52,6 +52,23 @@ const handleError = (errorMessage) => {
   window.alert(errorMessage);
 };
 
+const fetchByIDComputer = (endpointParameter) => {
+  console.log(endpointParameter);
+  fetch(endpointParameter)
+    .then(response => response.json())
+    .then((object) => {
+      const itemOnCart = {
+        sku: object.id,
+        name: object.title,
+        salePrice: object.price,
+      };
+      const newItemOnCart = document.querySelector('.cart__items');
+      const newSectionOnCart = createCartItemElement(itemOnCart);
+      newItemOnCart.appendChild(newSectionOnCart);
+    })
+    .catch(error => handleError(error));
+};
+
 const handleButtonClick = () => {
   const pageIds = document.querySelectorAll('.item__sku');
   const pageButtons = document.querySelectorAll('.item__add');
@@ -59,8 +76,8 @@ const handleButtonClick = () => {
   pageButtons.forEach((element, index) => {
     element.addEventListener('click', () => {
       const myId = pageIds[index].innerText;
-      let myEndPoint = `${endPoint}${myId}`;
-      console.log(myEndPoint);
+      const myEndPoint = `${endPoint}${myId}`;
+      fetchByIDComputer(myEndPoint);
     })
   });
 };
