@@ -2,6 +2,7 @@ const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/search?q=',
   endpoint: '$computador',
 };
+
 const url = `${apiInfo.api}${apiInfo.endpoint}`;
 const container = document.querySelector('.container');
 const cartList = document.querySelector('.cart__items');
@@ -19,7 +20,7 @@ function saveToStorage() {
 
 async function updateTotalPrice(price = 0) {
   const total = document.querySelector('.total-price');
-  total.innerHTML = `Preço Total: $${price}`;
+  total.innerHTML = price;
 }
 
 function createProductImageElement(imageSource) {
@@ -53,6 +54,11 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  const loading = document.createElement('div');
+  loading.classList.add('loading');
+  loading.innerHTML = 'loading...';
+  container.appendChild(loading);
+
   fetch(url)
     .then(response => response.json())
     .then(object => object.results)
@@ -63,7 +69,8 @@ function cartItemClickListener(event) {
         sectionItems
           .appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail }))
       ));
-    });
+    })
+    .finally(() => container.removeChild(loading));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -77,13 +84,15 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function findItemById(elementId) {
   await fetch(url)
     .then(response => response.json())
-    .then(object => object.results.find(item => item.id.includes(elementId)))
+    .then((object) => object.results.find(item => item.id.includes(elementId)))
     .then(({ id, title, price }) => {
       cartList.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
       totalPrice += price;
       updateTotalPrice(totalPrice);
     })
-    .finally(() => saveToStorage());
+    .finally(() => {
+      saveToStorage();
+    });
 }
 
 container.addEventListener('click', (e) => {
@@ -110,8 +119,9 @@ clearButton.onclick = () => {
 function totalPriceHandle() {
   const total = document.createElement('span');
   total.classList.add('total-price');
-  total.innerHTML = 'Preço Total: $0';
-  cartSection.appendChild(total);
+  total.classList.add('total');
+  total.innerHTML = 0;
+  document.querySelector('.total').appendChild(total);
 }
 
 window.onload = function onload() {
