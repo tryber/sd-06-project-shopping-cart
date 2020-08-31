@@ -1,5 +1,3 @@
-window.onload = function onload() { };
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -42,25 +40,31 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const endPoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-fetch(endPoint)
+function fetchProductsML () {
+  const endPoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  fetch(endPoint)
   .then(response => response.json())
   .then(data => data.results)
   .then((newdata) => {
-    newdata.forEach(({id, title, thumbnail}) => {
+    newdata.forEach(({ id, title, thumbnail }) => {
       const section = document.getElementsByClassName('items')[0];
-      const elementProduct = createProductItemElement({sku: id, name: title, image: thumbnail});
-      elementProduct.addEventListener('click', (e) => {
-        const id = getSkuFromProductItem(e.target.parentElement);
-        fetch(`https://api.mercadolibre.com/items/${id}`)
-        .then(response => response.json())
-        .then(({id, title, price}) => {
-          const cart = document.getElementsByClassName('cart__items')[0];
-          cart.appendChild(createCartItemElement({sku :id, name: title, salePrice: price}));
-        });
-      });
+      const elementProduct = createProductItemElement({ sku: id, name: title, image: thumbnail });
+      elementProduct.addEventListener('click', addtocart)
       section.appendChild(elementProduct);
     });
   });
+}
 
- 
+  function addtocart (e) {
+    const idprod = getSkuFromProductItem(e.target.parentElement);
+      fetch(`https://api.mercadolibre.com/items/${idprod}`)
+        .then(response => response.json())
+        .then(({ id, title, price }) => {
+          const cart = document.getElementsByClassName('cart__items')[0];
+          cart.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }))
+        })
+  };
+
+  window.onload = function onload() { 
+    fetchProductsML();
+  };          
