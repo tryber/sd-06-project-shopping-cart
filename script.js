@@ -81,10 +81,29 @@ function fetchComputer() {
     });
 }
 
+function clearList() {
+  const list = document.querySelector('.cart__items');
+  while (list.firstChild) list.removeChild(list.firstChild);
+}
+
 window.onload = function onload() {
   fetchComputer();
+  document.querySelector('.empty-cart').addEventListener('click', clearList);
+  // saveCart();
+  // loadCart();
 };
 
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
+// }
+
+// function saveCart() {
+//   const list = document.querySelector('.cart__items');
+//   window.localStorage.setItem('myCart', list.all);
+// }
+
+// function loadCart() {
+//   const list = document.querySelector('.cart__items');
+//     const myCart = window.localStorage.getItem('myCart');
+//     if (myCart) list.innerHTML = myCart;
 // }
