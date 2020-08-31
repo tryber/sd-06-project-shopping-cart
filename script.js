@@ -63,11 +63,11 @@ const fetchFunc = () => {
     .then(result => result.forEach(resultElement => createProductItemElement(resultElement)));
 };
 
-const clear = (createCartItemElement) => {
+const clear = () => {
   const botao = document.querySelector('.empty-cart');
   botao.addEventListener('click', () => {
     const ol = document.querySelector('.cart__items');
-    const item = document.querySelector('.cart__item')
+    // const item = document.querySelector('.cart__item')
     ol.innerHTML = '';
   });
 };
