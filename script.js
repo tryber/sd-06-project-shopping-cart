@@ -5,6 +5,13 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+}
+
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -34,7 +41,7 @@ const fetchDisplay = () => {
 
 const createItem = (element) => {
   //inside
-}
+};
 
 const fetchProducts = () => {
   fetch('https://api.mercadolibre.com/items/$ItemID')
@@ -43,13 +50,6 @@ const fetchProducts = () => {
     createItem(createProductItemElement(element));
   }));
 };
-
-function createProductImageElement(imageSource) {
-  const img = document.createElement('img');
-  img.className = 'item__image';
-  img.src = imageSource;
-  return img;
-}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
