@@ -13,9 +13,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  const itemToRemove = event.target;
-
-  itemToRemove.innerHTML = '';
+  event.target.remove();
 }
 
 function createCartItemElement({ id, title, price }) {
