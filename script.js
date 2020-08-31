@@ -39,22 +39,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-const handleError = (itemResearched) => {
-  captureMercadoLivreItem(itemResearched);
-}
+// function handleError(itemResearched) {
+//   captureMercadoLivreItem(itemResearched);
+// }
 
 function captureMercadoLivreItem(pesquisa) {
   const containerElements = document.querySelector('.items');
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$${pesquisa}`)
     .then(response => response.json())
-    .then(object => {
+    .then((object) => {
       // console.log(object.results[0].id)
       object.results.forEach((product) => {
         containerElements.appendChild(createProductItemElement(product));
       });
     })
-    .catch(() => handleError(pesquisa));
+    .catch(() => captureMercadoLivreItem(pesquisa));
 }
 
 window.onload = function onload() { captureMercadoLivreItem('computador'); };
