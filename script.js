@@ -1,4 +1,3 @@
-/* eslint-disable arrow-parens */
 window.onload = function onload() {
 
 };
