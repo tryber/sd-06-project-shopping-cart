@@ -28,27 +28,8 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const fetchItems = (query = 'computador') => {
-  const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
-  const sectionItems = document.querySelector('.items');
-
-  fetch(endpoint)
-    .then((response) => response.json())
-    .then((data) => {
-      const products = data.results;
-      products.forEach((prod) => {
-        const item = createProductItemElement({
-          sku: prod.id,
-          name: prod.title,
-          image: prod.thumbnail,
-        });
-        sectionItems.appendChild(item);
-      });
-    });
-};
-
 function cartItemClickListener(event) {
-  // hi
+  console.log(event);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -58,5 +39,50 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+const fetchItemBySKU = (sku) => {
+  const endpoint = `https://api.mercadolibre.com/items/${sku}`;
+  const cartElements = document.querySelector('.cart__items');
+
+  fetch(endpoint)
+    .then(response => response.json())
+    .then((data) => {
+      cartElements
+        .appendChild(createCartItemElement({
+          sku: data.id,
+          name: data.title,
+          salePrice: data.price,
+        }));
+    });
+};
+
+const fetchItems = (query = 'computador') => {
+  const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
+  const sectionItems = document.querySelector('.items');
+
+  fetch(endpoint)
+    .then(response => response.json())
+    .then((data) => {
+      const products = data.results;
+      const items = products.map((prod) => {
+        const item = createProductItemElement({
+          sku: prod.id,
+          name: prod.title,
+          image: prod.thumbnail,
+        });
+        sectionItems.appendChild(item);
+
+        return item;
+      });
+      return items;
+    })
+    .then((items) => {
+      items.forEach((i) => {
+        i.children[3].addEventListener('click', () => {  // botao de adicionar carrinho
+          fetchItemBySKU(getSkuFromProductItem(i));
+        });
+      });
+    });
+};
 
 window.onload = function onload() { fetchItems(); };
