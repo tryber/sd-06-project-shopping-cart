@@ -1,5 +1,6 @@
 function cartItemClickListener(event) {
-
+  const itemsList = document.querySelector('.cart__items');
+  itemsList.removeChild(event.target);
 }
 
 function createCustomElement(element, className, innerText) {
