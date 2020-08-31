@@ -6,31 +6,6 @@ const apiInfo = {
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
-window.onload = () => {
-  fetchComputer();
-};
-
-const fetchComputer = () => {
-  fetch(url)
-    .then((response) => response.json())
-    .then((object) => {
-      object.results.forEach(element => {
-        const objectList = {
-          sku: element.id,
-          name: element.title,
-          image: element.thumbnail,
-        };
-        const newItem = document.querySelector('.items');
-        newItem.appendChild(createProductItemElement(objectList));
-      });
-    })
-    .catch((error) => handleError(error));
-};
-
-const handleError = (errorMessage) => {
-  window.alert(errorMessage);
-}
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -72,3 +47,28 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+const handleError = (errorMessage) => {
+  window.alert(errorMessage);
+};
+
+const fetchComputer = () => {
+  fetch(url)
+    .then(response => response.json())
+    .then((object) => {
+      object.results.forEach((element) => {
+        const objectList = {
+          sku: element.id,
+          name: element.title,
+          image: element.thumbnail,
+        };
+        const newItem = document.querySelector('.items');
+        newItem.appendChild(createProductItemElement(objectList));
+      });
+    })
+    .catch(error => handleError(error));
+};
+
+window.onload = () => {
+  fetchComputer();
+};
