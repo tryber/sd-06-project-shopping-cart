@@ -1,5 +1,6 @@
 window.onload = function onload() { };
 
+// first change to open PR
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
