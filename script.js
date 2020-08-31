@@ -51,11 +51,13 @@ function createProductItemElement({ sku, name, image }) {
   // a metodologia dele para que conseguisse o resultado desejado.
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
     .addEventListener('click', () => {
-      document.querySelector('h2').innerHTML = 'Loading...';
+      const loading = document.createElement('h2');
+      loading.innerHTML = 'Loading...';
+      document.querySelector('.container').appendChild(loading);
       fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(result => result.json())
         .then((itemObj) => {
-          document.querySelector('h2').innerHTML = '';
+          document.querySelector('.container').removeChild(loading);
           const objectSku = {
             sku: itemObj.id,
             name: itemObj.title,
@@ -74,12 +76,10 @@ function getSkuFromProductItem(item) {
 }
 
 const fetchItems = () => {
-  document.querySelector('h2').innerHTML = 'Loading...';
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(object => object.results)
     .then(list => list.forEach((item) => {
-      document.querySelector('h2').innerHTML = '';
       const itemList = createProductItemElement({
         sku: item.id,
         name: item.title,
