@@ -1,7 +1,3 @@
-window.onload = function onload() {
-  handlerStrutor();
-};
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -55,7 +51,7 @@ function handlerStrutor() {
   console.log(arrayComputer);
   handlersectionsComputer(arrayComputer);
 });
-};
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -64,3 +60,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+window.onload = function onload() {
+  handlerStrutor();
+};
