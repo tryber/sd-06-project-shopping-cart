@@ -37,7 +37,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
     .then(r => r.json())
     .then((product) => {
       const item = createCartItemElement(product);
-      const shoppingCart = document.querySelector('.cart__title');
+      const shoppingCart = document.querySelector('.cart__items');
       shoppingCart.appendChild(item);
     });
   });
