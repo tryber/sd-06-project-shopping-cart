@@ -35,7 +35,7 @@ function createCartItemElement(data) {
   // console.log(sku, name, salePrice);
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
   return li;
 }
@@ -80,11 +80,11 @@ function createBtnAndClickListener() {
   const listaCart = document.getElementsByClassName('cart__items')[0];
   const section = document.createElement('section');
   const totalPrice = document.getElementsByClassName('total-price')[0];
-  console.log(totalPrice);
+  console.log(totalPrice.innerHTML);
   section.className = 'cartItem';
 
   section.appendChild(createCustomElement('button', 'empty-cart', 'Limpar Carrinho'))
-  .addEventListener('click', () => clearStorageAndList(listaCart));
+  .addEventListener('click', () => clearStorageAndList(listaCart, totalPrice));
 
   return section;
 }
