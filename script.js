@@ -1,3 +1,10 @@
+function getLocalStorageInfo() {
+  if (localStorage.getItem('cartShop') !== null) {
+    const localgetItems = document.querySelector('.cart__items');
+    localgetItems.innerHTML = localStorage.getItem('cartShop');
+  }
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -9,9 +16,15 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function updateLocalStorage() {
+  const cart = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cartShop', cart);
+}
+
 function cartItemClickListener(event) {
   const ol = document.querySelector('.cart__items');
   ol.removeChild(event.target);
+  updateLocalStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -26,6 +39,7 @@ function addCartShop(data) {
   const li = createCartItemElement({ sku: data.id, name: data.title, salePrice: data.price });
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
+  updateLocalStorage();
 }
 
 function fetchItem(event) {
@@ -76,4 +90,7 @@ function fetchMLB(url) {
   .catch(error => window.alert(error));
 }
 
-window.onload = () => fetchMLB(urlAPI);
+window.onload = () => {
+  fetchMLB(urlAPI);
+  getLocalStorageInfo(); 
+};
