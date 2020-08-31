@@ -1,5 +1,5 @@
 body{
-  background-color: #ededed;
+  background-color: rgb( 237, 237, 237 );
 }
 
 .top-bar {
@@ -28,7 +28,6 @@ body{
 }
 
 .items {
-  background-color: #ededed;
   display: flex;
   flex-basis: 70%;
   flex-wrap: wrap;
@@ -37,20 +36,14 @@ body{
 
 .item {
   background-color: white;
-  border: 0px solid blue;
   border-radius: 5px;
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.1), 0 -1px 2px 0 rgba(0,0,0,.1);
+  box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, .1 ), 0 -1px 2px 0 rgba( 0, 0, 0, .1 );
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: auto;
-  margin: 10px 10px;
+  margin: 10px;
   width: 200px;
-  
-}
-
-.item:hover {
-  
 }
 
 .item .item__sku {
@@ -68,7 +61,7 @@ body{
 }
 
 .item .item__add {
-  background-color: #3483FA;
+  background-color: rgb( 52, 131, 250 );
   border: 0;
   color: white;
   cursor: pointer;
