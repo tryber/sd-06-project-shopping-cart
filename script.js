@@ -37,7 +37,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  console.log(event);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -53,7 +53,6 @@ const handleError = (errorMessage) => {
 };
 
 const fetchByIDComputer = (endpointParameter) => {
-  console.log(endpointParameter);
   fetch(endpointParameter)
     .then(response => response.json())
     .then((object) => {
@@ -78,7 +77,7 @@ const handleButtonClick = () => {
       const myId = pageIds[index].innerText;
       const myEndPoint = `${endPoint}${myId}`;
       fetchByIDComputer(myEndPoint);
-    })
+    });
   });
 };
 
