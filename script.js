@@ -51,7 +51,7 @@ const fetchML = () => {
     .then(data => data.results.forEach((element) => {
       createItem(createProductItemElement(element));
     }));
-}
+};
 
 window.onload = function onload() {
   fetchML();
