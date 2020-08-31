@@ -50,7 +50,7 @@ function queryAtML() {
     .appendChild(createProductItemElement({
       sku: item.id,
       name: item.title,
-      image: item.thumbnail
+      image: item.thumbnail,
     })));
   });
 }
