@@ -85,13 +85,13 @@ function loadStorage() {
 function emptyCart() {
   const emptyButton = document.querySelector('.empty-cart');
   emptyButton.addEventListener('click', () => {
-      document.querySelector('.cart__items').innerHTML = ''
-      addToStorage();
-    });
+    document.querySelector('.cart__items').innerHTML = '';
+    addToStorage();
+  });
 }
 
 window.onload = function onload() {
   fetchProductsML();
   loadStorage();
-  emptyCart()
+  emptyCart();
 };
