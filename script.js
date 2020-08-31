@@ -1,6 +1,6 @@
 window.onload = function onload() {
   handlerStrutor();
- };
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -16,7 +16,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku: id, name: title, image: thumbnail }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -34,26 +34,23 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  //console.log(event);
+   console.log(event);
   const eventItem = document.querySelector('.cart_item').value;
+  eventItem.appendChild(cartItem).addEventListener('click', cartItemClickListener);
   const handlerMergeUrl = `${apiInfo.endpoint}computador`;
-  console.log(handlerMergeUrl);
-}
 
-const apiInfo = {
-  endpoint: 'https://api.mercadolibre.com/sites/MLB/search?q=computador',
-  option: 'computador'
 }
 
 const handlerStrutor = () => {
-  const structor =`${apiInfo.endpoint}${apiInfo.option}`
-fetch(structor)
-.then((response) => response.json())
-.then((object) =>{
+  const url = "https://api.mercadolibre.com/sites/MLB/search?q=computer";
+  fetch(url)
+.then(response => response.json())
+.then((object) => {
   const arrayComputer = object.results;
+  console.log(arrayComputer);
   handlersectionsComputer(arrayComputer);
-})
-}
+});
+};
 
 function handlersectionsComputer(arrayComputer) {
   arrayComputer.forEach((product) => {
