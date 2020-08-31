@@ -26,9 +26,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const emptyList = () => {
   const ol = document.querySelector('.cart__items');
-  while (ol.removeChild) {
-    ol.removeChild(ol.lastChild);
-  }
+  ol.innerHTML = '';
 };
 
 const fetchItemById = (id) => {
