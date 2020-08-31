@@ -12,6 +12,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -19,21 +27,23 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  // Não estava conseguindo colocar o eventListener do Button, porque quando tentava selecionar os Btns ele ainda "nao tinha carregado",
-  // vi que um colega tinha colocado o eventListener na criaçao do Btn e utilizei a metodologia dele para que conseguisse o resultado desejado.
+  // Não estava conseguindo colocar o eventListener do Button, porque quando tentava selecionar
+  // os Btns ele ainda "nao tinha carregado",
+  // vi que um colega tinha colocado o eventListener na criaçao do Btn e utilizei
+  // a metodologia dele para que conseguisse o resultado desejado.
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
     .addEventListener('click', () => {
       fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(result => result.json())
-        .then(object => {
+        .then((object) => {
           const cartItem = createCartItemElement({
             sku: object.id,
             name: object.title,
-            salePrice: object.price
+            salePrice: object.price,
           });
-        const cartOL = document.querySelector('.cart__items');
-        cartOL.appendChild(cartItem);
-      });
+          const cartOL = document.querySelector('.cart__items');
+          cartOL.appendChild(cartItem);
+        });
     });
 
   return section;
@@ -45,14 +55,6 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 }
 
 window.onload = function onload() {
@@ -67,5 +69,4 @@ window.onload = function onload() {
       const listItems = document.querySelector('.items');
       listItems.appendChild(itemList);
     }));
-
 };
