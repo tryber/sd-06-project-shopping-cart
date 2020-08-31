@@ -19,7 +19,22 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  // Não estava conseguindo colocar o eventListener do Button, porque quando tentava selecionar os Btns ele ainda "nao tinha carregado",
+  // vi que um colega tinha colocado o eventListener na criaçao do Btn e utilizei a metodologia dele para que conseguisse o resultado desejado.
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', () => {
+      fetch(`https://api.mercadolibre.com/items/${sku}`)
+        .then(result => result.json())
+        .then(object => {
+          const cartItem = createCartItemElement({
+            sku: object.id,
+            name: object.title,
+            salePrice: object.price
+          });
+        const cartOL = document.querySelector('.cart__items');
+        cartOL.appendChild(cartItem);
+      });
+    });
 
   return section;
 }
@@ -52,4 +67,5 @@ window.onload = function onload() {
       const listItems = document.querySelector('.items');
       listItems.appendChild(itemList);
     }));
+
 };
