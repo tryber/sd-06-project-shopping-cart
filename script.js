@@ -1,8 +1,4 @@
-window.onload = function onload() {
-  pointFetch()
-};
-
-const url = "https://api.mercadolibre.com/sites/MLB/search?q=$computador"
+const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -28,7 +24,6 @@ function createProductItemElement(item) {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   const sectionItem = document.querySelector('.items');
   sectionItem.appendChild(section);
-  return;
 }
 
 function getSkuFromProductItem(item) {
@@ -48,8 +43,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const pointFetch = () => {
-  let query = url;
+  const query = url;
   fetch(query)
   .then(response => response.json())
-  .then(response => response.results.forEach((object) => createProductItemElement(object)))
-}
+  .then(response => response.results.forEach(object => createProductItemElement(object)));
+};
+
+window.onload = function onload() {
+  pointFetch();
+};
