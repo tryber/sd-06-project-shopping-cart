@@ -80,10 +80,10 @@ cartList.addEventListener('click', (e) => {
   if (element.tagName === 'LI') {
     cartList.removeChild(element);
   }
-})
+});
 
 clearButton.onclick = () => {
   document.querySelectorAll('li').forEach(item => cartList.removeChild(item));
-}
+};
 
 window.onload = function onload() { cartItemClickListener(); };
