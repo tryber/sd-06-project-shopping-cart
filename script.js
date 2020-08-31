@@ -1,11 +1,6 @@
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
 const itemSearch = 'computador';
 
-const appendItem = (item) => {
-  const createDisplay = document.querySelector('.items');
-  createDisplay.appendChild(item);
-};
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -17,6 +12,11 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+
+const appendItem = (item) => {
+  const createDisplay = document.querySelector('.items');
+  createDisplay.appendChild(item);
+};
 
 const fetchDisplay = () => {
   fetch(`${url}${itemSearch}`)
