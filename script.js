@@ -37,7 +37,7 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
-}*/
+}
 
 /* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
