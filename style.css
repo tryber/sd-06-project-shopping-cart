@@ -68,7 +68,6 @@
   flex-basis: 30%;
   flex-flow: column wrap;
 }
-
 .cart .cart__title {
   flex-basis: 1;
   font-size: 16pt;
