@@ -1,3 +1,7 @@
+body {
+  color: rgb(114, 114, 114);
+  font-family: 'Open Sans', sans-serif;
+}
 .top-bar {
   align-items: center;
   display: flex;
