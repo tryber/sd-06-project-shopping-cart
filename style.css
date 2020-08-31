@@ -1,3 +1,9 @@
+ol , li , div , p , button , section , span , img {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -68,7 +74,26 @@
 .cart {
   display: flex;
   flex-basis: 30%;
-  flex-flow: column wrap;
+  flex-flow: column;
+  padding: 8px;
+}
+
+.cart button {
+  background-color: rgb( 199 , 109 , 109 );
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  height: 30px;
+  margin: 0 auto;
+  order: 3;
+  width: 50%;
+}
+
+.cart .total-price {
+  margin: 10px auto;
+  order: 2;
+  text-align: center;
 }
 
 .cart .cart__title {
@@ -77,6 +102,26 @@
   text-align: center;
 }
 
+.cart li {
+  list-style: none;
+}
+
+.cart .cart-item-container {
+  align-items: center;
+  border: 1px solid rgb( 0 , 217 , 255 );
+  border-radius: 8px;
+  display: flex;
+  margin: 8px auto;
+  padding: 8px;
+  width: 90%;
+}
+
+.cart .cart-item-container img {
+  margin-right: 8px;
+  height: 80px;
+}
+
+/* based on https://www.w3schools.com/howto/howto_css_loader.asp */
 .loader {
   animation: spin 1.4s linear infinite;
   border: 6px solid rgb( 192 , 191 , 191 ); /* Light grey */
