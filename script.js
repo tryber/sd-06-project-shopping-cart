@@ -1,3 +1,17 @@
+const clearCart = () => {
+    const cartList = document.querySelector('.cart__items');
+    while(cartList.firstChild) {
+      cartList.removeChild(cartList.firstChild);
+    }
+}
+
+const clearCartbuttonEvent = () => {
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', (e) => {
+    clearCart(e)
+  })
+}
+
 function cartItemClickListener(event) {
 
 }
@@ -70,4 +84,5 @@ function getSkuFromProductItem(item) {
 
 window.onload = function onload() {
   displayItems();
+  clearCartbuttonEvent();
 };
