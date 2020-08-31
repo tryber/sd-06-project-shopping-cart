@@ -77,8 +77,13 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const clearButton = () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', () => document.querySelector('.cart__items').innerHTML = '');
+}
 window.onload = function onload() {
   fetchItens();
+  clearButton();
 };
 
 // const saveCart = document.getElementsByClassName('cart__items')[0];
