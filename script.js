@@ -38,7 +38,7 @@ function calculateCartTotalPrice() {
 
   if (productsSaved) {
     const totalPrice = productsSaved.reduce((start, next) => start + next.salePrice, 0);
-    priceElement.innerText = `Preço a pagar: $${totalPrice}`;
+    priceElement.innerText = `${totalPrice}`;
   } else {
     priceElement.remove();
   }

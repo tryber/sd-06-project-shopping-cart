@@ -103,6 +103,7 @@ header , body {
   display: flex;
   margin: 8px auto;
   padding: 8px;
+  pointer-events: none;
   width: 90%;
 }
 
