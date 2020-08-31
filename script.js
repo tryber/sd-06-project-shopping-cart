@@ -1,10 +1,10 @@
 console.log('teste');
 
-window.onload = function onload() { 
+window.onload = function onload(){ 
   fetchProducts('computador');
-}
+};
 
-const fetchProducts = (product) => {
+function fetchProducts (product) {
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
 
   fetch(endpoint)
