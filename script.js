@@ -1,4 +1,35 @@
-window.onload = function onload() { };
+const apiInfo = {
+  api: 'https://api.mercadolibre.com/sites/MLB/',
+  endpoint: 'search?q=',
+  query: '$computador',
+};
+
+const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
+
+window.onload = () => {
+  fetchComputer();
+};
+
+const fetchComputer = () => {
+  fetch(url)
+    .then((response) => response.json())
+    .then((object) => {
+      object.results.forEach(element => {
+        const objectList = {
+          sku: element.id,
+          name: element.title,
+          image: element.thumbnail,
+        };
+        const newItem = document.querySelector('.items');
+        newItem.appendChild(createProductItemElement(objectList));
+      });
+    })
+    .catch((error) => handleError(error));
+};
+
+const handleError = (errorMessage) => {
+  window.alert(errorMessage);
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
