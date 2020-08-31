@@ -1,3 +1,15 @@
+const apiInfo = {
+
+  api: 'https://developers.mercadolivre.com.br/',
+  endpoint: 'https://api.mercadolibre.com/sites/MLB/search?q=$QUERY'
+  
+}
+
+ const url = `${apiInfo.api} ${apiInfo.endpoint}`
+
+
+
+
 window.onload = function onload() { };
 
 function createProductImageElement(imageSource) {
