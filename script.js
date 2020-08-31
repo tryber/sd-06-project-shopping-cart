@@ -4,6 +4,8 @@ const apiInfo = {
 };
 const url = `${apiInfo.api}${apiInfo.endpoint}`;
 const container = document.querySelector('.container');
+const cartList = document.querySelector('.cart__items');
+const clearButton = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -62,7 +64,6 @@ function findItemById(elementId) {
     .then(response => response.json())
     .then(object => object.results.find(item => item.id.includes(elementId)))
     .then(({ id, title, price }) => {
-      const cartList = document.querySelector('.cart__items');
       cartList.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
     });
 }
@@ -73,5 +74,16 @@ container.addEventListener('click', (e) => {
     findItemById(idElement);
   }
 });
+
+cartList.addEventListener('click', (e) => {
+  const element = e.target;
+  if (element.tagName === 'LI') {
+    cartList.removeChild(element);
+  }
+})
+
+clearButton.onclick = () => {
+  document.querySelectorAll('li').forEach(item => cartList.removeChild(item));
+}
 
 window.onload = function onload() { cartItemClickListener(); };
