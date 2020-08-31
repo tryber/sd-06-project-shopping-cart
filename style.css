@@ -89,9 +89,16 @@ body {
 }
 
 .cart {
+
+  --cart-bg1: rgba( 240 , 243 , 250 , 0.85 );
+
+  --cart-bg2: rgba( 240 , 243 , 250 , 0 );
+  background: linear-gradient( 180deg , var( --cart-bg1 ) 0% , var( --cart-bg2 ) 40% );
+  border-radius: 20px;
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  padding: 20px;
 }
 
 .cart .cart__title {
