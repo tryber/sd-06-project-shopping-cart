@@ -46,7 +46,7 @@ function appendItems(array) {
 function cartItemClickListener(event) {
   fetch(url)
     .then(response => response.json())
-    .then(object => appendItems(object.results))
+    .then(object => appendItems(object.results));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -57,10 +57,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function findItemById(id) {
+function findItemById(elementId) {
   fetch(url)
     .then(response => response.json())
-    .then(object => object.results.find(item => item.id.includes(id)))
+    .then(object => object.results.find(item => item.id.includes(elementId)))
     .then(({ id, title, price }) => {
       const cartList = document.querySelector('.cart__items');
       cartList.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
@@ -72,6 +72,6 @@ container.addEventListener('click', (e) => {
     const idElement = e.target.parentNode.firstChild.innerHTML;
     findItemById(idElement);
   }
-})
+});
 
 window.onload = function onload() { cartItemClickListener(); };
