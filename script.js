@@ -14,6 +14,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  event.target.remove(); // ChildNode.remove() fonte: MDN web docs
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -37,6 +38,8 @@ function addToCart(event) {
       };
       const itemsList = document.querySelector('.cart__items');
       itemsList.appendChild(createCartItemElement(newItem));
+      const salvedItens = document.getElementsByClassName('cart__items')[0];
+      localStorage.setItem('salvedItens', salvedItens.innerHTML);
     });
 }
 
