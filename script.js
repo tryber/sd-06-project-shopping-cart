@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 function createProductImageElement(imageSource) {
@@ -36,8 +37,14 @@ function storage() {
 
 async function subCart(price) {
   const p = document.querySelector('.total-price');
-  p.innerText = (Number(p.innerText) - Number(price)).toFixed(0);
+  p.innerText = Math.round(((Number(p.innerText) - Number(price)) * 100)) / 100;
   localStorage.price = p.innerText;
+}
+
+async function sumCart(price) {
+  const p = document.querySelector('.total-price');
+  p.innerText = Math.round((Number(p.innerText) + price) * 100) / 100;
+  localStorage.price = Number(p.innerText);
 }
 
 async function cartItemClickListener(event) {
@@ -46,12 +53,6 @@ async function cartItemClickListener(event) {
   await subCart(price);
   ol.removeChild(event.target);
   storage();
-}
-
-async function sumCart(price) {
-  const p = document.querySelector('.total-price');
-  p.innerText = (Number(p.innerText) + price).toFixed(0);
-  localStorage.price = Number(p.innerText);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -99,7 +100,7 @@ function loadStorage() {
     document.querySelectorAll('.cart__item').forEach((item) => {
       item.addEventListener('click', cartItemClickListener);
     });
-    const price = Number(localStorage.price).toFixed(0);
+    const price = Number(localStorage.price);
     document.querySelector('.total-price').innerText = price;
   }
 }
