@@ -18,7 +18,7 @@ function cartItemClickListener(event) {
   item.addEventListener('click', () => {
     const section = document.querySelector('.cart__items');
     section.removeChild(item);
-  })
+  });
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
