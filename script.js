@@ -100,10 +100,10 @@ window.onload = function onload() {
     arrayN[index] = JSON.parse(localStorage[`items${index + 1}`]);
   }
   arrayN.map((el) => {
-    cartItem.appendChild(createCartItemElement({
+    return cartItem.appendChild(createCartItemElement({
       sku: el.sku,
       name: el.name,
       salePrice: el.salePrice,
-    })); 
+    }));
   });
 };
