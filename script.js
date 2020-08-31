@@ -44,7 +44,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const APIReq = () => {
   const items = document.querySelector('#item');
-  items.innerHTML = '<h1>Loading...</h1>';
+  items.innerHTML = "<h1 class='loading'>Loading...</h1>";
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
   .then(res => res.json())
   .then((data) => {
