@@ -6,6 +6,15 @@ const apiInfo = {
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
+function cartItemClickListener(event) {
+  event.target.remove();
+  //  console.log(event.target); // retorna o elemento li todo
+  //  let teste = event.target.innerText;
+  //  let teste2 = localStorage.getItem('items');
+  //  console.log(teste2)
+  //  localStorage.removeItem('items', event.target); //passar para string
+}
+
 const handleError = (errorMessage) => {
   window.alert(errorMessage);
 };
@@ -72,15 +81,6 @@ function createProductItemElement({ sku, name, image }) {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  event.target.remove();
-  //  console.log(event.target); // retorna o elemento li todo
-  //  let teste = event.target.innerText;
-  //  let teste2 = localStorage.getItem('items');
-  //  console.log(teste2)
-  //  localStorage.removeItem('items', event.target); //passar para string
 }
 
 const fetchComputer = () => {
