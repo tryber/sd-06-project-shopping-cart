@@ -73,5 +73,7 @@ window.onload = function onload() {
   const cartItem = document.querySelector('#cart-items');
   items.addEventListener('click', addItems);
   const empty = document.querySelector('#getEmpy');
-  empty.addEventListener('click', () => cartItem.innerHTML = '');
+  empty.addEventListener('click', () => {
+    cartItem.innerHTML = ''
+  });
 };
