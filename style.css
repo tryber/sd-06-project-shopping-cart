@@ -4,28 +4,16 @@ ol , li , div , p , button , section , span , img {
   padding: 0;
 }
 
-.top-bar {
-  align-items: center;
-  display: flex;
-  height: 100px;
-  justify-content: space-around;
-  margin-bottom: 10px;
-  width: 100%;
-}
-
-.top-bar .input-name-group {
-  align-items: flex-start;
-  display: flex;
-}
-
-.top-bar .input-terms-group {
-  align-items: flex-start;
-  display: flex;
+header , body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
   display: flex;
   justify-content: space-around;
+  padding: 8px;
   width: 100%;
 }
 
@@ -39,9 +27,8 @@ ol , li , div , p , button , section , span , img {
 }
 
 .item {
-  border: 2px solid blue;
+  border: 1px solid black;
   border-radius: 5px;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: auto;
@@ -60,15 +47,18 @@ ol , li , div , p , button , section , span , img {
 }
 
 .item .item__image {
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .item .item__add {
-  background-color: green;
+  background-color: rgb( 82 , 228 , 82 );
   border: 0;
+  border-radius: 8px;
   cursor: pointer;
-  margin: 0;
+  margin: 5px auto;
   padding: 5px;
+  width: 80%;
 }
 
 .cart {
@@ -117,8 +107,13 @@ ol , li , div , p , button , section , span , img {
 }
 
 .cart .cart-item-container img {
-  margin-right: 8px;
   height: 80px;
+  margin-right: 8px;
+  pointer-events: none;
+}
+
+.cart .cart-item-container p {
+  pointer-events: none;
 }
 
 /* based on https://www.w3schools.com/howto/howto_css_loader.asp */
