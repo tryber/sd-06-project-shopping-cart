@@ -37,7 +37,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  console.log(event);
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -56,14 +56,13 @@ const fetchByIDComputer = (endpointParameter) => {
   fetch(endpointParameter)
     .then(response => response.json())
     .then((object) => {
-      const itemOnCart = {
+      const itemOnCart = createCartItemElement ({
         sku: object.id,
         name: object.title,
         salePrice: object.price,
-      };
+      });
       const newItemOnCart = document.querySelector('.cart__items');
-      const newSectionOnCart = createCartItemElement(itemOnCart);
-      newItemOnCart.appendChild(newSectionOnCart);
+      newItemOnCart.appendChild(itemOnCart);
     })
     .catch(error => handleError(error));
 };
