@@ -62,15 +62,15 @@ const fetchFunc = () => {
 };
 
 const clear = () => {
-  const botao = document.querySelector('.empty-cart')
+  const botao = document.querySelector('.empty-cart');
   botao.addEventListener('click', () => {
     const sect = document.querySelector('.cart');
-    let ol = document.querySelector('.cart__items');
+    const ol = document.querySelector('.cart__items');
     sect.removeChild(ol);
-  })
+  });
 };
 
 window.onload = function onload() {
   fetchFunc();
-  clear()
+  clear();
 };
