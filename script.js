@@ -69,7 +69,7 @@ function addButtonSetup() {
           const myItemObject = {
             sku: itemsIDArray[i].innerText,
             name: response.title,
-            salePrice: response.base_price,
+            salePrice: response.price,
           };
 
           const cartItemsOl = document.getElementsByTagName('ol')[0];
