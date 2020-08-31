@@ -19,7 +19,7 @@ function saveToStorage() {
 }
 
 async function updateTotalPrice(price = 0) {
-  const total = document.querySelector('.total-price');
+  const total = document.querySelector('.total');
   total.innerHTML = price;
 }
 
@@ -82,13 +82,13 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function findItemById(elementId) {
-  await fetch(url)
+  fetch(url)
     .then(response => response.json())
     .then(object => object.results.find(item => item.id.includes(elementId)))
     .then(({ id, title, price }) => {
       cartList.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
       totalPrice += price;
-      updateTotalPrice(totalPrice);
+      await updateTotalPrice(totalPrice);
     })
     .finally(() => {
       saveToStorage();
