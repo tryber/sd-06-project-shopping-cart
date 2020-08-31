@@ -69,7 +69,7 @@ const empty = () => {
     const ol = document.querySelector('.cart__items');
     ol.innerHTML = '';
   });
-}
+};
 
 const renderItem = (arrayOfProducts) => {
   arrayOfProducts.forEach((product) => {
