@@ -62,4 +62,4 @@ function computerFetch() {
       });
     });
 }
-window.onload = function onload() { computerFetch()};
+window.onload = function onload() { computerFetch(); };
