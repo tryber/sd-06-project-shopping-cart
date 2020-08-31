@@ -1,4 +1,25 @@
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const api = {
+  url: 'https://api.mercadolibre.com/',
+  endpointSearch: 'sites/MLB/search?q=',
+  endpointItem: 'items/',
+};
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+function buttonItemOnClick() {
+  fetch(`${api.url}${api.endpointItem}${this.id}`)
+    .then(response => response.json())
+    .then((data) => {
+      const cartItems = document.querySelector('.cart__items');
+      cartItems.appendChild(createCartItemElement(data));
+    });
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,7 +35,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -22,7 +42,10 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const buttonItem = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  buttonItem.addEventListener('click', buttonItemOnClick);
+  buttonItem.id = sku;
+  section.appendChild(buttonItem);
 
   return section;
 }
@@ -35,16 +58,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   // coloque seu código aqui
 }*/
 
-/* function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}*/
-
 function fetchProduct() {
-  fetch(url)
+  fetch(`${api.url}${api.endpointSearch}computador`)
     .then(response => response.json())
     .then((data) => {
       data.results.forEach((product) => {
