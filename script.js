@@ -18,8 +18,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  const cartProduct = document.querySelector('.cart__items');
-  cartProduct.removeChild(event.target);
+// coloque seu código aqui
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -29,12 +28,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-function saveCart() {
-  const cart = document.querySelector('.cart__items');
-  localStorage.setItem('savedCart', cart.innerHTML);
-}
-
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -90,13 +83,6 @@ function fetchProducts() {
 // a funcao que chamamos createProductItemElement ja cria
 // a secao de cada item especifico com a classe 'item'
 
-function cartOnload() {
-  const reloadedCart = document.querySelector('.cart__items');
-  const lastCart = localStorage.getItem('savedCart', cart.innerHTML);
-  reloadedCart.appendChild(lastCart);
-}
-
 window.onload = function onload() {
   fetchProducts();
-  cartOnload();
 };
