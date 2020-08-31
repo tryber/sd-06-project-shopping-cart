@@ -1,23 +1,22 @@
 const urlApi = 'https://api.mercadolibre.com/sites/MLB/search?q=';
 
-window.onload = function onload() { 
-  fetchSearch()
-};
-
 const fetchSearch = () => {
   const endpoint = `${urlApi}COMPUTADOR`;
-  
+
   fetch(endpoint)
-    .then((response) => response.json())
+    .then(response => response.json())
     .then((object) => {
-      console.log(object.results)
       object.results.forEach((item) => {
         const section = document.querySelector('.items');
         const createItems = createProductItemElement(item);
         section.appendChild(createItems);
-      })
-    })
-}
+      });
+    });
+};
+
+window.onload = function onload() {
+  fetchSearch();
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
