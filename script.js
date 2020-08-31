@@ -79,8 +79,8 @@ function getSkuFromProductItem(item) {
 
 const clearButton = () => {
   const button = document.querySelector('.empty-cart');
-  button.addEventListener('click', () => document.querySelector('.cart__items').innerHTML = '');
-}
+  button.addEventListener('click', function () { document.querySelector('.cart__items').innerHTML = ''; });
+};
 window.onload = function onload() {
   fetchItens();
   clearButton();
