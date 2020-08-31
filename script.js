@@ -54,10 +54,10 @@ const getItem = () => {
       const sku = item.id;
       const name = item.title;
       const salePrice = item.price;
-      const itemObject = { sku, name, salePrice }
+      const itemObject = { sku, name, salePrice };
       createCartItemElement(itemObject);
     });
-}
+};
 
 const fetchUrl = () => {
   fetch(url)
