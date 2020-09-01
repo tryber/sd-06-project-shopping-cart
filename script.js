@@ -19,11 +19,8 @@ async function sumTotal(salePrice) {
 }
 
 async function cartItemClickListener(event) {
-  // coloque seu código aqui
-  // event.target.remove(); // ChildNode.remove() fonte: MDN web docs
-  const ol = document.querySelector('ol');
   const price = Number(event.target.innerText.split('$')[1]);
-  ol.removeChild(event.target);
+  event.target.remove();
   await sumTotal(-price);
 }
 
