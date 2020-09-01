@@ -15,14 +15,9 @@ function createCustomElement(element, className, innerText) {
 let total = 0;
 
 const finalPrice = async (price) => {
-  if (document.querySelector('.total-price')) {
-    document.querySelector('.total-price').remove();
-  }
-  const text = createCustomElement('p', 'total-price', 'Preço total: ');
-  const list = document.querySelector('.cart');
+  const text = document.querySelector('.total-price');
   total += await parseFloat(price);
-  text.innerHTML = await `Preço total: $${Math.round(total * 100) / 100}`;
-  list.appendChild(text);
+  text.innerHTML = await Math.round(total * 100) / 100;
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -108,5 +103,12 @@ const fetchItems = () => {
 
 window.onload = function onload() {
   fetchItems();
+  const list = document.querySelector('.cart');
+  const wraper = createCustomElement('div', 'div-price', '');
+  const text = createCustomElement('p', 'text-price', 'Preço total: $');
+  const value = createCustomElement('p', 'total-price', '');
+  list.appendChild(wraper);
+  wraper.appendChild(text);
+  wraper.appendChild(value);
   clearCart();
 };
