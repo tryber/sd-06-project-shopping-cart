@@ -122,13 +122,18 @@ const mblProducts = (results) => {
 
 window.onload = function onload() {
   // request product list from mercado livre's api on window load and calls mblProducts function
+
   const endpoint = 'sites/MLB/search?q=$computador';
-  const fetchComputer = (url) => {
+  const fetchComputers = (url) => {
+    const loadingElement = document.querySelector('.loading');
     fetch(url)
       .then(response => response.json())
-      .then(data => mblProducts(data.results));
+      .then(data => {
+        mblProducts(data.results);
+        loadingElement.remove();
+      });
   };
-  fetchComputer(`${base}${endpoint}`);
+  setTimeout(() => fetchComputers(`${base}${endpoint}`), 3000);
 
   // add event to empty our cart
   document.querySelector('.empty-cart').addEventListener('click', emptyCart);
