@@ -18,7 +18,7 @@ async function updateTotalPrice(myCart) {
     total += price;
   }
   const totalPrice = document.querySelector('.total-price');
-  totalPrice.innerText = `Preço Total: $${total}`;
+  totalPrice.innerText = total;
 }
 
 // Armazena no LocalStorage toda lista do carrinho
