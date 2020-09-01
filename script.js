@@ -77,6 +77,14 @@ function createItemList() {
   }));
 }
 
+function clearList() {
+  const cartList = document.querySelector('.cart__items');
+  cartList.innerHTML = '';
+}
+
 window.onload = function onload() {
   createItemList();
+
+  const buttonEmptyCart = document.querySelector('.empty-cart');
+  buttonEmptyCart.addEventListener('click', clearList);
 };
