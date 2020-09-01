@@ -16,15 +16,20 @@ function createCustomElement(element, className, innerText) {
 
 const saveItems = () => {
   const items = document.querySelector('.cart__items').innerHTML;
-  const total = document.querySelector('.total-price').innerHTML;
+  // const total = document.querySelector('.total-price').innerHTML;
   localStorage.setItem('cart', items);
-  localStorage.setItem('total', total);
+  // localStorage.setItem('total', total);
 };
 
 function cartItemClickListener(event) {
-  const ol = document.querySelector('.cart__items');
-  const item = event.target;
-  ol.removeChild(item);
+  const li = event.target;
+  event.target.remove();
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const total = document.querySelector('.total-price');
+  const totalPrice = parseFloat(total.innerHTML);
+  const result = totalPrice - itemPrice;
+  total.innerText = result;
+  total.innerText = result;
   saveItems();
 }
 
@@ -90,13 +95,15 @@ const clear = () => {
   botao.addEventListener('click', () => {
     const ol = document.querySelector('.cart__items');
     ol.innerHTML = '';
+    const total = document.querySelector('.total-price');
+    total.innerText = 0;
     saveItems();
   });
 };
 
 const storage = () => {
   if (localStorage.cart) document.querySelector('.cart__items').innerHTML = localStorage.cart;
-  if (localStorage.total) document.querySelector('.total-price').innerHTML = localStorage.total;
+  // if (localStorage.total) document.querySelector('.total-price').innerHTML = localStorage.total;
 };
 
 const loading = () => {
