@@ -23,7 +23,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 function cartItemClickListener(event) {
-  const selectedItem = event.targuet;
+  const selectedItem = event.target;
   const fatherOfProductToClean = document.querySelector('.cart__items');
   fatherOfProductToClean.removeChild(selectedItem);
 }
