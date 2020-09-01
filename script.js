@@ -8,7 +8,8 @@ function createProductImageElement(imageSource) {
 
 function totalPrice(value) {
   const totalValue = document.querySelector('.total-price');
-  totalValue.innerHTML = (parseFloat(totalValue.innerHTML) + value).toFixed(2);
+  totalValue.innerText = Math.round((Number(totalValue.innerText) + value) * 100) / 100;
+  console.log(totalValue);
 }
 
 function decreaseValue(event) {
@@ -19,7 +20,8 @@ function decreaseValue(event) {
 
 function saveCart() {
   const ol = document.querySelector('ol').innerHTML;
-  const totalValue = document.querySelector('.total-price').innerHTML;
+  const totalValue = document.querySelector('.total-price').innerText;
+  console.log(totalValue);
   localStorage.setItem('cart', ol);
   localStorage.setItem('price', (parseFloat(totalValue).toFixed(2)));
 }
@@ -28,7 +30,7 @@ function loadSavedCart() {
   const itemsOnCart = document.querySelector('ol');
   itemsOnCart.innerHTML = localStorage.getItem('cart');
   const totalValue = document.querySelector('.total-price');
-  totalValue.innerHTML = (parseFloat(localStorage.getItem('price'))).toFixed(2);
+  totalValue.innerHTML = localStorage.getItem('price');
   const ol = document.querySelector('.cart__items');
   const allLoadedItens = document.querySelectorAll('li');
   allLoadedItens.forEach((li) => {
