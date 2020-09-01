@@ -49,11 +49,11 @@ function createCartItemElement({ sku, name, salePrice }) {
 };
 
 const loading = () => {
-  const loading = document.querySelector('.cart');
+  const loadingArea = document.querySelector('.cart');
   const spanLoading = document.createElement('span');
   spanLoading.className = 'loading';
   spanLoading.innerText = 'Loading...';
-  loading.appendChild(spanLoading);
+  loadingArea.appendChild(spanLoading);
 }
 
 const fetchItem = (id) => {
