@@ -14,23 +14,20 @@ function cleanCart(event) {
   document.querySelector('div').innerText = 'Preço total: $0';
 }
 
-async function totalPrice(price) {
-  let total = parseInt(localStorage.getItem('total'), 10);
-  total += price;
-  const totalText = document.querySelector('div');
-  totalText.innerHTML = `Preço total: ${total}`;
-}
-
 function saveLocalStorage({ id, price, title }) {
   if (localStorage.length === 0 || localStorage.cart === '') {
     localStorage.setItem('cart', `${id}, ${title}, ${price}`);
     localStorage.setItem('total', `${price}`);
+    const totalText = document.querySelector('div');
+    totalText.innerHTML = `Preço total: ${price}`;
   } else {
     const items = localStorage.getItem('cart');
     let total = parseInt(localStorage.getItem('total'), 10);
     total += price;
     localStorage.setItem('cart', `${items}, ${id}, ${title}, ${price}`);
     localStorage.setItem('total', `${total}`);
+    const totalText = document.querySelector('div');
+    totalText.innerHTML = `Preço total: ${total}`;
   }
 }
 
@@ -103,7 +100,6 @@ async function createCartItemElement(event) {
   li.addEventListener('click', cartItemClickListener);
   saveLocalStorage({ id, price, title });
   document.querySelector('.cart__items').appendChild(li);
-  totalPrice(price);
   return li;
 }
 
