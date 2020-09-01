@@ -16,19 +16,22 @@ function cartItemClickListener(event) {
   const aux = event.target;
   aux.remove();
 }
+
 function removeItem() {
-  const cartItems = document.querySelectorAll('.cart__item');
+  const clearOptions = document.querySelectorAll('.cart__item');
   const ol = document.querySelector('.cart__items');
-  for (let index = 0; index < cartItems.length; index += 1) {
-    ol.removeChild(cartItems[index]);
-  }
+  clearOptions.forEach((index) => {
+    ol.removeChild(index);
+  });
+  localStorage.setItem('cartList', clearOptions.innerHTML);
+  console.log(localStorage.getItem('cartList'));
 }
 
 function clearList() {
   const clearListItem = document.querySelector('.empty-cart');
   clearListItem.addEventListener('click', removeItem);
+  localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML);
 }
-
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -58,6 +61,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       document.querySelector('.cart__items').appendChild(item);
     });
   });
+  
   return section;
 }
 
@@ -72,12 +76,15 @@ function handlersectionsComputer(arrayComputer) {
 function handlerStrutor() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computer';
   fetch(url)
-.then(response => response.json())
-.then((object) => {
-  const arrayComputer = object.results;
-  console.log(arrayComputer);
-  handlersectionsComputer(arrayComputer);
-});
+  .then(response => response.json())
+  .then((object) => {
+    if (object.error) {
+      throw new Error(object.error);
+    }
+    document.querySelector('.cart__items').appendChild(createCartItemElement(object));
+  })
+  .then(() => localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML))
+  .catch(error => window.alert(error));
 }
 
 window.onload = function onload() {
