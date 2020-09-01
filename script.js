@@ -8,7 +8,7 @@ const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
 const sumOfPrices = async (price) => {
   const totalPrice = document.querySelector('.total-price');
-  totalPrice.innerHTML = (totalPrice.innerHTML * 1) + price;
+  totalPrice.innerHTML = (Math.round(totalPrice.innerHTML * 100) / 100) + price;
 };
 
 function cartItemClickListener(event) {
@@ -108,7 +108,7 @@ const fetchComputer = () => {
       });
     })
     .then(() => localStorageLoad())
-    .then(() => setTimeout(() => document.getElementById('load').remove(), 1500))
+    .then(() => setTimeout(() => document.getElementById('load').remove(), 4000))
     .catch(error => handleError(error));
 };
 
