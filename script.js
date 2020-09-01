@@ -55,15 +55,15 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 function addItemInCart(url, id) {
-  if (myCartArray.find(currId => currId = id)) return;
-  fetch(url)
+  if (myCartArray.find(currId => currId === id)) return 'item já está no carrinho.';
+  return fetch(url)
     .then(jsonReceived => jsonReceived.json())
     .then((object) => {
       const cartList = document.querySelector('ol.cart__items');
       cartList.appendChild(createCartItemElement(object));
       myCartArray.push(object.id);
       sumCart()
-        .catch(error => console.log(error));
+        .catch(error => error);
     })
     .catch('deu pau no add pro carrinho!');
 }
