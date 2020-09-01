@@ -1,3 +1,7 @@
+let totalValue = parseFloat(localStorage.getItem('totalValue'));
+
+if (!totalValue) totalValue = 0;
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -9,10 +13,20 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const totalValueUpdate = async (value) => {
+  totalValue += value;
+  const totalValueFormated = Math.round(totalValue * 100) / 100;
+  const totalPrice = document.querySelector('.total-price');
+  totalPrice.innerText = totalValueFormated;
+  localStorage.setItem('totalValue', totalValueFormated);
+};
+
 // Removendo único item da lista
 function cartItemClickListener(event) {
   const item = event.target;
   item.remove();
+  const price = parseFloat(item.split('PRICE $')[1]);
+  totalValueUpdate(-price);
   const ol = document.querySelector('.cart__items');
   localStorage.setItem('itemCartStorage', ol.innerHTML);
 }
@@ -24,6 +38,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   ol.appendChild(li);
+  totalValueUpdate(salePrice);
   localStorage.setItem('itemCartStorage', ol.innerHTML);
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -33,6 +48,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 const emptyList = () => {
   const ol = document.querySelector('.cart__items');
   ol.innerHTML = '';
+  totalValue = 0;
+  totalValueUpdate(0);
   localStorage.removeItem('itemCartStorage');
 };
 
@@ -94,6 +111,11 @@ window.onload = function onload() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computadores';
   resultFetch(url);
   document.querySelector('.empty-cart').addEventListener('click', emptyList);
-  document.querySelector('.cart__items').innerHTML = localStorage.getItem('itemCartStorage');
-  localStorage.getItem('itemCartStorage');
+  //  Adicionando evento remover em cada item da lista
+  const ol = document.querySelector('.cart__items');
+  ol.innerHTML = localStorage.getItem('itemCartStorage');
+  for (let i = 0; i < ol.children.length; i += 1) {
+    ol.children[i].addEventListener('click', cartItemClickListener);
+  }
+  totalValueUpdate(0);
 };
