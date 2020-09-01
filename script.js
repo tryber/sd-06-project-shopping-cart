@@ -44,13 +44,26 @@ function cartItemClickListener(event) {
   }
 }
 
+function saveCart(cartId) {
+  const arrayId = [cartId];
+  const arrayIdShoppingCart = JSON.parse(localStorage.getItem('arrayIdShoppingCart'));
+  if (localStorage.getItem('arrayIdShoppingCart') === null) {
+    localStorage.setItem('arrayIdShoppingCart', JSON.stringify(arrayId));
+  } else if (!arrayIdShoppingCart.some(idLocal => idLocal === cartId)) {    
+    localStorage.setItem('arrayIdShoppingCart', JSON.stringify(arrayIdShoppingCart.concat(arrayId)));
+  }
+}
+
+// localStorage.clear()
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  saveCart(sku);
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+// console.log(localStorage.getItem('arrayDescription'));
 
 function requisitionItem(idProduct) {
   fetch(`https://api.mercadolibre.com/items/${idProduct}`)
@@ -58,8 +71,8 @@ function requisitionItem(idProduct) {
     .then((object) => {
       const listPurchase = document.querySelector('.cart__items');
       listPurchase.appendChild(createCartItemElement(object));
-    })
-    .catch(() => requisitionItem(idProduct));
+    });
+    // .catch(() => requisitionItem(idProduct));
 }
 
 function buttonSelectItemEvent() {
@@ -82,8 +95,19 @@ function requisitionMercadoLivreItem(pesquisa) {
         containerElements.appendChild(createProductItemElement(product));
       });
       buttonSelectItemEvent();
-    })
-    .catch(() => requisitionMercadoLivreItem(pesquisa));
+    });
+    // .catch(() => requisitionMercadoLivreItem(pesquisa));
 }
 
-window.onload = function onload() { requisitionMercadoLivreItem('computador'); };
+function renderShoppingCartSave() {
+  if (localStorage.getItem('arrayIdShoppingCart') !== null) {
+    console.log(JSON.parse(localStorage.getItem('arrayIdShoppingCart')))
+    JSON.parse(localStorage.getItem('arrayIdShoppingCart'))
+      .forEach((idCartItem) => requisitionItem(idCartItem));
+  }
+}
+
+window.onload = function onload() {
+  requisitionMercadoLivreItem('computador');
+  renderShoppingCartSave();
+};
