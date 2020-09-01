@@ -1,11 +1,9 @@
 function cartItemClickListener(event) {
   const itemsList = document.querySelector('.cart__items');
-  const localStorageValues = Object.values(localStorage);
-  localStorageValues.forEach((value) => {
-    if (event.target.innerText.includes(value)) {
-      // learned how to get the key with value here:
-      // https://stackoverflow.com/questions/12949723/html5-localstorage-getting-key-from-value
-      localStorage.removeItem(localStorage.key(value));
+  const localKeys = Object.keys(localStorage);
+  localKeys.forEach((key) => {
+    if (event.target.innerText.includes(key)) {
+      localStorage.removeItem(key);
     }
   });
   itemsList.removeChild(event.target);
@@ -33,6 +31,17 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
+const clearCart = (items, button) => {
+  button.addEventListener('click', function () {
+    localStorage.clear();
+    let element = items.lastElementChild;
+    while (element) {
+      items.removeChild(element);
+      element = items.lastElementChild;
+    }
+  });
+};
+
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -47,18 +56,12 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
     .then((product) => {
       const item = createCartItemElement(product);
       const shoppingCart = document.querySelector('.cart__items');
-      shoppingCart.appendChild(item);
-      localStorage.setItem((shoppingCart.children.length - 1), product.id);
-      const cartItems = document.getElementById('cart-items');
+      if (!shoppingCart.innerText.includes(product.id)) {
+        shoppingCart.appendChild(item);
+        localStorage.setItem(product.id, product.id);
+      }
       const clearButton = document.getElementById('empty-cart');
-      clearButton.addEventListener('click', function () {
-        localStorage.clear();
-        let element = cartItems.lastElementChild;
-        while (element) {
-          cartItems.removeChild(element);
-          element = cartItems.lastElementChild;
-        }
-      });
+      clearCart(shoppingCart, clearButton);
     });
   });
   section.appendChild(thisButton);
@@ -102,4 +105,8 @@ window.onload = function onload() {
       shoppingCart.appendChild(item);
     });
   }
+
+  const cartItems = document.querySelector('#cart-items');
+  const clearButton = document.getElementById('empty-cart');
+  clearCart(cartItems, clearButton);
 };
