@@ -45,7 +45,7 @@ function clearStorageAndList(listaCarrinho, precoTotal) { // line 88
 }
 
 /*
-____________________ASYNC FUNCTIONS____________________
+____________________ALL FUNCTIONS____________________
 */
 async function sumPrices() {
   const carrinho = document.querySelectorAll('.cart__item'); // Espera o DOM ser criado (async)
@@ -59,6 +59,17 @@ async function cartItemClickListener(event) {
   await event.remove();
   await sumPrices();
   carrinhoCompras();
+}
+
+function createCartItemElement(data) {
+  // console.log(data);
+  const { sku, name, salePrice } = data;
+  // console.log(sku, name, salePrice);
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', () => cartItemClickListener(li));
+  return li;
 }
 
 async function addToCart(skuId) { // async para declarar que a função é async de forma sincrona
@@ -75,40 +86,11 @@ async function addToCart(skuId) { // async para declarar que a função é async
   carrinhoCompras();
 }
 
-async function createWindowList() {
-  fetch(urlComputer)
-  .then(response => response.json())
-  .then(data =>
-    data.results.forEach((product) => {
-      const infoProduct = createProductItemElement({
-        sku: product.id,
-        name: product.title,
-        image: product.thumbnail,
-      });
-      sectionItens.appendChild(infoProduct);
-    }),
-  );
-}
-
-/*
-____________________CREATE FUNCTIONS____________________
-*/
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-}
-
-function createCartItemElement(data) {
-  // console.log(data);
-  const { sku, name, salePrice } = data;
-  // console.log(sku, name, salePrice);
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', () => cartItemClickListener(li));
-  return li;
 }
 
 function createCustomElement(element, className, innerText) {
@@ -130,6 +112,21 @@ function createProductItemElement({ sku, name, image }) {
   .addEventListener('click', () => addToCart(sku));
 
   return section;
+}
+
+async function createWindowList() {
+  fetch(urlComputer)
+  .then(response => response.json())
+  .then(data =>
+    data.results.forEach((product) => {
+      const infoProduct = createProductItemElement({
+        sku: product.id,
+        name: product.title,
+        image: product.thumbnail,
+      });
+      sectionItens.appendChild(infoProduct);
+    }),
+  );
 }
 
 function createBtnAndClickListener() {
