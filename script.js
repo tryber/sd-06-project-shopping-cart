@@ -103,7 +103,11 @@ function createBtnAndClickListener() {
 // }
 
 window.onload = async function onload() {
-  const sectionCart = document.getElementsByClassName('cart')[0];
+  const loading = document.querySelector('.loading');
+  setTimeout(() => {
+    loading.remove();
+  }, 500);
+  const sectionCart = document.getElementsByClassName('btn-cart')[0];
   sectionCart.appendChild(createBtnAndClickListener());
   const sectionItens = document.getElementsByClassName('items')[0];
   const CPUlibre = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';

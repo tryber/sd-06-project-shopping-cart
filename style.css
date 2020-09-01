@@ -75,3 +75,26 @@
   margin: 20px 0;
   text-align: center;
 }
+
+.cart .btn-cart {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+  padding-top: 10px;
+}
+
+.cart .empty-cart {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  padding: 8px;
+  width: 300px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
