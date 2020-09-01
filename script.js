@@ -116,6 +116,11 @@ const showProducts = (results) => {
   });
 };
 
+const removeLoading = () => {
+  const loading = document.querySelector('.loading');
+  loading.removeChild(loading.lastElementChild);
+}
+
 // Faz a requisição para buscar todos os produtos pelo valor "computadores"
 const fetchProducts = () => {
   const endPoint = `${myApi}/sites/MLB/search?q=$computadores`;
@@ -123,6 +128,7 @@ const fetchProducts = () => {
     .then(response => response.json())
     .then((object) => {
       showProducts(object.results);
+      removeLoading();
     });
 };
 
