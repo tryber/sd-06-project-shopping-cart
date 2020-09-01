@@ -37,8 +37,8 @@ const clearCart = () => {
   const buttonClear = document.querySelector('.empty-cart');
   buttonClear.addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
-  }
-)};
+  },
+) };
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
