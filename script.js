@@ -52,8 +52,8 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
     .addEventListener('click', () => {
       const loading = document.createElement('h2');
-      loading.innerHTML = 'Loading...';
-      loading.className = 'loading';
+      loading.innerHTML = 'loading...';
+      loading.classList.add('loading');
       document.querySelector('.container').appendChild(loading);
       fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(result => result.json())
