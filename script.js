@@ -37,11 +37,13 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-//event.target.remove();
+// event.target.remove();
   const items = document.querySelectorAll('.cart__item');
-  items.forEach((item) => item.addEventListener('click', function() {
+  items.forEach((item) => {
+    item.addEventListener('click', function () {
     item.remove();
-  }));
+   });
+  });
 };
 
 function createCartItemElement({ sku, name, salePrice }) {
