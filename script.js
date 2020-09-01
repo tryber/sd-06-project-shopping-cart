@@ -55,8 +55,7 @@ const getItem = () => {
       const name = item.title;
       const salePrice = item.price;
       const cart = document.querySelector('.cart__items');
-      cart.appendChild(createCartItemElement({ sku, name, salePrice }))
-      
+      cart.appendChild(createCartItemElement({ sku, name, salePrice }));
     });
 };
 
@@ -77,19 +76,17 @@ const fetchUrl = () => {
     });
 };
 
+// Requisito 6
+const emptyList = () => {
+  document.querySelector('.empty-cart').addEventListener('click', () => {
+    const cart = document.querySelector('.cart__items');
+    while (cart.firstChild) {
+      cart.removeChild(cart.firstChild);
+    }
+  });
+};
 
 window.onload = function onload() {
   fetchUrl();
   emptyList();
 };
-
-// Requisito 6 
-const emptyList = () => {
-  document.querySelector('.empty-cart').addEventListener('click', () => {
-    const cart = document.querySelector('.cart__items')
-    while (cart.firstChild) {
-      cart.removeChild(cart.firstChild)
-    }
-  })
-}
-
