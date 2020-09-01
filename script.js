@@ -23,7 +23,6 @@ function removeItemFromLocalStorage(sku) {
 function cartItemClickListener(event) {
   const parentItems = document.querySelector('.cart__items');
   const item = event.target;
-  console.log(event)
   removeItemFromLocalStorage(item.id);
   parentItems.removeChild(item);
 }
