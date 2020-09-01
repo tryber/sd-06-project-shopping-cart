@@ -16,8 +16,8 @@ async function sumOfPrices() {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  //  localStorage.removeItem('items', ...
-  //  ao clicar, remover do localstorage também
+  localStorage.clear();
+  localStorageSave();
   sumOfPrices();
 }
 
