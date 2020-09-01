@@ -78,3 +78,7 @@
 .price-container {
   display: flex;
 }
+
+.total-price {
+  margin-left: 5px;
+}
