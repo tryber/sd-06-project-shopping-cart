@@ -1,14 +1,14 @@
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
 const local = () => {
-   const lista = document.querySelector('.cart__items').innerHTML;
-   localStorage.lista = lista;
- };
+  const lista = document.querySelector('.cart__items').innerHTML;
+  localStorage.lista = lista;
+};
 
 const localRender = () => {
   document.querySelector('.cart__items').innerHTML = localStorage.lista;
   const itemLi = document.querySelectorAll('.cart__item');
-  itemLi.forEach(element => {
+  itemLi.forEach((element) => {
     element.addEventListener('click', () => {
       element.remove();
       local();
