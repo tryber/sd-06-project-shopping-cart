@@ -1,28 +1,23 @@
-const loading = document.createElement('h2');
-loading.innerHTML = 'loading...';
-loading.classList.add('loading');
 let sum = 0;
 
 const saveCart = () => {
-  const cartItems = document.querySelectorAll('.cart__item');
-  const savedItems = [];
-  cartItems.forEach(item => savedItems.push(item.innerText));
-  localStorage.setItem('Carrinho', savedItems);
-};
+  const cartItems = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('Cart', cartItems);
+}
 
 const emptyCart = () => {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     const allCart = document.querySelectorAll('.cart__item');
     allCart.forEach(item => item.parentNode.removeChild(item));
-    saveCart();
+    localStorage.clear();
     document.querySelector('.total-price').innerHTML = '';
     sum = 0;
   });
 };
 
 const loadCart = () => {
-  const retrieveCart = localStorage.getItem('Carrinho');
-  if (!retrieveCart) {
+  const retrieveCart = localStorage.getItem('Cart');
+  if (retrieveCart) {
     document.querySelector('.cart__items').innerHTML = retrieveCart;
   }
 };
@@ -72,11 +67,9 @@ function createProductItemElement({ sku, name, image }) {
   // a metodologia dele para que conseguisse o resultado desejado.
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
     .addEventListener('click', () => {
-      document.querySelector('.container').appendChild(loading);
       fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(result => result.json())
         .then((itemObj) => {
-          document.querySelector('.container').removeChild(loading);
           const objectSku = {
             sku: itemObj.id,
             name: itemObj.title,
@@ -96,7 +89,7 @@ function getSkuFromProductItem(item) {
 }
 
 const fetchItems = () => {
-  document.querySelector('.container').appendChild(loading);
+  const loading = document.querySelector('.loading');
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(object => object.results)
