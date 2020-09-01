@@ -13,7 +13,7 @@ const loadingFunction = () => {
   divContainerText.innerText = 'loading...';
   divContainerText.id = 'load';
   mainContainer.appendChild(divContainerText);
-}
+};
 
 const sumOfPrices = async (price) => {
   const totalPrice = document.querySelector('.total-price');
