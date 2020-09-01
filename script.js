@@ -45,12 +45,23 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 function addCartShop(data) {
-  const li = createCartItemElement({ sku: data.id, name: data.title, salePrice: data.price });
+  const sku = data.id;
+  const name = data.title;
+  const salePrice = data.price;
+  const li = createCartItemElement({ sku, name, salePrice });
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
-  updateTotalPrice('add', data.price);
-  updateLocalStorage('add', data.id);
+  updateTotalPrice('add', salePrice);
+  updateLocalStorage('add', sku);
 }
+
+// function addCartShop(data) {
+//   const li = createCartItemElement({ sku: data.id, name: data.title, salePrice: data.price });
+//   const ol = document.querySelector('.cart__items');
+//   ol.appendChild(li);
+//   updateTotalPrice('add', data.price);
+//   updateLocalStorage('add', data.id);
+// }
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
