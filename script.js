@@ -88,7 +88,7 @@ const itemCart = () => {
     })
 // Removendo o elemento de loading, assim que o item é carregado.
   .then(loading.remove());
-  }, 2000)
+  }, 2000);
 };
 
 const connection = () => {
