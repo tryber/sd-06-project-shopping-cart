@@ -15,7 +15,7 @@ const emptyCart = () => {
     const allCart = document.querySelectorAll('.cart__item');
     allCart.forEach(item => item.parentNode.removeChild(item));
     saveCart();
-    document.querySelector('.total-price').innerHTML = "";
+    document.querySelector('.total-price').innerHTML = '';
     sum = 0;
   });
 };
