@@ -61,7 +61,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-
 }
 
 const fetchFunc = () => {
@@ -82,7 +81,7 @@ const clear = () => {
 const storage = () => {
   if (localStorage.cart) {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
-  };
+  }
 };
 
 window.onload = function onload() {
