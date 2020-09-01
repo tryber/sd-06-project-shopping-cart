@@ -83,7 +83,7 @@ async function fetchProducts(product) {
   fetch(endpoint)
     .then(response => response.json())
     .then(object => object.results.forEach(item => createProductItemElement(item)))
-    .then(teste => document.querySelector('.loading').remove());
+    .then(() => document.querySelector('.loading').remove());
 
   return 'Produtos retornados';
 }
