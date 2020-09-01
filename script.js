@@ -31,7 +31,9 @@ function createProductItemElement({ sku, name, image }) {
 // }
 
 function cartItemClickListener(event) {
-  console.log(event);
+  const productList = document.querySelector('.cart__items');
+  const itemSelected = event.target;
+  productList.removeChild(itemSelected);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
