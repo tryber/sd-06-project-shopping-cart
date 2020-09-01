@@ -12,13 +12,13 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ id, title, thumbnail }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
-  section.appendChild(createCustomElement('span', 'item__sku', id));
-  section.appendChild(createCustomElement('span', 'item__title', title));
-  section.appendChild(createProductImageElement(thumbnail));
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -55,11 +55,15 @@ function saveCart(cartId) {
 }
 
 // localStorage.clear()
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }, textSaveCart) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  saveCart(sku);
+  if (textSaveCart) {
+    li.innerText = textSaveCart;
+  } else {
+    li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  }
+  saveCart(li.innerText);
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -100,8 +104,9 @@ function requisitionMercadoLivreItem(pesquisa) {
 
 function renderShoppingCartSave() {
   if (localStorage.getItem('arrayIdShoppingCart') !== null) {
+    const listPurchase = document.querySelector('.cart__items');
     JSON.parse(localStorage.getItem('arrayIdShoppingCart'))
-      .forEach(idCartItem => requisitionItem(idCartItem));
+      .forEach(idCartItem => listPurchase.appendChild(createCartItemElement({}, idCartItem)));
   }
 }
 
