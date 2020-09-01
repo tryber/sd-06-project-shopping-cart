@@ -16,21 +16,28 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 }
+
+const getPrice = text => Number(text.slice(text.indexOf('$') + 1));
+
+const minusTotalPrice = (price) => {
+  totalprice -= Math.round(price * 100) / 100;
+  document.querySelector('.total-price').innerText = `${Math.round(totalprice * 100) / 100}`;
+};
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const clickedItem = event.target;
+  // console.log(clickedItem.innerText);
+  minusTotalPrice(getPrice(clickedItem.innerText));
+  // const skuItem = getSkuFromProductItem(clickedItem);
   clickedItem.parentNode.removeChild(clickedItem);
 }
-
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
