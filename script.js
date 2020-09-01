@@ -1,4 +1,11 @@
-window.onload = function onload() { };
+
+
+const apiInfo = {
+  api: 'https://api.mercadolibre.com/sites/MLB/search?q=',
+  endpoint: 'computador'
+}
+
+const url = `${apiInfo.api}${apiInfo.endpoint}`
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -12,18 +19,6 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
-}
-
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
 }
 
 function getSkuFromProductItem(item) {
@@ -41,3 +36,33 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+const fetchCurrency = () => {
+  const endpoint = `${apiInfo.api}${apiInfo.endpoint}`;
+
+  fetch(endpoint)
+  .then((response) => response.json())
+  .then((object) => {
+    object.results.forEach((item) => {
+      const productList = document.querySelector('.items');
+      const productArray = createProductItemElement(item);
+      productList.appendChild(productArray);
+    });
+  });
+}
+
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  return section;
+}
+
+window.onload = function onload() {
+  fetchCurrency();
+ };
