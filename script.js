@@ -60,7 +60,7 @@ async function addtocart(e) {
         addToStorage();
         sumValue(price);
       })
-      .catch(error => alert (`${error}`));
+      .catch(error => alert(`${error}`));
 }
 function fetchProductsML() {
   const endPoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
