@@ -15,17 +15,17 @@ async function decreaseValue(event) {
   let totalValue = event.target.innerHTML;
   totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
   console.log(totalValue);
-  await totalPrice(-totalValue);
+  totalPrice(-totalValue);
 }
 
-function saveCart() {
+async function saveCart() {
   const cart = document.querySelector('.cart__items');
   const totalValue = document.querySelector('.total-price');
   localStorage.setItem('total-value', totalValue.innerHTML);
   localStorage.setItem('cart-shop', cart.innerHTML);
 }
 
-function loadSavedCart() {
+async function loadSavedCart() {
   document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart-shop');
   document.querySelector('.total-price').innerHTML = localStorage.getItem('total-value');
   const ol = document.querySelector('.cart__items');
@@ -43,7 +43,7 @@ async function cartItemClickListener(event) {
   await decreaseValue(event);
   const mainList = document.querySelector('.cart__items');
   mainList.removeChild(event.target);
-  saveCart();
+  await saveCart();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -61,7 +61,6 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
