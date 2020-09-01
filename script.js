@@ -90,13 +90,13 @@ const clear = () => {
   botao.addEventListener('click', () => {
     const ol = document.querySelector('.cart__items');
     ol.innerHTML = '';
-    saveItems()
+    saveItems();
   });
 };
 
 const storage = () => {
   if (localStorage.cart) document.querySelector('.cart__items').innerHTML = localStorage.cart;
-  if(localStorage.total) document.querySelector('.total-price').innerHTML = localStorage.total;
+  if (localStorage.total) document.querySelector('.total-price').innerHTML = localStorage.total;
 };
 
 const loading = () => {
