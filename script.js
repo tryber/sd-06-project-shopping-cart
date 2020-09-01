@@ -2,7 +2,7 @@ function sumPromise(array) {
   let prices = 0;
   array.forEach(function (item) {
     prices += parseFloat(item.innerText.split('$')[1]);
-  })
+  });
   return prices;
 }
 
