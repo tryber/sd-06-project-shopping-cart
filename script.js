@@ -39,7 +39,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
+//Solução inspirada no codigo com o conscentimento do meu colega Thales Rangel da turma 6
 function includeInCart(e) {
   const idInclude = getSkuFromProductItem(e.target.parentElement);
   fetch(`https://api.mercadolibre.com/items/${idInclude}`)
