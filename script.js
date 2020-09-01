@@ -44,7 +44,7 @@ function loadStorage() {
 // e pegamos o valor total que ja esta no carrinho
 // apos definirmos todas as variaveis, somamos o valor ja existente
 // no carrinho com o valor do novo produto
-// depois inserimos esse novo valor no elemento 
+// depois inserimos esse novo valor no elemento
 // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/parseFloat
 
 function getTotalPrice() {
