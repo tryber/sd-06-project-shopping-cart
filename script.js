@@ -108,14 +108,14 @@ function loaderElement() {
   const itemSection = document.querySelector('section.items');
   const div = document.createElement('div');
   div.className = 'loading';
-  div.innerHTML = `loading... <br> <img src='loading.gif'>`;
+  div.innerHTML = 'loading...<br><img src="loading.gif">';
   itemSection.appendChild(div);
 }
 
 window.onload = function onload() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   loaderElement();
-    fetch(url)
+  fetch(url)
     .then(jsonReceived => jsonReceived.json())
     .then((object) => {
       const itemSection = document.querySelector('section.items');

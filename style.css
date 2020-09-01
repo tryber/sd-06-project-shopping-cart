@@ -31,7 +31,7 @@ body {
 }
 
 .loading {
-  color: rgba( 30 , 45 , 70 , .6 );
+  color: rgba( 30 , 45 , 70 , 0.6 );
   font-size: 2em;
   font-weight: 300;
   margin-top: 45px;
