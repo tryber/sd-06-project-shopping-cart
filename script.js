@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 // mercado livre API
 const base = 'https://api.mercadolibre.com/';
 
@@ -9,11 +10,28 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// sum prices of products on our cart
+const cartValue = async () => {
+  const items = document.getElementsByTagName('li');
+  let itemPrice = 0;
+  const priceDisplay = document.querySelector('.total-price');
+
+  for (let i = 0; i < items.length; i += 1) {
+    itemPrice += parseFloat(items[i].innerHTML.split('$')[1]);
+  }
+
+  priceDisplay.innerText = `Total: ${itemPrice}`;
+};
+
 // funcs to delete our items or empty our cart
 function cartItemClickListener(event) {
   const selectedItem = event.target;
   selectedItem.remove();
   const cartParentElement = document.querySelector('.cart__items');
+
+  // calls func to sum prices of products in our cart
+  cartValue();
+
   localStorage.setItem('cartStorage', cartParentElement.innerHTML);
 }
 
@@ -21,6 +39,9 @@ const emptyCart = () => {
   const cartParentElement = document.querySelector('.cart__items');
   cartParentElement.innerHTML = '';
   localStorage.removeItem('cartStorage');
+
+  // calls func to sum prices of products in our cart
+  cartValue();
 };
 
 // create cart list item
@@ -29,10 +50,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+
   return li;
 }
 
-// search product by id on API
+// request product by id on API
 const fetchProduct = (productId) => {
   const productEndpoint = `items/${productId}`;
   const productSearch = `${base}${productEndpoint}`;
@@ -44,7 +66,9 @@ const fetchProduct = (productId) => {
       cartList.appendChild(
         createCartItemElement({ sku: data.id, name: data.title, salePrice: data.price }),
       );
-      console.log(localStorage.setItem('cartStorage', cartList.innerHTML));
+      // calls func to sum prices of products in our cart
+      cartValue();
+      localStorage.setItem('cartStorage', cartList.innerHTML);
     });
 };
 
@@ -97,7 +121,7 @@ const mblProducts = (results) => {
 };
 
 window.onload = function onload() {
-  // fetch product list from mercado livre's api on window load and calls mblProducts function
+  // request product list from mercado livre's api on window load and calls mblProducts function
   const endpoint = 'sites/MLB/search?q=$computador';
   const fetchComputer = (url) => {
     fetch(url)
@@ -109,15 +133,16 @@ window.onload = function onload() {
   // add event to empty our cart
   document.querySelector('.empty-cart').addEventListener('click', emptyCart);
 
-  // call local storage to load saved our cart
+  // call local storage to load our saved cart
   const loadCart = () => {
     const cartParentElement = document.querySelector('.cart__items');
     cartParentElement.innerHTML = localStorage.getItem('cartStorage');
+
     const cartListItems = document.getElementsByTagName('li');
+
     for (let i = 0; i < cartListItems.length; i += 1) {
       cartListItems[i].addEventListener('click', cartItemClickListener);
     }
   };
-
   loadCart();
 };
