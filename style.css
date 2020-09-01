@@ -1,5 +1,6 @@
 body {
   background-color: rgb( 237 , 237 , 237 );
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .top-bar {
@@ -69,6 +70,7 @@ body {
 }
 
 .cart {
+  background-color: white;
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
