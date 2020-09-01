@@ -1,6 +1,9 @@
 
 // criei uma URL com o endPoint do mercado livre
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const url = {
+  endPointWeb: 'https://api.mercadolibre.com/sites/MLB/search?q=computador',
+  endPointItem: 'https://api.mercadolibre.com/items/',
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -16,62 +19,70 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener(event) {
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.removeChild(event.target);
+}
+
+function createCartItemElement({ id, title, price }) {
+  const li = document.createElement('li');
+  const carShop = document.querySelector('.cart__items');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', cartItemClickListener);
+
+  carShop.appendChild(li);
+}
+
+const fetchItem = (sku) => {
+  const endPoint = `${url.endPointItem}${sku}`;
+  fetch(endPoint)
+    .then(response => response.json())
+    .then(objeto => createCartItemElement(objeto));
+};
+
+
 function createProductItemElement({ sku, name, image }) {
+  const addButtonCar = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  addButtonCar.addEventListener('click', () => fetchItem(sku));
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(addButtonCar);
 
   return section;
 }
 
-// Criei a função que faz a requisição no site URL.
 const fetchWindow = () => {
-  // criei uma variavel e atribui a ela a url do endpoint do ML
-  const endPoint = `${url}`;
-  // criei um fatch na URL digitando aqui agora eu ate questiono se é necessario
-  // os passos anteriores, talvez eu mexa no futuro.
+  const endPoint = `${url.endPointWeb}`;
   fetch(endPoint)
-    // metodo then para receber a promisse binario e transformar em um obj
     .then(response => response.json())
-    // metodo then que recebe o obj e transforma em um array ja no metodo
-    // foreach que vai criar um obj pra cada outro obj recebido da response
-    .then(object => object.results.forEach((item) => {
-      const obj = {
+    .then(objShowCase => objShowCase.results.forEach((item) => {
+      const objShowC = {
         sku: item.id,
         name: item.title,
         image: item.thumbnail,
       };
-      // recolhi a section com a class 'items' para poder
-      // adicionar filhos a ela
       const showcase = document.querySelector('.items');
-      showcase.appendChild(createProductItemElement(obj));
+      showcase.appendChild(createProductItemElement(objShowC));
     }));
 };
 
-// atribui ao meu script uma function que dispara
-// functions assim que a pagina esta carregada
+const imprima = () => console.log('clicando');
+
+const setClearButton = () => {
+  const clearButton = document.getElementsByClassName('empty-cart');
+  clearButton[0].addEventListener('click', imprima);
+};
+
 window.onload = function onload() {
-  // disparei a function fetchWindow que na verdade é uma requisição
-  // do API do mercado livre.
   fetchWindow();
+  setClearButton();
 };
 
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
-// }
-
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
-
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
 // }
