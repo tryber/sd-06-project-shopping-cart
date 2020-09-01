@@ -7,8 +7,8 @@ const apiInfo = {
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
 const sumOfPrices = async (price) => {
-  const totalPrice = await document.querySelector('.total-price');
-  totalPrice.innerHTML = ((Math.round(totalPrice.innerHTML * 100) / 100) + price);
+  const totalPrice = document.querySelector('.total-price');
+  totalPrice.innerHTML = totalPrice.innerHTML * 1 + price;
 };
 
 function cartItemClickListener(event) {
@@ -82,7 +82,7 @@ function createProductItemElement({ sku, name, image }) {
       });
       const itemList = document.querySelector('.cart__items');
       itemList.appendChild(item);
-      sumOfPrices(parseFloat(element.price));
+      sumOfPrices(element.price);
       localStorageSave();
     });
   });
@@ -108,11 +108,18 @@ const fetchComputer = () => {
       });
     })
     .then(() => localStorageLoad())
-    .then(() => setTimeout(() => document.querySelector('.loading').remove(), 4000))
+    .then(() => setTimeout(() => document.querySelector('.loading').remove(), 2000))
     .catch(error => handleError(error));
 };
 
+function loadingPage () {
+  const loading = document.getElementById('load');
+  loading.className = 'loading'
+  loading.innerText = 'loading...'
+}
+
 window.onload = () => {
+  loadingPage();
   fetchComputer();
   emptyCart();
 };
