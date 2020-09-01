@@ -31,7 +31,7 @@ async function sumCart() {
     } else {
       pricePlacer.innerText = '-';
     }
-  } catch(error) {
+  } catch (error) {
     throw new Error('Ocorreu um erro no cálculo do valor de seu carrinho.');
   }
 }
