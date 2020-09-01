@@ -64,14 +64,14 @@ const addCar = () => {
   });
 };
 
-const fetchCar = (id) => {
+window.onload = function onload() {
+  fetchItems();
+  addCar();
+};
+
+function fetchCar(id) {
   const urlId = `https://api.mercadolibre.com/items/${id}`;
   fetch(urlId)
   .then(response => response.json())
   .then(response => createCartItemElement(response));
-};
-
-window.onload = function onload() {
-  fetchItems();
-  addCar();
 };
