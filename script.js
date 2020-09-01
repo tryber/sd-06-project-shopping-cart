@@ -89,12 +89,12 @@ const storage = () => {
       item.addEventListener('click', cartItemClickListener);
     });
   }
-}
+};
 
 // const sumPrices = () => {
 //   const cart = document.querySelector('.cart');
 //   console.log(cart);
-
+//   const totalPrice = createElement('')
 // }
 
 window.onload = function onload() {
