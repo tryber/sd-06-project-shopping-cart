@@ -1,5 +1,9 @@
-window.onload = function onload() { };
+/* eslint-disable arrow-parens */
+// mercado livre API and 'computador' endpoint
+const base = 'https://api.mercadolibre.com/';
+const endpoint = 'sites/MLB/search?q=$computador';
 
+// create product image
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -7,13 +11,96 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// sum prices of products on our cart
+const cartValue = async () => {
+  const items = document.getElementsByTagName('li');
+  let itemPrice = 0;
+  const priceDisplay = document.querySelector('.total-price');
+
+  for (let i = 0; i < items.length; i += 1) {
+    itemPrice += parseFloat(items[i].innerHTML.split('$')[1]);
+  }
+
+  priceDisplay.innerText = `${itemPrice}`;
+};
+
+// funcs to delete our items or empty our cart
+function cartItemClickListener(event) {
+  const selectedItem = event.target;
+  selectedItem.remove();
+  const cartParentElement = document.querySelector('.cart__items');
+
+  // calls func to sum prices of products in our cart
+  cartValue();
+
+  localStorage.setItem('cartStorage', cartParentElement.innerHTML);
+}
+
+const emptyCart = () => {
+  const cartParentElement = document.querySelector('.cart__items');
+  cartParentElement.innerHTML = '';
+  localStorage.removeItem('cartStorage');
+
+  // calls func to sum prices of products in our cart
+  cartValue();
+};
+
+// create cart list item
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+
+  return li;
+}
+
+// request product by id on API
+const fetchProduct = (productId) => {
+  const productEndpoint = `items/${productId}`;
+  const productSearch = `${base}${productEndpoint}`;
+
+  fetch(productSearch)
+    .then(response => response.json())
+    .then((data) => {
+      const cartList = document.querySelector('.cart__items');
+      cartList.appendChild(
+        createCartItemElement({ sku: data.id, name: data.title, salePrice: data.price }),
+      );
+      // calls func to sum prices of products in our cart
+      cartValue();
+      localStorage.setItem('cartStorage', cartList.innerHTML);
+    });
+};
+
+// get item's id
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+// call previous func to get item id from parent element when click on 'Adicione ao Carrinho' button
+// and add the item to user's cart
+const getItemToCart = (event) => {
+  const item = (event.target).parentElement;
+  const id = getSkuFromProductItem(item);
+
+  fetchProduct(id);
+};
+
+// create custom html elements
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
+
+  // add event listener product list buttons
+  if (element === 'button') {
+    e.addEventListener('click', getItemToCart);
+  }
   return e;
 }
 
+// create html item to main product list
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -26,18 +113,48 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// iterate product list from ML'S api to create our own list
+const mblProducts = (results) => {
+  results.forEach((result) => {
+    const product = { sku: result.id, name: result.title, image: result.thumbnail };
+    document.querySelector('.items').appendChild(createProductItemElement(product));
+  });
+};
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+// request product list from mercado livre's api on window load and calls mblProducts function
+const fetchComputers = (url) => {
+  const loadingParentElement = document.querySelector('.items');
+  const loadingElement = document.querySelector('.loading');
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      loadingParentElement.removeChild(loadingElement);
+      mblProducts(data.results);
+    });
+};
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+// func to get local storage to load our saved cart
+const loadCart = () => {
+  const cartParentElement = document.querySelector('.cart__items');
+  cartParentElement.innerHTML = localStorage.getItem('cartStorage');
+
+  const cartListItems = document.getElementsByTagName('li');
+
+  for (let i = 0; i < cartListItems.length; i += 1) {
+    cartListItems[i].addEventListener('click', cartItemClickListener);
+  }
+
+  // calls func to sum prices of products in our cart
+  cartValue();
+};
+
+window.onload = function onload() {
+  // call func to request product list
+  fetchComputers(`${base}${endpoint}`);
+
+  // add event to empty our cart
+  document.querySelector('.empty-cart').addEventListener('click', emptyCart);
+
+  // call func to get our last shopping cart
+  loadCart();
+};
