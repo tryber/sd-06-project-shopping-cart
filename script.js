@@ -47,7 +47,7 @@ const fetchProducts = () => {
     .then(response => response.json())
     .then((response) => {
       console.log(response.results);
-      return response.results.map((element) => {
+      response.results.forEach((element) => {
         const product = createProductItemElement({
           sku: element.id,
           name: element.title,
