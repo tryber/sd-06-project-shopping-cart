@@ -48,12 +48,28 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+// // Criando span com valor total dos produtos
+// const sumValues = async (objeto) => {
+//   const totalValue = document.createElement('span');
+//   totalValue.className = 'total-price'
+//   totalValue.innerText = `Valor total${objeto}`
+//   document.querySelector('.cart').appendChild(totalValue);
+// }
+
 const itemCart = () => {
 // Capturando o evento, e logo após o proximo elemento html, com isso capturo o ID de cada item
   const target = event.target;
   const id = target.parentNode;
   const idCorreto = id.firstChild.innerText;
+// Criando elemento de loading para informar enquanto a API busca as informações
+  const loading = document.createElement('span');
+  const cart = document.querySelector('.cart');
+  cart.appendChild(loading)
+  loading.className = 'loading';
+  loading.innerText = 'loading...';
+  
 // Realizando a chama para a API, passando o id do item que foi clicado
+  setTimeout(function() {  
   fetch(`https://api.mercadolibre.com/items/${idCorreto}`)
     .then(response => response.json())
     .then((object) => {
@@ -69,32 +85,51 @@ const itemCart = () => {
       const cartItem = document.querySelector('.cart__item');
 // Adicionando a função criada para remoção do item
       cartItem.addEventListener('click', cartItemClickListener);
-    });
+    })
+// Removendo o elemento de loading, assim que o item é carregado.
+  .then(loading.remove())
+  }, 2000)
 };
 
 const connection = () => {
 // Recebendo todos os itens da API, e renderizando em tela
   fetch(url)
-    .then(response => response.json())
-    .then((object) => {
-// Armazenando o resultado do fetch em uma constante
-      const objectResult = object.results;
-      objectResult.forEach((item) => {
-// Criando item por item, através do foreach e da funcão creacteProductItemElement
-        const product = createProductItemElement({
-          sku: item.id,
-          name: item.title,
-          image: item.thumbnail,
-        });
-// Renderizando em tela os itens criados e armazaendos na consta product
-        document.querySelector('.items').appendChild(product);
-// Capturando o botão "Adicionar ao carrinho", para utilizar na funcão itemCart
-        const button = document.querySelector('.items').lastChild;
-        button.lastChild.addEventListener('click', itemCart);
+  .then(response => response.json())
+  .then((object) => {
+    // Armazenando o resultado do fetch em uma constante
+    const objectResult = object.results;
+    objectResult.forEach((item) => {
+      // Criando item por item, através do foreach e da funcão creacteProductItemElement
+      const product = createProductItemElement({
+        sku: item.id,
+        name: item.title,
+        image: item.thumbnail,
       });
-    });
+      // Renderizando em tela os itens criados e armazaendos na consta product
+      document.querySelector('.items').appendChild(product);
+      // Capturando o botão "Adicionar ao carrinho", para utilizar na funcão itemCart
+      const button = document.querySelector('.items').lastChild;
+      button.lastChild.addEventListener('click', itemCart);
+    })
+  })
+      /*.then(clearCart)*/
 };
 
+// Criando a função que realiza o reset do carrinho
+/*const clearCart = () => {
+  let buttonClear = document.querySelector('.empty-cart');
+  let cartItems = document.querySelector('.cart__items'); 
+  
+// Adicionando evento ao click, enquanto houver elementos no cartItems, iremos remove-los
+// Validando verificando se existe um primeiro filho
+
+  buttonClear.addEventListener('click', function() {
+    while(cartItems.firstChild) {
+      cartItems.removeChild(cartItems.firstChild);
+    };
+  });
+};
+*/
 window.onload = function onload() {
   connection();
 };
