@@ -1,20 +1,32 @@
+let sum = 0;
+
+async function totalPrice(price, operator) {
+  const total = document.querySelector('.total-price');
+  sum = (operator === 'add' ? sum += price : sum -= price);
+  total.innerHTML = (sum === 0) ? '' : `Total: R$${sum}`;
+}
+
 function saveToLocalStorage(id, title, price) {
-  if (typeof Storage !== 'undefined') {
-    let arrayOfItems = [];
+  if (Storage) {
     const getCartItems = JSON.parse(localStorage.getItem('cartML'));
-    arrayOfItems = (getCartItems === null ? [] : getCartItems);
+    let arrayOfItems = (getCartItems === null ? [] : getCartItems);
     arrayOfItems.push({ id, title, price });
     localStorage.setItem('cartML', JSON.stringify(arrayOfItems));
   }
 }
 
 function removeItemFromLocalStorage(sku) {
-  if (typeof Storage !== 'undefined') {
-    let arrayOfItems = [];
+  if (Storage) {
     const getCartItems = JSON.parse(localStorage.getItem('cartML'));
-    arrayOfItems = (getCartItems === null ? [] : getCartItems);
-    const newArray = arrayOfItems.filter(element => element.id !== sku);
-    localStorage.setItem('cartML', JSON.stringify(newArray));
+    let arrayOfItems = (getCartItems === null ? [] : getCartItems);
+    for (let index = 0; index < arrayOfItems.length; index += 1) {
+      if (arrayOfItems[index].id === sku) {
+        totalPrice(arrayOfItems[index].price, 'sub');
+        arrayOfItems.splice(index, 1);
+        break;
+      }
+    }
+    localStorage.setItem('cartML', JSON.stringify(arrayOfItems));
   }
 }
 
@@ -29,7 +41,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.id = sku;
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: R$${salePrice}`;
   return li;
 }
 
@@ -40,12 +52,13 @@ function addToCart(product) {
 }
 
 function getFromLocalStorage() {
-  if (typeof Storage !== 'undefined') {
+  if (Storage) {
     const getProductCartItems = JSON.parse(localStorage.getItem('cartML'));
     arrayOfItems = (getProductCartItems === null ? [] : getProductCartItems);
     arrayOfItems.forEach((element) => {
       const itemProduct = createCartItemElement(element);
       addToCart(itemProduct);
+      totalPrice(element.price, 'add');
     });
   }
 }
@@ -57,6 +70,7 @@ const fetchProductItem = (sku) => {
       const itemProduct = createCartItemElement(data);
       addToCart(itemProduct);
       saveToLocalStorage(data.id, data.title, data.price);
+      totalPrice(data.price, 'add');
     });
 };
 
