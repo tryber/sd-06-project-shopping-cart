@@ -43,18 +43,23 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 // mark add <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-const apiInfo = {
-  api: 'https://api.mercadolibre.com/sites/MLB/search?q=$' ,
-  endpoint: 'computador',
+// função de erro, caso de erro
+const handleError = (errorMessage) => {
+  window.alert(errorMessage);
 }
 
-const url = `${apiInfo.api}${apiInfo.endpoint}`
+// construção da api url
+const apiInfo = {
+  api: 'https://api.mercadolibre.com/sites/MLB/search?q=$',
+  endpoint: 'computador',
+};
+
+const url = `${apiInfo.api}${apiInfo.endpoint}`;
 
 // função fetch para pegar o obj do api do mercado livre
 const fetchCurrency = (currency) => {
-
   fetch(url)
-    .then((response) => response.json())
+    .then(response => response.json())
     .then((object) => {
       console.log(object);
       if (object.error) {
@@ -62,22 +67,18 @@ const fetchCurrency = (currency) => {
       } else {
         console.log(object.results);
         // caminha na array object.results
-        object.results.forEach(item => {
-          // seleciona a section com id items e vai add p/ cada elemento da array o return da função createProductItemElement.
+        object.results.forEach((item) => {
+          // seleciona a section com id items e vai add p/ cada elemento da array
+          // (cont) o return da função createProductItemElement.
           // o parametro item é o objeto gerado pela array object.results
           document.querySelector('.items')
           // tirar duvida do obj distruct
           .appendChild(createProductItemElement(item));
           console.log(item.title);
-        })
+        });
       }
     })
-    .catch((error) => handleError(error))
-}
-
-// função de erro, caso de erro
-const handleError = (errorMessage) => {
-  window.alert(errorMessage);
+    .catch(error => handleError(error));
 }
 
 window.onload = function onload() {
