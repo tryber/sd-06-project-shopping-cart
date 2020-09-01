@@ -119,7 +119,7 @@ const showProducts = (results) => {
 const removeLoading = () => {
   const loading = document.querySelector('.loading');
   loading.removeChild(loading.lastElementChild);
-}
+};
 
 // Faz a requisição para buscar todos os produtos pelo valor "computadores"
 const fetchProducts = () => {
