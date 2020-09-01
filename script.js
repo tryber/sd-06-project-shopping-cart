@@ -1,3 +1,5 @@
+var prices = [];
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -11,6 +13,7 @@ function cleanCart(event) {
     document.querySelector('.cart__items')
     .removeChild(document.querySelector('.cart__items').childNodes[0]);
   }
+  document.querySelector('div').innerText = 'Preço total: $0';
 }
 
 function saveLocalStorage({ id, price, title }) {
@@ -37,6 +40,7 @@ function removeFromStorage(element) {
 function checkStorage(element) {
   if (localStorage.cart.split(',').length === 3) {
     localStorage.clear();
+    prices = [];
   } else {
     removeFromStorage(element);
   }
@@ -77,6 +81,8 @@ async function createCartItemElement(event) {
   li.addEventListener('click', cartItemClickListener);
   saveLocalStorage({ id, price, title });
   document.querySelector('.cart__items').appendChild(li);
+  prices.push(parseInt(price));
+  totalPrice(prices);
   return li;
 }
 
@@ -125,6 +131,13 @@ function fetchItems(query = 'computador') {
       return TransformedObj;
     }));
 }
+
+const totalPrice = (prices) => {
+  const total = prices.reduce((acc, cur) => acc +=cur, 0);
+  const totalText = document.querySelector('div');
+  totalText.innerHTML = `Preço total: ${total}`;
+};
+ 
 
 window.onload = function onload() {
   fetchItems();
