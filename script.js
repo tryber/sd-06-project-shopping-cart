@@ -83,9 +83,9 @@ function createProductItemElement({ sku, name, image }) {
   // vi que um colega tinha colocado o eventListener na criaçao do Btn e utilizei
   // a metodologia dele para que conseguisse o resultado desejado.
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-    .addEventListener('click', () => {
+    .addEventListener('click', async () => {
       loading();
-      fetch(`https://api.mercadolibre.com/items/${sku}`)
+      await fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(result => result.json())
         .then((itemObj) => {
           const objectSku = {
@@ -107,9 +107,9 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const fetchItems = () => {
+const fetchItems = async () => {
   loading();
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(object => object.results)
     .then(list => list.forEach((item) => {
