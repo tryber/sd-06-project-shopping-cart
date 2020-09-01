@@ -86,7 +86,7 @@ const itemCart = () => {
       // Removendo o elemento de loading, assim que o item é carregado.
     });
     loading.remove();
-  }, 2000);
+  }, 400);
 };
 
 // Criando a função que realiza o reset do carrinho
