@@ -1,7 +1,3 @@
-window.onload = function onload() { 
-  fetchCurrency();
-};
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -47,9 +43,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 // mark add <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-const  apiInfo  =  {
-  api : 'https://api.mercadolibre.com/sites/MLB/search?q=$' ,
-  endpoint : 'computador'
+const apiInfo = {
+  api: 'https://api.mercadolibre.com/sites/MLB/search?q=$' ,
+  endpoint: 'computador',
 }
 
 const url = `${apiInfo.api}${apiInfo.endpoint}`
@@ -64,15 +60,15 @@ const fetchCurrency = (currency) => {
       if (object.error) {
         throw new Error(object.error);
       } else {
-        console.log(object.results)
+        console.log(object.results);
         // caminha na array object.results
         object.results.forEach(item => {
           // seleciona a section com id items e vai add p/ cada elemento da array o return da função createProductItemElement.
           // o parametro item é o objeto gerado pela array object.results
           document.querySelector('.items')
           // tirar duvida do obj distruct
-          .appendChild(createProductItemElement(item))
-          console.log(item.title)
+          .appendChild(createProductItemElement(item));
+          console.log(item.title);
         })
       }
     })
@@ -84,3 +80,6 @@ const handleError = (errorMessage) => {
   window.alert(errorMessage);
 }
 
+window.onload = function onload() {
+  fetchCurrency();
+};
