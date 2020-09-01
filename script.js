@@ -1,5 +1,7 @@
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  const cartItem = event.target;
+  const cart = document.querySelector('.cart__items');
+  cart.removeChild(cartItem);
 }
 
 function createCartItemElement({ id, title, price }) {
