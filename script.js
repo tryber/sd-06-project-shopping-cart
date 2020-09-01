@@ -12,8 +12,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-async function sumTotal(salePrice) {
-  const totalPrice = await document.querySelector('.total-price');
+function sumTotal(salePrice) {
+  const totalPrice = document.querySelector('.total-price');
   totalPrice.innerText = ((Math.round((totalPrice.innerText) * 100) / 100) + salePrice);
 }
 
@@ -21,12 +21,12 @@ function cartItemClickListener(event) {
   event.target.remove(); // ChildNode.remove() fonte: MDN web docs
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  sumTotal(salePrice);
+  await sumTotal(salePrice);
   return li;
 }
 
@@ -60,9 +60,9 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 // requisito 6 Botão Limpar carrinho de compras
 function clearAll() {
