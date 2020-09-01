@@ -56,15 +56,11 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const urlSearch = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
-
-// Requisito 2
-const getItem = () => {
-  const target = event.target;
-  const parentTarget = target.parentElement;
-  const firstChild = parentTarget.firstChild.innerText;
+// Fetching items
+const fetchItem = (firstChild) => {
   const loading = document.querySelector('#loading');
-  loading.innerHTML = 'loading...';
   loading.classList.add('loading');
+  loading.innerHTML = 'loading...';
   fetch(`https://api.mercadolibre.com/items/${firstChild}`)
     .then(response => response.json())
     .then((item) => {
@@ -73,16 +69,24 @@ const getItem = () => {
       const salePrice = item.price;
       const cart = document.querySelector('.cart__items');
       cart.appendChild(createCartItemElement({ sku, name, salePrice }));
-      loading.innerHTML = '';
       loading.classList.remove('loading');
+      loading.innerHTML = '';
     });
+};
+
+// Requisito 2
+const getItem = () => {
+  const target = event.target;
+  const parentTarget = target.parentElement;
+  const firstChild = parentTarget.firstChild.innerText;
+  fetchItem(firstChild);
 };
 
 // Requisito 1
 const fetchUrl = () => {
   const loading = document.querySelector('#loading');
-  loading.innerHTML = 'loading...';
   loading.classList.add('loading');
+  loading.innerHTML = 'loading...';
   fetch(urlSearch)
     .then(response => response.json())
     .then((object) => {
@@ -94,9 +98,9 @@ const fetchUrl = () => {
         document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
         const items = document.querySelector('.items').lastChild;
         items.lastChild.addEventListener('click', getItem);
-        loading.innerHTML = '';
-        loading.classList.remove('loading');
       });
+      loading.classList.remove('loading');
+      loading.innerHTML = '';
     });
 };
 
