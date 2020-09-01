@@ -1,3 +1,12 @@
+function clearCar() {
+  document.querySelector('.empty-cart')
+  .addEventListener('click', () => {
+    const prods = document.querySelector('.cart__items');
+    const prod = document.querySelectorAll('.cart__item');
+    prod.forEach(elem => prods.removeChild(elem));
+  });
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -69,4 +78,4 @@ function computerFetch() {
     });
 }
 
-window.onload = function onload() { computerFetch(); };
+window.onload = function onload() { computerFetch(); clearCar(); };
