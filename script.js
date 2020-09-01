@@ -46,14 +46,14 @@ function cartItemClickListener(event) {
   saveCartLocally();
 }
 
-async function sumCart() {
-  const currentCart = document.querySelector('.cart__items');
-  const cartProducts = currentCart.innerText;
-  cartProducts.toString;
-  const prices = cartProducts.split('$', cartProducts.length);
-  prices.splice(0, 1);
-  console.log(parseInt(prices));
-}
+// async function sumCart() {
+//   const currentCart = document.querySelector('.cart__items');
+//   const cartProducts = currentCart.innerText;
+//   cartProducts.toString;
+//   const prices = cartProducts.split('$', cartProducts.length);
+//   prices.splice(0, 1);
+//   console.log(parseInt(prices));
+// }
 
 // 02 Adicionando o produto ao carrinho de compras
 // com essa funcao ao clicar no item eh criado uma
@@ -69,8 +69,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-
 
 // 01 Listagem de produtos. criar uma listagem de produtos
 // que devem ser consultados através da API do Mercado Livre
@@ -105,6 +103,29 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function loading(load = true) {
+  const container = document.querySelector('.items');
+  container.innerHTML = '';
+
+  if (load) {
+    const loaderContainer = document.createElement('div');
+    loaderContainer.style.display = 'flex';
+    loaderContainer.style.alignItems = 'center';
+
+    const loader = document.createElement('div');
+    loader.className = 'loader';
+
+    const loaderText = document.createElement('p');
+    loaderText.appendChild(document.createTextNode('loading...'));
+    loaderText.className = 'loading';
+
+    loaderContainer.appendChild(loader);
+    loaderContainer.appendChild(loaderText);
+
+    container.appendChild(loaderContainer);
+  }
+}
+
 // 01 Listagem de produtos. criar uma listagem de produtos
 // que devem ser consultados através da API do Mercado Livre
 // funcao que faz essa requisicao da API e chama a funcao
@@ -133,8 +154,8 @@ function fetchProducts() {
         document.querySelector('.items').appendChild(product);
       });
     });
-    loading();
-    loading(false);
+  loading();
+  loading(false);
 }
 
 
@@ -151,30 +172,6 @@ function clearCartButton(event) {
     saveCartLocally();
   }
 }
-
-function loading(load = true) {
-  const container = document.querySelector('.items');
-  container.innerHTML = '';
-
-  if (load) {
-    const loaderContainer = document.createElement('div');
-    loaderContainer.style.display = 'flex';
-    loaderContainer.style.alignItems = 'center';
-
-    const loader = document.createElement('div');
-    loader.className = 'loader';
-
-    const loaderText = document.createElement('p');
-    loaderText.appendChild(document.createTextNode('loading...'));
-    loaderText.className = 'loading';
-
-    loaderContainer.appendChild(loader);
-    loaderContainer.appendChild(loaderText);
-
-    container.appendChild(loaderContainer);
-  }
-}
-
 
 window.onload = function onload() {
   fetchProducts();
