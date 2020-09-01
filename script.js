@@ -92,7 +92,7 @@ const loading = () => {
     const load = document.querySelector('.loading');
     load.remove();
   }, 1000);
-}
+};
 
 // function sum() {
 //   const cart = document.querySelector('.cart__item').innerHTML
