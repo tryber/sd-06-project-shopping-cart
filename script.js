@@ -24,8 +24,9 @@ const totalValueUpdate = async (value) => {
 // Removendo único item da lista
 function cartItemClickListener(event) {
   const item = event.target;
+  const itemText = item.innerText;
+  const price = parseFloat(itemText.split('PRICE: $')[1]);
   item.remove();
-  const price = parseFloat(item.split('PRICE $')[1]);
   totalValueUpdate(-price);
   const ol = document.querySelector('.cart__items');
   localStorage.setItem('itemCartStorage', ol.innerHTML);
