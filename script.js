@@ -88,7 +88,7 @@ async function fetchProducts(product) {
 }
 
 window.onload = async function onload() {
-  fetchProducts('computador')
-    .then(() => document.querySelector('.loading').remove());
+  await fetchProducts('computador')
+  document.querySelector('.loading').remove()
   fetchCartFromStorage();
 };
