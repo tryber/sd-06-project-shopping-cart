@@ -102,8 +102,8 @@ const clearCart = () => {
   buttonClear.addEventListener('click', function () {
     while (cartItems.firstChild) {
       cartItems.removeChild(cartItems.firstChild);
-    };
- });
+    }
+  });
 };
 
 const connection = () => {
@@ -129,8 +129,6 @@ const connection = () => {
   })
     .then(clearCart);
 };
-
-
 
 window.onload = function onload() {
   connection();
