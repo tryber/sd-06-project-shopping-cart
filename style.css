@@ -31,7 +31,7 @@
 }
 
 .item {
-  border: 2px solid blue;
+  border: 1px solid rgb( 3 , 58 , 8 );
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -39,6 +39,7 @@
   height: auto;
   margin: 5px;
   width: 200px;
+  align-items: center;
 }
 
 .item .item__sku {
@@ -52,14 +53,15 @@
 }
 
 .item .item__image {
-  width: 100%;
+  width: 60%;
 }
 
 .item .item__add {
-  background-color: green;
+  color: rgb( 247 , 240 , 240 );
+  background-color: rgb( 3 , 58 , 8 );
   border: 0;
   cursor: pointer;
-  margin: 0;
+  margin-bottom: 5px;
   padding: 5px;
 }
 
