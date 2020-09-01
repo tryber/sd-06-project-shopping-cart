@@ -11,8 +11,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-async function sumTotal(salePrice) {
-  const totalPrice = await document.querySelector('.total-price');
+function sumTotal(salePrice) {
+  const totalPrice = document.querySelector('.total-price');
   totalPrice.innerText = ((Math.round((totalPrice.innerText) * 100) / 100) + salePrice);
 }
 
@@ -30,10 +30,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function addToCart(event) {
+async function addToCart(event) {
   const monitorScreen = event.target;
   const sku = monitorScreen.parentNode.firstChild.innerHTML;
-  fetch(`https://api.mercadolibre.com/items/${sku}`)
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
     .then((data) => {
       const newItem = {
