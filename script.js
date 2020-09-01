@@ -38,12 +38,8 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
 // event.target.remove();
-  const items = document.querySelectorAll('.cart__item');
-  items.forEach((item) => {
-    item.addEventListener('click', function () {
-      item.remove();
-    });
-  });
+  const items = document.querySelector('.cart__items');
+  items.removeChild(event.target);  
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -64,7 +60,7 @@ const itemCart = () => {
   const cart = document.querySelector('.cart');
   cart.appendChild(loading);
   loading.className = 'loading';
-  loading.innerHTML = 'loading...';
+  loading.innerText = 'loading...';
 
 // Realizando a chama para a API, passando o id do item que foi clicado
   setTimeout(function () {
@@ -83,9 +79,9 @@ const itemCart = () => {
       const cartItem = document.querySelector('.cart__item');
 // Adicionando a função criada para remoção do item
       cartItem.addEventListener('click', cartItemClickListener);
-      // Removendo o elemento de loading, assim que o item é carregado.
-    });
-    loading.remove();
+      // Removendo o elemento de loading através da classe do span, assim que o item é carregado.
+    })
+    .then(() => document.querySelector('.loading').remove());
   }, 400);
 };
 
@@ -132,3 +128,6 @@ window.onload = function onload() {
   connection();
   clearCart();
 };
+
+
+
