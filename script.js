@@ -2,8 +2,17 @@ function carrinhoCompras() {
   localStorage.setItem('li do carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
 
-async function clearStorageAndList(event) { // line 73 não sei ao certo se line 6 é errado!
-  event.innerHTML = ''; // eslint-disable-line no-param-reassign
+function clean(firstItem, secondItem) {
+  const textPrice = secondItem.innerText;
+  const itemList = firstItem.innerHTML;
+  const cartList = document.getElementsByClassName('cart__items')[0];
+  const totalPrice = document.getElementsByClassName('total-price')[0];
+  if (itemList.length >= 0) cartList.innerHTML = '';
+  if (textPrice.length >= 0) totalPrice.innerText = '';
+}
+
+async function clearStorageAndList(listaCart, totalPrice) { // line 73
+  await clean(listaCart, totalPrice);
   await localStorage.removeItem('li do carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
 
@@ -37,7 +46,6 @@ function createCartItemElement(data) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
-  console.log(salePrice);
   return li;
 }
 
@@ -50,7 +58,7 @@ async function addToCart(skuId) { // async para declarar que a função é async
   .then(data => getOlList.appendChild(createCartItemElement({
     sku: data.id,
     name: data.title,
-    salePrice: data.price,
+    salePrice: data.price, // poderia ser base_price?
   })));
   await carrinhoCompras();
   await sumPrices();
