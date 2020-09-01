@@ -83,7 +83,7 @@ function renderShoppingCart() {
       li.addEventListener('click', cartItemClickListener);
       document.querySelector('.cart__items').appendChild(li);
     }
-    let total = parseInt(localStorage.getItem('total'), 10);
+    const total = parseInt(localStorage.getItem('total'), 10);
     document.querySelector('div').innerText = `Preço total: ${total}`;
   }
 }
