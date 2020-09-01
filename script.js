@@ -24,8 +24,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener() {
   // coloque seu código aqui
-  const list = document.querySelector('.cart__items');
-  list.removeChild(event.target); // event nao tinha q estar no parametro? nao tinha q estar no parametro?
+  event.target.remove();
   localStorage.clear(); // limpa o storage
   localStorageSave();
 }
