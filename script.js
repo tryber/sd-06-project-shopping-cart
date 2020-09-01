@@ -8,7 +8,6 @@ const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
 const sumOfPrices = async (price) => {
   const totalPrice = document.querySelector('.total-price');
-  price = parseFloat(price);
   totalPrice.innerText = price;
 };
 
@@ -19,9 +18,9 @@ function cartItemClickListener(event) {
 const emptyCart = () => {
   const btnClear = document.querySelector('.empty-cart');
   const cartItems = document.getElementsByTagName('li');
-  btnClear.addEventListener('click', () => { 
-    while (cartItems.length > 0){
-        document.getElementsByTagName('li')[0].remove();
+  btnClear.addEventListener('click', () => {
+    while (cartItems.length > 0) {
+      document.getElementsByTagName('li')[0].remove();
     }
     document.querySelector('.total-price').innerText = '0';
   });
