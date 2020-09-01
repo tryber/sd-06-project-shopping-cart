@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable arrow-parens */
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -36,38 +38,9 @@ function fetchItem(itemID) {
   return fetch(apiItem).then(response => response.json());
 }
 
-async function totalValueUpdater() {
-  const cartList = document.querySelector('.cart__items');
-  let cartItemsIds = [];
-
-  for (let x = cartList.firstChild; x; x = x.nextElementSibling) {
-    const nextID = x.innerText.substr(5, 13);
-    cartItemsIds.push(nextID);
-  }
-
-  cartItemsIds = cartItemsIds.map(itemID => fetchItem(itemID).then(async (item) => {
-    const currentPrice = await item.price;
-    return currentPrice;
-  }));
-
-  return cartItemsIds;
-}
-
-function totalValueDisplay() {
-  const totalPriceDisplay = document.querySelector('.total-price');
-  totalValueUpdater().then((cartItemsIds) => {
-    const totalPrice = cartItemsIds.reduce(async (acc, curr) => acc + await curr.salePrice);
-    console.log(totalPrice);
-    totalPriceDisplay.innerText = totalPrice;
-  });
-}
-
-totalValueDisplay();
-
 function saveCurrentList() {
   const cartList = document.querySelector('.cart__items');
   const listSaver = cartList.innerHTML;
-  totalValueUpdater();
   localStorage.setItem('SavedList', listSaver);
 }
 
@@ -84,22 +57,13 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-function itemCreator(item, createFunction, listClassName) {
-  const newItem = createFunction(item);
-  const itemList = document.querySelector(listClassName);
-  itemList.appendChild(newItem);
-  if (createFunction === createCartItemElement) {
-    saveCurrentList();
-  }
-}
-
 function addItemToCart(eventElement) {
   if (eventElement.className === 'item__add') {
     const selectedItem = eventElement.parentNode;
     const itemID = getSkuFromProductItem(selectedItem);
     fetchItem(itemID)
       .then((data) => {
-        itemCreator(data, createCartItemElement, '.cart__items');
+        createCartItemElement(data);
       });
   }
 }
@@ -108,7 +72,8 @@ function createItemList() {
   fetch(apiList).then(response => response.json())
     .then(data => data.results
       .forEach((computer) => {
-        itemCreator(computer, createProductItemElement, '.items');
+        const itemList = document.querySelector('.items');
+        itemList.appendChild(createProductItemElement(computer));
       }));
 }
 
