@@ -16,7 +16,8 @@ function createCustomElement(element, className, innerText) {
 
 function saveItems() {
   const items = document.querySelector('.cart__items').innerHTML;
-  localStorage.setItem('cart', items); //comando pronto para escolher o que salvar, setItem serve para salvar e passamos nome e o valor (cart e items);
+  localStorage.setItem('cart', items);
+  //comando pronto para escolher o que salvar, setItem serve para salvar e passamos nome e o valor (cart e items);
 }
 
 function cartItemClickListener(event) {
