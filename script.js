@@ -77,15 +77,18 @@ function createProductItemElement({ id, title, thumbnail }) {
   return section;
 }
 
-function fetchProducts(product) {
+async function fetchProducts(product) {
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
 
   fetch(endpoint)
     .then(response => response.json())
     .then(object => object.results.forEach(item => createProductItemElement(item)));
+
+  return 'Produtos retornados'
 }
 
-window.onload = function onload() {
-  fetchProducts('computador');
+window.onload = async function onload() {
+  fetchProducts('computador')
+    .then(resolved => document.querySelector('.loading').remove());
   fetchCartFromStorage();
 };
