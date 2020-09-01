@@ -11,10 +11,11 @@ function createProductImageElement(imageSource) {
 
 // destructuring do data q vem cartItemClickListener
 
-function cartItemClickListener() {
+function cartItemClickListener(event) {
   const carList = document.querySelector('.cart__items');
-  carList.removeChild(this);
+  carList.removeChild(event.target);
 }
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -37,7 +38,6 @@ function getOutOfTheCar(event) {
       const addCpuCar = document.querySelector('.cart__items');
       addCpuCar.appendChild(createCartItemElement(data));
     });
-
 }
 
 function createCustomElement(element, className, innerText) {
