@@ -1,10 +1,10 @@
 async function cartTotalValue() {
   const cartItems = document.querySelectorAll('.cart__item');
-  let totalPrice = 0;
-  cartItems.forEach(function (item) {
-    totalPrice += parseFloat(item.innerText.split('$')[1]);
-  });
-  document.querySelector('.total__price').innerText = totalPrice;
+  const thisItems = [...cartItems];
+  const totalPrice = await thisItems.reduce((acc, current) => {
+    return acc + parseFloat(current.innerText.split('$')[1]);
+  }, 0)
+  document.querySelector('.total__price').innerText = ` ${totalPrice}`;
 }
 
 function saveStorage() {
