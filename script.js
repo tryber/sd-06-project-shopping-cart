@@ -37,7 +37,7 @@ const getTotalPriceFromCart = cart => cart
   .reduce((acc, item) => acc + getPriceFromString(item.innerText), 0);
 
 const displayPrice = (price) => {
-  document.querySelector('.total-price').innerText = `Total: ${price}`;
+  document.querySelector('.total-price').innerText = price;
 };
 
 const updateLocalStorage = (cart) => {
