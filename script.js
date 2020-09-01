@@ -1,8 +1,8 @@
 async function cartTotalValue() {
   const cartItems = document.querySelectorAll('.cart__item');
   let totalPrice = 0;
-  cartItems.forEach(function(item) {
-    totalPrice += parseFloat(item.innerText.split('$')[1])
+  cartItems.forEach(function (item) {
+    totalPrice += parseFloat(item.innerText.split('$')[1]);
   });
   document.querySelector('.total__price').innerText = totalPrice;
 }
