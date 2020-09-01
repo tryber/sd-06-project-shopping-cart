@@ -1,3 +1,13 @@
+prices = arrItems =>
+  arrItems.reduce((acc, cur) => acc + parseFloat(cur.innerText.split('$')[1]),
+  0);
+
+async function totalPrices() {
+  const items = document.querySelectorAll('.cart__item');
+  const total = await prices([...items]);
+  console.log(prices([...items]));
+  document.querySelector('.total-price').innerText = `Valor total: $${total}`;
+}
 // Referencia: ajuda da galera do discord, entendi a referencia!!
 
 lclStorage = () => {
@@ -33,22 +43,28 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   const items = document.querySelector('.items');
+  // items.innerHTML = '<h1 class="loading">Loading</h1>';
+  // items.innerHTML = '';
   items.appendChild(section);
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 function cartItemClickListener(event) {
   event.path[1].removeChild(event.path[0]);
   lclStorage();
+  totalPrices();
 }
 
 const clearButton = document.querySelector('.empty-cart');
 clearButton.addEventListener('click', () => {
   document.querySelector('.cart__items').innerHTML = '';
+  localStorage.clear();
+  lclStorage();
+  totalPrices();
 });
 
 function createCartItemElement({ id, title, price }) {
@@ -59,16 +75,18 @@ function createCartItemElement({ id, title, price }) {
   ol.appendChild(li);
   li.addEventListener('click', cartItemClickListener);
   lclStorage();
+  totalPrices();
   return li;
 }
 const url = 'https://api.mercadolibre.com/';
 
-queryApiCart = (id) => {
+function queryApiCart(id) {
   const endPoint = `${url}items/${id}`;
   fetch(endPoint)
   .then(response => response.json())
   .then(data => createCartItemElement(data));
-};
+  totalPrices();
+}
 
 queryApi = () => {
   const endPoint = `${url}sites/MLB/search?q=computador`;
@@ -87,7 +105,13 @@ queryApi = () => {
 };
 
 window.onload = function onload() {
-  loadLclStorage();
-  queryApi();
-  document.querySelectorAll('.cart__item').forEach(element => element.addEventListener('click', cartItemClickListener));
+  document.querySelector('.items').innerHTML = '<h1 class="loading">loading...</h1>';
+  setTimeout(() => {
+    document.querySelector('.items').innerHTML = '';
+    loadLclStorage();
+    totalPrices();
+    queryApi();
+  }, 500);
+  document.querySelectorAll('.cart__item')
+  .forEach(element => element.addEventListener('click', cartItemClickListener));
 };
