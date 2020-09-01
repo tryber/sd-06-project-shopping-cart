@@ -56,7 +56,7 @@ const itemCart = () => {
   const idCorreto = id.firstChild.innerText;
 
 // Realizando a chama para a API, passando o id do item que foi clicado
-    fetch(`https://api.mercadolibre.com/items/${idCorreto}`)
+  fetch(`https://api.mercadolibre.com/items/${idCorreto}`)
     .then(response => response.json())
     .then((object) => {
 // Criando o item a ser adicionado no carrinho, através da função CreateCartItemElement
@@ -72,7 +72,7 @@ const itemCart = () => {
 // Adicionando a função criada para remoção do item
       cartItem.addEventListener('click', cartItemClickListener);
       // Removendo o elemento de loading através da classe do span, assim que o item é carregado.
-    })  
+    });
 };
 
 // Criando a função que realiza o reset do carrinho
@@ -98,7 +98,7 @@ const connection = () => {
   loading.className = 'loading';
   loading.innerText = 'loading...';
 // Recebendo todos os itens da API, e renderizando em tela
-setTimeout(function () {  
+setTimeout(function () {
   fetch(url)
   .then(response => response.json())
   .then((object) => {
@@ -120,7 +120,7 @@ setTimeout(function () {
   })
     .then(clearCart)
     .then(() => document.querySelector('.loading').remove());
-  }, 4000);
+}, 4000);
 };
 
 window.onload = function onload() {
