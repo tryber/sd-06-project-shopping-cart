@@ -9,6 +9,7 @@ function createProductImageElement(imageSource) {
 function cartItemClickListener(event) {
   const mainList = document.querySelector('.cart__items');
   mainList.removeChild(event.target);
+  saveCart();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -95,8 +96,9 @@ const fetchList = () => {
     });
   })
   .then(() => clearCartButton())
-  .then(() => loadSavedCart());
-};
+  .then(() => loadSavedCart())
+  .then(() => document.querySelector('.loading').remove());
+}
 
 window.onload = function onload() {
   fetchList();

@@ -78,3 +78,7 @@
 .cart__items:hover {
   cursor: pointer;
 }
+
+.loading {
+  font-size: 80px;
+}
