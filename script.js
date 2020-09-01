@@ -4,8 +4,6 @@ window.onload = function onload() {
 
 async function createList() {
   const items = document.getElementsByClassName('items')[0];
-  // const query = document.getElementById('query_input').value;
-  // acho que talvez o teste não peça por um retorno de qqr pesquisa, só de "computador"
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   await fetch(url)
     .then(r => r.json())
