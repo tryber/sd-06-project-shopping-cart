@@ -3,7 +3,7 @@ function saveToLocalStorage(id, title, price) {
     let arrayOfItems = [];
     const getCartItems = JSON.parse(localStorage.getItem('cartML'));
     arrayOfItems = (getCartItems === null ? [] : getCartItems);
-    arrayOfItems.push({ id, title, price, });
+    arrayOfItems.push({ id, title, price });
     localStorage.setItem('cartML', JSON.stringify(arrayOfItems));
   }
 }
@@ -13,19 +13,8 @@ function removeItemFromLocalStorage(sku) {
     let arrayOfItems = [];
     const getCartItems = JSON.parse(localStorage.getItem('cartML'));
     arrayOfItems = (getCartItems === null ? [] : getCartItems);
-    const newArray = arrayOfItems.filter((element) => element.id !== sku);
+    const newArray = arrayOfItems.filter(element => element.id !== sku);
     localStorage.setItem('cartML', JSON.stringify(newArray));
-  }
-}
-
-function getFromLocalStorage() {
-  if (typeof Storage !== 'undefined') {
-    const getProductCartItems = JSON.parse(localStorage.getItem('cartML'));
-    arrayOfItems = (getProductCartItems === null ? [] : getProductCartItems);
-    arrayOfItems.forEach((element) => {
-      const itemProduct = createCartItemElement(element);
-      addToCart(itemProduct);
-    });
   }
 }
 
@@ -48,6 +37,17 @@ function addToCart(product) {
   const itemCart = document.querySelector('.cart__items');
   itemCart.addEventListener('click', cartItemClickListener);
   itemCart.appendChild(product);
+}
+
+function getFromLocalStorage() {
+  if (typeof Storage !== 'undefined') {
+    const getProductCartItems = JSON.parse(localStorage.getItem('cartML'));
+    arrayOfItems = (getProductCartItems === null ? [] : getProductCartItems);
+    arrayOfItems.forEach((element) => {
+      const itemProduct = createCartItemElement(element);
+      addToCart(itemProduct);
+    });
+  }
 }
 
 const fetchProductItem = (sku) => {
