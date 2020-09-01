@@ -52,7 +52,7 @@ async function getListOfProducts() {
 
 async function mountCartItem(product) {
   const productSku = getSkuFromProductItem(product);
-  const url = `https://api.mercadolibre.com/items/${productSku}`
+  const url = `https://api.mercadolibre.com/items/${productSku}`;
   const response = await fetch(url);
   const retrievedItem = await response.json();
   const cartItem = {
@@ -65,7 +65,7 @@ async function mountCartItem(product) {
 
 async function addItemToCart(product) {
   const mountedCartItem = await mountCartItem(product);
-  const cartItemsField = document.querySelector('.cart__items')
+  const cartItemsField = document.querySelector('.cart__items');
   const cartItemElement = createCartItemElement(mountedCartItem);
   cartItemsField.appendChild(cartItemElement);
 }
@@ -88,8 +88,8 @@ async function renderProducts() {
   });
 }
 
-function setupEventHandlers() {
-}
+/*function setupEventHandlers() {
+}*/
 
 window.onload = async function onload() {
   await renderProducts();
