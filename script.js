@@ -72,7 +72,13 @@ const fetchDisplay = () => {
   .then(data => data.results.forEach((element) => {
     appendItem(createProductItemElement(element));
   }));
+  loadingText()
 };
+
+const loadingText = () => {
+  const message = 'loading...';
+  return alert(message);
+}
 
 window.onload = function onload() {
   fetchDisplay();
