@@ -30,6 +30,15 @@ body {
   display: flex;
 }
 
+.loading {
+  color: rgba( 30 , 45 , 70 , .6 );
+  font-size: 2em;
+  font-weight: 300;
+  margin-top: 45px;
+  opacity: 0.7;
+  text-align: center;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
