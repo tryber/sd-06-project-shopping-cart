@@ -46,7 +46,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 // função de erro, caso de erro
 const handleError = (errorMessage) => {
   window.alert(errorMessage);
-}
+};
 
 // construção da api url
 const apiInfo = {
@@ -79,7 +79,7 @@ const fetchCurrency = (currency) => {
       }
     })
     .catch(error => handleError(error));
-}
+};
 
 window.onload = function onload() {
   fetchCurrency();
