@@ -63,7 +63,7 @@ const getItem = () => {
       loading.innerHTML = '';
       loading.classList.remove('loading');
     });
-  }, 3000);
+  }, 1000);
 };
 
 // Requisito 1
