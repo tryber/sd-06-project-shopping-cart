@@ -143,6 +143,9 @@ window.onload = function onload() {
     for (let i = 0; i < cartListItems.length; i += 1) {
       cartListItems[i].addEventListener('click', cartItemClickListener);
     }
+
+    // calls func to sum prices of products in our cart
+    cartValue();
   };
   loadCart();
 };
