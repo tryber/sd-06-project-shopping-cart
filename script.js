@@ -79,6 +79,13 @@ function addCartElement(id) {
     });
 }
 
+function eraseCartList() {
+  document.getElementById('list').innerHTML = '';
+  localStorage.clear();
+  priceSum = 0;
+  document.getElementById('price').innerHTML = 0;
+}
+
 const fetchProductList = () => {
   fetch(url)
     .then(response => response.json())
