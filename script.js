@@ -1,22 +1,28 @@
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/',
-  endpoint: 'search?q=',
-  query: '$computador',
+  endpoint: 'search?q=$',
+  query: 'computador',
 };
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
-async function sumOfPrices() {
-  const itensOnCart = await document.querySelectorAll('.cart__item');
-  const numberOnPrice = [...itensOnCart]
-    .map(number => number.innerText.match(/[0-9.0-9]+$/))// Referência: https://www.regular-expressions.info/anchors.html testes: https://regex101.com/
-    .reduce((acc, val) => acc + parseFloat(val), 0);
-  document.querySelector('.total-price').innerHTML = numberOnPrice;
+//  Using .match and regex to filter numbers given interval
+//  /[0-9.0-9]+$/ => All numbers after 'whatever' character
+//  Number must be at the end of sentence (no spaces allowed)
+//  Ref: https://www.regular-expressions.info/anchors.html
+//  Tests: https://regex101.com/     
+
+const sumOfPrices = async () => {
+  const cartItems = await document.querySelectorAll('.cart__item');
+  const getPrice = [...cartItems]
+    .map(value => value.innerText.match(/[0-9.0-9]+$/))
+    .reduce((accumulator, value) => accumulator + parseFloat(value), 0);
+  document.querySelector('.total-price').innerHTML = getPrice;
 }
 
 const localStorageSave = () => {
-  const itemsOnCart = document.querySelector('.cart__items');
-  localStorage.setItem('items', itemsOnCart.innerHTML);
+  const cartItem = document.querySelector('.cart__items');
+  localStorage.setItem('items', cartItem.innerHTML);
 };
 
 function cartItemClickListener(event) {
@@ -30,8 +36,8 @@ const emptyCart = () => {
   const btnClear = document.querySelector('.empty-cart');
   const cartItems = document.getElementsByTagName('li');
   btnClear.addEventListener('click', () => {
-    while (cartItems.length > 0) {
-      document.getElementsByTagName('li')[0].remove();
+    while (cartItems.length) {
+      cartItems[0].remove();
     }
     document.querySelector('.total-price').innerText = '0';
     localStorage.clear();
@@ -51,10 +57,10 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const localStorageLoad = () => {
-  const getCartItens = document.querySelector('.cart__items');
+  const getCartItem = document.querySelector('.cart__items');
   const getCart = localStorage.getItem('items');
-  getCartItens.innerHTML = getCart;
-  getCartItens.addEventListener('click', cartItemClickListener);
+  getCartItem.innerHTML = getCart;
+  getCartItem.addEventListener('click', cartItemClickListener);
 };
 
 function createProductImageElement(imageSource) {
@@ -87,13 +93,12 @@ function createProductItemElement({ sku, name, image }) {
         name: element.title,
         salePrice: element.price,
       });
-      const itemList = document.querySelector('.cart__items');
-      itemList.appendChild(item);
+      document.querySelector('.cart__items').appendChild(item);
       sumOfPrices();
       localStorageSave();
-    });
+    })
+    .catch(error => handleError(error));
   });
-
   return section;
 }
 
