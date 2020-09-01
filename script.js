@@ -95,6 +95,7 @@ function listElements(arrResults) {
     const name = product.title;
     const image = product.thumbnail;
     const secItems = document.querySelector('.items');
+    document.querySelector('.loading').style.display = 'none';
     secItems.appendChild(createProductItemElement({ sku, name, image }));
   });
 }
