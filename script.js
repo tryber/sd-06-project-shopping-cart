@@ -71,6 +71,16 @@ function fetchProduct() {
     });
 }
 
+function cleanAll() {
+  const tagOl = document.getElementById('cart_items');
+  while (tagOl.firstChild) {
+    tagOl.removeChild(tagOl.firstChild);
+  }
+}
+
 window.onload = function onload() {
   fetchProduct();
+
+  const cleanButton = document.getElementById('empty_cart');
+  cleanButton.addEventListener('click', cleanAll);
 };
