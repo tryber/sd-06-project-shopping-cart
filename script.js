@@ -20,7 +20,7 @@ const cartValue = async () => {
     itemPrice += parseFloat(items[i].innerHTML.split('$')[1]);
   }
 
-  priceDisplay.innerText = `Total: ${itemPrice}`;
+  priceDisplay.innerText = `${itemPrice}`;
 };
 
 // funcs to delete our items or empty our cart
