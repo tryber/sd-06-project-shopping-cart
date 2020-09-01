@@ -1,7 +1,7 @@
-function createEventHandlers() {
-  const clearCartButton = document.querySelector('.empty-cart');
-  clearCartButton.addEventListener('click', clearCart);
-}
+const saveItems = () => {
+  const cart = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cart', cart);
+};
 
 function clearCart() {
   const cart = document.querySelector('.cart__items');
@@ -11,10 +11,10 @@ function clearCart() {
   saveItems();
 }
 
-const saveItems = () => {
-  const cart = document.querySelector('.cart__items').innerHTML;
-  localStorage.setItem('cart', cart);
-};
+function createEventHandlers() {
+  const clearCartButton = document.querySelector('.empty-cart');
+  clearCartButton.addEventListener('click', clearCart);
+}
 
 function cartItemClickListener(event) {
   const cartItem = event.target;
