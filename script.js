@@ -28,11 +28,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-// const idItem = event.target;
-  // console.log(idItem.innerText);
-  // while (idItem.className !== 'cart__item') { idItem = idItem.parentElement; }
-  // console.log(idItem);
-  // const oie = idItem.firstChild.firstChild.innerText;
 function cartItemClickListener(event) {
   const containerElements = document.querySelector('.items');
   const idItem = event.target.innerText.split(' ')[1];
