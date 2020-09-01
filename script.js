@@ -1,4 +1,22 @@
-window.onload = function onload() { };
+// cria URL API:
+const urlML = 'https://api.mercadolibre.com/';
+// cria o fetch - requisito1:
+const fetchProduct = (term) => {
+  const endpointTerm = `${urlML}sites/MLB/search?q=${term}`;
+  fetch(endpointTerm).then(response => response.json())
+  .then(query => query.results.forEach((product) => {
+    const sectionItems = document.querySelector('.items');
+    sectionItems.appendChild(createProductItemElement({
+      sku: product.id,
+      name: product.title,
+      image: product.thumbnail,
+    }));
+  }));
+};
+
+window.onload = function onload() {
+  fetchProduct('computador');
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
