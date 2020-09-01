@@ -32,7 +32,7 @@ async function totalSum() {
       const div = document.querySelector('.total-price');
       const price = parseFloat(priceTag.innerHTML.split('$')[1]);
       sum += price;
-      div.innerHTML = `Valor total no carrinho: $ ${sum}`;
+      div.innerHTML = `${sum}`;
     });
   } else {
     const div = document.querySelector('.total-price');
