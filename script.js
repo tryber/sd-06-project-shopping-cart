@@ -56,4 +56,4 @@ async function fetchProducts() {
 
 window.onload = function onload() {
   fetchProducts();
-}
+};
