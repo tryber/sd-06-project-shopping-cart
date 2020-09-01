@@ -81,17 +81,10 @@ async function renderProducts() {
     };
     const productElement = createProductItemElement(product);
     const addToCartButton = productElement.querySelector('.item__add');
-    addToCartButton.addEventListener('click', () => {
-      addItemToCart(productElement);
-    });
+    addToCartButton.addEventListener('click', () => addItemToCart(productElement));
     itemsField.appendChild(productElement);
   });
 }
-
-/*
-function setupEventHandlers() {
-}
-*/
 
 window.onload = async function onload() {
   await renderProducts();
