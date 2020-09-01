@@ -45,9 +45,9 @@ const appendItem = (item) => {
   const createDisplay = document.querySelector('.items');
   createDisplay.appendChild(item);
   item.addEventListener('click', (event) => {
-    const getSkuFromProductItem = event.currentTarget.firstChild.innerText
-    fetchToChart(getSkuFromProductItem)
-  })
+    const getSku = event.currentTarget.firstChild.innerText
+    fetchToChart(getSku);
+  });
 };
 
 const fetchDisplay = () => {
@@ -63,16 +63,16 @@ const fetchDisplay = () => {
 const appendItemToChart = (element) => {
   const toChart = document.querySelector('.cart__items');
   toChart.appendChild(element);
-}
+};
 
 const fetchToChart = (skuName) => {
   const url = 'https://api.mercadolibre.com/items/';
   fetch(`${url}${skuName}`)
   .then(resolve => resolve.json())
-  .then(data => {
+  .then((data) => {
     appendItemToChart(createCartItemElement(data));
-  })
-}
+  });
+};
 
 window.onload = function onload() {
   fetchDisplay();
