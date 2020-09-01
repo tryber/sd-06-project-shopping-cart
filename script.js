@@ -67,7 +67,7 @@ const appendItem = (item) => {
 const loadingText = () => {
   const message = 'loading...';
   return alert(message);
-}
+};
 
 const fetchDisplay = () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
