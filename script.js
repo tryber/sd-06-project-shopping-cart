@@ -49,7 +49,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-function saveState(){
+function saveState() {
   const cartState = document.querySelector('.cart__items').innerHTML;
   localStorage.cart = cartState;
 }
@@ -95,7 +95,7 @@ function clearCartItems() {
 window.onload = function onload() {
   getProductList();
   document.querySelector('.empty-cart').addEventListener('click', () => clearCartItems());
-  if(localStorage.cart){
+  if (localStorage.cart) {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
   }
 };
