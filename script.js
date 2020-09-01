@@ -17,6 +17,8 @@ function createCustomElement(element, className, innerText) {
 function saveItems() {
   const items = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', items);
+  const prices = document.querySelector('.total-price').innerHTML;
+  localStorage.setItem('price', prices)
   // comando pronto para escolher o que salvar
   // setItem serve para salvar e passamos nome e o valor (cart e items);
 }
@@ -24,6 +26,7 @@ function saveItems() {
 function cartItemClickListener(event) {
   const ol = document.querySelector('.cart__items');
   const item = event.target;
+  console.log(item);
   ol.removeChild(item);
   saveItems();
 }
@@ -33,9 +36,8 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-
-  // sumPrices(salePrice);
   saveItems();
+  sumPrices(salePrice);
   return li;
 }
 
@@ -92,16 +94,23 @@ const clearButton = () => {
 const storage = () => {
   if (localStorage.cart) {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
-    // document.querySelectorAll('.cart__item').forEach((item) => {
-    //   item.addEventListener('click', cartItemClickListener);
-    // });
+    document.querySelectorAll('.cart__item').forEach((item) => {
+      item.addEventListener('click', cartItemClickListener);
+    });
+  }
+  if (localStorage.price){
+    document.querySelector('.total-price').innerHTML = localStorage.price;
   }
 };
 
-// const sumPrices = (price) => {
-//   const divPrice = document.querySelector('.total-price');
-//   console.log(price)
-// }
+let tot = 0;
+const sumPrices = (price) => {
+  const divPrice = document.querySelector('.total-price');
+  tot = tot + price;
+  divPrice.innerHTML = tot;
+  console.log(tot);
+  saveItems();
+}
 
 const loadDiv = () => {
   setTimeout(() => {
