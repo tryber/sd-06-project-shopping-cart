@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+}
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -17,6 +23,28 @@
   display: flex;
 }
 
+header {
+  background-color: white;
+  color: rgb( 36 , 66 , 56 );
+  text-align: center;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+header #trybe-logo {
+  position: absolute;
+  margin-top: 15px;
+  width: 90px;
+  left: 15px;
+}
+
+header h1 {
+  font-size: 26px;
+  text-align: center;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -28,10 +56,13 @@
   flex-basis: 70%;
   flex-wrap: wrap;
   justify-content: center;
+  background-color: rgb( 117 , 146 , 114 );
+  padding-top: 15px;
 }
 
 .item {
   border: 1px solid rgb( 3 , 58 , 8 );
+  background-color: rgb( 253 , 251 , 251 );
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -42,13 +73,18 @@
   align-items: center;
 }
 
+.item:hover {
+  border: 3px solid rgb( 51 , 71 , 53 );
+  cursor: pointer;
+}
+
 .item .item__sku {
   display: none;
 }
 
 .item .item__title {
   flex-grow: 1;
-  padding: 10px;
+  padding: 20px;
   text-align: center;
 }
 
@@ -69,25 +105,36 @@
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  background-color: rgb( 10 , 54 , 5 );
+  color: rgb( 253 , 251 , 251 );
+  align-items: center;
 }
 
 .cart .cart__title {
   flex-basis: 1;
-  font-size: 16pt;
+  font-size: 24px;
   text-align: center;
+  padding: 10px 5px;
 }
 
 li {
   cursor: pointer;
   margin-top: 5px;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
   border-bottom: 1px solid rgb( 134 , 130 , 130 );
 }
 
 li:hover {
-  background-color: rgb( 206 , 206 , 173 );
+  background-color: rgb( 57 , 124 , 60 );
 }
 
 .total {
   display: flex;
+  font-size: 18px;
+  justify-content: center;
+}
+
+.empty-cart {
+  width: 150px;
+  font-size: 15px;
 }
