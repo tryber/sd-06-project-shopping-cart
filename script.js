@@ -17,7 +17,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event) {
+function cartItemClickListener() {
   // coloque seu código aqui
   const list = document.querySelector('.cart__items');
   list.removeChild(event.target);
