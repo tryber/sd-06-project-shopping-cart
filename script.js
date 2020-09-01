@@ -49,7 +49,6 @@ const computerObjectSearch = (inPutId) => {
   const productID = inPutId;
   console.log(productID);
   endpoint = `https://api.mercadolibre.com/items/${productID}`;
-  // <span class="item__sku">MLB1532299476</span>
   console.log(endpoint);
   return fetch(endpoint)
     .then(response => response.json())
@@ -87,7 +86,19 @@ const itemSearch = () => {
 
 window.onload = function onload() {
   itemSearch();
+  setupCleanEvent();
 };
+
+const setupCleanEvent = () => {
+  cleanButton = document.querySelector('.empty-cart');
+  cleanButton.addEventListener('click', cleanCart);
+}
+
+const cleanCart = (event) => {
+  const cleanFather = document.querySelector('.cart__items');
+  cleanFather.innerHTML = '';
+  // cleanFather.removeChild(event.target);
+}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
