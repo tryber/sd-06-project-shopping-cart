@@ -15,7 +15,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-
+  
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
