@@ -22,7 +22,7 @@ function saveLocalStorage({ id, price, title }) {
     totalText.innerHTML = `${price}`;
   } else {
     const items = localStorage.getItem('cart');
-    let total = parseInt(localStorage.getItem('total'), 10);
+    let total = parseFloat(localStorage.getItem('total'), 10);
     total += price;
     localStorage.setItem('cart', `${items}, ${id}, ${title}, ${price}`);
     localStorage.setItem('total', `${total}`);
@@ -45,9 +45,8 @@ function removeFromStorage(element) {
 }
 
 function removeFromPrices(element) {
-  const text = element.innerText.split('|');
-  const singlePrice = parseInt(text[2].split(':')[1].trim().slice(1), 10);
-  let total = parseInt(localStorage.getItem('total'), 10);
+  const singlePrice = parseFloat(element.innerText.split('$')[1]);
+  let total = parseFloat(localStorage.getItem('total'));
   total -= singlePrice;
   document.querySelector('div').innerText = `${total}`;
   localStorage.setItem('total', `${total}`);
@@ -80,7 +79,7 @@ function renderShoppingCart() {
       li.addEventListener('click', cartItemClickListener);
       document.querySelector('.cart__items').appendChild(li);
     }
-    const total = parseInt(localStorage.getItem('total'), 10);
+    const total = parseFloat(localStorage.getItem('total'));
     document.querySelector('div').innerText = `${total}`;
   }
 }
