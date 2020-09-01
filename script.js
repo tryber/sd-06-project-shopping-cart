@@ -2,6 +2,15 @@ function cartItemClickListener(event) {
   document.querySelector('.cart__items').removeChild(this);
 }
 
+function clearCart() {
+  document.querySelector('.empty-cart').addEventListener('click', () => {
+    const cartList = document.querySelector('.cart__items');
+    while(cartList.firstChild) {
+      cartList.removeChild(cartList.lastChild)
+    }
+  });
+}
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -74,4 +83,5 @@ function queryAtML() {
 
 window.onload = () => {
   queryAtML();
+  clearCart();
 };
