@@ -1,9 +1,17 @@
 // pegando a API
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
+// função para criar o localstorage
+const localStorageShopCart = () => {
+  const shopCart = document.querySelector('.cart__items').innerHTML;
+  console.log(shopCart);
+  localStorage.shopCart = shopCart;
+};
+
 // função que apaga um item da lista do carrinho quando clicado
 function cartItemClickListener(event) {
   event.target.remove();
+  localStorageShopCart();
 }
 
 // função para criar a lista no carrinho de compras
@@ -41,7 +49,8 @@ function findId() {
     .then((object) => {
       console.log(object);
       handleCreatListCart(object);
-    });
+    })
+    .then(() => localStorageShopCart());
 }
 
 // função correlacionada a função createProductItemElement (parte referente a imagem)
@@ -94,6 +103,22 @@ const handleAPI = () => {
   });
 };
 
+// função para recuperar o localstorage
+const saveLocalStorage = () => {
+  if (localStorage.shopCart) {
+    document.querySelector('.cart__items').innerHTML = localStorage.shopCart;
+  }
+};
+
+// função para remover (chamando cartItemClickListener ) algum elemento do retorno do localstorage
+const removeCartItemClickListener = () => {
+  document.querySelectorAll('.cart__item')
+    .forEach(element => element.addEventListener('click', cartItemClickListener));
+  localStorageShopCart();
+};
+
 window.onload = function onload() {
   handleAPI();
+  saveLocalStorage();
+  removeCartItemClickListener();
 };
