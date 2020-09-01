@@ -14,16 +14,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function settingWebStorage() {
+function saveItems() {
   const items = document.querySelector('.cart__items').innerHTML;
-  localStorage.cartShop = items;
+  localStorage.setItem('cart', items); //comando pronto para escolher o que salvar, setItem serve para salvar e passamos nome e o valor (cart e items);
 }
 
 function cartItemClickListener(event) {
   const ol = document.querySelector('.cart__items');
   const item = event.target;
   ol.removeChild(item);
-  settingWebStorage();
+  saveItems();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -31,7 +31,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  settingWebStorage();
+  saveItems();
   return li;
 }
 
@@ -51,6 +51,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       const createItem = createCartItemElement(result);
       const ol = document.querySelector('.cart__items');
       ol.appendChild(createItem);
+      saveItems();
     });
   });
 
@@ -83,18 +84,20 @@ const clearButton = () => {
 };
 
 const storage = () => {
-  if (localStorage.cartShop) {
-    document.querySelector('.cart__items').innerHTML = localStorage.cartShop;
-    document.querySelectorAll('.cart__item').forEach((item) => {
-      item.addEventListener('click', cartItemClickListener);
-    });
+  if (localStorage.cart) {
+    document.querySelector('.cart__items').innerHTML = localStorage.cart;
+    // document.querySelectorAll('.cart__item').forEach((item) => {
+    //   item.addEventListener('click', cartItemClickListener);
+    // });
   }
 };
 
 // const sumPrices = () => {
 //   const cart = document.querySelector('.cart');
 //   console.log(cart);
-//   const totalPrice = createElement('')
+//   const totalPrice = createElement('p');
+//   totalPrice.innerHTML = 'deu certo';
+//   cart.appendChild(totalPrice);
 // }
 
 window.onload = function onload() {
