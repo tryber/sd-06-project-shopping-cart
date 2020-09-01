@@ -40,7 +40,8 @@ let sum = 0;
 
 async function sumOfCartItems(itemPrice) {
   const totalPrice = document.querySelector('.total-price');
-  sum += itemPrice;
+  const value = await itemPrice;
+  sum += value;
   totalPrice.innerHTML = sum;
 }
 
