@@ -54,7 +54,6 @@ function saveCart(cartId) {
   }
 }
 
-// localStorage.clear()
 function createCartItemElement({ id: sku, title: name, price: salePrice }, textSaveCart) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -110,7 +109,21 @@ function renderShoppingCartSave() {
   }
 }
 
+function clearCart() {
+  const buttonClearCart = document.querySelector('.empty-cart');
+  const list = document.querySelector('.cart__items');
+  buttonClearCart.addEventListener('click', () => {
+    localStorage.clear();
+    const arrayListLength = list.children.length;
+    for (let index = 0; index < arrayListLength; index += 1) {
+      const li = list.children[0];
+      list.removeChild(li);      
+    }
+  });
+}
+
 window.onload = function onload() {
   requisitionMercadoLivreItem('computador');
   renderShoppingCartSave();
+  clearCart();
 };
