@@ -1,3 +1,7 @@
+body {
+  font-family: Roboto, sans-serif;
+}
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -31,7 +35,7 @@
 }
 
 .item {
-  border: 2px solid blue;
+  border: 2px solid black;
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -56,8 +60,9 @@
 }
 
 .item .item__add {
-  background-color: green;
-  border: 0;
+  background-color: blue;
+  border-radius: 5px;
+  color: white;
   cursor: pointer;
   margin: 0;
   padding: 5px;
@@ -72,5 +77,12 @@
 .cart .cart__title {
   flex-basis: 1;
   font-size: 16pt;
+  font-weight: 700;
   text-align: center;
+}
+
+.empty-cart {
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 6px;
 }
