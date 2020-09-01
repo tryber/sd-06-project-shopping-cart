@@ -37,8 +37,12 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  event.target.remove();
-}
+//event.target.remove();
+  const items = document.querySelectorAll('.cart__item');
+  items.forEach((item) => item.addEventListener('click', function() {
+    item.remove();
+  }));
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -47,14 +51,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-// // Criando span com valor total dos produtos
-// const sumValues = async (objeto) => {
-//   const totalValue = document.createElement('span');
-//   totalValue.className = 'total-price'
-//   totalValue.innerText = `Valor total${objeto}`
-//   document.querySelector('.cart').appendChild(totalValue);
-// }
 
 const itemCart = () => {
 // Capturando o evento, e logo após o proximo elemento html, com isso capturo o ID de cada item
@@ -86,8 +82,8 @@ const itemCart = () => {
 // Adicionando a função criada para remoção do item
       cartItem.addEventListener('click', cartItemClickListener);
       // Removendo o elemento de loading, assim que o item é carregado.
-      loading.remove();
-    });
+    })
+    loading.remove();
   }, 2000);
 };
 
