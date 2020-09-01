@@ -68,10 +68,12 @@ function createProductItemElement({ id, title, thumbnail }) {
 
 function fetchProductList() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+  document.querySelector('.items').innerHTML = 'Loading';
 
   fetch(url)
     .then(response => response.json())
     .then((object) => {
+      document.querySelector('.items').innerHTML = '';
       object.results.forEach(item => createProductItemElement(item));
     });
 }
