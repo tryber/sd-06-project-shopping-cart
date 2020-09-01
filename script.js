@@ -11,6 +11,23 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+// add
+const fetchProductId = (id) => {
+  const urlId = `https://api.mercadolibre.com/items/${id}`;
+  // console.log(urlId)
+  fetch(urlId)
+    .then(response => response.json())
+    .then((object) => {
+      // console.log(object);
+      if (object.error) {
+        throw new Error(object.error);
+      } else {
+        console.log(object);
+        document.querySelector('.cart').appendChild(createCartItemElement(object));
+      }
+    })
+    .catch(error => handleError(error));
+};
 
 // tirar duvida do obj distruct
 function createProductItemElement({ id, title, thumbnail }) {
@@ -22,8 +39,8 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
   .addEventListener('click', () => {
-    fetchProductId(id)
-  })
+    fetchProductId(id);
+  });
 
   return section;
 }
@@ -82,23 +99,6 @@ const fetchCurrency = (currency) => {
     })
     .catch(error => handleError(error));
 };
-
-const fetchProductId = id => {
-  const urlId = `https://api.mercadolibre.com/items/${id}`
-  // console.log(urlId)
-  fetch(urlId)
-    .then((response) => response.json())
-    .then((object) => {
-      // console.log(object);
-      if (object.error) {
-        throw new Error(object.error);
-      } else {
-        console.log(object)
-        document.querySelector('.cart').appendChild(createCartItemElement(object));
-      }
-    })
-    .catch((error) => handleError(error))
-}
 
 window.onload = function onload() {
   fetchCurrency();
