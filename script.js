@@ -16,11 +16,11 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener() {
   event.target.remove();
-  localStorage.removeItem(event.target.id)
+  localStorage.removeItem(event.target.id);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  localStorage.setItem(sku, JSON.stringify({ 'id': sku, 'title': name, 'price': salePrice }));
+  localStorage.setItem(sku, JSON.stringify({ id: sku, title: name, price: salePrice }));
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.id = sku;
@@ -40,7 +40,7 @@ const addCartFunction = (itemId) => {
 const getItemId = () => {
   const itemId = event.target.parentNode.children[0].innerText;
   addCartFunction(itemId);
-}
+};
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
@@ -70,6 +70,6 @@ window.onload = function onload() {
   fetch(url)
     .then(response => response.json())
     .then(object => handleResults(object.results));
-  
+
   Object.keys(localStorage).forEach(key => addCartFunction(key));
 };
