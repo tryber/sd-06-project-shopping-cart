@@ -17,11 +17,26 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// 04 Carregue o carrinho de compras através do
+// LocalStorage ao iniciar a página
+
+function saveCartLocally() {
+  const storageItems = document.querySelector('.cart__items').innerHTML;
+  localStorage.cartShop = storageItems;
+}
+
+function loadStorage() {
+  if (localStorage.cartShop) {
+    document.querySelector('.cart__items').innerHTML = localStorage.cartShop;
+  }
+}
+
 // 03 Remova o item do carrinho de compras ao clicar nele
 function cartItemClickListener(event) {
   const cartList = document.querySelector('.cart__items');
   const element = event.target;
   cartList.removeChild(element);
+  saveCartLocally();
 }
 
 // 02 Adicionando o produto ao carrinho de compras
@@ -45,6 +60,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 // createProductItemElement funcao que cria o item do produto
 // na tela principal, com o eventListener para fazer
 // requisicao pelo preco do produto para ir para o carrinho de compras
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -70,6 +86,7 @@ function createProductItemElement({ sku, name, image }) {
   });
   return section;
 }
+
 // 01 Listagem de produtos. criar uma listagem de produtos
 // que devem ser consultados através da API do Mercado Livre
 // funcao que faz essa requisicao da API e chama a funcao
@@ -81,6 +98,7 @@ function createProductItemElement({ sku, name, image }) {
 // e depois fazemos um appendchild na secao 'items' do html
 // a funcao que chamamos createProductItemElement ja cria
 // a secao de cada item especifico com a classe 'item'
+
 function fetchProducts() {
   const searchValue = 'computador';
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=$${searchValue}`;
@@ -106,15 +124,19 @@ function fetchProducts() {
 // depois usamos o while para que ENQUANTO a lista
 // de compras cartItems ainda possuir itens dentro dela
 // a funcao ira remover a childNode
+
 function clearCartButton(event) {
   localStorage.clear();
   const cartItems = document.querySelector('.cart__items');
   while (cartItems.childNodes.length > 0) {
     cartItems.removeChild(cartItems.childNodes[0]);
+    saveCartLocally();
   }
 }
 
 window.onload = function onload() {
   fetchProducts();
-  document.querySelector('.empty-cart').addEventListener('click', clearCartButton);
+  loadStorage();
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', clearCartButton);
 };
