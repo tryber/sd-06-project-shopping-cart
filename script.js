@@ -45,7 +45,7 @@ async function totalValueUpdater() {
     cartItemsValues.push(currentItemValue);
   }
   const totalValue = await cartItemsValues.reduce((acc, curr) => acc + parseInt(curr, 10), 0);
-  const totalValueDisplay = document.querySelector('.total-price-display');
+  const totalValueDisplay = document.querySelector('.total-price');
   totalValueDisplay.innerText = await totalValue;
 }
 
