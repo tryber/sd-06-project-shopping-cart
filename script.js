@@ -51,6 +51,13 @@ const fetchItems = () => {
   .then(response => response.results.forEach(object => createProductItemElement(object)));
 };
 
+function fetchCar(id) {
+  const urlId = `https://api.mercadolibre.com/items/${id}`;
+  fetch(urlId)
+  .then(response => response.json())
+  .then(response => createCartItemElement(response));
+};
+
 const addCar = () => {
   const itemAdd = document.querySelector('.items');
   itemAdd.addEventListener('click', (e) => {
@@ -69,9 +76,3 @@ window.onload = function onload() {
   addCar();
 };
 
-function fetchCar(id) {
-  const urlId = `https://api.mercadolibre.com/items/${id}`;
-  fetch(urlId)
-  .then(response => response.json())
-  .then(response => createCartItemElement(response));
-};
