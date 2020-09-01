@@ -46,11 +46,10 @@ const apiQuery = () => {
   const endpoint = `${URL}sites/MLB/search?q=computador`;
   fetch(endpoint)
     .then(response => response.json())
-    .then(item => item.results.forEach(element => {
+    .then(item => item.results.forEach((element) => {
       createProductItemElement(element);
     }));
-
-}
+};
 
 window.onload = function onload() {
   apiQuery();
