@@ -17,8 +17,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-
-
 // 03 Remova o item do carrinho de compras ao clicar nele
 function cartItemClickListener(event) {
   const cartList = document.querySelector('.cart__items');
