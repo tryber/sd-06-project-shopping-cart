@@ -60,8 +60,8 @@ function addCartItem(event) {
 
 function createItemList() {
   const container = document.querySelector('.container');
-  const loadingMessage = document.querySelector('.loading');
-  
+  const loadingText = document.querySelector('.loading');
+
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   fetch(url)
   .then(response => response.json())
@@ -76,7 +76,7 @@ function createItemList() {
     newProduct.addEventListener('click', addCartItem);
     productList.appendChild(newProduct);
   }))
-  .finally(() => container.removeChild(loadingMessage));
+  .finally(() => container.removeChild(loadingText));
 }
 
 function clearList() {
