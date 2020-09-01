@@ -1,22 +1,22 @@
 const saveItems = () => {
   const cart = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', cart);
-}
-
-function fetchCartFromStorage () {
-  const storedCart = localStorage.getItem('cart');
-  const cart = document.querySelector('.cart__items');
-  if (storedCart === '') console.log('carrinho vazio');
-  cart.innerHTML = storedCart;
-  const cartItems = document.querySelectorAll('.cart__item');
-  cartItems.forEach(item => item.addEventListener('click', cartItemClickListener))
-}
+};
 
 function cartItemClickListener(event) {
   const cartItem = event.target;
   const cart = document.querySelector('.cart__items');
   cart.removeChild(cartItem);
   saveItems();
+}
+
+function fetchCartFromStorage() {
+  const storedCart = localStorage.getItem('cart');
+  const cart = document.querySelector('.cart__items');
+  if (storedCart === '') console.log('carrinho vazio');
+  cart.innerHTML = storedCart;
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach(item => item.addEventListener('click', cartItemClickListener))
 }
 
 function createCartItemElement({ id, title, price }) {
