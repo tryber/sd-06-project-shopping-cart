@@ -33,7 +33,7 @@ const loading = () => {
   } else {
     document.querySelector('.cart').removeChild(document.querySelector('.loading'));
   }
-}
+};
 
 async function getPrice(item) {
   sum += item.price;
