@@ -17,10 +17,18 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// 03 Remova o item do carrinho de compras ao clicar nele
 function cartItemClickListener(event) {
-// coloque seu código aqui
+  const cartList = document.querySelector('.cart__items');
+  cartList.removeChild(event.target);
 }
 
+// 02 Adicionando o produto ao carrinho de compras
+// com essa funcao ao clicar no item eh criado uma 
+// li com as infos, que voltam para a funcao
+// createProductItemElement para o elemento ser criado na tela 
+// 03 essa funcao cria o eventlisteneer para remover o 
+// item do carrinho ao ser clicado
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -29,13 +37,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+// 01 Listagem de produtos. criar uma listagem de produtos 
+// que devem ser consultados através da API do Mercado Livre
+// 02 Adicionando o produto ao carrinho de compras
+// createProductItemElement funcao que cria o item do produto // na tela principal, com o eventListener para fazer
+// requisicao pelo preco do produto para ir para o carrinho de compras
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
   const itemsSection = document.querySelector('.items');
-
   itemsSection.appendChild(section);
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -56,7 +67,10 @@ function createProductItemElement({ sku, name, image }) {
   });
   return section;
 }
-
+// 01 Listagem de produtos. criar uma listagem de produtos 
+// que devem ser consultados através da API do Mercado Livre
+// funcao que faz essa requisicao da API e chama a funcao
+// createProductItemElement para criar o item na tela
 function fetchProducts() {
   const searchValue = 'computador';
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=$${searchValue}`;
@@ -83,6 +97,15 @@ function fetchProducts() {
 // a funcao que chamamos createProductItemElement ja cria
 // a secao de cada item especifico com a classe 'item'
 
+function clearCartButton(event) {
+  localStorage.clear();
+  while (document.querySelector('.cart__items').childNodes.length > 0) {
+    document.querySelector('.cart__items')
+    .removeChild(document.querySelector('.cart__items').childNodes[0]);
+  }
+}
+
 window.onload = function onload() {
   fetchProducts();
+  document.querySelector('.empty-cart').addEventListener('click', clearCartButton);
 };
