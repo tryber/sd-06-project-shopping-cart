@@ -18,7 +18,7 @@ function saveItems() {
   const items = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', items);
   const prices = document.querySelector('.total-price').innerHTML;
-  localStorage.setItem('price', prices)
+  localStorage.setItem('price', prices);
   // comando pronto para escolher o que salvar
   // setItem serve para salvar e passamos nome e o valor (cart e items);
 }
@@ -30,6 +30,15 @@ function cartItemClickListener(event) {
   ol.removeChild(item);
   saveItems();
 }
+
+let tot = 0;
+const sumPrices = (price) => {
+  const divPrice = document.querySelector('.total-price');
+  tot += price;
+  divPrice.innerHTML = tot;
+  console.log(tot);
+  saveItems();
+};
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
@@ -98,19 +107,10 @@ const storage = () => {
       item.addEventListener('click', cartItemClickListener);
     });
   }
-  if (localStorage.price){
+  if (localStorage.price) {
     document.querySelector('.total-price').innerHTML = localStorage.price;
   }
 };
-
-let tot = 0;
-const sumPrices = (price) => {
-  const divPrice = document.querySelector('.total-price');
-  tot = tot + price;
-  divPrice.innerHTML = tot;
-  console.log(tot);
-  saveItems();
-}
 
 const loadDiv = () => {
   setTimeout(() => {
