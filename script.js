@@ -42,6 +42,8 @@ function addItemToCart(event, sku) {
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  const loading = document.querySelector('.loading');
+  loading.style.display = 'none';
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -89,9 +91,18 @@ function loadCartItem() {
   return localStorageValues;
 }
 
+function loadMessageRequest() {
+  const div = document.createElement('div');
+  const items = document.querySelector('.items');
+  div.className = 'loading';
+  div.innerHTML = 'LOADING...';
+  items.appendChild(div);
+}
+
 window.onload = function onload() {
   fetchListOfProducts();
   loadCartItem();
+  loadMessageRequest();
   const btnEmptyCart = document.querySelector('.empty-cart');
   btnEmptyCart.addEventListener('click', clearCart);
 };
