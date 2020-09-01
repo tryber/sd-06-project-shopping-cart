@@ -20,7 +20,10 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createCustomElement('span', 'item__sku', id));
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+  .addEventListener('click', () => {
+    fetchProductId(id)
+  })
 
   return section;
 }
@@ -33,10 +36,10 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -61,11 +64,11 @@ const fetchCurrency = (currency) => {
   fetch(url)
     .then(response => response.json())
     .then((object) => {
-      console.log(object);
+      // console.log(object);
       if (object.error) {
         throw new Error(object.error);
       } else {
-        console.log(object.results);
+        // console.log(object.results);
         // caminha na array object.results
         object.results.forEach((item) => {
           // seleciona a section com id items e vai add p/ cada elemento da array
@@ -74,12 +77,28 @@ const fetchCurrency = (currency) => {
           document.querySelector('.items')
           // tirar duvida do obj distruct
           .appendChild(createProductItemElement(item));
-          console.log(item.title);
         });
       }
     })
     .catch(error => handleError(error));
 };
+
+const fetchProductId = id => {
+  const urlId = `https://api.mercadolibre.com/items/${id}`
+  // console.log(urlId)
+  fetch(urlId)
+    .then((response) => response.json())
+    .then((object) => {
+      // console.log(object);
+      if (object.error) {
+        throw new Error(object.error);
+      } else {
+        console.log(object)
+        document.querySelector('.cart').appendChild(createCartItemElement(object));
+      }
+    })
+    .catch((error) => handleError(error))
+}
 
 window.onload = function onload() {
   fetchCurrency();
