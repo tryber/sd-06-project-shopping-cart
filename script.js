@@ -84,11 +84,6 @@ const itemSearch = () => {
     });
 };
 
-window.onload = function onload() {
-  itemSearch();
-  setupCleanEvent();
-};
-
 const cleanCart = (event) => {
   const cleanFather = document.querySelector('.cart__items');
   cleanFather.innerHTML = '';
@@ -97,6 +92,11 @@ const cleanCart = (event) => {
 const setupCleanEvent = () => {
   cleanButton = document.querySelector('.empty-cart');
   cleanButton.addEventListener('click', cleanCart);
+};
+
+window.onload = function onload() {
+  itemSearch();
+  setupCleanEvent();
 };
 
 function getSkuFromProductItem(item) {
