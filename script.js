@@ -5,6 +5,16 @@ const apiURL = {
   endPointItem: 'items/',
 };
 
+async function fetchItemsID(itemID) {
+  const itemURL = `${apiURL.url}${apiURL.endPointItem}${itemID}`;
+  await fetch(itemURL)
+    .then(response => response.json())
+    .then((resultJSON) => {
+      createCartItemElement(resultJSON.id, resultJSON.title, resultJSON.price);
+    })
+    .catch(error => window.alert(error));
+}
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -67,21 +77,12 @@ function createCartItemElement(sku, name, salePrice) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  const cartOl = document.querySelector('.cart__items');
+  cartOl.appendChild(li);
+  console.log(cartOl.appendChild(li));
   return li;
 }
 
-function fetchItemsID(itemID) {
-  const itemURL = `${apiURL.url}${apiURL.endPointItem}${itemID}`;
-  fetch(itemURL)
-    .then(response => response.json())
-    .then((resultJSON) => {
-      const cartItem = createCartItemElement(resultJSON.id, resultJSON.title, resultJSON.price);
-      cartItem.addEventListener('click', cartItemClickListener);
-      const cartOl = document.querySelector('.cart__items');
-      cartOl.appendChild(cartItem);
-    })
-    .catch(error => window.alert(error));
-}
 
 window.onload = function onload() {
   fetchItems();
