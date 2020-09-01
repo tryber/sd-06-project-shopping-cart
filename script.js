@@ -19,11 +19,6 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function renderCartItem(event) {
-  const itemID = event.target.parentNode.children[0].innerText;
-  fetchItemsID(itemID);
-}
-
 function createProductItemElement(sku, name, image) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -82,6 +77,11 @@ function fetchItemsID(itemID) {
       cartOl.appendChild(cartItem);
     })
     .catch(error => window.alert(error));
+}
+
+function renderCartItem(event) {
+  const itemID = event.target.parentNode.children[0].innerText;
+  fetchItemsID(itemID);
 }
 
 window.onload = function onload() {
