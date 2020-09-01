@@ -42,8 +42,6 @@ function addItemToCart(event, sku) {
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
-  const loading = document.querySelector('.loading');
-  loading.style.display = 'none';
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -66,6 +64,11 @@ function fetchListOfProducts() {
   const QUERY = 'computador';
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${QUERY}`)
     .then(products => products.json())
+    .then((products) => {
+      const loading = document.querySelector('.loading');
+      loading.remove();
+      return products;
+    })
     .then(products => renderItemsProducts(products.results));
 }
 
