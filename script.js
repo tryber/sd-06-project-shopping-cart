@@ -7,7 +7,7 @@ const url = `${apiInfo.api}${apiInfo.endpoint}`;
 const container = document.querySelector('.container');
 const cartList = document.querySelector('.cart__items');
 const clearButton = document.querySelector('.empty-cart');
-let totalPrice = document.createElement('span');
+const totalPrice = document.createElement('span');
 document.querySelector('.total-price').appendChild(totalPrice);
 
 function loadFromStorage() {
@@ -116,7 +116,7 @@ cartList.addEventListener('click', (e) => {
   if (element.tagName === 'LI') {
     const price = element.innerText.split('PRICE: $')[1];
     cartList.removeChild(element);
-    updateTotalPrice(price * - 1)
+    updateTotalPrice(price * -1);
   }
 });
 
