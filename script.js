@@ -1,5 +1,5 @@
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  document.querySelector('.cart__items').removeChild(this);
 }
 
 function getSkuFromProductItem(item) {
@@ -41,7 +41,6 @@ function queryThisAtML(sku) {
       });
       cartItems.appendChild(Item);
     });
-  return queryUrl;
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -73,6 +72,6 @@ function queryAtML() {
     });
 }
 
-window.onload = function onload() {
+window.onload = () => {
   queryAtML();
 };
