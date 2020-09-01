@@ -45,7 +45,7 @@ async function totalValueUpdater() {
     cartItemsIds.push(nextID);
   }
 
-  cartItemsIds = cartItemsIds.map((itemID) => fetchItem(itemID).then(async (item) => {
+  cartItemsIds = cartItemsIds.map(itemID => fetchItem(itemID).then(async (item) => {
     const currentPrice = await item.price;
     return currentPrice;
   }));
