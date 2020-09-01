@@ -1,22 +1,22 @@
 window.onload = function onload() {};
 
-const api = "https://api.mercadolibre.com/sites/MLB/search?q=computador";
+const api = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 fetch(api)
   .then(response => response.json())
   .then(data => data.results)
-  .then(eachData => {
+  .then((eachData) => {
     eachData.forEach((data) => {
       const section = document.getElementsByClassName('items')[0];
-      section.appendChild(createProductItemElement({data}));
-    })
-  }); 
+      section.appendChild(createProductItemElement(data));
+    });
+  });
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-} 
+}
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
