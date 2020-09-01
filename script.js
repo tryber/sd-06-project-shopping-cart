@@ -30,9 +30,9 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  let total = [];
-  total.push(salePrice)
-  console.log(total)
+  // let total = [];
+  // total.push(salePrice)
+  // console.log(total)
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -70,9 +70,10 @@ function fetchFunc() {
   setTimeout(() =>
   fetch(url)
     .then(response => response.json())
-    .then(object => object.results) 
-    .then(result => result.forEach(resultElement => createProductItemElement(resultElement))), 1000);
-};
+    .then(object => object.results)
+    .then(result => result.forEach(resultElement => createProductItemElement(resultElement))),
+    1000);
+}
 
 const clear = () => {
   const botao = document.querySelector('.empty-cart');
@@ -106,5 +107,5 @@ window.onload = function onload() {
   fetchFunc();
   clear();
   storage();
-  loading()
+  loading();
 };
