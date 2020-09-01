@@ -15,12 +15,10 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 }
 
@@ -30,18 +28,34 @@ function getSkuFromProductItem(item) {
 
 // Requisito 3
 function cartItemClickListener(event) {
+  const total = document.querySelector('.total-price');
+  const priceToRemove = parseFloat((event.target.innerText).split('$')[1]);
+  const totalPrice = parseFloat(total.lastChild.innerHTML);
+  const sub = totalPrice - priceToRemove;
+  total.lastChild.innerText = sub;
   event.target.remove();
+}
+
+// Requisito 5
+async function sumItems(li) {
+  const total = document.querySelector('.total-price');
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.lastChild.innerHTML);
+  const sum = itemPrice + totalPrice;
+  total.lastChild.innerText = sum;
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  sumItems(li);
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
 const urlSearch = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+
 
 // Requisito 2
 const getItem = () => {
@@ -63,7 +77,6 @@ const getItem = () => {
       loading.classList.remove('loading');
     });
 };
-
 
 // Requisito 1
 const fetchUrl = () => {
@@ -89,15 +102,9 @@ const emptyList = () => {
     while (cart.firstChild) {
       cart.removeChild(cart.firstChild);
     }
+    document.querySelector('.total-price').lastChild.innerText = 0;
   });
 };
-
-// Requisito 5
-// const sum = () => {
-//   const items = document.querySelector('.cart__item')
-//   console.log(items)
-// }
-
 
 window.onload = function onload() {
   fetchUrl();
