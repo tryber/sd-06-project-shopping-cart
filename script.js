@@ -10,21 +10,26 @@ function createProductImageElement(imageSource) {
 // }
 
 // destructuring do data q vem cartItemClickListener
+
+function cartItemClickListener() {
+  const carList = document.querySelector('.cart__items');
+  carList.removeChild(this);
+}
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  // Depois customizar btn...
+  // const btn = document.createElement('button');
+  // li.appendChild(btn);
+  li.addEventListener('click', cartItemClickListener);
 
   return li;
 }
 
-// function cartItemClickListener(event) {
-//   // to be continue...
-// }
-
-function getOutOfTheCar(event){
+function getOutOfTheCar(event) {
   const idCardTarget = event.target.previousSibling.previousSibling.previousSibling.innerText;
-  const url = `https://api.mercadolibre.com/items/${ idCardTarget }`;
+  const url = `https://api.mercadolibre.com/items/${idCardTarget}`;
   fetch(url)
     .then(response => response.json())
     // .then(e => console.log(e));
