@@ -68,9 +68,9 @@ const emptyCart = () => {
   emptyButton.addEventListener('click', () => {
     const olCart = document.querySelector('.cart__items');
     olCart.innerHTML = '';
-    localStorageItem(olCart.innerHTML);
+    localStorage.clear();
     const localPrice = document.querySelector('.total-price');
-    localPrice.innerText = '0.00';
+    localPrice.innerText = '0,00';
   });
 };
 
@@ -123,6 +123,7 @@ const fetchToCreateLayout = () => {
     const sectionItem = document.querySelector('.items');
     sectionItem.appendChild(section);
   })));
+  document.querySelector('.container').removeChild(document.querySelector('.loading'));
 };
 
 window.onload = function onload() {
