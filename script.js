@@ -45,7 +45,8 @@ function cartItemClickListener(event) {
   const value = Number(valourString[valourString.length - 1].replace('$', ''));
   decreasePrice(value)
     .then((totalValue) => {
-      document.getElementById('price').innerHTML = `Preço total: $${totalValue}`;
+      const totalPrice = document.getElementById('price');
+      totalPrice.innerHTML = `Preço total: $${totalValue}`;
     });
 }
 
