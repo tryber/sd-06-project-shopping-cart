@@ -47,16 +47,25 @@ const fetchItems = () => {
       console.log(obj.results);
       obj.results.forEach((items) => {
         const { id, title, thumbnail } = items;
-        const card = createProductItemElement({
+        const products = createProductItemElement({
           sku: id,
           name: title,
           image: thumbnail,
         });
-        document.querySelector('.items').appendChild(card);
+        document.querySelector('.items').appendChild(products);
       });
     });
 };
 
+const clearCart = () => {
+  const clear = document.querySelector('.empty-cart');
+  clear.addEventListener('click', () => {
+    let items = document.querySelector('.cart__items');
+    items.innerHTML = '';
+  });
+};
+
 window.onload = function onload() {
   fetchItems();
+  clearCart()
 };
