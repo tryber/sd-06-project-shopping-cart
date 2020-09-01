@@ -1,42 +1,58 @@
+/*
+____________________DOM's____________________
+*/
+const cartList = document.getElementsByClassName('cart__items')[0];
+const totalPrice = document.getElementsByClassName('total-price')[0];
+const sectionCart = document.getElementsByClassName('btn-cart')[0];
+const sectionItens = document.getElementsByClassName('items')[0];
+const loading = document.querySelector('.loading');
+
+/*
+____________________API - Information____________________
+*/
+const apiInfo = {
+  api: 'https://api.mercadolibre.com/',
+  epMBL: 'sites/MLB/',
+  epItens: 'items/',
+  type: 'computador'
+};
+
+const url = `${apiInfo.api}`;
+const urlItens = `${url}${apiInfo.epItens}`;
+const urlComputer = `${url}${apiInfo.epMBL}search?q=${apiInfo.type}`;
+
+/*
+____________________LOCAL STORAGE HANDLE____________________
+*/
 function carrinhoCompras() {
-  localStorage.setItem('li do carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
+  localStorage.setItem('li do carrinho', cartList.innerHTML);
 }
 
+function clearStorageAndList(listaCart, totalPrice) { // line 88
+  clean(listaCart, totalPrice);
+  localStorage.removeItem('li do carrinho', cartList.innerHTML);
+}
+
+/*
+____________________SUB-FUNCTION CLEARANCE____________________
+*/
 function clean(firstItem, secondItem) {
   const textPrice = secondItem.innerText;
   const itemList = firstItem.innerHTML;
-  const cartList = document.getElementsByClassName('cart__items')[0];
-  const totalPrice = document.getElementsByClassName('total-price')[0];
+
   if (itemList.length >= 0) cartList.innerHTML = '';
-  if (textPrice.length >= 0) totalPrice.innerText = '';
+  if (textPrice.length >= 0) totalPrice.innerText = 0;
 }
 
-async function clearStorageAndList(listaCart, totalPrice) { // line 73
-  await clean(listaCart, totalPrice);
-  await localStorage.removeItem('li do carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
-}
-
+/*
+____________________CREATE FUNCTIONS____________________
+*/
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 }
-
-async function sumPrices() {
-  const carrinho = await document.querySelectorAll('.cart__item');
-  const numPrice = await [...carrinho].map(elem => elem.textContent.match(/[0-9.0-9]+$/))
-  .reduce((accumul, valor) => accumul + parseFloat(valor), 0);
-
-  document.querySelector('.total-price').innerHTML = `${numPrice}`;
-}
-
-async function cartItemClickListener(event) {
-  await event.remove();
-  await carrinhoCompras();
-  await sumPrices();
-}
-
 
 function createCartItemElement(data) {
   // console.log(data);
@@ -47,21 +63,6 @@ function createCartItemElement(data) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
   return li;
-}
-
-
-async function addToCart(skuId) { // async para declarar que a função é async de forma sincrona
-  const addLibre = `https://api.mercadolibre.com/items/${skuId}`;
-  const getOlList = document.querySelector('.cart__items');
-  await fetch(addLibre) // o await tem a função de esperar a anterior acabar
-  .then(response => response.json())
-  .then(data => getOlList.appendChild(createCartItemElement({
-    sku: data.id,
-    name: data.title,
-    salePrice: data.price, // poderia ser base_price?
-  })));
-  await carrinhoCompras();
-  await sumPrices();
 }
 
 function createCustomElement(element, className, innerText) {
@@ -86,44 +87,71 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function createBtnAndClickListener() {
-  const listaCart = document.getElementsByClassName('cart__items')[0];
   const section = document.createElement('section');
-  const totalPrice = document.getElementsByClassName('total-price')[0];
-  // console.log(totalPrice.innerHTML);
   section.className = 'cartItem';
 
   section.appendChild(createCustomElement('button', 'empty-cart', 'Limpar Carrinho'))
-  .addEventListener('click', () => clearStorageAndList(listaCart, totalPrice));
+  .addEventListener('click', () => clearStorageAndList(cartList, totalPrice));
 
   return section;
 }
 
-// async function getPrice() {
+/*
+____________________ASYNC FUNCTIONS____________________
+*/
+async function sumPrices() {
+  const carrinho = document.querySelectorAll('.cart__item'); // Espera o DOM ser criado (async)
+  const numPrice = [...carrinho].map(elem => elem.textContent.match(/[0-9.0-9]+$/))
+  .reduce((accumul, valor) => accumul + parseFloat(valor), 0);
 
-// }
+  totalPrice.innerHTML = `${numPrice}`;
+}
 
-window.onload = async function onload() {
-  const loading = document.querySelector('.loading');
-  setTimeout(() => {
-    loading.remove();
-  }, 500);
-  const sectionCart = document.getElementsByClassName('btn-cart')[0];
-  sectionCart.appendChild(createBtnAndClickListener());
-  const sectionItens = document.getElementsByClassName('items')[0];
-  const CPUlibre = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-  await fetch(CPUlibre)
+async function cartItemClickListener(event) {
+  await event.remove();
+  await sumPrices();
+  carrinhoCompras();
+}
+
+async function addToCart(skuId) { // async para declarar que a função é async de forma sincrona
+  const addLibrary = `${urlItens}${skuId}`;
+  const getOlList = document.querySelector('.cart__items');
+  await fetch(addLibrary) // o await tem a função de esperar a anterior acabar
+  .then(response => response.json())
+  .then(data => getOlList.appendChild(createCartItemElement({
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price, // poderia ser base_price?
+  })));
+  await sumPrices();
+  carrinhoCompras();
+}
+
+async function createWindowList() {
+  fetch(urlComputer)
   .then(response => response.json())
   .then(data =>
     data.results.forEach((product) => {
-      const INFOproduct = createProductItemElement({
+      const infoProduct = createProductItemElement({
         sku: product.id,
         name: product.title,
         image: product.thumbnail,
       });
-      sectionItens.appendChild(INFOproduct);
+      sectionItens.appendChild(infoProduct);
     }),
   );
-  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('li do carrinho');
+}
+
+/*
+____________________WINDOW ONLOAD____________________
+*/
+window.onload = async function onload() {
+  setTimeout(() => {
+    loading.remove();
+  }, 500);
+  sectionCart.appendChild(createBtnAndClickListener());
+  await createWindowList();
+  cartList.innerHTML = localStorage.getItem('li do carrinho');
   document.querySelectorAll('li').forEach(elem => elem.addEventListener('click', () => cartItemClickListener(elem)));
   await sumPrices();
 };
