@@ -1,3 +1,16 @@
+function createEventHandlers() {
+  const clearCartButton = document.querySelector('.empty-cart');
+  clearCartButton.addEventListener('click', clearCart);
+}
+
+function clearCart() {
+  const cart = document.querySelector('.cart__items');
+  while (cart.firstChild !== null) {
+    cart.firstChild.remove();
+  }
+  saveItems();
+}
+
 const saveItems = () => {
   const cart = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', cart);
@@ -91,4 +104,5 @@ async function fetchProducts(product) {
 window.onload = async function onload() {
   fetchProducts('computador');
   fetchCartFromStorage();
+  createEventHandlers();
 };
