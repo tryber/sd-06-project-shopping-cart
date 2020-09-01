@@ -49,7 +49,7 @@ function fetchItems() {
   fetch(query)
   .then(response => response.json())
   .then(response => response.results.forEach(object => createProductItemElement(object)));
-};
+}
 
 function fetchCar(id) {
   const urlId = `https://api.mercadolibre.com/items/${id}`;
@@ -72,12 +72,12 @@ const addCar = () => {
 };
 
 const emptyCart = () => {
-const button = document.querySelector('.empty-cart');
-button.addEventListener('click', () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', () => {
   const itemsCart = document.querySelectorAll('.cart__item');
-  itemsCart.forEach((element) => element.remove());
-  });
-}
+  itemsCart.forEach(element => element.remove());
+});
+};
 
 window.onload = function onload() {
   fetchItems();
