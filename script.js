@@ -27,11 +27,13 @@ function cartItemClickListener(event) {
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const list = document.createElement('li');
-  list.className = 'cart__item';
-  list.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  list.addEventListener('click', cartItemClickListener);
-  return list;
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  sumPrices(li)
+  li.addEventListener('click', cartItemClickListener);
+
+  return li;
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -53,6 +55,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
         const list = document.querySelector('.cart__items');
         list.appendChild(createItem);
         saveStorage();
+        sumPrices();
       });
   });
   items.appendChild(section);
@@ -77,27 +80,31 @@ const clear = () => {
     const section = document.querySelector('.cart__items');
     section.innerHTML = '';
   });
+  saveStorage();
+  sumPrices(li);
 };
 
 const storageItems = () => {
   if (localStorage.cart) {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
-  }
+  };
 };
 
-const sumPrices = () => {
-  const cart = document.querySelector('.cart__items');
-  console.log(cart);
-  // const arrayCart = cart.split(' ');
-  // const total = arrayCart[arrayCart.length - 1].slice(1);
-  // const number = parseInt(total);
+const load = () => {
+  const text = document.querySelector('.loading');
 
-  return cart;
-};
+}
+
+const sumPrices = async (li) => {
+  const total = document.querySelector('.total-price');
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.lastChild.innerHTML);
+  const sum = itemPrice + totalPrice;
+  total.lastChild.innerText = sum;
+}
 
 window.onload = function onload() {
   fetchFunction();
   clear();
   storageItems();
-  sumPrices();
 };
