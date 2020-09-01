@@ -38,11 +38,33 @@ function loadStorage() {
   }
 }
 
+// 05 Some o valor total dos itens do carrinho de compras de forma assíncrona
+//pegar o preco, transformar em number cm parseFloat, e somar no total
+const sumPrices = async (li) => {
+  const total = document.querySelector('.total-price');
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.lastChild.innerHTML);
+  const sum = itemPrice + totalPrice;
+  total.lastChild.innerText = sum;
+}
+
+function removeFromPrices(element) {
+  const total = document.querySelector('.total-price')
+  const productPrice = parseFloat(element.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.lastChild.innerHTML);
+  const sub = totalPrice - productPrice;
+  total.lastChild.innerText = sub;
+}
+
 // 03 Remova o item do carrinho de compras ao clicar nele
+// a funcao encontra a lista do carrinho e seleciona o
+// elemento que recebe o evento, e o remove
+// depois o carrinho eh salvo no localStorage, atualizado
 function cartItemClickListener(event) {
   const cartList = document.querySelector('.cart__items');
   const element = event.target;
   cartList.removeChild(element);
+  removeFromPrices(element);
   saveCartLocally();
 }
 
@@ -57,6 +79,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  sumPrices(li);
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -138,11 +161,16 @@ function clearCartButton(event) {
   }
 }
 
+// 07 a funcao Set Time Out esta sendo usada para
+// imitar um 'atraso' da API, dando espaco para o 
+// escrito 'loading' aparecer, e quando o tempo 'acaba'
+// a funcao chama os itens para serem impressos na tela
+// e o loading eh escondido
 window.onload = function onload() {
-  fetchProducts();
   loadStorage();
   setTimeout(() => {
     document.querySelector('.loading').remove();
+    fetchProducts();
   }, 500);
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', clearCartButton);
