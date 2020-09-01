@@ -29,13 +29,13 @@ async function totalSum() {
   let sum = 0;
   if (items.length !== 0) {
     items.forEach((priceTag) => {
-      const div = document.querySelector('#price');
+      const div = document.querySelector('.total-price');
       const price = parseFloat(priceTag.innerHTML.split('$')[1]);
       sum += price;
       div.innerHTML = `Valor total no carrinho: $ ${sum}`;
     });
   } else {
-    const div = document.querySelector('#price');
+    const div = document.querySelector('.total-price');
     div.innerHTML = '';
   }
 }
