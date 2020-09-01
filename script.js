@@ -93,7 +93,7 @@ const ML_URL = () => {
 
 window.onload = function onload() {
   ML_URL();
-  document.querySelector('ol').addEventListener('click', e =>
+  document.querySelector('.cart__items').addEventListener('click', e =>
     cartItemClickListener(e.target));
   if (localStorage.getItem('cart')) {
     RETRIEVE_CART();
