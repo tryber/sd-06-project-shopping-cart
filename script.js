@@ -24,7 +24,7 @@ function cartItemClickListener(item) {
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = ` SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.id = `${id}`;
   CART.appendChild(li);
   UPDATE_CART();
