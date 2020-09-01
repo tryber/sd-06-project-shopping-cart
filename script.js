@@ -41,7 +41,7 @@ const fetchProductId = (id) => {
         throw new Error(object.error);
       } else {
         console.log(object);
-        document.querySelector('cart__items').appendChild(createCartItemElement(object));
+        document.querySelector('.cart__items').appendChild(createCartItemElement(object));
       }
     })
     .catch(error => handleError(error));
