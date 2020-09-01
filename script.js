@@ -28,6 +28,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// Requisito 3
 function cartItemClickListener(event) {
   event.target.remove();
 }
@@ -54,12 +55,13 @@ const getItem = () => {
       const name = item.title;
       const salePrice = item.price;
       const cart = document.querySelector('.cart__items');
-      cart.appendChild(createCartItemElement({ sku, name, salePrice }));
+      cart.appendChild(createCartItemElement({ sku, name, salePrice }))
+      
     });
 };
 
 // Requisito 1
-const promise = () => {
+const fetchUrl = () => {
   fetch(urlSearch)
     .then(response => response.json())
     .then((object) => {
@@ -75,6 +77,19 @@ const promise = () => {
     });
 };
 
+
 window.onload = function onload() {
-  promise();
+  fetchUrl();
+  emptyList();
 };
+
+// Requisito 6 
+const emptyList = () => {
+  document.querySelector('.empty-cart').addEventListener('click', () => {
+    const cart = document.querySelector('.cart__items')
+    while (cart.firstChild) {
+      cart.removeChild(cart.firstChild)
+    }
+  })
+}
+
