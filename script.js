@@ -14,6 +14,11 @@ async function sumOfPrices() {
   document.querySelector('.total-price').innerHTML = numberOnPrice;
 }
 
+const localStorageSave = () => {
+  const itemsOnCart = document.querySelector('.cart__items');
+  localStorage.setItem('items', itemsOnCart.innerHTML);
+};
+
 function cartItemClickListener(event) {
   event.target.remove();
   localStorage.clear();
@@ -44,11 +49,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-const localStorageSave = () => {
-  const itemsOnCart = document.querySelector('.cart__items');
-  localStorage.setItem('items', itemsOnCart.innerHTML);
-};
 
 const localStorageLoad = () => {
   const getCartItens = document.querySelector('.cart__items');
