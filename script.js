@@ -84,7 +84,7 @@ const itemCart = () => {
 // Selecionando o item do carrinho para depois remove-lo
       const cartItem = document.querySelector('.cart__item');
 // Adicionando a função criada para remoção do item
-      cartItem.addEventListener('click', cartItemClickListener)
+      cartItem.addEventListener('click', cartItemClickListener);
       // Removendo o elemento de loading, assim que o item é carregado.
       loading.remove();
     });
