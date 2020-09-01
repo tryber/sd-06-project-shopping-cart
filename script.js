@@ -97,12 +97,10 @@ async function addItems(event) {
 
 window.onload = function onload() {
   APIReq();
-  const items = document.querySelector('#item');
   const cartItem = document.querySelector('#cart-items');
-  items.addEventListener('click', addItems);
+  document.querySelector('#item').addEventListener('click', addItems);
   const price = document.querySelector('#pricesT');
-  const empty = document.querySelector('#getEmpy');
-  empty.addEventListener('click', () => {
+  document.querySelector('#getEmpy').addEventListener('click', () => {
     localStorage.clear();
     cartItem.innerHTML = '';
     price.innerText = `Preço total: $${0}`;
