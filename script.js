@@ -2,14 +2,14 @@ let totalValue = parseFloat(localStorage.getItem('totalValue'));
 
 if (!totalValue) totalValue = 0;
 
-function createProductImageElement(imageSource) {
+const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 }
 
-function getSkuFromProductItem(item) {
+const getSkuFromProductItem = (item) => {
   return item.querySelector('span.item__sku').innerText;
 }
 
@@ -22,7 +22,7 @@ const totalValueUpdate = async (value) => {
 };
 
 // Removendo único item da lista
-function cartItemClickListener(event) {
+const cartItemClickListener = (event) => {
   const item = event.target;
   const itemText = item.innerText;
   const price = parseFloat(itemText.split('PRICE: $')[1]);
@@ -33,7 +33,7 @@ function cartItemClickListener(event) {
 }
 
 // Criando item a item dentro do carrinho
-function createCartItemElement({ sku, name, salePrice }) {
+const createCartItemElement = ({ sku, name, salePrice }) => {
   const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -69,7 +69,7 @@ const getItemToCart = (event) => {
   fetchItemById(id);
 };
 
-function createCustomElement(element, className, innerText) {
+const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
@@ -80,7 +80,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 // Criando itens na lista e renderizando
-function createProductItemElement({ sku, name, image }) {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
