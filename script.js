@@ -46,12 +46,18 @@ async function fetchProducts() {
   const json = await result.json();
   const itemsArray = json.results;
   itemsArray.forEach((item) => {
-    const sku = item.id;
-    const name = item.title;
-    const image = item.thumbnail;
-    createProductItemElement({ sku, name, image });
-    createProductImageElement(image);
+    const data = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    };
+    const newItems = createProductItemElement(data);
+    parentList(newItems);
   });
+}
+function parentList(element){
+const parentClass = document.querySelector('.items');
+parentClass.appendChild(element);
 }
 
 window.onload = function onload() {
