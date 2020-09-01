@@ -14,24 +14,12 @@ const apiInfo = {
   api: 'https://api.mercadolibre.com/',
   epMBL: 'sites/MLB/',
   epItens: 'items/',
-  type: 'computador'
+  type: 'computador',
 };
 
 const url = `${apiInfo.api}`;
 const urlItens = `${url}${apiInfo.epItens}`;
 const urlComputer = `${url}${apiInfo.epMBL}search?q=${apiInfo.type}`;
-
-/*
-____________________LOCAL STORAGE HANDLE____________________
-*/
-function carrinhoCompras() {
-  localStorage.setItem('li do carrinho', cartList.innerHTML);
-}
-
-function clearStorageAndList(listaCart, totalPrice) { // line 88
-  clean(listaCart, totalPrice);
-  localStorage.removeItem('li do carrinho', cartList.innerHTML);
-}
 
 /*
 ____________________SUB-FUNCTION CLEARANCE____________________
@@ -42,6 +30,64 @@ function clean(firstItem, secondItem) {
 
   if (itemList.length >= 0) cartList.innerHTML = '';
   if (textPrice.length >= 0) totalPrice.innerText = 0;
+}
+
+/*
+____________________LOCAL STORAGE HANDLE____________________
+*/
+function carrinhoCompras() {
+  localStorage.setItem('li do carrinho', cartList.innerHTML);
+}
+
+function clearStorageAndList(listaCarrinho, precoTotal) { // line 88
+  clean(listaCarrinho, precoTotal);
+  localStorage.removeItem('li do carrinho', cartList.innerHTML);
+}
+
+/*
+____________________ASYNC FUNCTIONS____________________
+*/
+async function sumPrices() {
+  const carrinho = document.querySelectorAll('.cart__item'); // Espera o DOM ser criado (async)
+  const numPrice = [...carrinho].map(elem => elem.textContent.match(/[0-9.0-9]+$/))
+  .reduce((accumul, valor) => accumul + parseFloat(valor), 0);
+
+  totalPrice.innerHTML = `${numPrice}`;
+}
+
+async function cartItemClickListener(event) {
+  await event.remove();
+  await sumPrices();
+  carrinhoCompras();
+}
+
+async function addToCart(skuId) { // async para declarar que a função é async de forma sincrona
+  const addLibrary = `${urlItens}${skuId}`;
+  const getOlList = document.querySelector('.cart__items');
+  await fetch(addLibrary) // o await tem a função de esperar a anterior acabar
+  .then(response => response.json())
+  .then(data => getOlList.appendChild(createCartItemElement({
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price, // poderia ser base_price?
+  })));
+  await sumPrices();
+  carrinhoCompras();
+}
+
+async function createWindowList() {
+  fetch(urlComputer)
+  .then(response => response.json())
+  .then(data =>
+    data.results.forEach((product) => {
+      const infoProduct = createProductItemElement({
+        sku: product.id,
+        name: product.title,
+        image: product.thumbnail,
+      });
+      sectionItens.appendChild(infoProduct);
+    }),
+  );
 }
 
 /*
@@ -94,52 +140,6 @@ function createBtnAndClickListener() {
   .addEventListener('click', () => clearStorageAndList(cartList, totalPrice));
 
   return section;
-}
-
-/*
-____________________ASYNC FUNCTIONS____________________
-*/
-async function sumPrices() {
-  const carrinho = document.querySelectorAll('.cart__item'); // Espera o DOM ser criado (async)
-  const numPrice = [...carrinho].map(elem => elem.textContent.match(/[0-9.0-9]+$/))
-  .reduce((accumul, valor) => accumul + parseFloat(valor), 0);
-
-  totalPrice.innerHTML = `${numPrice}`;
-}
-
-async function cartItemClickListener(event) {
-  await event.remove();
-  await sumPrices();
-  carrinhoCompras();
-}
-
-async function addToCart(skuId) { // async para declarar que a função é async de forma sincrona
-  const addLibrary = `${urlItens}${skuId}`;
-  const getOlList = document.querySelector('.cart__items');
-  await fetch(addLibrary) // o await tem a função de esperar a anterior acabar
-  .then(response => response.json())
-  .then(data => getOlList.appendChild(createCartItemElement({
-    sku: data.id,
-    name: data.title,
-    salePrice: data.price, // poderia ser base_price?
-  })));
-  await sumPrices();
-  carrinhoCompras();
-}
-
-async function createWindowList() {
-  fetch(urlComputer)
-  .then(response => response.json())
-  .then(data =>
-    data.results.forEach((product) => {
-      const infoProduct = createProductItemElement({
-        sku: product.id,
-        name: product.title,
-        image: product.thumbnail,
-      });
-      sectionItens.appendChild(infoProduct);
-    }),
-  );
 }
 
 /*
