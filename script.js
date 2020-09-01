@@ -42,10 +42,10 @@ function cartItemClickListener(event) {
   const id = Object.keys(localStorage).find(key => localStorage[key] === event.innerHTML);
   const valourString = localStorage[id].split(' ');
   localStorage.removeItem(id);
-  const valour = Number(valourString[valourString.length - 1].replace('$', ''));
-  decreasePrice(valour)
-    .then((total) => {
-      document.getElementById('price').innerHTML = `Preço total: $${total}`;
+  const value = Number(valourString[valourString.length - 1].replace('$', ''));
+  decreasePrice(value)
+    .then((totalValue) => {
+      document.getElementById('price').innerHTML = `Preço total: $${totalValue}`;
     });
 }
 
