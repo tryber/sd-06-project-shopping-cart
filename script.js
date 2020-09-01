@@ -13,9 +13,22 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
-  console.log(event);
+  const aux = event.target;
+  aux.remove();
 }
+function removeItem() {
+  const cartItems = document.querySelectorAll('.cart__item');
+  const ol = document.querySelector('.cart__items');
+  for (let index = 0; index < cartItems.length; index += 1) {
+    ol.removeChild(cartItems[index]);
+  }
+}
+
+function clearList() {
+  const clearListItem = document.querySelector('.empty-cart');
+  clearListItem.addEventListener('click', removeItem);
+}
+
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -68,5 +81,8 @@ function handlerStrutor() {
 }
 
 window.onload = function onload() {
+  clearList();
+  removeItem();
   handlerStrutor();
+  
 };
