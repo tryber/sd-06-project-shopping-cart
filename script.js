@@ -117,7 +117,7 @@ function clearCart() {
     const arrayListLength = list.children.length;
     for (let index = 0; index < arrayListLength; index += 1) {
       const li = list.children[0];
-      list.removeChild(li);      
+      list.removeChild(li);
     }
   });
 }
