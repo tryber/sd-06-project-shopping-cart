@@ -91,7 +91,16 @@ function loadCartSaved() {
   listOfCart.forEach(element => element.addEventListener('click', cartItemClickListener));
 }
 
+function cleanCart() {
+  const cart = document.querySelector('.cart__items');
+  localStorage.cartItems = '';
+  cart.innerHTML = '';
+  console.log('apagado');
+}
+
 window.onload = function onload() {
   fetchComputers();
   loadCartSaved();
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', cleanCart);
 };
