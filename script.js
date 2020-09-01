@@ -89,16 +89,15 @@ window.onload = function onload() {
   setupCleanEvent();
 };
 
-const setupCleanEvent = () => {
-  cleanButton = document.querySelector('.empty-cart');
-  cleanButton.addEventListener('click', cleanCart);
-}
-
 const cleanCart = (event) => {
   const cleanFather = document.querySelector('.cart__items');
   cleanFather.innerHTML = '';
-  // cleanFather.removeChild(event.target);
-}
+};
+
+const setupCleanEvent = () => {
+  cleanButton = document.querySelector('.empty-cart');
+  cleanButton.addEventListener('click', cleanCart);
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
