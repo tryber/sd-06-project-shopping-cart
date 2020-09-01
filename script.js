@@ -66,8 +66,11 @@ function fetchComputers() {
 }
 
 function cartItemClickListener() {
-  const item1 = null;
-  return item1;
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.addEventListener('click', function (event) {
+    console.log(event.target);
+    cartItems.removeChild(event.target);
+  });
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
