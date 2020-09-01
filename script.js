@@ -1,9 +1,7 @@
 async function cartTotalValue() {
   const cartItems = document.querySelectorAll('.cart__item');
   const thisItems = [...cartItems];
-  const totalPrice = await thisItems.reduce((acc, current) => {
-    return acc + parseFloat(current.innerText.split('$')[1]);
-  }, 0)
+  const totalPrice = await thisItems.reduce((acc, current) => acc + parseFloat(current.innerText.split('$')[1]), 0);
   document.querySelector('.total__price').innerText = ` ${totalPrice}`;
 }
 
