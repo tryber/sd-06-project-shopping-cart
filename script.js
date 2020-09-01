@@ -29,7 +29,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-
 const addCartFunction = (itemId) => {
   const urlItem = `https://api.mercadolibre.com/items/${itemId}`;
   const cart = document.querySelector('.cart__items');
@@ -71,5 +70,5 @@ window.onload = function onload() {
     .then(response => response.json())
     .then(object => handleResults(object.results));
 
-  Object.keys(localStorage).forEach(key => addCartFunction(key));
+  Object.keys(localStorage).reverse().forEach(key => addCartFunction(key));
 };
