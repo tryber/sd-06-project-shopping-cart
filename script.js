@@ -12,8 +12,12 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+async function sumTotal(salePrice) {
+  const totalPrice = document.querySelector('.total-price');
+  totalPrice.innerText = ((Math.round((totalPrice.innerText) * 100) / 100) + salePrice);
+}
+
 function cartItemClickListener(event) {
-  // coloque seu código aqui
   event.target.remove(); // ChildNode.remove() fonte: MDN web docs
 }
 
@@ -22,6 +26,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  sumTotal(salePrice);
   return li;
 }
 
@@ -63,6 +68,7 @@ function getSkuFromProductItem(item) {
 function clearAll() {
   console.log('Apagado!');
   document.querySelector('.cart__items').innerHTML = '';
+  document.querySelector('.total-price').innerText = '0.00';
   localStorage.clear();
 }
 
