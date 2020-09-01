@@ -50,9 +50,8 @@ queryApiCart = (id) => {
   const endPoint = `${url}items/${id}`;
   fetch(endPoint)
   .then(response => response.json())
-  .then((data) => createCartItemElement(data))
-
-}
+  .then(data => createCartItemElement(data));
+};
 
 queryApi = () => {
   const endPoint = `${url}sites/MLB/search?q=computador`;
@@ -64,8 +63,8 @@ queryApi = () => {
       itemElement.addEventListener('click', (e) => {
         if (e.target.className === 'item__add') {
           queryApiCart(item.id)
-        }
-      })
+        };
+      });
     });
   });
 };
