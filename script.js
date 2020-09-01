@@ -32,6 +32,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const computerObjectSearch = (inPutId) => {
+
+  const productID = inPutId;
+  console.log(productID);
+  endpoint = `https://api.mercadolibre.com/items/${productID}`;
+  // <span class="item__sku">MLB1532299476</span>
+  console.log(endpoint);
+  return fetch(endpoint)
+    .then(response => response.json())
+    .then((object) => {
+      console.log(object);
+      sendItemtoCart(object);
+    });
+}
+
 const objectDetails = (productsArray) => {
   productsArray.forEach((elements) => {
     const section = document.querySelector('.items');
@@ -49,7 +64,7 @@ const objectDetails = (productsArray) => {
   });
 };
 
-const sendItemtoCart = product => {
+const sendItemtoCart = (product) => {
   const { id: sku, title: name, price: salePrice } = product;
   console.log(product);
   const itemToCart = createCartItemElement({ sku, name, salePrice });
@@ -69,20 +84,7 @@ const itemSearch = () => {
     });
 };
 
-const computerObjectSearch = (inPutId) => {
 
-  const productID = inPutId;
-  console.log(productID);
-  endpoint = `https://api.mercadolibre.com/items/${productID}`;
-  // <span class="item__sku">MLB1532299476</span>
-  console.log(endpoint);
-  return fetch(endpoint)
-    .then(response => response.json())
-    .then((object) => {
-      console.log(object);
-      sendItemtoCart(object);
-    });
-}
 
 window.onload = function onload() {
   itemSearch();
