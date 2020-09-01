@@ -92,7 +92,7 @@ function loadLocalStorage() {
     document.querySelectorAll('li').forEach((item) => {
       item.addEventListener('click', cartItemClickListener);
     });
-  };
+  }
 }
 
 window.onload = function onload() {
