@@ -1,5 +1,5 @@
 .body-builder {
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(230 ,230 ,230);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -41,7 +41,7 @@
   flex-direction: column;
   height: auto;
   margin: 5px;
-  box-shadow: 4px 5px 8px rgb(121, 121, 121);
+  box-shadow: 4px 5px 8px rgb(121 ,121 ,121);
   width: 200px;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .item .item__add {
-  background-color: rgb(60, 184, 60);
+  background-color: rgb(60 ,184 ,60);
   border: 0;
   border-radius: 0 0 8px 8px;
   cursor: pointer;
@@ -78,7 +78,7 @@
 }
 
 .cart .cart__title {
-  color: #333;
+  color: rgb(51 ,51 ,51);
   flex-basis: 1;
   font-size: 20pt;
   margin: 20px 0;
@@ -94,10 +94,10 @@
 }
 
 .cart .empty-cart {
-  background-color: rgb(180, 50, 50);
+  background-color: rgb(180 ,50 ,50);
   border: none;
   border-radius: 6px;
-  color: rgb(240, 250, 240);
+  color: rgb(240 ,250 ,240);
   cursor: pointer;
   outline: none;
   padding: 8px;
