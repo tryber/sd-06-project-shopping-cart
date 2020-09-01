@@ -1,8 +1,6 @@
 window.onload = function onload() {
-  queryApi()
-
+  queryApi();
 };
-
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -21,7 +19,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ id, title, thumbnail }) {
   const section = document.createElement('section');
   section.className = 'item';
-  
   section.appendChild(createCustomElement('span', 'item__sku', id));
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
@@ -36,7 +33,6 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  
 }
 
 function createCartItemElement({ id, title, price }) {
