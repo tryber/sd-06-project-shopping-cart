@@ -32,11 +32,9 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  const liremove = document.querySelector('.cart__items');
-
-  liremove.addEventListener('click', (e) => {
+  document.querySelector('.cart__items').addEventListener('click', (e) => {
     const liTarget = e.target;
-    liTarget.innerHTML='';
+    liTarget.innerHTML = '';
   });
 }
 
@@ -75,7 +73,7 @@ const addCar = () => {
       console.log('erro');
     }
   });
-};
+}
 
 window.onload = function onload() {
   fetchItems();
