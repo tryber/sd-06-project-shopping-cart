@@ -17,7 +17,7 @@ function createCustomElement(element, className, innerText) {
 const saveStorage = () => {
   const items = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', items);
-}
+};
 
 const sumPrices = async (li) => {
   const total = document.querySelector('.total-price');
@@ -25,7 +25,7 @@ const sumPrices = async (li) => {
   const totalPrice = parseFloat(total.lastChild.innerHTML);
   const sum = itemPrice + totalPrice;
   total.lastChild.innerText = sum;
-}
+};
 
 function cartItemClickListener(event) {
   const section = document.querySelector('.cart__items');
@@ -80,7 +80,7 @@ const fetchFunction = () => {
     .then(response => response.json())
     .then(object => object.results)
     .then(result => result.forEach(element => createProductItemElement(element)));
-}
+};
 
 const clear = () => {
   const button = document.querySelector('.empty-cart');
@@ -90,16 +90,16 @@ const clear = () => {
   });
   saveStorage();
   sumPrices(li);
-}
+};
 
 const storageItems = () => {
   if (localStorage.cart) {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
   }
-}
+};
 
 window.onload = function onload() {
   fetchFunction();
   clear();
   storageItems();
-}
+};
