@@ -10,7 +10,7 @@ async function cartTotalValue() {
   const cartItems = document.querySelectorAll('.cart__item');
   const thisItems = [...cartItems];
   const totalPrice = await sumPromise(thisItems);
-  document.querySelector('.total__price').innerText = ` ${totalPrice}`;
+  document.querySelector('.total-price').innerText = ` ${totalPrice}`;
 }
 
 function saveStorage() {
