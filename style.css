@@ -103,19 +103,61 @@ body {
 
 .cart .cart__title {
   flex-basis: 1;
-  font-size: 1em;
+  font-size: 1.6em;
   text-align: center;
+  margin-bottom: 11px;
 }
 
 .cart .empty-cart {
   align-self: center;
-  background: rgb( 220 , 80 , 80 );
+  background: rgb( 219 , 57 , 57 );
   border: none;
   border-radius: 12px;
   color: rgb( 245 , 250 , 245 );
   font-size: 0.9em;
   font-weight: 700;
-  margin: 15px 0;
+  margin: 10px 0 0;
   padding: 13px;
-  width: 70%;
+  width: 50%;
+}
+
+.cart .empty-cart:hover {
+  background: rgb( 243 , 51 , 51 );
+}
+
+.cart .empty-cart:focus {
+  border: 0;
+}
+
+.cart .empty-cart:active {
+  border: 0;
+  background: rgb( 175 , 63 , 63 );
+}
+
+.cart .total-price {
+  align-self: flex-end;
+  background-color: rgb( 244 , 251 , 252 );
+  border-radius: 8px;
+  color: rgb( 25 , 30 , 30 );
+  display: block;
+  padding: 0;
+  min-width: 40%;
+}
+
+.cart .total-price em {
+  background: rgb( 213 , 227 , 230 );
+  border-radius: 8px 0 0 8px;
+  display: inline-block;
+  font-style: normal;
+  font-weight: 700;
+  padding: 5px 10px;
+  margin: 0;
+}
+
+.cart .price-symbol , .cart .current-price {
+  display: inline-block;
+  font-style: italic;
+  font-weight: 500;
+  padding: 5px 10px;
+  margin: 0;
 }

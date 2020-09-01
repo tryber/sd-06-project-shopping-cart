@@ -18,11 +18,25 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+async function sumCart() {
+  const pricePlacer = document.querySelector('.total-price .current-price');
+  const cartSection = document.querySelector('.cart__items').children;
+  if (cartSection.length > 0) {
+    let sum = 0;
+    for (let index = 0; index < cartSection.length; index += 1) {
+      sum += parseFloat(cartSection[index].price);
+    }
+    pricePlacer.innerText = sum.toFixed(2);
+  } else {
+    pricePlacer.innerText = '-';
+  }
+}
+
 function cartItemClickListener(event) {
   const indexOfItem = myCartArray.indexOf(event.target.id);
   if (indexOfItem > -1) myCartArray.splice(indexOfItem, 1);
-  console.log(myCartArray);
   event.target.remove();
+  sumCart();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -30,6 +44,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.id = sku;
+  li.price = salePrice;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -41,6 +56,7 @@ function addItemInCart(url) {
     .then((object) => {
       const cartList = document.querySelector('ol.cart__items');
       cartList.appendChild(createCartItemElement(object));
+      sumCart();
     })
     .catch('deu pau no add pro carrinho!');
 }
