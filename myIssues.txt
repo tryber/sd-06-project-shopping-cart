@@ -1,1 +1,3 @@
+Req. 7 .then(() => document.querySelector('.loading').remove()); --> tá no lugar certo? Mais de um escopo? Como faria com await e async
+
 Req 1: func createProductItemElement criando o elemento e inputando ele.... mais de um escopo?
