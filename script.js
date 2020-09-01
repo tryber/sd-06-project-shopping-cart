@@ -21,7 +21,7 @@ const finalPrice = async (price) => {
   const text = createCustomElement('p', 'total-price', 'Preço total: ');
   const list = document.querySelector('.cart');
   total += await parseFloat(price);
-  text.innerHTML = await `Preço total: $${total.toFixed(2)}`;
+  text.innerHTML = await `Preço total: $${Math.round(total * 100) / 100}`;
   list.appendChild(text);
 };
 
