@@ -1,3 +1,8 @@
+// função de erro, caso de erro
+const handleError = (errorMessage) => {
+  window.alert(errorMessage);
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -11,6 +16,15 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+
+function createCartItemElement({ id, title, price }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
 // add
 const fetchProductId = (id) => {
   const urlId = `https://api.mercadolibre.com/items/${id}`;
@@ -52,21 +66,6 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
-
-function createCartItemElement({ id, title, price }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
-// mark add <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-// função de erro, caso de erro
-const handleError = (errorMessage) => {
-  window.alert(errorMessage);
-};
 
 // construção da api url
 const apiInfo = {
