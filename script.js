@@ -9,7 +9,7 @@ const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 async function sumOfPrices() {
   const itensOnCart = await document.querySelectorAll('.cart__item');
   const numberOnPrice = [...itensOnCart]
-    .map(number => number.innerText.match(/[0-9.0-9]+$/))// Referência: https://www.regular-expressions.info/anchors.html
+    .map(number => number.innerText.match(/[0-9.0-9]+$/))// Referência: https://www.regular-expressions.info/anchors.html testes: https://regex101.com/
     .reduce((acc, val) => acc + parseFloat(val), 0);
   document.querySelector('.total-price').innerHTML = numberOnPrice;
 }
@@ -27,8 +27,8 @@ const emptyCart = () => {
       document.getElementsByTagName('li')[0].remove();
     }
     document.querySelector('.total-price').innerText = '0';
+    localStorage.clear();
   });
-  localStorage.clear();
 };
 
 const handleError = (errorMessage) => {
