@@ -44,9 +44,13 @@ async function totalValueUpdater() {
     const currentItemValue = currentItemText.split(' | ')[2].substr(8);
     cartItemsValues.push(currentItemValue);
   }
-  const totalValue = await cartItemsValues.reduce((acc, curr) => acc + parseInt(curr, 10), 0);
+  const totalValue = await cartItemsValues
+    .reduce((acc, curr) => {
+      const formattedCurrentNumber = parseFloat(curr);
+      return acc + formattedCurrentNumber;
+    }, 0);
   const totalValueDisplay = document.querySelector('.total-price');
-  totalValueDisplay.innerText = await totalValue;
+  totalValueDisplay.innerText = await totalValue.toFixed(2);
 }
 
 function cartItemClickListener(event) {
