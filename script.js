@@ -44,7 +44,7 @@ function createCartItemElement(item) {
   return cartItems;
 }
 
-const fetchItems = () => {
+function fetchItems() {
   const query = url;
   fetch(query)
   .then(response => response.json())
@@ -71,7 +71,16 @@ const addCar = () => {
   });
 };
 
+const emptyCart = () => {
+const button = document.querySelector('.empty-cart');
+button.addEventListener('click', () => {
+  const itemsCart = document.querySelectorAll('.cart__item');
+  itemsCart.forEach((element) => element.remove());
+  });
+}
+
 window.onload = function onload() {
   fetchItems();
   addCar();
+  emptyCart();
 };
