@@ -98,27 +98,27 @@ const connection = () => {
   loading.className = 'loading';
   loading.innerText = 'loading...';
 // Recebendo todos os itens da API, e renderizando em tela
-    fetch(url)
-      .then(response => response.json())
-      .then((object) => {
-        // Armazenando o resultado do fetch em uma constante
-        const objectResult = object.results;
-        objectResult.forEach((item) => {
-          // Criando item por item, através do foreach e da funcão creacteProductItemElement
-          const product = createProductItemElement({
-            sku: item.id,
-            name: item.title,
-            image: item.thumbnail,
-          });
-          // Renderizando em tela os itens criados e armazaendos na consta product
-          document.querySelector('.items').appendChild(product);
-          // Capturando o botão "Adicionar ao carrinho", para utilizar na funcão itemCart
-          const button = document.querySelector('.items').lastChild;
-          button.lastChild.addEventListener('click', itemCart);
+  fetch(url)
+    .then(response => response.json())
+    .then((object) => {
+      // Armazenando o resultado do fetch em uma constante
+      const objectResult = object.results;
+      objectResult.forEach((item) => {
+        // Criando item por item, através do foreach e da funcão creacteProductItemElement
+        const product = createProductItemElement({
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
         });
-      })
-      .then(clearCart)
-      .then(() => document.querySelector('.loading').remove());
+        // Renderizando em tela os itens criados e armazaendos na consta product
+        document.querySelector('.items').appendChild(product);
+        // Capturando o botão "Adicionar ao carrinho", para utilizar na funcão itemCart
+        const button = document.querySelector('.items').lastChild;
+        button.lastChild.addEventListener('click', itemCart);
+      });
+    })
+    .then(clearCart)
+    .then(() => document.querySelector('.loading').remove());
 };
 
 window.onload = function onload() {
