@@ -1,4 +1,4 @@
-const urlEndpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -6,7 +6,6 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -14,25 +13,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function setStorage() {
-  const items = document.querySelector('.cart__items');
-  localStorage.setItem('cart', items.innerHTML);
-}
-
-const clear = () => {
-  const botao = document.querySelector('.empty-cart');
-  botao.addEventListener('click', () => {
-    const ol = document.querySelector('.cart__items');
-    ol.innerHTML = '';
-    setStorage();
-  });
+const saveItems = () => {
+  const items = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cart', items);
 };
 
 function cartItemClickListener(event) {
-  const item = document.querySelector('.cart__items');
-  const targ = event.target;
-  item.removeChild(targ);
-  setStorage();
+  const ol = document.querySelector('.cart__items');
+  const item = event.target;
+  ol.removeChild(item);
+  saveItems();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -44,54 +34,58 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  const sectionHTML = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')).addEventListener('click', () => {
+
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+  .addEventListener('click', () => {
     const sk = sku;
     fetch(`https://api.mercadolibre.com/items/${sk}`)
-    .then(response => response.json())
-    .then((result) => {
-      const createItem = createCartItemElement(result);
-      const ol = document.querySelector('.cart__items');
-      ol.appendChild(createItem);
-    });
-    setStorage();
+      .then(response => response.json())
+      .then((result) => {
+        const createItem = createCartItemElement(result);
+        const ol = document.querySelector('.cart__items');
+        ol.appendChild(createItem);
+        saveItems();
+      });
   });
-  const sectionItems = document.querySelector('.items');
-  sectionItems.appendChild(section);
-  return section;
-}
+sectionHTML.appendChild(section);
 
-function loadSavedCart() {
-  document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart-shop');
-  const ol = document.querySelector('.cart__items');
-  const allLoadedItens = document.querySelectorAll('li');
-  allLoadedItens.forEach((li) => {
-    li.addEventListener('click', (event) => {
-      ol.removeChild(event.target);
-      setStorage();
-    });
-  });
-}
-
-function fetchFunction() {
-  fetch(urlEndpoint)
-    .then(response => response.json())
-    .then(object => object.results)
-    .then(result => result.forEach(element => createProductItemElement(element)))
-    .then(() => clear())
-    .then(() => loadSavedCart());
+return section;
 }
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const fetchFunc = () => {
+  fetch(url)
+    .then(response => response.json())
+    .then(object => object.results)
+    .then(result => result.forEach(resultElement => createProductItemElement(resultElement)));
+};
+
+const clear = () => {
+  const botao = document.querySelector('.empty-cart');
+  botao.addEventListener('click', () => {
+    const ol = document.querySelector('.cart__items');
+    ol.innerHTML = '';
+  });
+};
+
+const storage = () => {
+  if (localStorage.cart) {
+    document.querySelector('.cart__items').innerHTML = localStorage.cart;
+  }
+};
+
 window.onload = function onload() {
-  fetchFunction();
+  fetchFunc();
   clear();
+  storage();
 };
