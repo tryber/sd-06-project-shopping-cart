@@ -54,9 +54,9 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
         saveItems();
       });
   });
-sectionHTML.appendChild(section);
+  sectionHTML.appendChild(section);
 
-return section;
+  return section;
 }
 
 function getSkuFromProductItem(item) {
