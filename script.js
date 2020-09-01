@@ -86,9 +86,12 @@ function createProductItemElement({ id, title, thumbnail }) {
 } */
 
 const ML_URL = () => {
+  const CONTAINER = document.querySelector('.container');
+  CONTAINER.appendChild(createCustomElement('h1', 'loading', 'Loading'));
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then(resp => resp.json())
     .then(data => data.results.forEach(result => createProductItemElement(result)))
+    .then(document.querySelector('.loading').remove())
     .catch(error => console.error('Error: ', error));
 };
 
