@@ -1,9 +1,9 @@
 // pegando a API
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
-
+// função que apaga um item da lista do carrinho quando clicado
 function cartItemClickListener(event) {
-  
+  event.target.remove();
 }
 
 // função para criar a lista no carrinho de compras
