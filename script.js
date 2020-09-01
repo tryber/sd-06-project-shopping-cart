@@ -32,6 +32,12 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  const liremove = document.querySelector('.cart__items');
+
+  liremove.addEventListener('click', (e) => {
+    const liTarget = e.target;
+    liTarget.innerHTML='';
+  });
 }
 
 function createCartItemElement(item) {
@@ -56,7 +62,7 @@ function fetchCar(id) {
   fetch(urlId)
   .then(response => response.json())
   .then(response => createCartItemElement(response));
-}
+};
 
 const addCar = () => {
   const itemAdd = document.querySelector('.items');
