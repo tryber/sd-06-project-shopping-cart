@@ -28,10 +28,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -64,11 +60,6 @@ const appendItem = (item) => {
   });
 };
 
-const loadingText = () => {
-  const message = 'loading...';
-  return alert(message);
-};
-
 const fetchDisplay = () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
   const itemSearch = 'computador';
@@ -77,9 +68,23 @@ const fetchDisplay = () => {
   .then(data => data.results.forEach((element) => {
     appendItem(createProductItemElement(element));
   }));
-  loadingText();
 };
+
+function cartItemClickListener(event) {
+  event.target.parentNode.removeChild(event.target);
+}
+
+const clearItems = () => {
+  const itemsToKill = document.querySelector('.cart__items');
+  itemsToKill.innerHTML = '';
+}
+
+const clearButton = () => {
+  const getButton = document.querySelector('.empty-cart');
+  getButton.addEventListener('click', clearItems);
+}
 
 window.onload = function onload() {
   fetchDisplay();
+  clearButton();
 };
