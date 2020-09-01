@@ -59,14 +59,15 @@ async function addItemInCart(url, id) {
   try {
     const fetchItem = await fetch(url);
     const object = await fetchItem.json();
-    if (object.error) throw new Error (object.error);
+    if (object.error) throw new Error(object.error);
     const cartList = document.querySelector('ol.cart__items');
     cartList.appendChild(createCartItemElement(object));
     myCartArray.push(object.id);
     sumCart();
-    } catch (error) {
-      throw new Error(error);
-    }
+  } catch (error) {
+    throw new Error(error);
+  }
+  return 'Sucess';
 }
 
 function itemClickListener(event) {
@@ -91,8 +92,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 async function loadStoredCart(array) {
-  for (id of array) {
-    const url = `https://api.mercadolibre.com/items/${id}`;
+  for (let index = 0; index < array.length; index += 1) {
+    const url = `https://api.mercadolibre.com/items/${array[index]}`;
     await addItemInCart(url);
   }
 }
