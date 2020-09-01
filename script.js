@@ -66,9 +66,15 @@ function createProductItemElement({ id, title, thumbnail }) {
   return section;
 }
 
+function loadingMessage() {
+  const loadText = document.createElement('div');
+  loadText.classList.add('loading');
+  loadText.innerHTML = 'Loading...';
+  document.querySelector('.items').appendChild(loadText);
+}
+
 function fetchProductList() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
-  document.querySelector('.items').innerHTML = 'Loading';
 
   fetch(url)
     .then(response => response.json())
@@ -84,6 +90,7 @@ function clearCartList() {
 }
 
 window.onload = function onload() {
+  loadingMessage();
   fetchProductList();
   document.querySelector('.empty-cart').addEventListener('click', clearCartList);
 
