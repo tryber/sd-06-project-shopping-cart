@@ -84,5 +84,4 @@ window.onload = function onload() {
   clearList();
   removeItem();
   handlerStrutor();
-  
 };
