@@ -19,13 +19,20 @@ const clear = () => {
   botao.addEventListener('click', () => {
     const ol = document.querySelector('.cart__items');
     ol.innerHTML = '';
+    setStorage();
   });
 };
+
+function setStorage() {
+  const items = document.querySelector('.cart__items');
+  localStorage.setItem('cart', items.innerHTML);
+}
 
 function cartItemClickListener(event) {
   const item = document.querySelector('.cart__items');
   const targ = event.target;
   item.removeChild(targ);
+  setStorage()
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -52,17 +59,32 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       const ol = document.querySelector('.cart__items');
       ol.appendChild(createItem);
     });
+  setStorage();
   });
   const sectionItems = document.querySelector('.items');
   sectionItems.appendChild(section);
   return section;
 }
 
+function loadSavedCart() {
+  document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart-shop');
+  const ol = document.querySelector('.cart__items');
+  const allLoadedItens = document.querySelectorAll('li');
+  allLoadedItens.forEach((li) => {
+    li.addEventListener('click', (event) => {
+      ol.removeChild(event.target);
+      setStorage();
+    });
+  });
+}
+
 function fetchFunction() {
   fetch(urlEndpoint)
     .then(response => response.json())
     .then(object => object.results)
-    .then(result => result.forEach(element => createProductItemElement(element)));
+    .then(result => result.forEach(element => createProductItemElement(element)))
+    .then(() => clear())
+    .then(() => loadSavedCart());
 }
 
 function getSkuFromProductItem(item) {
