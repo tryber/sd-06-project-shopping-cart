@@ -11,7 +11,7 @@ function cleanCart(event) {
     document.querySelector('.cart__items')
     .removeChild(document.querySelector('.cart__items').childNodes[0]);
   }
-  document.querySelector('div').innerText = 'Preço total: $0';
+  document.querySelector('div').innerText = '$0';
 }
 
 function saveLocalStorage({ id, price, title }) {
@@ -19,7 +19,7 @@ function saveLocalStorage({ id, price, title }) {
     localStorage.setItem('cart', `${id}, ${title}, ${price}`);
     localStorage.setItem('total', `${price}`);
     const totalText = document.querySelector('div');
-    totalText.innerHTML = `Preço total: ${price}`;
+    totalText.innerHTML = `${price}`;
   } else {
     const items = localStorage.getItem('cart');
     let total = parseInt(localStorage.getItem('total'), 10);
@@ -27,7 +27,7 @@ function saveLocalStorage({ id, price, title }) {
     localStorage.setItem('cart', `${items}, ${id}, ${title}, ${price}`);
     localStorage.setItem('total', `${total}`);
     const totalText = document.querySelector('div');
-    totalText.innerHTML = `Preço total: ${total}`;
+    totalText.innerHTML = `${total}`;
   }
 }
 
@@ -49,14 +49,14 @@ function removeFromPrices(element) {
   const singlePrice = parseInt(text[2].split(':')[1].trim().slice(1), 10);
   let total = parseInt(localStorage.getItem('total'), 10);
   total -= singlePrice;
-  document.querySelector('div').innerText = `Preço total: ${total}`;
+  document.querySelector('div').innerText = `${total}`;
   localStorage.setItem('total', `${total}`);
 }
 
 function checkStorage(element) {
   if (localStorage.cart.split(',').length === 3) {
     localStorage.clear();
-    document.querySelector('div').innerText = 'Preço total: $0';
+    document.querySelector('div').innerText = '$0';
   } else {
     removeFromStorage(element);
     removeFromPrices(element);
@@ -81,7 +81,7 @@ function renderShoppingCart() {
       document.querySelector('.cart__items').appendChild(li);
     }
     const total = parseInt(localStorage.getItem('total'), 10);
-    document.querySelector('div').innerText = `Preço total: ${total}`;
+    document.querySelector('div').innerText = `${total}`;
   }
 }
 
