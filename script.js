@@ -87,9 +87,14 @@ function eraseCartList() {
 }
 
 const fetchProductList = () => {
+  const loading = document.createElement('span');
+  loading.className = 'loading';
+  loading.innerHTML = '<h1>Loading...</h1>';
+  document.getElementById('firstSection').appendChild(loading);
   fetch(url)
     .then(response => response.json())
     .then((object) => {
+      document.getElementById('firstSection').removeChild(loading);
       object.results.forEach((result) => {
         const item = createProductItemElement(result);
         document.querySelector('.items').appendChild(item);
