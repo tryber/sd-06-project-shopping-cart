@@ -30,9 +30,9 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   const total = document.querySelector('.total-price');
   const priceToRemove = parseFloat((event.target.innerText).split('$')[1]);
-  const totalPrice = parseFloat(total.lastChild.innerHTML);
+  const totalPrice = parseFloat(total.innerHTML);
   const sub = totalPrice - priceToRemove;
-  total.lastChild.innerText = sub;
+  total.innerText = sub;
   event.target.remove();
 }
 
@@ -40,9 +40,9 @@ function cartItemClickListener(event) {
 async function sumItems(li) {
   const total = document.querySelector('.total-price');
   const itemPrice = parseFloat(li.innerText.split('$')[1]);
-  const totalPrice = parseFloat(total.lastChild.innerHTML);
+  const totalPrice = parseFloat(total.innerHTML);
   const sum = itemPrice + totalPrice;
-  total.lastChild.innerText = sum;
+  total.innerText = sum;
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -102,7 +102,7 @@ const emptyList = () => {
     while (cart.firstChild) {
       cart.removeChild(cart.firstChild);
     }
-    document.querySelector('.total-price').lastChild.innerText = 0;
+    document.querySelector('.total-price').innerText = 0;
   });
 };
 
