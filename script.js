@@ -1,3 +1,7 @@
+const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+let urlId = 'https://api.mercadolibre.com/items/';
+
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -30,21 +34,6 @@ function getSkuFromProductItem(item) {
 }
 */
 
-// function cartItemClickListener(event) {
-  // coloque seu código aqui
-// }
-
-/*
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-*/
-
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 function handleComputerObj(item) {
   const computerObj = {
@@ -60,12 +49,47 @@ function fetchComputers() {
     .then((response => response.json()))
     .then((object) => {
       object.results.forEach((computer) => {
-        document.querySelector('.items')
+        document
+        .querySelector('.items')
         .appendChild(createProductItemElement(handleComputerObj(computer)));
       });
     });
 }
 
+function cartItemClickListener() {
+  const itemsSection = document.querySelector('.items');
+  itemsSection.addEventListener('click', function (event) {
+    if (event.target.innerText === 'Adicionar ao carrinho!'); {
+      const endpoint = event.target.parentNode.firstChild.innerText;
+      urlId = `${urlId}${endpoint}`;
+      fetchComputersId(urlId);
+      urlId = 'https://api.mercadolibre.com/items/';
+    }
+  });
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+function fetchComputersId(newUrlId) {
+  if (newUrlId) {
+    fetch(newUrlId)
+    .then((response => response.json()))
+    .then((object) => {
+      document
+      .querySelector('.cart__items')
+      .appendChild(createCartItemElement(handleComputerObj(object)));
+    });
+  }
+}
+
+
 window.onload = function onload() {
   fetchComputers();
+  cartItemClickListener();
 };
