@@ -5,27 +5,12 @@ const apiURL = {
   endPointItem: 'items/',
 };
 
-
-
-function fetchItemsID(itemID) {
-  const itemURL = `${apiURL.url}${apiURL.endPointItem}${itemID}`;
-  fetch(itemURL)
-    .then(response => response.json())
-    .then((resultJSON => {
-      const cartItem = createCartItemElement(resultJSON.id, resultJSON.title, resultJSON.price);
-      cartItem.addEventListener('click', cartItemClickListener)
-      const cartOl = document.querySelector('.cart__items');
-      cartOl.appendChild(cartItem);
-    }))
-    .catch(error => window.alert(error));
-}
-
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
-}
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -36,6 +21,19 @@ function createProductImageElement(imageSource) {
 function renderCartItem(event) {
   const itemID = event.target.parentNode.children[0].innerText;
   fetchItemsID(itemID);
+}
+
+function fetchItemsID(itemID) {
+  const itemURL = `${apiURL.url}${apiURL.endPointItem}${itemID}`;
+  fetch(itemURL)
+    .then(response => response.json())
+    .then((resultJSON) => {
+      const cartItem = createCartItemElement(resultJSON.id, resultJSON.title, resultJSON.price);
+      cartItem.addEventListener('click', cartItemClickListener)
+      const cartOl = document.querySelector('.cart__items');
+      cartOl.appendChild(cartItem);
+    })
+    .catch(error => window.alert(error));
 }
 
 function createProductItemElement(sku, name, image) {
@@ -51,7 +49,7 @@ function createProductItemElement(sku, name, image) {
 }
 
 function listReturned(arrOfProducts) {
-  const itemsArray = arrOfProducts.map((element) => {
+  arrOfProducts.map((element) => {
     const secItems = document.querySelector('.items');
     secItems.appendChild(createProductItemElement(element.id, element.title, element.thumbnail));
     return { id: element.id, title: element.title, thumb: element.thumbnail };
@@ -74,6 +72,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  event.target.remove();
 }
 
 function createCartItemElement(sku, name, salePrice) {
