@@ -96,4 +96,3 @@ window.onload = () => {
   }, 500);
   fetchProduct('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
 };
-
