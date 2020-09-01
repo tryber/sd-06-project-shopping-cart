@@ -101,9 +101,13 @@ const totalResults = (results) => {
 
 // Fazendo requisição de todos os produtos
 const resultFetch = (url) => {
+  const section = document.querySelector('.items');
+  const h4 = document.querySelector('.loading');
+
   fetch(url)
     .then(response => response.json())
     .then((data) => {
+      section.removeChild(h4);
       totalResults(data.results);
     });
 };
@@ -111,6 +115,7 @@ const resultFetch = (url) => {
 window.onload = function onload() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computadores';
   resultFetch(url);
+  // Adicionando evento ao botão de esvaziar o carrinho
   document.querySelector('.empty-cart').addEventListener('click', emptyList);
   //  Adicionando evento remover em cada item da lista
   const ol = document.querySelector('.cart__items');
