@@ -1,11 +1,10 @@
 window.onload = function onload() {
-  fetchComputer();
- };
- const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
- const fetchComputer = () => {
-  fetch(url)
-    .then((response) => response.json())
-    .then((object) => handleResults(object.results))
+  const fetchComputer = () => {
+    const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+    fetch(url)
+      .then((response) => response.json())
+      .then((object) => handleResults(object.results))
+  };
  };
 
 const handleResults = (results) => {
