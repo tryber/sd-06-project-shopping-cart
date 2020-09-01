@@ -17,7 +17,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  let itemDelete = event.target;
+  const itemDelete = event.target;
   itemDelete.parentNode.removeChild(itemDelete);
 }
 
@@ -26,23 +26,31 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li;
+  const listOfElement = document.querySelector('.cart__items');
+  listOfElement.appendChild(li);
 }
+
+const placeToPlaceFunction = (section) => {
+  const placeToPlace = document.querySelector('.items');
+  placeToPlace.appendChild(section);
+};
+
+const creatObjectFunction = (element, callback) => {
+  const objectOfElement = {
+    sku: element.id,
+    name: element.title,
+    image: element.thumbnail,
+    salePrice: element.price,
+  };
+
+  callback(objectOfElement);
+};
 
 const searchHandler = (id) => {
   const url = `${apiUrl}${apiUrlItemCart}${id}`;
   fetch(url)
     .then(response => response.json())
-    .then((element) => {
-      const object = {
-        sku: element.id,
-        name: element.title,
-        salePrice: element.price,
-      };
-      const newItem = createCartItemElement(object);
-      const section = document.querySelector('.cart__items');
-      section.appendChild(newItem);
-    });
+    .then(element => creatObjectFunction(element, createCartItemElement));
 };
 
 const buttonHandler = () => {
@@ -61,8 +69,7 @@ function createProductItemElement({ sku, name, image }) {
   const buttonAdd = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   buttonAdd.addEventListener('click', buttonHandler);
   section.appendChild(buttonAdd);
-
-  return section;
+  placeToPlaceFunction(section);
 }
 
 //  function getSkuFromProductItem(item) {
@@ -70,15 +77,8 @@ function createProductItemElement({ sku, name, image }) {
 //  }
 
 const handleResults = (results) => {
-  results.forEach((element) => {
-    const object = {
-      sku: element.id,
-      name: element.title,
-      image: element.thumbnail,
-    };
-    const newItem = createProductItemElement(object);
-    const section = document.querySelector('.items');
-    section.appendChild(newItem);
+  results.forEach((elementDoArray) => {
+    creatObjectFunction(elementDoArray, createProductItemElement);
   });
 };
 
@@ -87,6 +87,8 @@ const apiHandlers = (url) => {
     .then(response => response.json())
     .then(object => handleResults(object.results));
 };
+
+//  const buttonDelete = document.querySelector('.empty-cart');
 
 window.onload = function onload() {
   apiHandlers(`${apiUrl}${apiUrlSearch}`);
