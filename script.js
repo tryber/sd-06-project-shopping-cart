@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -37,28 +37,12 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  const cart = document.querySelector('.cart__items')
-
   return li;
 }
 
 const urlSearch = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
-const promise = () => {
-  fetch(urlSearch)
-    .then(response => response.json())
-    .then((object) => {
-      const objectResult = object.results;
-      objectResult.forEach((element) => {
-        const sku = element.id;
-        const name = element.title;
-        const image = element.thumbnail;
-        document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
-        document.querySelector('.items').lastChild.addEventListener('click', getItem);
-      });
-    });
-};
-
+// Requisito 2
 const getItem = () => {
   const target = event.target;
   const parentTarget = target.parentElement;
@@ -69,10 +53,27 @@ const getItem = () => {
       const sku = item.id;
       const name = item.title;
       const salePrice = item.price;
-      const cart = document.querySelector('.cart__items')
-      cart.appendChild(createCartItemElement({ sku, name, salePrice }))
-    })
-}
+      const cart = document.querySelector('.cart__items');
+      cart.appendChild(createCartItemElement({ sku, name, salePrice }));
+    });
+};
+
+// Requisito 1
+const promise = () => {
+  fetch(urlSearch)
+    .then(response => response.json())
+    .then((object) => {
+      const objectResult = object.results;
+      objectResult.forEach((element) => {
+        const sku = element.id;
+        const name = element.title;
+        const image = element.thumbnail;
+        document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
+        const items = document.querySelector('.items').lastChild;
+        items.lastChild.addEventListener('click', getItem);
+      });
+    });
+};
 
 window.onload = function onload() {
   promise();
