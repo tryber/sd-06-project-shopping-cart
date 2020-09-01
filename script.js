@@ -1,7 +1,18 @@
 const CART = document.querySelector('.cart__items');
 
-const RETRIEVE_CART = function () { CART.innerHTML = localStorage.getItem('cart'); };
-const UPDATE_CART = function () { localStorage.cart = CART.innerHTML; };
+const RETRIEVE_CART = function () { CART.innerHTML = localStorage.cart; };
+const UPDATE_CART_STORAGE = function () { localStorage.cart = CART.innerHTML; };
+const ADD_TOTAL_PRICE = function (amount) {
+  if (document.querySelector('.total-price')) {
+    document.querySelector('.total-price').remove();
+  }
+  const DIV = document.createElement('div');
+  DIV.className = 'total-price';
+  document.querySelector('.cart').appendChild(DIV);
+  const DIV_PRICE = document.createElement('div');
+  DIV_PRICE.innerHTML = amount;
+  DIV.appendChild(DIV_PRICE);
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,8 +28,20 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const GET_CART_ITEMS = () => document.querySelectorAll('.cart__item');
+const SUM_ITEMS = items => Object.keys(items).reduce((total, cartItem) =>
+((total + ((Math.round(items[cartItem].dataset.price * 100)) / 100))), 0);
+
+async function calcTotalCart() {
+  const GET_CART_ITEMS_RESPONSE = await GET_CART_ITEMS();
+  const SUM_ITEMS_RESPONSE = await SUM_ITEMS(GET_CART_ITEMS_RESPONSE);
+  ADD_TOTAL_PRICE(SUM_ITEMS_RESPONSE);
+}
+
 function cartItemClickListener(item) {
   document.querySelector(`#${item.id}`).remove();
+  UPDATE_CART_STORAGE();
+  calcTotalCart();
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -26,8 +49,10 @@ function createCartItemElement({ id, title, price }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.id = `${id}`;
+  li.dataset.price = price;
   CART.appendChild(li);
-  UPDATE_CART();
+  UPDATE_CART_STORAGE();
+  calcTotalCart();
   return li;
 }
 
@@ -70,4 +95,5 @@ window.onload = function onload() {
   if (localStorage.getItem('cart')) {
     RETRIEVE_CART();
   }
+  calcTotalCart();
 };
