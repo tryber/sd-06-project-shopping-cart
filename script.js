@@ -5,19 +5,19 @@ function createProductImageElement(imageSource) {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-};
+}
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
-};
+}
 
 const saveStorage = () => {
   const items = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', items);
-};
+}
 
 const sumPrices = async (li) => {
   const total = document.querySelector('.total-price');
@@ -25,14 +25,14 @@ const sumPrices = async (li) => {
   const totalPrice = parseFloat(total.lastChild.innerHTML);
   const sum = itemPrice + totalPrice;
   total.lastChild.innerText = sum;
-};
+}
 
 function cartItemClickListener(event) {
   const section = document.querySelector('.cart__items');
   const item = event.target;
   section.removeChild(item);
   saveStorage();
-};
+}
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
@@ -42,7 +42,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.addEventListener('click', cartItemClickListener);
 
   return li;
-};
+}
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const items = document.querySelector('.items');
@@ -69,7 +69,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   items.appendChild(section);
 
   return section;
-};
+}
 
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
@@ -80,7 +80,7 @@ const fetchFunction = () => {
     .then(response => response.json())
     .then(object => object.results)
     .then(result => result.forEach(element => createProductItemElement(element)));
-};
+}
 
 const clear = () => {
   const button = document.querySelector('.empty-cart');
@@ -90,16 +90,16 @@ const clear = () => {
   });
   saveStorage();
   sumPrices(li);
-};
+}
 
 const storageItems = () => {
   if (localStorage.cart) {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
-  };
-};
+  }
+}
 
 window.onload = function onload() {
   fetchFunction();
   clear();
   storageItems();
-};
+}
