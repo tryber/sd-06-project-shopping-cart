@@ -63,7 +63,7 @@ const sumPrices = async (element) => {
 const removeFromPrices = async (element) => {
   const sub = getTotalPrice() - getProductPriceFromElement(element);
   document.querySelector('.total-price').lastChild.innerText = Math.round(sub);
-}
+};
 
 // 03 Remova o item do carrinho de compras ao clicar nele
 // a funcao encontra a lista do carrinho e seleciona o
