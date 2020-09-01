@@ -1,6 +1,50 @@
 // pegando a API
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
+
+function cartItemClickListener(event) {
+  
+}
+
+// função para criar a lista no carrinho de compras
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+// é chamado pelo findId para retonar o innerText do id
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+// é chamado pelo findId para fazer a parte do appendChild do cart
+const handleCreatListCart = (objectForCart) => {
+  const arrayProducts = document.querySelector('.cart__items');
+  arrayProducts.appendChild(createCartItemElement(objectForCart));
+};
+
+// função para achar o id do botão clicado (usa em conjunto a getSkuFromProductItem)
+function findId() {
+  const click = event.target.parentElement;
+  console.log(click);
+
+  const idProduct = getSkuFromProductItem(click);
+  console.log(idProduct);
+
+  const endpoint = `https://api.mercadolibre.com/items/${idProduct}`;
+
+  fetch(endpoint)
+    .then(response => response.json())
+    .then((object) => {
+      console.log(object);
+      handleCreatListCart(object);
+    });
+}
+
+// função correlacionada a função createProductItemElement (parte referente a imagem)
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -8,6 +52,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// função correlacionada a função createProductItemElement (parte referente aos textos)
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -23,26 +68,11 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', findId);
 
   return section;
 }
-
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
-
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
 
 // função para olhar dentro do object.result e criar os subitens de .items
 const filterElementsObjectApi = (elementsArray) => {
