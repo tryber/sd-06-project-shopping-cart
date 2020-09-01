@@ -120,7 +120,7 @@ function getLocalStorageInfo() {
     const filteredArray = arrFilter(historyProduct);
     if (filteredArray.length > 0) {
       // localStorage.cartShop = '';
-        filteredArray.forEach((id) => {
+      filteredArray.forEach((id) => {
         fetchItem(id);
         updateLocalStorage('remove', id);
       });
