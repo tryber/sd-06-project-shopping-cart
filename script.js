@@ -1,9 +1,10 @@
+let totalPrice = 0;
+
 const getTotalPrice = (itemAdd, itemRemove) => {
   const totalPriceContainer = document.getElementById('price');
-  let totalPrice = parseInt(totalPriceContainer.innerText, 0);
   if (itemAdd) { totalPrice += itemAdd; }
   if (itemRemove) { totalPrice -= itemRemove; }
-  totalPriceContainer.innerText = totalPrice;
+  totalPriceContainer.innerText = `Total Price: R$ ${totalPrice}`;
 };
 
 function cartItemClickListener(event) {
@@ -47,10 +48,11 @@ const clearCart = (items, button) => {
   button.addEventListener('click', function () {
     // clearing localStorage
     localStorage.clear();
+    totalPrice = 0;
+    document.getElementById('price').innerText = `Total Price: R$ ${totalPrice}`;
     let element = items.lastElementChild;
     // clearing cart one by one
     while (element) {
-      document.getElementById('price').innerText = 0;
       items.removeChild(element);
       element = items.lastElementChild;
     }
