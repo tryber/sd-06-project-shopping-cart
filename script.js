@@ -6,6 +6,15 @@ const apiInfo = {
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
+const loadingFunction = () => {
+  const mainContainer = document.querySelector('.items');
+  mainContainer.innerHTML = '';
+  const divContainerText = document.createElement('p');
+  divContainerText.innerText = 'loading...';
+  divContainerText.id = 'load';
+  mainContainer.appendChild(divContainerText);
+}
+
 const sumOfPrices = async (price) => {
   const totalPrice = document.querySelector('.total-price');
   totalPrice.innerText = price;
@@ -67,7 +76,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -96,6 +104,7 @@ function getSkuFromProductItem(item) {
 }
 
 const fetchComputer = () => {
+  loadingFunction();
   fetch(url)
     .then(response => response.json())
     .then((object) => {
@@ -109,6 +118,7 @@ const fetchComputer = () => {
       });
     })
     .then(() => localStorageLoad())
+    .then(() => document.getElementById('load').remove())
     .catch(error => handleError(error));
 };
 
