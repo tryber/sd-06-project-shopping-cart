@@ -1,3 +1,7 @@
+const loading = document.createElement('h2');
+loading.innerHTML = 'loading...';
+loading.classList.add('loading');
+
 const emptyCart = () => {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     const allCart = document.querySelectorAll('.cart__item');
@@ -41,7 +45,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -51,9 +54,6 @@ function createProductItemElement({ sku, name, image }) {
   // a metodologia dele para que conseguisse o resultado desejado.
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
     .addEventListener('click', () => {
-      const loading = document.createElement('h2');
-      loading.innerHTML = 'loading...';
-      loading.classList.add('loading');
       document.querySelector('.container').appendChild(loading);
       fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(result => result.json())
@@ -77,6 +77,7 @@ function getSkuFromProductItem(item) {
 }
 
 const fetchItems = () => {
+  document.querySelector('.container').appendChild(loading);
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(object => object.results)
@@ -89,6 +90,7 @@ const fetchItems = () => {
       const listItems = document.querySelector('.items');
       listItems.appendChild(itemList);
     }));
+    document.querySelector('.container').removeChild(loading);
 };
 
 window.onload = function onload() {
