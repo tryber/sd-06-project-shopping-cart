@@ -111,10 +111,6 @@ const displayItems = () => {
   );
 };
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function getCurrentCart() {
   return JSON.stringify(document.querySelectorAll('.cart__item'));
 }
