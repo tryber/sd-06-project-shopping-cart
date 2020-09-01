@@ -125,11 +125,12 @@ window.onload = function onload() {
 
   const endpoint = 'sites/MLB/search?q=$computador';
   const fetchComputers = (url) => {
+    const loadingParentElement = document.querySelector('.items');
     const loadingElement = document.querySelector('.loading');
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        loadingElement.remove();
+        loadingParentElement.removeChild(loadingElement);
         mblProducts(data.results);
       });
   };
