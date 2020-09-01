@@ -1,3 +1,8 @@
+function saveStorage() {
+  const cartItems = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('listCart', JSON.stringify(cartItems));
+}
+
 function cartItemClickListener(event) {
   document.querySelector('.cart__items').removeChild(this);
   saveStorage();
@@ -82,11 +87,6 @@ function queryAtML() {
     });
 }
 
-function saveStorage() {
-  var cartItems = document.querySelector('.cart__items').innerHTML;
-  localStorage.setItem('listCart', JSON.stringify(cartItems));
-}
-
 function loadStorage() {
   const cartItems = JSON.parse(localStorage.getItem('listCart'));
   if (cartItems) {
@@ -99,5 +99,5 @@ function loadStorage() {
 window.onload = () => {
   queryAtML();
   clearCart();
-  loadStorage()
+  loadStorage();
 };
