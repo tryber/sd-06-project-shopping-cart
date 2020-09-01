@@ -7,13 +7,6 @@ const localStorageSave = () => {
   const cartItem = document.querySelector('.cart__items');
   localStorage.setItem('items', cartItem.innerHTML);
 };
-// carrega storage
-const localStorageLoad = () => {
-  const saveItem = document.querySelector('.cart__items');
-  const savedKeyItems = localStorage.getItem('items');
-  saveItem.innerHTML = savedKeyItems;
-  saveItem.addEventListener('click', cartItemClickListener);
-};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -32,11 +25,17 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener() {
   // coloque seu código aqui
   const list = document.querySelector('.cart__items');
-  list.removeChild(event.target); //event nao tinha q estar no parametro?
-  localStorage.clear(); //limpa o storage
+  list.removeChild(event.target); // event nao tinha q estar no parametro? nao tinha q estar no parametro?
+  localStorage.clear(); // limpa o storage
   localStorageSave();
 }
-
+// carrega storage
+const localStorageLoad = () => {
+  const saveItem = document.querySelector('.cart__items');
+  const savedKeyItems = localStorage.getItem('items');
+  saveItem.innerHTML = savedKeyItems;
+  saveItem.addEventListener('click', cartItemClickListener);
+};
 
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
@@ -119,5 +118,5 @@ const fetchCurrency = (currency) => {
 
 window.onload = function onload() {
   fetchCurrency();
-  localStorageLoad();
+  localStorageLoad(); // carrega lista qndo inicia
 };
