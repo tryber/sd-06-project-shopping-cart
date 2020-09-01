@@ -71,17 +71,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
-const fetchFunction = () => {
-  fetch(urlEndpoint)
-    .then(response => response.json())
-    .then(object => object.results)
-    .then(result => result.forEach(element => createProductItemElement(element)));
-};
-
 const clear = () => {
   const button = document.querySelector('.empty-cart');
   button.addEventListener('click', () => {
@@ -90,6 +79,13 @@ const clear = () => {
   });
   saveStorage();
   sumPrices(li);
+};
+
+const fetchFunction = () => {
+  fetch(urlEndpoint)
+    .then(response => response.json())
+    .then(object => object.results)
+    .then(result => result.forEach(element => createProductItemElement(element)));
 };
 
 const storageItems = () => {
