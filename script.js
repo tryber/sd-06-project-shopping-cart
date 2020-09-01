@@ -37,7 +37,6 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-// event.target.remove();
   const items = document.querySelector('.cart__items');
   items.removeChild(event.target);
 }
@@ -55,15 +54,8 @@ const itemCart = () => {
   const target = event.target;
   const id = target.parentNode;
   const idCorreto = id.firstChild.innerText;
-// Criando elemento de loading para informar enquanto a API busca as informações
-  const loading = document.createElement('span');
-  const cart = document.querySelector('.cart');
-  cart.appendChild(loading);
-  loading.className = 'loading';
-  loading.innerText = 'loading...';
 
 // Realizando a chama para a API, passando o id do item que foi clicado
-  setTimeout(function () {
     fetch(`https://api.mercadolibre.com/items/${idCorreto}`)
     .then(response => response.json())
     .then((object) => {
@@ -80,9 +72,7 @@ const itemCart = () => {
 // Adicionando a função criada para remoção do item
       cartItem.addEventListener('click', cartItemClickListener);
       // Removendo o elemento de loading através da classe do span, assim que o item é carregado.
-    })
-    .then(() => document.querySelector('.loading').remove());
-  }, 400);
+    })  
 };
 
 // Criando a função que realiza o reset do carrinho
@@ -101,7 +91,14 @@ const clearCart = () => {
 };
 
 const connection = () => {
+  // Criando elemento de loading para informar enquanto a API busca as informações
+  const loading = document.createElement('span');
+  const cart = document.querySelector('.items');
+  cart.appendChild(loading);
+  loading.className = 'loading';
+  loading.innerText = 'loading...';
 // Recebendo todos os itens da API, e renderizando em tela
+setTimeout(function () {  
   fetch(url)
   .then(response => response.json())
   .then((object) => {
@@ -121,10 +118,11 @@ const connection = () => {
       button.lastChild.addEventListener('click', itemCart);
     });
   })
-    .then(clearCart);
+    .then(clearCart)
+    .then(() => document.querySelector('.loading').remove());
+  }, 4000);
 };
 
 window.onload = function onload() {
   connection();
-  clearCart();
 };
