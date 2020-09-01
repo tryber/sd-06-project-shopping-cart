@@ -1,3 +1,10 @@
+function loadingMessage() {
+  const loadText = document.createElement('div');
+  loadText.classList.add('loading');
+  loadText.innerHTML = 'Loading...';
+  document.querySelector('.items').appendChild(loadText);
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -17,6 +24,11 @@ function cartItemClickListener(event) {
   localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML);
 }
 
+function clearCartList() {
+  document.querySelector('.cart__items').innerHTML = '';
+  localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML);
+}
+
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -25,7 +37,6 @@ function createCartItemElement({ id, title, price }) {
 
   const cartSection = document.querySelector('.cart');
   cartSection.appendChild(li);
-  // console.log(localStorage.getItem(cartItems));
 
   return li;
 }
@@ -66,13 +77,6 @@ function createProductItemElement({ id, title, thumbnail }) {
   return section;
 }
 
-function loadingMessage() {
-  const loadText = document.createElement('div');
-  loadText.classList.add('loading');
-  loadText.innerHTML = 'Loading...';
-  document.querySelector('.items').appendChild(loadText);
-}
-
 function fetchProductList() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
@@ -84,14 +88,10 @@ function fetchProductList() {
     });
 }
 
-function clearCartList() {
-  document.querySelector('.cart__items').innerHTML = '';
-  localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML);
-}
-
 window.onload = function onload() {
   loadingMessage();
   fetchProductList();
+
   document.querySelector('.empty-cart').addEventListener('click', clearCartList);
 
   if (localStorage.getItem('cartItems')) {
