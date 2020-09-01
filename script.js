@@ -4,7 +4,6 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -12,21 +11,22 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function sumTotal(salePrice) {
-  const totalPrice = document.querySelector('.total-price');
+async function sumTotal(salePrice) {
+  const totalPrice = await document.querySelector('.total-price');
   totalPrice.innerText = ((Math.round((totalPrice.innerText) * 100) / 100) + salePrice);
 }
 
 function cartItemClickListener(event) {
+  // coloque seu código aqui
   event.target.remove(); // ChildNode.remove() fonte: MDN web docs
 }
 
-async function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  await sumTotal(salePrice);
+  sumTotal(salePrice);
   return li;
 }
 
@@ -47,11 +47,9 @@ function addToCart(event) {
       localStorage.setItem('salvedItens', salvedItens.innerHTML);
     });
 }
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -59,11 +57,9 @@ function createProductItemElement({ sku, name, image }) {
     .addEventListener('click', addToCart);
   return section;
 }
-
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
-
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
 // requisito 6 Botão Limpar carrinho de compras
 function clearAll() {
   console.log('Apagado!');
@@ -88,7 +84,6 @@ const fetchProduct = (url) => {
     })
     .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', clearAll));
 };
-
 window.onload = () => {
   setTimeout(() => {
     document.querySelector('.loading').remove();
