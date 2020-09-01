@@ -57,12 +57,12 @@ function getProductPriceFromElement(element) {
 }
 const sumPrices = async (element) => {
   const sum = getProductPriceFromElement(element) + getTotalPrice();
-  document.querySelector('.total-price').lastChild.innerText = Math.round(sum);
+  document.querySelector('.total-price').lastChild.innerText = (Math.round(sum * 100)) / 100;
 };
 
 const removeFromPrices = async (element) => {
   const sub = getTotalPrice() - getProductPriceFromElement(element);
-  document.querySelector('.total-price').lastChild.innerText = Math.round(sub);
+  document.querySelector('.total-price').lastChild.innerText = (Math.round(sub * 100)) / 100;
 };
 
 // 03 Remova o item do carrinho de compras ao clicar nele
