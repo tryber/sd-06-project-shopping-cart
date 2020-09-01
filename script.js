@@ -111,7 +111,16 @@ function getLocalStorageInfo() {
   }
 }
 
+function btCleaner() {
+  const btClean = document.querySelector('.empty-cart');
+  btClean.addEventListener('click', () => {
+    document.querySelector('.cart__items').innerHTML = '';
+    localStorage.setItem('cartShop', '');
+  });
+}
+
 window.onload = () => {
   fetchMLB(urlAPI);
   getLocalStorageInfo();
+  btCleaner();
 };
