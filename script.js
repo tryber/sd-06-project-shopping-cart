@@ -43,7 +43,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 // FETCH PROMISE
 
 const apiSite = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
-const apiFetch = async () => {
+const apiFetch = async function () {
   return fetch(apiSite)
     .then(function (response) {
       if (!response.ok) throw new Error('Erro de requisição');
