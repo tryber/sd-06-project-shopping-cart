@@ -1,5 +1,5 @@
 body {
-  background-image: url('https://images.freecreatives.com/wp-content/uploads/2016/01/Dark-Metal-Grid-Seamless-Pattern-Textures.jpg');
+  background-image: url( 'https://images.freecreatives.com/wp-content/uploads/2016/01/Dark-Metal-Grid-Seamless-Pattern-Textures.jpg' );
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
 }
@@ -106,7 +106,7 @@ body {
 
 
 .empty-cart {
-  background-color: rgb( 0 , 0 , 0 );
+  background-color: black;
   color: rgb( 204 , 160 , 15 );
   border: none;
   margin-left: 15%;
@@ -122,7 +122,7 @@ ul {
 }
 
 li {
-  background-color: rgb( 0 , 0 , 0 );
+  background-color: black;
   color: rgb( 155 , 155 , 155 );
   font-size: small;
   margin-left: 15%;
