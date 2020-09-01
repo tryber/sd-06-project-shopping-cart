@@ -56,7 +56,7 @@ function fetchCar(id) {
   fetch(urlId)
   .then(response => response.json())
   .then(response => createCartItemElement(response));
-};
+}
 
 const addCar = () => {
   const itemAdd = document.querySelector('.items');
@@ -75,4 +75,3 @@ window.onload = function onload() {
   fetchItems();
   addCar();
 };
-
