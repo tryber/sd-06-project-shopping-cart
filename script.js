@@ -14,19 +14,6 @@ function cartItemClickListener(event) {
   const aux = event.target;
   aux.remove();
 }
-
-const spallLoading = () => {
-  const auxsecondPlane = document.querySelector('.cart');
-  const loading = document.querySelector('.loading');
-  if (!loading) {
-    const loadingSpan = document.createElement('span');
-    loadingSpan.className = 'loading';
-    loadingSpan.innerText = 'loading...';
-    auxsecondPlane.appendChild(loadingSpan);
-  }
-  auxsecondPlane.removeChild(document.querySelector('.loading'));
-};
-
 function removeItem() {
   const cartItems = document.querySelectorAll('.cart__item');
   const ol = document.querySelector('.cart__items');
@@ -69,7 +56,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       document.querySelector('.cart__items').appendChild(item);
       const saveCart = document.querySelector('.cart__items');
       localStorage.setItem('cartItemsSaved', saveCart.innerHTML);
-      spallLoading();
     });
   });
   return section;
@@ -89,7 +75,6 @@ function handlerStrutor() {
   const arrayComputer = object.results;
   console.log(arrayComputer);
   handlersectionsComputer(arrayComputer);
-  spallLoading();
 });
 }
 
