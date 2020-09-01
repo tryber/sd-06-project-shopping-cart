@@ -48,9 +48,9 @@ const getItem = () => {
   const target = event.target;
   const parentTarget = target.parentElement;
   const firstChild = parentTarget.firstChild.innerText;
-  const loading = document.querySelector('.load__span');
-  loading.classList.add('loading');
+  const loading = document.querySelector('#loading');
   loading.innerHTML = 'loading...';
+  loading.classList.add('loading');
   setTimeout(function () {
     fetch(`https://api.mercadolibre.com/items/${firstChild}`)
     .then(response => response.json())
@@ -92,6 +92,8 @@ const emptyList = () => {
     }
   });
 };
+
+// Requisito 5
 
 window.onload = function onload() {
   fetchUrl();
