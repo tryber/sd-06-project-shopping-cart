@@ -64,7 +64,8 @@ function createProductItemElement(sku, name, image) {
 function listReturned(arrOfProducts) {
   arrOfProducts.map((element) => {
     const secItems = document.querySelector('.items');
-    return secItems.appendChild(createProductItemElement(element.id, element.title, element.thumbnail));
+    return secItems
+      .appendChild(createProductItemElement(element.id, element.title, element.thumbnail));
   });
 }
 
