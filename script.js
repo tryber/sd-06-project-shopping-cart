@@ -1,15 +1,16 @@
 function sumPromise(array) {
-  let prices = 0; 
-  array.forEach(item => prices += parseFloat(item.innerText.split('$')[1]));
+  let prices = 0;
+  array.forEach(function (item) {
+    prices += parseFloat(item.innerText.split('$')[1]);
+  })
   return prices;
-} 
+}
 
 async function cartTotalValue() {
   const cartItems = document.querySelectorAll('.cart__item');
   const thisItems = [...cartItems];
   const totalPrice = await sumPromise(thisItems);
   document.querySelector('.total__price').innerText = ` ${totalPrice}`;
-
 }
 
 function saveStorage() {
