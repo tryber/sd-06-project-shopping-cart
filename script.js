@@ -4,7 +4,7 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-
+let totalprice = 0;
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -39,6 +39,12 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const plusTotalPrice = (price) => {
+  totalprice += price;
+  const outputPrice = document.querySelector('.total-price');
+  outputPrice.innerText = `Preço total: $${totalprice}`;
+};
+
 const fetchSkuItem = (sku) => {
   const endpoint = `https://api.mercadolibre.com/items/${sku}`;
   fetch(endpoint)
@@ -50,6 +56,8 @@ const fetchSkuItem = (sku) => {
         salePrice: data.price,
       };
       document.querySelector('.cart__items').appendChild(createCartItemElement(obj));
+      plusTotalPrice(obj.salePrice); // TESTE!
+      console.log(totalprice); // TESTE!!
       const saveCart = document.querySelector('.cart__items');
       localStorage.setItem('cartItemsSaved', saveCart.innerHTML);
     });
@@ -89,7 +97,7 @@ const clearButton = () => {
 
 const saveStorage = () => {
   const saveCart = document.querySelector('.cart__items');
-  console.log(saveCart.innerHTML);
+  // console.log(saveCart.innerHTML); // TESTE
   localStorage.setItem('cartItemsSaved', saveCart.innerHTML);
 };
 
