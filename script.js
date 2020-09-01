@@ -1,6 +1,3 @@
-window.onload = function onload() {
-  apiQuery()
-};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -24,7 +21,7 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  const fatherQuery = document.querySelector('.items')
+  const fatherQuery = document.querySelector('.items');
   return fatherQuery.appendChild(section);
 }
 
@@ -48,11 +45,13 @@ const URL = 'https://api.mercadolibre.com/';
 const apiQuery = () => {
   const endpoint = `${URL}sites/MLB/search?q=computador`;
   fetch(endpoint)
-  .then(response => response.json())
-  .then(item => item.results.forEach(element => {   
-  createProductItemElement(element)
-  }))
+    .then(response => response.json())
+    .then(item => item.results.forEach(element => {
+      createProductItemElement(element);
+    }));
 
 }
 
-
+window.onload = function onload() {
+  apiQuery();
+};
