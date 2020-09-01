@@ -30,6 +30,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   localStorage.removeItem(event.target.innerText.substr(5, 13));
+  localStorage.removeItem(event.target.innerText.substr(5, 12));
   event.target.remove();
 }
 
