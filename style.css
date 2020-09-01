@@ -21,6 +21,7 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
+  align-items: flex-start;
 }
 
 .items {
@@ -58,19 +59,73 @@
 .item .item__add {
   background-color: green;
   border: 0;
+  color: white;
   cursor: pointer;
+  font-weight: 800;
   margin: 0;
   padding: 5px;
 }
 
 .cart {
+  border-radius: 5px;
+  border: 2px blue solid;
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  margin-top: 5px;
+}
+
+.cart__title {
+  font-weight: 900;
+  margin-bottom: 7px;
+  margin-top: 5px;
 }
 
 .cart .cart__title {
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  margin-right: 10px;
+}
+
+.price-style {
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  margin-top: 0;
+  margin-left: 2px;
+}
+
+.empty-cart {
+  background: linear-gradient( rgb( 212 , 49 , 49 ) , rgb( 136 , 67 , 67 ) );
+  border-radius: 20px;
+  border: 2px gray solid;
+  box-shadow: 0 0 3px black;
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+  margin-left: 7px;
+  margin-right: 7px;
+  padding: 5px;
+}
+
+.empty-cart:hover {
+  background: linear-gradient( rgb( 255 , 75 , 75 ) , rgb( 156 , 45 , 45 ) );
+}
+
+.empty-cart:focus {
+  outline: none;
+}
+
+.cart__item {
+  margin-bottom: 18px;
+  border-bottom: 1px black solid;
+  list-style-position: inside;
+  margin-right: 35px;
 }
