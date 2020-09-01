@@ -41,10 +41,10 @@ function cartItemClickListener(event) {
   const items = document.querySelectorAll('.cart__item');
   items.forEach((item) => {
     item.addEventListener('click', function () {
-    item.remove();
-   });
+      item.remove();
+    });
   });
-};
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -84,7 +84,7 @@ const itemCart = () => {
 // Adicionando a função criada para remoção do item
       cartItem.addEventListener('click', cartItemClickListener);
       // Removendo o elemento de loading, assim que o item é carregado.
-    })
+    });
     loading.remove();
   }, 2000);
 };
