@@ -83,8 +83,9 @@ function createProductItemElement({ id, title, thumbnail }) {
 
 const ML_URL = () => {
   const CONTAINER = document.querySelector('.container');
+  CONTAINER.appendChild(createCustomElement('h1', 'loading', 'loading...'));
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
-    .then(CONTAINER.appendChild(createCustomElement('h1', 'loading', 'loading...')))
+    // .then(CONTAINER.appendChild(createCustomElement('h1', 'loading', 'loading...')))
     .then(resp => resp.json())
     .then(data => data.results.forEach(result => createProductItemElement(result)))
     .then(document.querySelector('.loading').remove())
