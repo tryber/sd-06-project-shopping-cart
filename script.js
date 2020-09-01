@@ -1,4 +1,4 @@
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const urlEndpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -6,6 +6,7 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -13,28 +14,28 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const saveItems = () => {
+const saveStorage = () => {
   const items = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', items);
 };
 
 function cartItemClickListener(event) {
-  const ol = document.querySelector('.cart__items');
+  const section = document.querySelector('.cart__items');
   const item = event.target;
-  ol.removeChild(item);
-  saveItems();
+  section.removeChild(item);
+  saveStorage();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
+  const list = document.createElement('li');
+  list.className = 'cart__item';
+  list.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  list.addEventListener('click', cartItemClickListener);
+  return list;
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
-  const sectionHTML = document.querySelector('.items');
+  const items = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -44,48 +45,58 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
   .addEventListener('click', () => {
-    const sk = sku;
-    fetch(`https://api.mercadolibre.com/items/${sk}`)
+    const id = sku;
+    fetch(`https://api.mercadolibre.com/items/${id}`)
       .then(response => response.json())
       .then((result) => {
         const createItem = createCartItemElement(result);
-        const ol = document.querySelector('.cart__items');
-        ol.appendChild(createItem);
-        saveItems();
+        const list = document.querySelector('.cart__items');
+        list.appendChild(createItem);
+        saveStorage();
       });
   });
-  sectionHTML.appendChild(section);
+  items.appendChild(section);
 
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
-const fetchFunc = () => {
-  fetch(url)
+const fetchFunction = () => {
+  fetch(urlEndpoint)
     .then(response => response.json())
     .then(object => object.results)
-    .then(result => result.forEach(resultElement => createProductItemElement(resultElement)));
+    .then(result => result.forEach(element => createProductItemElement(element)));
 };
 
 const clear = () => {
-  const botao = document.querySelector('.empty-cart');
-  botao.addEventListener('click', () => {
-    const ol = document.querySelector('.cart__items');
-    ol.innerHTML = '';
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', () => {
+    const section = document.querySelector('.cart__items');
+    section.innerHTML = '';
   });
 };
 
-const storage = () => {
+const storageItems = () => {
   if (localStorage.cart) {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
   }
 };
 
+const sumPrices = () => {
+  let cart = document.querySelector('.cart__item').innerHTML
+  let arrayCart = cart.split(' ');
+  let total = arrayCart[arrayCart.length - 1].slice(1);
+  let number = parseInt(total);
+  console.log(number);
+  return number
+}
+
 window.onload = function onload() {
-  fetchFunc();
+  fetchFunction();
   clear();
-  storage();
+  storageItems();
+  sumPrices();
 };
