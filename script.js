@@ -60,7 +60,7 @@ const sumPrices = async (element) => {
   document.querySelector('.total-price').lastChild.innerText = Math.round(sum);
 };
 
-function removeFromPrices(element) {
+const removeFromPrices = async (element) => {
   const sub = getTotalPrice() - getProductPriceFromElement(element);
   document.querySelector('.total-price').lastChild.innerText = Math.round(sub);
 }
