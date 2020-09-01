@@ -32,7 +32,7 @@ function removeFromStorage() {
 
 function updateTotalPrice(price) {
   const string = totalPrice.innerHTML;
-  totalPrice.innerHTML = (Number(string) + price).toFixed(2);
+  totalPrice.innerHTML = Math.round((Number(string) + price) * 100) / 100;
 }
 
 function createProductImageElement(imageSource) {
