@@ -1,5 +1,6 @@
-window.onload = function onload() { };
+const urlEndpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
+// Função que já veio e eu não mexi
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -7,6 +8,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// Função que já veio e eu não mexi
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -14,30 +16,113 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+// Salvar itens no local storage
+const saveStorage = () => {
+  const items = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cart', items);
+};
+
+// Remove item ao ser clickado
+function cartItemClickListener(event) {
+  const li = event.target;
+  event.target.remove();
+  const total = document.querySelector('.total-price');
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.innerHTML);
+  const result = totalPrice - itemPrice;
+  total.innerText = result;
+  saveStorage();
+}
+
+// Soma o valor dos itens selecionados
+async function sumPrice(li) {
+  const total = document.querySelector('.total-price');
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.innerHTML);
+  const result = itemPrice + totalPrice;
+  total.innerText = result;
+  saveStorage();
+}
+
+// Cria os itens selecionados do carrinho
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  saveStorage();
+  sumPrice(li);
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+// Cria todos os itens retornados da API
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  const sectionItems = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', () => {
+      const url = sku;
+      fetch(`https://api.mercadolibre.com/items/${url}`)
+        .then(response => response.json())
+        .then((result) => {
+          const createdItem = createCartItemElement(result);
+          const ol = document.querySelector('.cart__items');
+          ol.appendChild(createdItem);
+          saveStorage();
+        });
+    });
+  sectionItems.appendChild(section);
 
   return section;
 }
 
+// Função que já veio
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+// Fetch que recupera e lida com os dados da API
+function fetchFunction() {
+  setTimeout(() =>
+  fetch(urlEndpoint)
+    .then(response => response.json())
+    .then(object => object.results)
+    .then(result => result.forEach(resultElement => createProductItemElement(resultElement))),
+    1000);
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+// Botão de limpar o carrinho
+const clear = () => {
+  const botao = document.querySelector('.empty-cart');
+  botao.addEventListener('click', () => {
+    const ol = document.querySelector('.cart__items');
+    ol.innerHTML = '';
+    const total = document.querySelector('.total-price');
+    total.innerText = 0;
+    saveStorage();
+  });
+};
+
+// Salvar no local storage
+const storage = () => {
+  if (localStorage.cartShop) document.querySelector('.cart__items').innerHTML = localStorage.cartShop;
+};
+
+const loadingMessage = () => {
+  setTimeout(() => {
+    const load = document.querySelector('.loading');
+    load.remove();
+  }, 1000);
+};
+
+window.onload = function onload() {
+  fetchFunction();
+  clear();
+  storage();
+  loadingMessage();
+};
