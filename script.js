@@ -19,6 +19,14 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function listReturned(arrOfProducts) {
+  arrOfProducts.map((element) => {
+    const secItems = document.querySelector('.items');
+    secItems.appendChild(createProductItemElement(element.id, element.title, element.thumbnail));
+    return { id: element.id, title: element.title, thumb: element.thumbnail };
+  });
+}
+
 function fetchItems() {
   const productURL = `${apiURL.url}${apiURL.endPointProduct}${apiURL.search}`;
   fetch(productURL)
@@ -28,14 +36,6 @@ function fetchItems() {
       listReturned(result);
     })
     .catch(error => window.alert(error));
-}
-
-function listReturned(arrOfProducts) {
-  arrOfProducts.map((element) => {
-    const secItems = document.querySelector('.items');
-    secItems.appendChild(createProductItemElement(element.id, element.title, element.thumbnail));
-    return { id: element.id, title: element.title, thumb: element.thumbnail };
-  });
 }
 
 function getSkuFromProductItem(item) {
