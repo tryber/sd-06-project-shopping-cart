@@ -98,7 +98,6 @@ const connection = () => {
   loading.className = 'loading';
   loading.innerText = 'loading...';
 // Recebendo todos os itens da API, e renderizando em tela
-  setTimeout(function () {
     fetch(url)
       .then(response => response.json())
       .then((object) => {
@@ -120,7 +119,6 @@ const connection = () => {
       })
       .then(clearCart)
       .then(() => document.querySelector('.loading').remove());
-  }, 4000);
 };
 
 window.onload = function onload() {
