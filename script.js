@@ -6,13 +6,17 @@ const apiInfo = {
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
-async function sumOfPrices(price) {
-  const totalPrice = await document.querySelector('.total-price');
-  totalPrice.innerHTML = parseFloat(totalPrice.innerHTML * 1) + price;
+async function sumOfPrices() {
+  const itensOnCart = await document.querySelectorAll('.cart__item');
+  const numberOnPrice = [...itensOnCart]
+    .map(number => number.innerText.match(/[0-9.0-9]+$/))// Referência: https://www.regular-expressions.info/anchors.html
+    .reduce((acc, val) => acc + parseFloat(val), 0);
+  document.querySelector('.total-price').innerHTML = numberOnPrice;
 }
 
 function cartItemClickListener(event) {
   event.target.remove();
+  sumOfPrices();
 }
 
 const emptyCart = () => {
@@ -24,6 +28,7 @@ const emptyCart = () => {
     }
     document.querySelector('.total-price').innerText = '0';
   });
+  localStorage.clear();
 };
 
 const handleError = (errorMessage) => {
@@ -82,7 +87,7 @@ function createProductItemElement({ sku, name, image }) {
       });
       const itemList = document.querySelector('.cart__items');
       itemList.appendChild(item);
-      sumOfPrices(element.price);
+      sumOfPrices();
       localStorageSave();
     });
   });
@@ -108,6 +113,7 @@ const fetchComputer = () => {
       });
     })
     .then(() => localStorageLoad())
+    .then(() => sumOfPrices())
     .then(() => setTimeout(() => document.querySelector('.loading').remove(), 2000))
     .catch(error => handleError(error));
 };
