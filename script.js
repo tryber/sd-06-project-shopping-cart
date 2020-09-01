@@ -1,6 +1,7 @@
 /* eslint-disable arrow-parens */
-// mercado livre API
+// mercado livre API and 'computador' endpoint
 const base = 'https://api.mercadolibre.com/';
+const endpoint = 'sites/MLB/search?q=$computador';
 
 // create product image
 function createProductImageElement(imageSource) {
@@ -120,38 +121,40 @@ const mblProducts = (results) => {
   });
 };
 
-window.onload = function onload() {
-  // request product list from mercado livre's api on window load and calls mblProducts function
+// request product list from mercado livre's api on window load and calls mblProducts function
+const fetchComputers = (url) => {
+  const loadingParentElement = document.querySelector('.items');
+  const loadingElement = document.querySelector('.loading');
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      loadingParentElement.removeChild(loadingElement);
+      mblProducts(data.results);
+    });
+};
 
-  const endpoint = 'sites/MLB/search?q=$computador';
-  const fetchComputers = (url) => {
-    const loadingParentElement = document.querySelector('.items');
-    const loadingElement = document.querySelector('.loading');
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        loadingParentElement.removeChild(loadingElement);
-        mblProducts(data.results);
-      });
-  };
-  setTimeout(() => fetchComputers(`${base}${endpoint}`), 3000);
+// func to get local storage to load our saved cart
+const loadCart = () => {
+  const cartParentElement = document.querySelector('.cart__items');
+  cartParentElement.innerHTML = localStorage.getItem('cartStorage');
+
+  const cartListItems = document.getElementsByTagName('li');
+
+  for (let i = 0; i < cartListItems.length; i += 1) {
+    cartListItems[i].addEventListener('click', cartItemClickListener);
+  }
+
+  // calls func to sum prices of products in our cart
+  cartValue();
+};
+
+window.onload = function onload() {
+  // call func to request product list
+  fetchComputers(`${base}${endpoint}`);
 
   // add event to empty our cart
   document.querySelector('.empty-cart').addEventListener('click', emptyCart);
 
-  // call local storage to load our saved cart
-  const loadCart = () => {
-    const cartParentElement = document.querySelector('.cart__items');
-    cartParentElement.innerHTML = localStorage.getItem('cartStorage');
-
-    const cartListItems = document.getElementsByTagName('li');
-
-    for (let i = 0; i < cartListItems.length; i += 1) {
-      cartListItems[i].addEventListener('click', cartItemClickListener);
-    }
-
-    // calls func to sum prices of products in our cart
-    cartValue();
-  };
+  // call func to get our last shopping cart
   loadCart();
 };
