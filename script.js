@@ -6,10 +6,10 @@ const apiInfo = {
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
-const sumOfPrices = async (price) => {
-  const totalPrice = document.querySelector('.total-price');
-  totalPrice.innerHTML = (totalPrice.innerHTML * 1) + price;
-};
+async function sumOfPrices(price) {
+  const totalPrice = await document.querySelector('.total-price');
+  totalPrice.innerHTML = parseFloat(totalPrice.innerHTML * 1) + price;
+}
 
 function cartItemClickListener(event) {
   event.target.remove();
