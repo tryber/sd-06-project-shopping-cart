@@ -151,8 +151,4 @@ window.onload = async function onload() {
     totalPrice = 0;
     displayPrice(totalPrice);
   });
-
 };
-
-
-
