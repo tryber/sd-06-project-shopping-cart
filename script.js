@@ -76,12 +76,14 @@ function itemClickListener(event) {
 }
 
 function renderItem(arrayProducts) {
+  const loading = document.querySelector('.loading');
   arrayProducts.forEach((product) => {
     const newItem = createProductItemElement(product);
     newItem.addEventListener('click', itemClickListener);
     const section = document.querySelector('.items');
     section.appendChild(newItem);
   });
+  loading.remove();
 }
 
 const getApi = () => {
