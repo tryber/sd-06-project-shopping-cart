@@ -10,7 +10,7 @@ const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 //  /[0-9.0-9]+$/ => All numbers after 'whatever' character
 //  Number must be at the end of sentence (no spaces allowed)
 //  Ref: https://www.regular-expressions.info/anchors.html
-//  Tests: https://regex101.com/     
+//  Tests: https://regex101.com/
 
 const sumOfPrices = async () => {
   const cartItems = await document.querySelectorAll('.cart__item');
@@ -18,7 +18,7 @@ const sumOfPrices = async () => {
     .map(value => value.innerText.match(/[0-9.0-9]+$/))
     .reduce((accumulator, value) => accumulator + parseFloat(value), 0);
   document.querySelector('.total-price').innerHTML = getPrice;
-}
+};
 
 const localStorageSave = () => {
   const cartItem = document.querySelector('.cart__items');
