@@ -38,7 +38,7 @@ function sumPrices(price) {
   const localPrice = document.querySelector('.total-price');
   const priceNow = parseFloat(localPrice.innerText);
   const priceParam = parseFloat(price);
-  const summedPrice = (priceNow + priceParam).toFixed(2);
+  const summedPrice = Math.round((priceNow + priceParam) * 100) / 100;
   localPrice.innerText = summedPrice;
 }
 
@@ -47,7 +47,7 @@ function subPrices(priceToSub) {
   const priceNow = parseFloat(localPrice.innerText);
   const getPrice = priceToSub.split('$');
   const price = parseFloat(getPrice[1]);
-  const subPrice = (priceNow - price).toFixed(2);
+  const subPrice = Math.round((priceNow - price) * 100) / 100;
   localPrice.innerText = subPrice;
 }
 
