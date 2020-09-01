@@ -41,6 +41,17 @@ function addToCart(product) {
   itemCart.appendChild(product);
 }
 
+function clearCart() {
+  const allItems = document.querySelector('.cart__items');
+  allItems.innerHTML = '';
+  localStorage.clear();
+}
+
+function emptyCart() {
+  const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', clearCart);
+}
+
 function getFromLocalStorage() {
   if (Storage) {
     const getProductCartItems = JSON.parse(localStorage.getItem('cartML'));
@@ -115,4 +126,5 @@ const fetchProducts = () => {
 window.onload = function onload() {
   fetchProducts();
   getFromLocalStorage();
+  emptyCart();
 };
