@@ -24,21 +24,33 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
 
-// function cartItemClickListener(event) {
+function cartItemClickListener(event) {
   // coloque seu código aqui
-// }
+}
 
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// }
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+async function addProductToCart(id) {
+  const endpoint = `https://api.mercadolibre.com/items/${id}`;
+
+  await fetch(endpoint)
+    .then(response => response.json())
+    .then((product) => {
+      const formattedProduct = createCartItemElement(product);
+      const cartContainer = document.querySelector('.cart__items');
+      cartContainer.appendChild(formattedProduct);
+    });
+}
 
 async function fetchProducts(query = 'computador') {
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
@@ -50,11 +62,15 @@ async function fetchProducts(query = 'computador') {
       results.forEach(({ id, title, thumbnail }) => {
         const product = createProductItemElement({ sku: id, name: title, image: thumbnail });
         const productsContainer = document.querySelector('.items');
+        product.children[3].addEventListener('click', function () {
+          const productId = product.children[0].innerText;
+          addProductToCart(productId);
+        });
         productsContainer.appendChild(product);
       });
     });
 }
 
-window.onload = function onload() {
-  fetchProducts();
+window.onload = async function onload() {
+  await fetchProducts();
 };
