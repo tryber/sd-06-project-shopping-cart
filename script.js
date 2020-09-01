@@ -60,12 +60,12 @@ const fetchItems = () => {
 const clearCart = () => {
   const clear = document.querySelector('.empty-cart');
   clear.addEventListener('click', () => {
-    let items = document.querySelector('.cart__items');
+    const items = document.querySelector('.cart__items');
     items.innerHTML = '';
   });
 };
 
 window.onload = function onload() {
   fetchItems();
-  clearCart()
+  clearCart();
 };
