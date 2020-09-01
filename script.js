@@ -6,6 +6,7 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -22,7 +23,7 @@ const clear = () => {
 };
 
 function cartItemClickListener(event) {
-  const item = document.querySelector('.cart__item');
+  const item = document.querySelector('.cart__items');
   const targ = event.target;
   item.removeChild(targ);
 }
