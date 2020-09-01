@@ -56,6 +56,10 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
+  const textItem = String(this.innerHTML).split('$');
+  const priceRed = parseInt(textItem[1]);
+  sum -= priceRed;
+  document.querySelector('.total-price').innerHTML = sum;
   this.parentNode.removeChild(this);
   saveCart();
 }
