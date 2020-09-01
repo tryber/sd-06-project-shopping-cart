@@ -1,17 +1,11 @@
-window.onload = function onload() {
-  fetchComputer();
-};
-
-
-
 const endpoint = "https://api.mercadolibre.com/sites/MLB/search?q=$computador";
+const itemEndpoint = "https://api.mercadolibre.com/items/$ItemID";
 
 function fetchComputer() {
   fetch(endpoint)
     .then((response) => response.json())
     .then((object) => {
       object.results.forEach(computer => {
-        console.log(computer)
         const fatherElement = document.querySelector(".items")
         fatherElement.appendChild(createProductItemElement(computer))
         
@@ -19,9 +13,14 @@ function fetchComputer() {
     });
 }
 
-// Adicione o elemento retornado da função createProductItemElement(product)
-// como filho do elemento <section class="items">
-
+function fetchBuyedComputer(sku) {
+  fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then((response) => response.json())
+    .then((object) => {
+    const cartItems = document.querySelector('.cart__items')
+    cartItems.appendChild(createCartItemElement({ sku: object.id, name: object.title , salePriceprice: object.price }))
+  })  
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -44,7 +43,10 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  
+  const buttonId = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  buttonId.addEventListener('click', () => fetchBuyedComputer(sku));
+  section.appendChild(buttonId);
 
   return section;
 }
@@ -54,7 +56,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  const removeItem = document.querySelector('.cart__items');
+  removeItem.removeChild(event.target)
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -63,4 +66,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+window.onload = function onload() {
+  fetchComputer();
+  cartItemClickListener;
 }
