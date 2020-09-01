@@ -30,9 +30,34 @@ function getSkuFromProductItem(item) {
 
 const localStorageItem = (item) => {
   localStorage.setItem('cartItems', item);
+  const localPrice = document.querySelector('.total-price');
+  localStorage.setItem('totalPrice', localPrice.innerText);
 };
 
+async function sumPrices(price) {
+  const localPrice = document.querySelector('.total-price');
+  const getPriceString = localPrice.innerText;
+  const priceWithDot = getPriceString.replace(',', '.');
+  const priceNow = parseFloat(priceWithDot);
+  const priceParam = parseFloat(price);
+  const summedPrice = (priceNow + priceParam).toFixed(2).replace('.', ',');
+  localPrice.innerText = summedPrice;
+}
+
+async function subPrices(priceToSub) {
+  const localPrice = document.querySelector('.total-price');
+  const getPriceString = localPrice.innerText;
+  const priceWithDot = getPriceString.replace(',', '.');
+  const priceNow = parseFloat(priceWithDot);
+  const getPrice = priceToSub.split('$');
+  const price = parseFloat(getPrice[1]);
+  const subPrice = (priceNow - price).toFixed(2).replace('.', ',');
+  localPrice.innerText = subPrice;
+}
+
 function cartItemClickListener(event) {
+  const priceToSub = event.target.innerText;
+  subPrices(priceToSub);
   event.target.remove();
   const olCart = document.querySelector('.cart__items');
   localStorageItem(olCart.innerHTML);
@@ -44,6 +69,8 @@ const emptyCart = () => {
     const olCart = document.querySelector('.cart__items');
     olCart.innerHTML = '';
     localStorageItem(olCart.innerHTML);
+    const localPrice = document.querySelector('.total-price');
+    localPrice.innerText = '0.00';
   });
 };
 
@@ -52,18 +79,23 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  sumPrices(salePrice);
   return li;
 }
 
 const loadLocalStorage = () => {
   const localStorageToLoad = localStorage.getItem('cartItems');
-  console.log(localStorageToLoad);
   const olCart = document.querySelector('.cart__items');
   olCart.innerHTML = localStorageToLoad;
   const listItem = document.querySelectorAll('.cart__item');
   listItem.forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
   });
+  if (localStorage.totalPrice) {
+    const loadPrice = localStorage.getItem('totalPrice');
+    const localPrice = document.querySelector('.total-price');
+    localPrice.innerText = loadPrice;
+  }
 };
 
 const addToCart = (id) => {
