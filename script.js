@@ -1,10 +1,10 @@
 let sum = 0;
 
-async function totalPrice(price, operator) {
-  const total = document.querySelector('.total-price');
-  sum = (operator === 'add' ? sum += price : sum -= price);
-  total.innerHTML = (sum === 0) ? '' : `Total: R$${sum}`;
-}
+// async function totalPrice(price, operator) {
+//   const total = document.querySelector('.total-price');
+//   sum = (operator === 'add' ? sum += price : sum -= price);
+//   total.innerHTML = (sum === 0) ? '' : `Total: R$${sum}`;
+// }
 
 function saveToLocalStorage(id, title, price) {
   if (Storage) {
@@ -19,7 +19,7 @@ function removeItemFromLocalStorage(sku) {
   const arrayOfItems = JSON.parse(localStorage.getItem('cartML'));
   for (let index = 0; index < arrayOfItems.length; index += 1) {
     if (arrayOfItems[index].id === sku) {
-      totalPrice(arrayOfItems[index].price, 'sub');
+      //totalPrice(arrayOfItems[index].price, 'sub');
       arrayOfItems.splice(index, 1);
       break;
     }
@@ -56,7 +56,7 @@ function getFromLocalStorage() {
     arrayOfItems.forEach((element) => {
       const itemProduct = createCartItemElement(element);
       addToCart(itemProduct);
-      totalPrice(element.price, 'add');
+      //totalPrice(element.price, 'add');
     });
   }
 }
