@@ -8,7 +8,6 @@ const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
 const sumOfPrices = async (price) => {
   const totalPrice = await document.querySelector('.total-price');
-  price = parseFloat(price);
   totalPrice.innerHTML = ((Math.round(totalPrice.innerHTML * 100) / 100) + price);
 };
 
@@ -83,7 +82,7 @@ function createProductItemElement({ sku, name, image }) {
       });
       const itemList = document.querySelector('.cart__items');
       itemList.appendChild(item);
-      sumOfPrices(element.price);
+      sumOfPrices(parseFloat(element.price));
       localStorageSave();
     });
   });
