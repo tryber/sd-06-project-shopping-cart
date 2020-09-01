@@ -16,7 +16,7 @@ function fetchCartFromStorage() {
   if (storedCart === '') console.log('carrinho vazio');
   cart.innerHTML = storedCart;
   const cartItems = document.querySelectorAll('.cart__item');
-  cartItems.forEach(item => item.addEventListener('click', cartItemClickListener))
+  cartItems.forEach(item => item.addEventListener('click', cartItemClickListener));
 }
 
 function createCartItemElement({ id, title, price }) {
