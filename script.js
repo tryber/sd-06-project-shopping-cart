@@ -3,6 +3,7 @@ let sum = 0;
 const saveCart = () => {
   const cartItems = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('Cart', cartItems);
+  localStorage.setItem('Price', sum);
 };
 
 const emptyCart = () => {
@@ -19,8 +20,20 @@ const loadCart = () => {
   const retrieveCart = localStorage.getItem('Cart');
   if (retrieveCart) {
     document.querySelector('.cart__items').innerHTML = retrieveCart;
+    document.querySelector('.total-price').innerHTML = localStorage.Price;
   }
 };
+
+const loading = () => {
+  if (!document.querySelector('.loading')) {
+    const newLoad = document.createElement('div');
+    newLoad.className = 'loading';
+    newLoad.innerText = 'loading...';
+    document.querySelector('.cart').appendChild(newLoad);
+  } else {
+    document.querySelector('.cart').removeChild(document.querySelector('.loading'));
+  }
+}
 
 async function getPrice(item) {
   sum += item.price;
@@ -67,6 +80,7 @@ function createProductItemElement({ sku, name, image }) {
   // a metodologia dele para que conseguisse o resultado desejado.
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
     .addEventListener('click', () => {
+      loading();
       fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(result => result.json())
         .then((itemObj) => {
@@ -80,6 +94,7 @@ function createProductItemElement({ sku, name, image }) {
           cartOL.appendChild(createCartItemElement(objectSku));
           saveCart();
         });
+      loading();
     });
   return section;
 }
@@ -89,7 +104,7 @@ function getSkuFromProductItem(item) {
 }
 
 const fetchItems = () => {
-  const loading = document.querySelector('.loading');
+  loading();
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(object => object.results)
@@ -102,7 +117,7 @@ const fetchItems = () => {
       const listItems = document.querySelector('.items');
       listItems.appendChild(itemList);
     }));
-  document.querySelector('.container').removeChild(loading);
+  loading();
 };
 
 window.onload = function onload() {
