@@ -9,7 +9,7 @@ const createProductImageElement = (imageSource) => {
 };
 
 // Atualiza o Preço total do Carrinho
-const updateTotalPrice = (myCart) => {
+async function updateTotalPrice(myCart) {
   const cartItems = myCart.getElementsByTagName('li');
   let total = 0;
   for (let i = 0; i < cartItems.length; i += 1) {
@@ -19,7 +19,7 @@ const updateTotalPrice = (myCart) => {
   }
   const totalPrice = document.querySelector('.total-price');
   totalPrice.innerText = `Preço Total: $${total}`;
-};
+}
 
 // Armazena no LocalStorage toda lista do carrinho
 const updateLocalStorage = () => {
