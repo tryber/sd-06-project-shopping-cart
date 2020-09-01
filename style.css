@@ -1,5 +1,5 @@
 body {
-  background-color: rgb( 66 , 66 , 66 );
+  background-image: url('https://images.freecreatives.com/wp-content/uploads/2016/01/Dark-Metal-Grid-Seamless-Pattern-Textures.jpg');
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
 }
@@ -18,14 +18,14 @@ body {
 
 .top-bar {
   align-items: center;
-  background-color: rgb( 29 , 29 , 29 );
+  background-color: rgb( 10 , 10 , 10 );
   color: rgb( 204 , 160 , 15 );
   display: flex;
   font-size: 50px;
   height: 100px;
   justify-content: left;
   margin-bottom: 0;
-  padding-left: 50px;
+  padding-left: 60px;
   width: 100%;
 }
 
@@ -55,7 +55,7 @@ body {
 
 .item {
   background-color: white;
-  border: 2px solid rgb( 29 , 29 , 29 );
+  border: 2px solid rgb( 10 , 10 , 10 );
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -80,7 +80,7 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb( 29 , 29 , 29 );
+  background-color: rgb( 10 , 10 , 10 );
   border: 0;
   color: rgb( 155 , 155 , 155 );
   cursor: pointer;
@@ -90,8 +90,8 @@ body {
 }
 
 .cart {
-  background-color: rgb( 29 , 29 , 29 );
-  color: rgb( 155 , 155 , 155 );
+  background-color: rgb( 10 , 10 , 10 );
+  color: rgb( 204 , 160 , 15 );
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
@@ -100,12 +100,13 @@ body {
 .cart .cart__title {
   flex-basis: 1;
   font-size: 18pt;
-  margin-top: 5%;
+  margin-top: 0;
   text-align: center;
 }
 
+
 .empty-cart {
-  background-color: rgb( 66 , 66 , 66 );
+  background-color: rgb( 0 , 0 , 0 );
   color: rgb( 204 , 160 , 15 );
   border: none;
   margin-left: 15%;
@@ -121,7 +122,7 @@ ul {
 }
 
 li {
-  background-color: rgb( 66 , 66 , 66 );
+  background-color: rgb( 0 , 0 , 0 );
   color: rgb( 155 , 155 , 155 );
   font-size: small;
   margin-left: 15%;
@@ -134,11 +135,11 @@ li {
 .total-price {
   color: rgb( 204 , 160 , 15 );
   font-size: 15px;
-  margin-left: 15%;
+  margin-left: 16%;
 }
 
 li:hover {
-  color: rgb( 29 , 29 , 29 );
+  color: rgb( 204 , 160 , 15 );
 }
 
 .item .item__add:hover {

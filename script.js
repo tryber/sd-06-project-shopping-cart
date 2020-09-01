@@ -39,21 +39,30 @@ function loadStorage() {
 }
 
 // 05 Some o valor total dos itens do carrinho de compras de forma assíncrona
-// pegar o preco, transformar em number cm parseFloat, e somar no total
-const sumPrices = async (li) => {
-  const total = document.querySelector('.total-price');
-  const itemPrice = parseFloat(li.innerText.split('$')[1]);
-  const totalPrice = parseFloat(total.lastChild.innerHTML);
-  const sum = itemPrice + totalPrice;
-  total.lastChild.innerText = sum;
+// nessa funcao pegamos o valor elemento valor total
+// com o parseFloat retiramos o preco da string do produto no carrinho
+// e pegamos o valor total que ja esta no carrinho
+// apos definirmos todas as variaveis, somamos o valor ja existente
+// no carrinho com o valor do novo produto
+// depois inserimos esse novo valor no elemento 
+// https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/parseFloat
+
+function getTotalPrice() {
+  const totalElement = document.querySelector('.total-price');
+  return parseFloat(totalElement.lastChild.innerHTML);
+}
+
+function getProductPriceFromElement(element) {
+  return parseFloat(element.innerText.split('$')[1]);
+}
+const sumPrices = async (element) => {
+  const sum = getProductPriceFromElement(element) + getTotalPrice();
+  document.querySelector('.total-price').lastChild.innerText = Math.round(sum);
 };
 
 function removeFromPrices(element) {
-  const total = document.querySelector('.total-price');
-  const productPrice = parseFloat(element.innerText.split('$')[1]);
-  const totalPrice = parseFloat(total.lastChild.innerHTML);
-  const sub = totalPrice - productPrice;
-  total.lastChild.innerText = sub;
+  const sub = getTotalPrice() - getProductPriceFromElement(element);
+  document.querySelector('.total-price').lastChild.innerText = Math.round(sub);
 }
 
 // 03 Remova o item do carrinho de compras ao clicar nele
@@ -152,13 +161,17 @@ function fetchProducts() {
 // depois usamos o while para que ENQUANTO a lista
 // de compras cartItems ainda possuir itens dentro dela
 // a funcao ira remover a childNode
+// alem disso, no final da funcao damos o valor 0 para
+// o elemento html '.total-price'
 function clearCartButton(event) {
   localStorage.clear();
+  const total = document.querySelector('.total-price');
   const cartItems = document.querySelector('.cart__items');
   while (cartItems.childNodes.length > 0) {
     cartItems.removeChild(cartItems.childNodes[0]);
     saveCartLocally();
   }
+  total.lastChild.innerText = '0';
 }
 
 // 07 a funcao Set Time Out esta sendo usada para
