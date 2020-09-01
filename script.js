@@ -36,6 +36,14 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
+let sum = 0;
+
+async function sumOfCartItems(itemPrice) {
+  const totalPrice = document.querySelector('.total-price');
+  sum += itemPrice;
+  totalPrice.innerHTML = sum;
+}
+
 const renderCartItem = (event) => {
   const id = event.target.parentNode.firstChild.innerHTML;
 
@@ -44,10 +52,12 @@ const renderCartItem = (event) => {
   fetch(endpoint2)
     .then(response => response.json())
     .then((object) => {
+      console.log(object);
       const cartItem = createCartItemElement(object);
       const ol = document.querySelector('.cart__items');
       ol.appendChild(cartItem);
       storage();
+      sumOfCartItems(parseFloat(object.base_price));
     });
 };
 
