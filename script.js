@@ -51,7 +51,7 @@ const getItem = () => {
   const loading = document.querySelector('#loading');
   loading.innerHTML = 'loading...';
   loading.classList.add('loading');
-    fetch(`https://api.mercadolibre.com/items/${firstChild}`)
+  fetch(`https://api.mercadolibre.com/items/${firstChild}`)
     .then(response => response.json())
     .then((item) => {
       const sku = item.id;
