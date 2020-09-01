@@ -46,7 +46,7 @@ function cartItemClickListener(event) {
   decreasePrice(value)
     .then((totalValue) => {
       const totalPrice = document.getElementById('price');
-      totalPrice.innerHTML = `Preço total: $${totalValue}`;
+      totalPrice.innerHTML = `${totalValue}`;
     });
 }
 
@@ -74,7 +74,7 @@ function addCartElement(id) {
       localStorage.setItem(`${localStorage.length}`, element.innerHTML);
       addPrice(object.price)
         .then((total) => {
-          document.getElementById('price').innerHTML = `Preço total: $${total}`;
+          document.getElementById('price').innerHTML = `${total}`;
         });
     });
 }
@@ -109,9 +109,9 @@ window.onload = function onload() {
       const valour = Number(valourString[valourString.length - 1].replace('$', ''));
       addPrice(valour)
         .then((total) => {
-          document.getElementById('price').innerHTML = `Preço total: $${total}`;
+          document.getElementById('price').innerHTML = `${total}`;
         });
     });
   }
-  document.getElementById('price').innerHTML = `Preço total: $${priceSum}`;
+  document.getElementById('price').innerHTML = `${priceSum}`;
 };
