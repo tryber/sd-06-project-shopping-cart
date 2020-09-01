@@ -16,6 +16,8 @@ async function sumOfPrices() {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  //  localStorage.removeItem('items', ...
+  //  ao clicar, remover do localstorage também
   sumOfPrices();
 }
 
@@ -52,7 +54,7 @@ const localStorageLoad = () => {
   const getCartItens = document.querySelector('.cart__items');
   const getCart = localStorage.getItem('items');
   getCartItens.innerHTML = getCart;
-  getCartItens.addEventListener('dblclick', cartItemClickListener);
+  getCartItens.addEventListener('click', cartItemClickListener);
 };
 
 function createProductImageElement(imageSource) {
