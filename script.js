@@ -88,8 +88,16 @@ const apiHandlers = (url) => {
     .then(object => handleResults(object.results));
 };
 
-//  const buttonDelete = document.querySelector('.empty-cart');
+//  const buttonDeleteFunction = () => {
+//    window.alert('kemf')
+//  }
+const buttonDeleteFunction = () => {
+  const completeList = document.querySelector('.cart__items');
+  completeList.innerHTML = ' ';
+};
 
 window.onload = function onload() {
   apiHandlers(`${apiUrl}${apiUrlSearch}`);
+  const buttonDelete = document.querySelector('.empty-cart');
+  buttonDelete.addEventListener('click', buttonDeleteFunction);
 };
