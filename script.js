@@ -61,7 +61,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       document.querySelector('.cart__items').appendChild(item);
     });
   });
-  
   return section;
 }
 
@@ -81,6 +80,9 @@ function handlerStrutor() {
     if (object.error) {
       throw new Error(object.error);
     }
+    const arrayComputer = object.results;
+    console.log(arrayComputer);
+    handlersectionsComputer(arrayComputer);
     document.querySelector('.cart__items').appendChild(createCartItemElement(object));
   })
   .then(() => localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML))
