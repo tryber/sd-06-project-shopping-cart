@@ -33,6 +33,8 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+
+  // sumPrices(salePrice);
   saveItems();
   return li;
 }
@@ -66,15 +68,18 @@ function getSkuFromProductItem(item) {
 
 const fetchFunction = () => {
   const functionHTML = document.querySelector('.items');
-  fetch(url)
-  .then(response => response.json())
-  .then(object => object.results)
-  .then((result) => {
-    result.forEach((item) => {
-      const section = createProductItemElement(item);
-      functionHTML.appendChild(section);
+  setTimeout(() => {
+    fetch(url)
+    .then(response => response.json())
+    .then(object => object.results)
+    .then((result) => {
+      result.forEach((item) => {
+        const section = createProductItemElement(item);
+        functionHTML.appendChild(section);
+      });
     });
-  });
+  }, 500);
+
 };
 
 const clearButton = () => {
@@ -94,17 +99,20 @@ const storage = () => {
   }
 };
 
-// const sumPrices = () => {
-//   const cart = document.querySelector('.cart');
-//   console.log(cart);
-//   const totalPrice = createElement('p');
-//   totalPrice.innerHTML = 'deu certo';
-//   cart.appendChild(totalPrice);
+// const sumPrices = (price) => {
+//   const divPrice = document.querySelector('.total-price');
+//   console.log(price)
 // }
+
+const loadDiv = () => {
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 500)
+}
 
 window.onload = function onload() {
   fetchFunction();
   clearButton();
   storage();
-  // sumPrices();
+  loadDiv();
 };
