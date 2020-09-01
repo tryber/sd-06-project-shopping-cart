@@ -86,13 +86,14 @@ const storageItems = () => {
 };
 
 const sumPrices = () => {
-  let cart = document.querySelector('.cart__item').innerHTML
-  let arrayCart = cart.split(' ');
-  let total = arrayCart[arrayCart.length - 1].slice(1);
-  let number = parseInt(total);
-  console.log(number);
-  return number
-}
+  const cart = document.querySelector('.cart__items');
+  console.log(cart);
+  // const arrayCart = cart.split(' ');
+  // const total = arrayCart[arrayCart.length - 1].slice(1);
+  // const number = parseInt(total);
+
+  return cart;
+};
 
 window.onload = function onload() {
   fetchFunction();
