@@ -19,19 +19,6 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function fetchItemsID(itemID) {
-  const itemURL = `${apiURL.url}${apiURL.endPointItem}${itemID}`;
-  fetch(itemURL)
-    .then(response => response.json())
-    .then((resultJSON) => {
-      const cartItem = createCartItemElement(resultJSON.id, resultJSON.title, resultJSON.price);
-      cartItem.addEventListener('click', cartItemClickListener)
-      const cartOl = document.querySelector('.cart__items');
-      cartOl.appendChild(cartItem);
-    })
-    .catch(error => window.alert(error));
-};
-
 function renderCartItem(event) {
   const itemID = event.target.parentNode.children[0].innerText;
   fetchItemsID(itemID);
@@ -82,6 +69,19 @@ function createCartItemElement(sku, name, salePrice) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+function fetchItemsID(itemID) {
+  const itemURL = `${apiURL.url}${apiURL.endPointItem}${itemID}`;
+  fetch(itemURL)
+    .then(response => response.json())
+    .then((resultJSON) => {
+      const cartItem = createCartItemElement(resultJSON.id, resultJSON.title, resultJSON.price);
+      cartItem.addEventListener('click', cartItemClickListener);
+      const cartOl = document.querySelector('.cart__items');
+      cartOl.appendChild(cartItem);
+    })
+    .catch(error => window.alert(error));
 }
 
 window.onload = function onload() {
