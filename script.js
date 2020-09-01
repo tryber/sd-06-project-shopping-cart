@@ -50,7 +50,7 @@ async function totalValueUpdater() {
       return acc + formattedCurrentNumber;
     }, 0);
   const totalValueDisplay = document.querySelector('.total-price');
-  totalValueDisplay.innerText = await totalValue.toFixed(2);
+  totalValueDisplay.innerText = await totalValue;
 }
 
 function cartItemClickListener(event) {
