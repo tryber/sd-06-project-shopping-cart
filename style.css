@@ -74,3 +74,22 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.cart__items:hover {
+  cursor: pointer;
+}
+
+.loading {
+  font-size: 80px;
+}
+
+.total-price {
+  font-weight: 800;
+}
+
+.empty-cart {
+  background-color: whitesmoke;
+  border: 2px solid black;
+  font-size: 15px;
+  padding: 5px;
+}
