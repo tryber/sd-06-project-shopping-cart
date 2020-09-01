@@ -73,6 +73,11 @@ function fetchProductList() {
     });
 }
 
+function clearCartList() {
+  document.querySelector('.cart__items').innerHTML = '';
+}
+
 window.onload = function onload() {
   fetchProductList();
+  document.querySelector('.empty-cart').addEventListener('click', clearCartList);
 };
