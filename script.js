@@ -37,11 +37,13 @@ function saveCurrentList() {
 }
 
 function loadingMessage(status) {
-  const loadingDisplay = document.querySelector('.loading');
+  const loadingDisplay = document.querySelector('.loading-display');
   if (status === 'on') {
-    loadingDisplay.innerText = 'loading...';
+    const loadingSpan = document.createElement('span');
+    loadingSpan.className = 'loading';
+    loadingDisplay.appendChild(loadingSpan);
   } else {
-    loadingDisplay.innerText = '';
+    loadingDisplay.removeChild(loadingDisplay.firstElementChild);
   }
 }
 
