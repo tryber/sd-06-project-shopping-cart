@@ -14,6 +14,11 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function setStorage() {
+  const items = document.querySelector('.cart__items');
+  localStorage.setItem('cart', items.innerHTML);
+}
+
 const clear = () => {
   const botao = document.querySelector('.empty-cart');
   botao.addEventListener('click', () => {
@@ -23,16 +28,11 @@ const clear = () => {
   });
 };
 
-function setStorage() {
-  const items = document.querySelector('.cart__items');
-  localStorage.setItem('cart', items.innerHTML);
-}
-
 function cartItemClickListener(event) {
   const item = document.querySelector('.cart__items');
   const targ = event.target;
   item.removeChild(targ);
-  setStorage()
+  setStorage();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -59,7 +59,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       const ol = document.querySelector('.cart__items');
       ol.appendChild(createItem);
     });
-  setStorage();
+    setStorage();
   });
   const sectionItems = document.querySelector('.items');
   sectionItems.appendChild(section);
