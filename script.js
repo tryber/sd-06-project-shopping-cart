@@ -44,6 +44,15 @@ function handleComputerObj(item) {
   return computerObj;
 }
 
+function handleCartItemObj(item) {
+  const computerObj = {
+    sku: item.id,
+    name: item.title,
+    salePrice: item.price,
+  };
+  return computerObj;
+}
+
 function fetchComputers() {
   fetch(url)
     .then((response => response.json()))
@@ -75,9 +84,10 @@ function fetchComputersId(newUrlId) {
     fetch(newUrlId)
     .then((response => response.json()))
     .then((object) => {
+      console.log(object.base_price)
       document
       .querySelector('.cart__items')
-      .appendChild(createCartItemElement(handleComputerObj(object)));
+      .appendChild(createCartItemElement(handleCartItemObj(object)));
     });
   }
 }
