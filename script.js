@@ -22,7 +22,6 @@ function saveItems() {
   // comando pronto para escolher o que salvar
   // setItem serve para salvar e passamos nome e o valor (cart e items);
 }
-
 function cartItemClickListener(event) {
   const ol = document.querySelector('.cart__items');
   const item = event.target;
