@@ -33,7 +33,12 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  event.path[1].removeChild(event.path[0])
 }
+
+const clearButton = document.querySelector('.empty-cart');
+clearButton.addEventListener('click', () => document
+.querySelector('.cart__items').innerHTML = '');
 
 function createCartItemElement({ id, title, price }) {
   const ol = document.querySelector('.cart__items');
