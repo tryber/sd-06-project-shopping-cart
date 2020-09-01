@@ -4,14 +4,12 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
 }
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -21,11 +19,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   return section;
 }
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
 // Requisito 3
 function cartItemClickListener(event) {
   const total = document.querySelector('.total-price');
@@ -35,7 +31,6 @@ function cartItemClickListener(event) {
   total.innerText = sub;
   event.target.remove();
 }
-
 // Requisito 5
 async function sumItems(li) {
   const total = document.querySelector('.total-price');
@@ -44,7 +39,6 @@ async function sumItems(li) {
   const sum = itemPrice + totalPrice;
   total.innerText = sum;
 }
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -53,14 +47,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
 const urlSearch = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
 // Fetching items
 const fetchItem = (firstChild) => {
-  const loading = document.querySelector('#loading');
-  loading.classList.add('loading');
-  loading.innerHTML = 'loading...';
+  const cartSection = document.querySelector('.cart');
+  const spanLoading = document.createElement('span');
+  spanLoading.className = 'loading';
+  spanLoading.innerHTML = 'loading...';
+  cartSection.appendChild(spanLoading);
   fetch(`https://api.mercadolibre.com/items/${firstChild}`)
     .then(response => response.json())
     .then((item) => {
@@ -69,8 +64,8 @@ const fetchItem = (firstChild) => {
       const salePrice = item.price;
       const cart = document.querySelector('.cart__items');
       cart.appendChild(createCartItemElement({ sku, name, salePrice }));
-      loading.classList.remove('loading');
-      loading.innerHTML = '';
+      console.log(spanLoading);
+      cartSection.removeChild(spanLoading);
     });
 };
 
@@ -81,12 +76,13 @@ const getItem = () => {
   const firstChild = parentTarget.firstChild.innerText;
   fetchItem(firstChild);
 };
-
 // Requisito 1
 const fetchUrl = () => {
-  const loading = document.querySelector('#loading');
-  loading.classList.add('loading');
-  loading.innerHTML = 'loading...';
+  const cartSection = document.querySelector('.cart');
+  const spanLoading = document.createElement('span');
+  spanLoading.className = 'loading';
+  spanLoading.innerHTML = 'loading...';
+  cartSection.appendChild(spanLoading);
   fetch(urlSearch)
     .then(response => response.json())
     .then((object) => {
@@ -99,11 +95,9 @@ const fetchUrl = () => {
         const items = document.querySelector('.items').lastChild;
         items.lastChild.addEventListener('click', getItem);
       });
-      loading.classList.remove('loading');
-      loading.innerHTML = '';
+      cartSection.removeChild(spanLoading);
     });
 };
-
 // Requisito 6
 const emptyList = () => {
   document.querySelector('.empty-cart').addEventListener('click', () => {
@@ -114,7 +108,6 @@ const emptyList = () => {
     document.querySelector('.total-price').innerText = 0;
   });
 };
-
 window.onload = function onload() {
   fetchUrl();
   emptyList();
