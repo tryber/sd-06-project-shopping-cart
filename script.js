@@ -80,7 +80,7 @@ function fetchComputers() {
       const product = createProductItemElement(computer);
       itemToCartEventListener(product);
       section.appendChild(product);
-    }))
+    }));
 }
 
 function loadCartSaved() {
