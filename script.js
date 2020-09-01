@@ -41,11 +41,9 @@ function cartItemClickListener(event) {
     if (newAr[index] !== null && el.sku === id) {
       newAr[index] = null;
     }
-    
-  })
-  localStorage.setItem(`carrinho`, JSON.stringify(newAr));
+  });
+  localStorage.setItem('carrinho', JSON.stringify(newAr));
   price.innerText = `Preço total: $${(localStorage.total) ? localStorage.total : acc.toFixed(2)}`;
-  
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -93,7 +91,7 @@ async function addItems(event) {
       name: data.title,
       salePrice: data.price };
     newAr.push(obj);
-    localStorage.setItem(`carrinho`, JSON.stringify(newAr));
+    localStorage.setItem('carrinho', JSON.stringify(newAr));
   }).catch(() => console.log('erro ocorrido'));
 }
 
@@ -109,21 +107,21 @@ window.onload = function onload() {
     localStorage.clear();
     cartItem.innerHTML = '';
     price.innerText = `Preço total: $${0}`;
-    localStorage.setItem('total', 0)
+    localStorage.setItem('total', 0);
   });
 
   if (localStorage.carrinho && localStorage.total) {
-    const arrayN = JSON.parse(localStorage.carrinho)
+    const arrayN = JSON.parse(localStorage.carrinho);
     arrayN.map((el, index) => {
       if (arrayN[index] !== null) {
         const objt = {
-              sku: el.sku,
-              name: el.name,
-              salePrice: el.salePrice,
-            };
-            return cartItem.appendChild(createCartItemElement(objt));
+          sku: el.sku,
+          name: el.name,
+          salePrice: el.salePrice,
+        };
+        return cartItem.appendChild(createCartItemElement(objt));
       }
-    
+      return true;
     });
     price.innerText = `Preço total: $${parseFloat(localStorage.total).toFixed(2)}`;
   }
