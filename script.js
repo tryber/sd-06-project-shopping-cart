@@ -111,25 +111,25 @@ const connection = () => {
       const button = document.querySelector('.items').lastChild;
       button.lastChild.addEventListener('click', itemCart);
     });
-  });
-      /* .then(clearCart)*/
+  })
+    .then(clearCart)
 };
 
 // Criando a função que realiza o reset do carrinho
-/* const clearCart = () => {
-  let buttonClear = document.querySelector('.empty-cart');
-  let cartItems = document.querySelector('.cart__items');
+const clearCart = () => {
+ let buttonClear = document.querySelector('.empty-cart');
+ let cartItems = document.querySelector('.cart__items');
 
 // Adicionando evento ao click, enquanto houver elementos no cartItems, iremos remove-los
 // Validando verificando se existe um primeiro filho
 
-  buttonClear.addEventListener('click', function() {
+ buttonClear.addEventListener('click', function() {
     while(cartItems.firstChild) {
       cartItems.removeChild(cartItems.firstChild);
     };
   });
 };
-*/
+
 window.onload = function onload() {
   connection();
 };
