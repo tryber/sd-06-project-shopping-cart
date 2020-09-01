@@ -9,7 +9,6 @@ function createProductImageElement(imageSource) {
 function totalPrice(value) {
   const totalValue = document.querySelector('.total-price');
   totalValue.innerText = Math.round((Number(totalValue.innerText) + value) * 100) / 100;
-  console.log(totalValue);
 }
 
 function decreaseValue(event) {
@@ -21,9 +20,8 @@ function decreaseValue(event) {
 function saveCart() {
   const ol = document.querySelector('ol').innerHTML;
   const totalValue = document.querySelector('.total-price').innerText;
-  console.log(totalValue);
   localStorage.setItem('cart', ol);
-  localStorage.setItem('price', (parseFloat(totalValue).toFixed(2)));
+  localStorage.setItem('price', totalValue);
 }
 
 function loadSavedCart() {
@@ -65,28 +63,35 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function fetchItem(event) {
+  const sku = getSkuFromProductItem(event.target.parentNode);
+  console.log(sku);
+  fetch(`https://api.mercadolibre.com/items/${sku}`)
+  .then(data => data.json())
+  .then((data) => {
+    const item = createCartItemElement({
+      sku: data.id,
+      name: data.title,
+      salePrice: data.price,
+    });
+    const olList = document.querySelector('.cart__items');
+    olList.appendChild(item);
+    saveCart();
+  });
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-  .addEventListener('click', () => {
-    fetch(`https://api.mercadolibre.com/items/${sku}`)
-      .then(data => data.json())
-      .then((data) => {
-        const item = createCartItemElement({
-          sku: data.id,
-          name: data.title,
-          salePrice: data.price,
-        });
-        const olList = document.querySelector('.cart__items');
-        olList.appendChild(item);
-        saveCart();
-      });
-  });
+  .addEventListener('click', fetchItem);
   return section;
 }
 
