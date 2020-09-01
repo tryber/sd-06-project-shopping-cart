@@ -82,13 +82,13 @@ async function fetchProducts(product) {
 
   fetch(endpoint)
     .then(response => response.json())
-    .then(object => object.results.forEach(item => createProductItemElement(item)));
+    .then(object => object.results.forEach(item => createProductItemElement(item)))
+    .then(teste => document.querySelector('.loading').remove());
 
   return 'Produtos retornados';
 }
 
 window.onload = async function onload() {
-  await fetchProducts('computador');
-  document.querySelector('.loading').remove();
+  fetchProducts('computador');
   fetchCartFromStorage();
 };
