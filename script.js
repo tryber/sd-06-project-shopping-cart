@@ -55,5 +55,6 @@ async function fetchProducts() {
     let name = item.title;
     let image = item.thumbnail;
     createProductItemElement({ sku, name, image });
+    createProductImageElement(image);
   });
 }
