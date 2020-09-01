@@ -39,17 +39,17 @@ function loadStorage() {
 }
 
 // 05 Some o valor total dos itens do carrinho de compras de forma assíncrona
-//pegar o preco, transformar em number cm parseFloat, e somar no total
+// pegar o preco, transformar em number cm parseFloat, e somar no total
 const sumPrices = async (li) => {
   const total = document.querySelector('.total-price');
   const itemPrice = parseFloat(li.innerText.split('$')[1]);
   const totalPrice = parseFloat(total.lastChild.innerHTML);
   const sum = itemPrice + totalPrice;
   total.lastChild.innerText = sum;
-}
+};
 
 function removeFromPrices(element) {
-  const total = document.querySelector('.total-price')
+  const total = document.querySelector('.total-price');
   const productPrice = parseFloat(element.innerText.split('$')[1]);
   const totalPrice = parseFloat(total.lastChild.innerHTML);
   const sub = totalPrice - productPrice;
@@ -162,7 +162,7 @@ function clearCartButton(event) {
 }
 
 // 07 a funcao Set Time Out esta sendo usada para
-// imitar um 'atraso' da API, dando espaco para o 
+// imitar um 'atraso' da API, dando espaco para o
 // escrito 'loading' aparecer, e quando o tempo 'acaba'
 // a funcao chama os itens para serem impressos na tela
 // e o loading eh escondido
