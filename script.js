@@ -41,10 +41,12 @@ function cartItemClickListener(event) {
   document.querySelector('.cart__items').removeChild(event);
   const id = Object.keys(localStorage).find(key => localStorage[key] === event.innerHTML);
   const valourString = localStorage[id].split(' ');
-  localStorage.removeItem(id); 
+  localStorage.removeItem(id);
   const valour = Number(valourString[valourString.length - 1].replace('$', ''));
   decreasePrice(valour)
-    .then(total => document.getElementById('price').innerHTML = `Preço total: $${total}`);
+    .then((total) => {
+      document.getElementById('price').innerHTML = `Preço total: $${total}`;
+    });
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -70,7 +72,9 @@ function addCartElement(id) {
       document.querySelector('.cart__items').appendChild(element);
       localStorage.setItem(`${localStorage.length}`, element.innerHTML);
       addPrice(object.price)
-        .then(total => document.getElementById('price').innerHTML = `Preço total: $${total}`);
+        .then((total) => {
+          document.getElementById('price').innerHTML = `Preço total: $${total}`;
+        });
     });
 }
 
@@ -100,6 +104,13 @@ window.onload = function onload() {
       li.innerHTML = item;
       document.querySelector('.cart__items').appendChild(li);
       li.addEventListener('click', event => cartItemClickListener(event.target));
+      const valourString = item.split(' ');
+      const valour = Number(valourString[valourString.length - 1].replace('$', ''));
+      addPrice(valour)
+        .then((total) => {
+          document.getElementById('price').innerHTML = `Preço total: $${total}`;
+        });
     });
   }
+  document.getElementById('price').innerHTML = `Preço total: $${priceSum}`;
 };
