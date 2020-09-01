@@ -79,7 +79,6 @@ const fetchFunction = () => {
       });
     });
   }, 500);
-
 };
 
 const clearButton = () => {
@@ -107,8 +106,8 @@ const storage = () => {
 const loadDiv = () => {
   setTimeout(() => {
     document.querySelector('.loading').remove();
-  }, 500)
-}
+  }, 500);
+};
 
 window.onload = function onload() {
   fetchFunction();
