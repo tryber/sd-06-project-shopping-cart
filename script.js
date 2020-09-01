@@ -31,13 +31,10 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const getPriceFromString = (str) => {
-  return Number(str.slice(-str.length + str.indexOf('$') + 1));
-};
+const getPriceFromString = str => Number(str.slice(-str.length + str.indexOf('$') + 1));
 
-const getTotalPriceFromCart = (cart) => {
-  return cart.reduce((acc, item) => acc + getPriceFromString(item.innerText), 0);
-};
+const getTotalPriceFromCart = cart => cart
+  .reduce((acc, item) => acc + getPriceFromString(item.innerText), 0);
 
 const displayPrice = (price) => {
   document.querySelector('.total-price').innerText = `Total: ${price}`;
