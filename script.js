@@ -91,12 +91,12 @@ const ML_URL = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then(resp => resp.json())
     .then(data => data.results.forEach(result => createProductItemElement(result)))
-    .then(document.querySelector('.loading').remove())
     .catch(error => console.error('Error: ', error));
 };
 
 window.onload = function onload() {
   ML_URL();
+  document.querySelector('.loading').remove()
   document.querySelector('ol').addEventListener('click', e =>
     cartItemClickListener(e.target));
   if (localStorage.getItem('cart')) {
