@@ -1,3 +1,10 @@
+let sum = 0;
+
+async function totalPrice(price, operator) {
+  const total = document.querySelector('.total-price');
+  sum = (operator === 'add' ? sum += price : sum -= price);
+  total.innerHTML = (sum === 0) ? '' : `Preço total: $${sum}`;
+}
 
 function saveToLocalStorage(id, title, price) {
   if (Storage) {
@@ -32,6 +39,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.id = sku;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  totalPrice(salePrice, 'add');
   return li;
 }
 
