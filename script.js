@@ -5,8 +5,8 @@ function cartItemClickListener(event) {
 function clearCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     const cartList = document.querySelector('.cart__items');
-    while(cartList.firstChild) {
-      cartList.removeChild(cartList.lastChild)
+    while (cartList.firstChild) {
+      cartList.removeChild(cartList.lastChild);
     }
   });
 }
