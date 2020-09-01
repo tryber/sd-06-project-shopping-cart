@@ -84,7 +84,6 @@ function fetchComputersId(newUrlId) {
     fetch(newUrlId)
     .then((response => response.json()))
     .then((object) => {
-      console.log(object.base_price)
       document
       .querySelector('.cart__items')
       .appendChild(createCartItemElement(handleCartItemObj(object)));
