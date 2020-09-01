@@ -17,16 +17,28 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function totalPrice() {
+  const spanTotalPrice = document.querySelector('.total-price');
+  const shoppingCart = document.querySelector('.cart__items');
+  const arrayPrices = [];
+  let getTotalPrice = 0;
+
+  const list = shoppingCart.children;
+  for (let index = 0; index < list.length; index += 1) {
+    const arrayItems = list[index].innerHTML.split(' ');
+    const price = arrayItems[arrayItems.length - 1];
+    const value = Number(price.substring(1));
+    arrayPrices.push(value);
+  }
+
+  getTotalPrice = arrayPrices.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  spanTotalPrice.innerHTML = ` Total $ ${getTotalPrice}`;
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
   toLocalStorage();
-}
-
-function retrieveLocalStorage() {
-  const localStorageList = localStorage.getItem('cart_products');
-  document.querySelector('.cart__items').innerHTML = localStorageList;
-  const shoppingCart = document.querySelector('.cart__items');
-  shoppingCart.addEventListener('click', cartItemClickListener);
+  totalPrice();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -43,8 +55,9 @@ function itemOnCLick() {
   .then((object) => {
     const cartItems = document.querySelector('.cart__items');
     cartItems.appendChild(createCartItemElement(object));
-  })
-  .then(() => toLocalStorage());
+    toLocalStorage();
+    totalPrice();
+  });
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -64,17 +77,14 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 function removeItem() {
-  const cartItems = document.querySelectorAll('.cart__item');
   const ol = document.querySelector('.cart__items');
-  for (let index = 0; index < cartItems.length; index += 1) {
-    ol.removeChild(cartItems[index]);
-  }
+  ol.innerHTML = '';
+  totalPrice();
 }
 
 function clearList() {
   const emptyButton = document.querySelector('.empty-cart');
   emptyButton.addEventListener('click', removeItem);
-  localStorage.clear();
 }
 
 function renderProducts(arrayProducts) {
@@ -100,5 +110,7 @@ window.onload = function onload() {
   fetchProducts();
   clearList();
   removeItem();
-  retrieveLocalStorage();
+  const localStorageList = localStorage.getItem('cart_products');
+  document.querySelector('.cart__items').innerHTML = localStorageList;
+  totalPrice();
 };
