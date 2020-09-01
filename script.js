@@ -5,6 +5,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 let totalprice = 0;
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -42,7 +43,15 @@ function createCartItemElement({ sku, name, salePrice }) {
 const plusTotalPrice = (price) => {
   totalprice += price;
   const outputPrice = document.querySelector('.total-price');
-  outputPrice.innerText = `Preço total: $${totalprice}`;
+  if (!document.querySelector('.show-price')) {
+    const priceShow = document.createElement('span');
+    priceShow.className = 'show-price';
+    priceShow.innerText = `${totalprice}`;
+    outputPrice.appendChild(priceShow);
+  } else {
+    document.querySelector('.show-price').innerText = `${totalprice}`;
+  }
+  // outputPrice.innerText = `Preço total: $${totalprice}`;
 };
 
 const fetchSkuItem = (sku) => {
@@ -92,6 +101,8 @@ const clearButton = () => {
   button.addEventListener('click', function () {
     document.querySelector('.cart__items').innerHTML = '';
     localStorage.setItem('cartItemsSaved', '');
+    document.querySelector('.show-price').innerText = '';
+    totalprice = 0;
   });
 };
 
