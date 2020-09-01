@@ -81,16 +81,12 @@ function createProductItemElement({ id, title, thumbnail }) {
   return section;
 }
 
-/* function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-} */
-
 const ML_URL = () => {
   const CONTAINER = document.querySelector('.container');
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then(CONTAINER.appendChild(createCustomElement('h1', 'loading', 'loading...')))
     .then(resp => resp.json())
-    .then(data => data.results.forEach(result => creaeProductItemElement(result)))
+    .then(data => data.results.forEach(result => createProductItemElement(result)))
     .then(document.querySelector('.loading').remove())
     .catch(error => console.error('Error: ', error));
 };
