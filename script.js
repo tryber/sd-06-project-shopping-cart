@@ -7,11 +7,9 @@ const createProductImageElement = (imageSource) => {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-}
+};
 
-const getSkuFromProductItem = (item) => {
-  return item.querySelector('span.item__sku').innerText;
-}
+const getSkuFromProductItem = item => item.querySelector('span.item__sku').innerText;
 
 const totalValueUpdate = async (value) => {
   totalValue += value;
@@ -30,7 +28,7 @@ const cartItemClickListener = (event) => {
   totalValueUpdate(-price);
   const ol = document.querySelector('.cart__items');
   localStorage.setItem('itemCartStorage', ol.innerHTML);
-}
+};
 
 // Criando item a item dentro do carrinho
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -43,7 +41,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   localStorage.setItem('itemCartStorage', ol.innerHTML);
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
+};
 
 // Esvaziando lista do carrinho
 const emptyList = () => {
@@ -77,7 +75,7 @@ const createCustomElement = (element, className, innerText) => {
     e.addEventListener('click', getItemToCart);
   }
   return e;
-}
+};
 
 // Criando itens na lista e renderizando
 const createProductItemElement = ({ sku, name, image }) => {
@@ -88,7 +86,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   return section;
-}
+};
 
 // Armazenando itens para depois renderizar
 const totalResults = (results) => {
