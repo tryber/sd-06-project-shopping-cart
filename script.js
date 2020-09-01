@@ -129,8 +129,8 @@ window.onload = function onload() {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        mblProducts(data.results);
         loadingElement.remove();
+        mblProducts(data.results);
       });
   };
   setTimeout(() => fetchComputers(`${base}${endpoint}`), 3000);
