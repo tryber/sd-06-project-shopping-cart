@@ -68,16 +68,20 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }, textS
 }
 
 function requisitionItem(idProduct) {
+  const loading = document.querySelector('span.loading');
+  loading.innerText = 'loading...';
+
   fetch(`https://api.mercadolibre.com/items/${idProduct}`)
     .then(response => response.json())
     .then((object) => {
       const listPurchase = document.querySelector('.cart__items');
       listPurchase.appendChild(createCartItemElement(object));
+      loading.innerText = '';
     });
     // .catch(() => requisitionItem(idProduct));
 }
 
-function buttonSelectItemEvent() {
+function eventClickButtonSelectItem() {
   const buttonSelectItem = document.querySelectorAll('.item__add');
   buttonSelectItem.forEach((buttonItem) => {
     buttonItem.addEventListener('click', () => {
@@ -89,6 +93,9 @@ function buttonSelectItemEvent() {
 }
 
 function requisitionMercadoLivreItem(pesquisa) {
+  const loading = document.querySelector('span.loading');
+  loading.innerText = 'loading...';
+
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$${pesquisa}`)
     .then(response => response.json())
     .then((object) => {
@@ -96,7 +103,8 @@ function requisitionMercadoLivreItem(pesquisa) {
         const containerElements = document.querySelector('.items');
         containerElements.appendChild(createProductItemElement(product));
       });
-      buttonSelectItemEvent();
+      eventClickButtonSelectItem();
+      loading.innerText = '';
     });
     // .catch(() => requisitionMercadoLivreItem(pesquisa));
 }
