@@ -66,7 +66,7 @@ const itemCart = () => {
   const cart = document.querySelector('.cart');
   cart.appendChild(loading);
   loading.className = 'loading';
-  loading.innerText = 'loading...';
+  loading.innerHTML = 'loading...';
 
 // Realizando a chama para a API, passando o id do item que foi clicado
   setTimeout(function () {
@@ -84,10 +84,10 @@ const itemCart = () => {
 // Selecionando o item do carrinho para depois remove-lo
       const cartItem = document.querySelector('.cart__item');
 // Adicionando a função criada para remoção do item
-      cartItem.addEventListener('click', cartItemClickListener);
-    })
-// Removendo o elemento de loading, assim que o item é carregado.
-  .then(loading.remove());
+      cartItem.addEventListener('click', cartItemClickListener)
+      // Removendo o elemento de loading, assim que o item é carregado.
+      loading.remove();
+    });
   }, 2000);
 };
 
