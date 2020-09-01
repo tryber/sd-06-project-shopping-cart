@@ -141,6 +141,9 @@ function clearCartButton(event) {
 window.onload = function onload() {
   fetchProducts();
   loadStorage();
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 500);
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', clearCartButton);
 };
