@@ -4,8 +4,9 @@ const api = {
   endpointItem: 'items/',
 };
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+function cartItemClickListener() {
+  const cartItems = document.getElementById('cart_items');
+  cartItems.removeChild(this);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
