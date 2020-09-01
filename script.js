@@ -54,7 +54,8 @@ function renderShoppingCart() {
     for (let item = 0; item < itemsArray.length; item += 3) {
       const li = document.createElement('li');
       li.className = 'cart__item';
-      li.innerText = `SKU: ${itemsArray[item]} | NAME: ${itemsArray[item + 1]} | PRICE: $${itemsArray[item + 2]}`;
+      li.innerText = `SKU: ${itemsArray[item].trim()} | NAME: ${itemsArray[item + 1]
+        .trim()} | PRICE: $${itemsArray[item + 2].trim()}`;
       li.addEventListener('click', cartItemClickListener);
       document.querySelector('.cart__items').appendChild(li);
     }
