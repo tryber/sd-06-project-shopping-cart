@@ -7,16 +7,13 @@ const api = {
 function cartItemClickListener() {
   const cartItems = document.getElementById('cart_items');
   cartItems.removeChild(this);
-  let keyName = '';
-  for (let i = 0; i < localStorage.length; i += 1) {
-    keyName = localStorage.key(i);
-  }
-  localStorage.removeItem(keyName);
+  localStorage.removeItem(this.id);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.id = sku; 
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
