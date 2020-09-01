@@ -100,7 +100,6 @@ window.onload = function onload() {
   const items = document.querySelector('#item');
   const cartItem = document.querySelector('#cart-items');
   items.addEventListener('click', addItems);
-
   const price = document.querySelector('#pricesT');
   const empty = document.querySelector('#getEmpy');
   empty.addEventListener('click', () => {
@@ -109,7 +108,6 @@ window.onload = function onload() {
     price.innerText = `Preço total: $${0}`;
     localStorage.setItem('total', 0);
   });
-
   if (localStorage.carrinho && localStorage.total) {
     const arrayN = JSON.parse(localStorage.carrinho);
     arrayN.map((el, index) => {
