@@ -36,9 +36,9 @@ const loading = () => {
 };
 
 async function getPrice(item) {
-  sum += item.price;
+  sum += Math.round(item.price * 100) / 100;
   const totalPrice = document.querySelector('.total-price');
-  totalPrice.innerHTML = parseInt(sum.toFixed(2), 10);
+  totalPrice.innerHTML = Math.round(sum * 100) / 100;
 }
 
 function createProductImageElement(imageSource) {
@@ -58,8 +58,8 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const textItem = String(this.innerHTML).split('$');
   const priceRed = parseFloat(textItem[1], 10).toFixed(2);
-  sum -= priceRed;
-  document.querySelector('.total-price').innerHTML = parseInt(sum, 10);
+  sum -= Math.round(priceRed * 100) / 100;
+  document.querySelector('.total-price').innerHTML = Math.round(sum * 100) / 100;
   this.parentNode.removeChild(this);
   saveCart();
 }
