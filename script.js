@@ -80,6 +80,9 @@ const getItem = () => {
 
 // Requisito 1
 const fetchUrl = () => {
+  const loading = document.querySelector('#loading');
+  loading.innerHTML = 'loading...';
+  loading.classList.add('loading');
   fetch(urlSearch)
     .then(response => response.json())
     .then((object) => {
@@ -91,6 +94,8 @@ const fetchUrl = () => {
         document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
         const items = document.querySelector('.items').lastChild;
         items.lastChild.addEventListener('click', getItem);
+        loading.innerHTML = '';
+        loading.classList.remove('loading');
       });
     });
 };
