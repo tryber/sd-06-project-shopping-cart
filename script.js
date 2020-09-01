@@ -11,7 +11,7 @@ function createProductImageElement(imageSource) {
 const totalValueUpdate = (value) => {
   const totalPrice = document.querySelector('.total-price');
   totalValue += value;
-  totalPrice.innerText = totalValue.toFixed(2);
+  totalPrice.innerText = Math.round(totalValue * 100) / 100;
 };
 
 const clearCart = () => {
