@@ -86,7 +86,13 @@ const fetchProduct = (url) => {
         document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('salvedItens');
       });
     })
-    .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', clearAll));
+    .then(document.getElementsByClassName('empty-cart')[0].addEventListener('click', clearAll))
+    .then(() => {
+      const itemsCart = document.querySelector('.cart__items');
+      itemsCart.innerHTML = localStorage.getItem('cart item:');
+      document.querySelector('.total-price').innerHTML = localStorage.getItem('total price:');
+      itemsCart.addEventListener('click', cartItemClickListener);
+    });
 };
 
 window.onload = () => {
