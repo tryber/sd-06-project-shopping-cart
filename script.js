@@ -37,15 +37,15 @@ function saveCurrentList() {
 }
 
 async function totalValueUpdater() {
-  const cartList = await document.querySelector('.cart__items');
-  const cartItemsValues = await [];
+  const cartList = document.querySelector('.cart__items');
+  const cartItemsValues = [];
   for (let x = cartList.firstElementChild; x; x = x.nextElementSibling) {
     const currentItemText = x.innerText;
     const currentItemValue = currentItemText.split(' | ')[2].substr(8);
     cartItemsValues.push(currentItemValue);
   }
   const totalValue = await cartItemsValues.reduce((acc, curr) => acc + parseInt(curr, 10), 0);
-  const totalValueDisplay = await document.querySelector('.total-price-display');
+  const totalValueDisplay = document.querySelector('.total-price-display');
   totalValueDisplay.innerText = await totalValue;
 }
 
