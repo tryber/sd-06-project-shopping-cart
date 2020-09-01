@@ -24,7 +24,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
+// quesito dois, ajuda de Willan Gomes
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -35,13 +35,12 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
   .addEventListener('click', () => {
     fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(data => data.json())
-    .then((data) => {
-      console.log(data);
+    .then(index => index.json())
+    .then((index) => {
       const item = createCartItemElement({
-        sku: data.id,
-        name: data.title,
-        salePrice: data.price,
+        sku: index.id,
+        name: index.title,
+        salePrice: index.price,
       });
       document.querySelector('.cart__items').appendChild(item);
     });
