@@ -51,13 +51,15 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const handleResults = (results) => {
-  results.forEach((element) => {
-    const items = document.querySelector('.items');
-    items.appendChild(createProductItemElement(element));
-  });
+window.onload = function onload() {
+  const handleResults = (results) => {
+    results.forEach((element) => {
+      const items = document.querySelector('.items');
+      items.appendChild(createProductItemElement(element));
+    });
+  };
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+  fetch(url)
+    .then(response => response.json())
+    .then(object => handleResults(object.results));
 };
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
-fetch(url)
-  .then(response => response.json())
-  .then(object => handleResults(object.results));
