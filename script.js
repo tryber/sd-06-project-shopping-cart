@@ -3,7 +3,7 @@ let sum = 0;
 const saveCart = () => {
   const cartItems = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('Cart', cartItems);
-}
+};
 
 const emptyCart = () => {
   document.querySelector('.empty-cart').addEventListener('click', () => {
