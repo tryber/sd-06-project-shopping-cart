@@ -6,7 +6,8 @@ function createProductImageElement(imageSource) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  const cartItemClickList = document.querySelector('.cart_items')
+  cartItemClickList.removeChild(event.target)
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
