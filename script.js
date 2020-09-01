@@ -29,9 +29,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  localStorage.removeItem(event.target.innerText.substr(5, 13));
-  localStorage.removeItem(event.target.innerText.substr(5, 12));
   event.target.remove();
+  createInLocalStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -44,8 +43,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const createInLocalStorage = (sku, name) => {
-  localStorage.setItem(sku, name);
+const createInLocalStorage = () => {
+  const cartItems = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cart-items', cartItems);
 };
 
 const fetchItem = (id) => {
@@ -57,7 +57,7 @@ const fetchItem = (id) => {
       const salePrice = item.price;
       const itemObject = { sku, name, salePrice };
       createCartItemElement(itemObject);
-      createInLocalStorage(sku, name);
+      createInLocalStorage();
     });
 };
 
@@ -84,9 +84,11 @@ const fetchUrl = () => {
 };
 
 const checkLocalStorage = () => {
-  const keys = Object.keys(localStorage);
-  if (keys.length > 0) {
-    keys.forEach(id => fetchItem(id));
+  if (localStorage.getItem('cart-items') !== null) {
+    document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart-items');
+    document.querySelectorAll('.cart__item').forEach(element => {
+      element.addEventListener('click', cartItemClickListener);
+    });
   }
 };
 
