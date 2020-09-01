@@ -11,11 +11,11 @@ async function totalPrice(value) {
   totalValue.innerHTML = (parseFloat(totalValue.innerHTML) + value).toFixed(2);
 }
 
-function decreaseValue(event) {
+async function decreaseValue(event) {
   let totalValue = event.target.innerHTML;
   totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
   console.log(totalValue);
-  totalPrice(-totalValue);
+  await totalPrice(-totalValue);
 }
 
 function saveCart() {
