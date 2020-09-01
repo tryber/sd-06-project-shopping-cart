@@ -130,4 +130,5 @@ const connection = () => {
 
 window.onload = function onload() {
   connection();
+  clearCart();
 };
