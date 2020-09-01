@@ -10,17 +10,13 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
-};
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-}
-function renderCartItem(event) {
-  const itemID = event.target.parentNode.children[0].innerText;
-  fetchItemsID(itemID);
 }
 
 function fetchItemsID(itemID) {
@@ -34,6 +30,11 @@ function fetchItemsID(itemID) {
       cartOl.appendChild(cartItem);
     })
     .catch(error => window.alert(error));
+};
+
+function renderCartItem(event) {
+  const itemID = event.target.parentNode.children[0].innerText;
+  fetchItemsID(itemID);
 }
 
 function createProductItemElement(sku, name, image) {
@@ -65,7 +66,7 @@ function fetchItems() {
       listReturned(result);
     })
     .catch(error => window.alert(error));
-};
+}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
