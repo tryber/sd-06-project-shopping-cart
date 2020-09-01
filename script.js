@@ -94,6 +94,7 @@ const fetchSkuItem = async (sku) => {
 };
 
 const fetchItens = async () => {
+  loadingText();
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(list => list.results)
@@ -111,6 +112,7 @@ const fetchItens = async () => {
         document.querySelector('.items').appendChild(section);
       });
     });
+  loadingText();
 };
 
 function getSkuFromProductItem(item) {
