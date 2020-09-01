@@ -42,14 +42,14 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const plusTotalPrice = (price) => {
   totalprice += price;
-  const outputPrice = document.querySelector('.total-price');
-  if (!document.querySelector('.show-price')) {
+  const outputPrice = document.querySelector('.show-price');
+  if (!document.querySelector('.total-price')) {
     const priceShow = document.createElement('span');
-    priceShow.className = 'show-price';
+    priceShow.className = 'total-price';
     priceShow.innerText = `${totalprice}`;
     outputPrice.appendChild(priceShow);
   } else {
-    document.querySelector('.show-price').innerText = `${totalprice}`;
+    document.querySelector('.total-price').innerText = `${totalprice}`;
   }
   // outputPrice.innerText = `Preço total: $${totalprice}`;
 };
