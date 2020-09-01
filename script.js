@@ -6,18 +6,9 @@ const apiInfo = {
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${apiInfo.query}`;
 
-const loadingFunction = () => {
-  const mainContainer = document.querySelector('.items');
-  mainContainer.innerHTML = '';
-  const divContainerText = document.createElement('p');
-  divContainerText.innerText = 'loading...';
-  divContainerText.id = 'load';
-  mainContainer.appendChild(divContainerText);
-};
-
 const sumOfPrices = async (price) => {
   const totalPrice = document.querySelector('.total-price');
-  totalPrice.innerText = price;
+  totalPrice.innerHTML = (totalPrice.innerHTML * 1) + price;
 };
 
 function cartItemClickListener(event) {
@@ -104,7 +95,6 @@ function getSkuFromProductItem(item) {
 }
 
 const fetchComputer = () => {
-  loadingFunction();
   fetch(url)
     .then(response => response.json())
     .then((object) => {
@@ -118,7 +108,7 @@ const fetchComputer = () => {
       });
     })
     .then(() => localStorageLoad())
-    .then(() => document.getElementById('load').remove())
+    .then(() => setTimeout(() => document.getElementById('load').remove(), 1500))
     .catch(error => handleError(error));
 };
 
