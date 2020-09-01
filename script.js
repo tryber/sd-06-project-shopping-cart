@@ -108,4 +108,4 @@ window.onload = function onload() {
   loadStorage();
   fetchProducts();
   emptyCart();
-};
+}; //tachatoja.
