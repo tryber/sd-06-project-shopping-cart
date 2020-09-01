@@ -31,7 +31,13 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  // coloque seu código aqui 
+  // Você deve criar uma listagem de produtos que devem ser consultados através da API do Mercado Livre.
+
+  // Você deve utilizar o endpoint:
+
+  // "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
+  // onde $QUERY deve ser o valor da sua busca. Para este trabalho, a busca deve ser o termo computador.
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
