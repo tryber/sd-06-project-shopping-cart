@@ -54,11 +54,11 @@ async function mountCartItem(product) {
   const productSku = getSkuFromProductItem(product);
   const url = `https://api.mercadolibre.com/items/${productSku}`;
   const response = await fetch(url);
-  const retrievedItem = await response.json();
+  const itemInfo = await response.json();
   const cartItem = {
-    sku: retrievedItem.id,
-    name: retrievedItem.title,
-    salePrice: retrievedItem.price,
+    sku: itemInfo.id,
+    name: itemInfo.title,
+    salePrice: itemInfo.price,
   };
   return cartItem;
 }
