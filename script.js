@@ -24,19 +24,22 @@ function includeItemcart(item) {
   list.appendChild(item);
 }
 
-async function totalSum() {
+function renderPrice(value) {
+  const div = document.querySelector('.total-price');
+  div.innerHTML = value;
+}
+
+function totalSum() {
   const items = document.querySelectorAll('.cart__item');
   let sum = 0;
   if (items.length !== 0) {
     items.forEach((priceTag) => {
-      const div = document.querySelector('.total-price');
       const price = parseFloat(priceTag.innerHTML.split('$')[1]);
       sum += price;
-      div.innerHTML = `${sum}`;
+      renderPrice(sum);
     });
   } else {
-    const div = document.querySelector('.total-price');
-    div.innerHTML = '';
+    renderPrice('');
   }
 }
 
