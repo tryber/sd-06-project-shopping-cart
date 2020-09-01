@@ -51,7 +51,6 @@ const getItem = () => {
   const loading = document.querySelector('#loading');
   loading.innerHTML = 'loading...';
   loading.classList.add('loading');
-  setTimeout(function () {
     fetch(`https://api.mercadolibre.com/items/${firstChild}`)
     .then(response => response.json())
     .then((item) => {
@@ -63,8 +62,8 @@ const getItem = () => {
       loading.innerHTML = '';
       loading.classList.remove('loading');
     });
-  }, 1000);
 };
+
 
 // Requisito 1
 const fetchUrl = () => {
@@ -94,6 +93,11 @@ const emptyList = () => {
 };
 
 // Requisito 5
+// const sum = () => {
+//   const items = document.querySelector('.cart__item')
+//   console.log(items)
+// }
+
 
 window.onload = function onload() {
   fetchUrl();
