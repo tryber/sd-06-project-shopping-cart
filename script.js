@@ -39,13 +39,12 @@ function loadStorage() {
 }
 
 // 05 Some o valor total dos itens do carrinho de compras de forma assíncrona
-// nessa funcao pegamos o valor elemento valor total
-// com o parseFloat retiramos o preco da string do produto no carrinho
-// e pegamos o valor total que ja esta no carrinho
-// apos definirmos todas as variaveis, somamos o valor ja existente
-// no carrinho com o valor do novo produto
-// depois inserimos esse novo valor no elemento
-// https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/parseFloat
+// nessa parte desenvolvi 4 funcoes
+// getTotalPrice busca o elemento html valor total do carrinho
+// getProductPriceFromElement pega o final da string
+// do produto e retorna em numero usando ParseFloat
+// sumPrices  faz a soma do valor do carrinho com o valor do produto
+// removeFrom Prices faz a subtracao quando algum elemento for retirado
 
 function getTotalPrice() {
   const totalElement = document.querySelector('.total-price');
