@@ -1,5 +1,6 @@
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -16,13 +17,13 @@ function createCustomElement(element, className, innerText) {
 
 function createProductItemElement(item) {
   const section = document.createElement('section');
+  const sectionItem = document.querySelector('.items');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', item.id));
   section.appendChild(createCustomElement('span', 'item__title', item.title));
   section.appendChild(createProductImageElement(item.thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  const sectionItem = document.querySelector('.items');
   sectionItem.appendChild(section);
 }
 
@@ -31,24 +32,51 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement(item) {
   const li = document.createElement('li');
+  const ol = document.querySelector('.cart__items')
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.innerText = `SKU: ${item.id} | NAME: ${item.title} | PRICE: $${item.price}`;
+  li.addEventListener('click', cartItemClickListener());
+  ol.appendChild(li)
   return li;
 }
 
-const pointFetch = () => {
+const fetchItems = () => {
   const query = url;
   fetch(query)
   .then(response => response.json())
-  .then(response => response.results.forEach(object => createProductItemElement(object)));
+  .then(response => response.results.forEach(object => createProductItemElement(object)))
 };
 
+const addCar = () => {
+  const itemAdd = document.querySelector('.items')
+  itemAdd.addEventListener('click',(e) => {
+
+    const button = document.querySelector('item__add')
+    if(e.target.type ===  'submit') {
+      const item = e.target.parentNode
+      const id = item.querySelector('.item__sku').innerHTML
+      fetchCar(id)
+    } else {
+      console.log('erro')
+    }
+    })
+}
+
+const fetchCar = (id) => {
+  const urlId = `https://api.mercadolibre.com/items/${id}`
+  console.log(urlId)
+  fetch(urlId)
+  .then(response => response.json())
+  .then(response => createCartItemElement(response))
+}
+
 window.onload = function onload() {
-  pointFetch();
+  fetchItems();
+  addCar()
 };
+
+
