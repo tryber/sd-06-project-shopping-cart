@@ -134,7 +134,7 @@ body {
   background: rgb( 175 , 63 , 63 );
 }
 
-.cart .total-price {
+.cart .price {
   align-self: flex-end;
   background-color: rgb( 244 , 251 , 252 );
   border-radius: 8px;
@@ -144,7 +144,7 @@ body {
   min-width: 40%;
 }
 
-.cart .total-price em {
+.cart .price em {
   background: rgb( 213 , 227 , 230 );
   border-radius: 8px 0 0 8px;
   display: inline-block;
@@ -154,10 +154,13 @@ body {
   margin: 0;
 }
 
-.cart .price-symbol , .cart .current-price {
+.cart .price-symbol , .cart .total-price {
   display: inline-block;
-  font-style: italic;
   font-weight: 500;
   padding: 5px 10px;
   margin: 0;
+}
+
+.cart .price-symbol {
+  font-style: italic;
 }

@@ -19,16 +19,20 @@ function getSkuFromProductItem(item) {
 }
 
 async function sumCart() {
-  const pricePlacer = document.querySelector('.total-price .current-price');
-  const cartSection = document.querySelector('.cart__items').children;
-  if (cartSection.length > 0) {
-    let sum = 0;
-    for (let index = 0; index < cartSection.length; index += 1) {
-      sum += parseFloat(cartSection[index].price);
+  try {
+    const pricePlacer = document.querySelector('.price .total-price');
+    const cartSection = document.querySelector('.cart__items').children;
+    if (cartSection.length > 0) {
+      let sum = 0;
+      for (let index = 0; index < cartSection.length; index += 1) {
+        sum += parseFloat(cartSection[index].price);
+      }
+      pricePlacer.innerText = sum.toFixed(2);
+    } else {
+      pricePlacer.innerText = '-';
     }
-    pricePlacer.innerText = sum.toFixed(2);
-  } else {
-    pricePlacer.innerText = '-';
+  } catch(error) {
+    throw new Error('Ocorreu um erro no cálculo do valor de seu carrinho.');
   }
 }
 
@@ -36,7 +40,8 @@ function cartItemClickListener(event) {
   const indexOfItem = myCartArray.indexOf(event.target.id);
   if (indexOfItem > -1) myCartArray.splice(indexOfItem, 1);
   event.target.remove();
-  sumCart();
+  sumCart()
+    .catch(error => console.log(error));
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -56,7 +61,8 @@ function addItemInCart(url) {
     .then((object) => {
       const cartList = document.querySelector('ol.cart__items');
       cartList.appendChild(createCartItemElement(object));
-      sumCart();
+      sumCart()
+        .catch(error => console.log(error));
     })
     .catch('deu pau no add pro carrinho!');
 }
