@@ -6,12 +6,12 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-async function totalPrice(value) {
+function totalPrice(value) {
   const totalValue = document.querySelector('.total-price');
   totalValue.innerHTML = (parseFloat(totalValue.innerHTML) + value).toFixed(2);
 }
 
-async function decreaseValue(event) {
+function decreaseValue(event) {
   let totalValue = event.target.innerHTML;
   totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
   console.log(totalValue);
@@ -39,8 +39,8 @@ function loadSavedCart() {
   });
 }
 
-async function cartItemClickListener(event) {
-  await decreaseValue(event);
+function cartItemClickListener(event) {
+  decreaseValue(event);
   const mainList = document.querySelector('.cart__items');
   mainList.removeChild(event.target);
   saveCart();
