@@ -98,7 +98,7 @@ const connection = () => {
   loading.className = 'loading';
   loading.innerText = 'loading...';
 // Recebendo todos os itens da API, e renderizando em tela
-setTimeout(function () {
+  setTimeout(function () {
   fetch(url)
   .then(response => response.json())
   .then((object) => {
