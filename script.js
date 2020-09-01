@@ -29,8 +29,13 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
 const requiredUrl = 'https://api.mercadolibre.com/items/';
 
-function cartItemClickListener(event) {
+function cartItemClickListener() {
   // coloque seu código aqui
+  const element = document.querySelector('.cart__items');
+  element.addEventListener('click', (event) => {
+    const item = event.target;
+    element.removeChild(item);
+  });
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -75,4 +80,5 @@ const fetchObj = () => {
 
 window.onload = function onload() {
   fetchObj();
+  cartItemClickListener();
 };
