@@ -34,10 +34,10 @@ function cartItemClickListener(event) {
 }
 
 const clearCart = () => {
-const buttonClear = document.querySelector('.empty-cart');
-  buttonClear.addEventListener('click', () => 
-    document.querySelector('.cart__items').innerHTML='');
-}
+  const buttonClear = document.querySelector('.empty-cart');
+  buttonClear.addEventListener('click', () => {
+    document.querySelector('.cart__items').innerHTML = ''}
+)};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -52,26 +52,26 @@ const idUrl = 'https://api.mercadolibre.com/items/';
 const addCart = (id) => {
   const endpoint = `${idUrl}${id}`;
   fetch(endpoint)
-  .then(response => response.json())
-  .then((response) => {
-    const { title, price } = response;
-    const li = createCartItemElement({ sku: id, name: title, salePrice: price });
-    const cartList = document.querySelector('.cart__items');
-    cartList.appendChild(li);
-  });
+    .then(response => response.json())
+    .then((response) => {
+      const { title, price } = response;
+      const li = createCartItemElement({ sku: id, name: title, salePrice: price });
+      const cartList = document.querySelector('.cart__items');
+      cartList.appendChild(li);
+    });
 };
 
 const apiQuery = () => {
   const endpoint = `${URL}sites/MLB/search?q=computador`;
   fetch(endpoint)
-  .then(response => response.json())
-  .then(item => item.results.forEach((element) => {
-    const section = createProductItemElement(element);
-    section.lastChild.addEventListener('click', (event) => {
-      const idRequest = getSkuFromProductItem(event.target.parentElement);
-      addCart(idRequest);
-    });
-  }));
+    .then(response => response.json())
+    .then(item => item.results.forEach((element) => {
+      const section = createProductItemElement(element);
+      section.lastChild.addEventListener('click', (event) => {
+        const idRequest = getSkuFromProductItem(event.target.parentElement);
+        addCart(idRequest);
+      });
+    }));
 };
 
 window.onload = function onload() {
