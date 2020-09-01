@@ -3,6 +3,7 @@ const clearCart = () => {
   while (cartList.firstChild) {
     cartList.removeChild(cartList.firstChild);
   }
+  localStorage.clear();
 };
 
 const clearCartbuttonEvent = () => {
@@ -12,8 +13,31 @@ const clearCartbuttonEvent = () => {
   });
 };
 
+const removeItemInStorage = (event) => {
+  let li = event.target
+  let i = 1
+  while (li.previousElementSibling) {
+    li = li.previousElementSibling;
+    i += 1;
+  }
+  let arrayOfItems = JSON.parse(localStorage.getItem('cartItems'));
+  arrayOfItems.splice(i,1);
+  localStorage.setItem('cartItems',JSON.stringify(arrayOfItems));
+}
+
 function cartItemClickListener(event) {
   event.target.parentNode.removeChild(event.currentTarget);
+  console.log(event.target)
+  removeItemInStorage(event);
+}
+
+function recordOnLocalStorage(item) {
+  if(Storage) {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    let items = cartItems ?? [];
+    items.push(item);
+    localStorage.setItem('cartItems',JSON.stringify(items));
+  }
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -33,7 +57,10 @@ const addProductToCart = (li) => {
 
 const fetchProductItem = (sku) => {
   fetch(`https://api.mercadolibre.com/items/${sku}`).then(resolve => resolve.json())
-  .then(itemCart => addProductToCart(createCartItemElement(itemCart)));
+  .then(itemCart => {
+    addProductToCart(createCartItemElement(itemCart));
+    recordOnLocalStorage(itemCart);
+  });
 };
 
 const appendItem = (product) => {
@@ -84,7 +111,25 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function getCurrentCart() {
+  return JSON.stringify(document.querySelectorAll('.cart__item'));
+}
+
+function loadCart() {
+  const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+  if(cartItems !== null) {
+    cartItems.forEach(cartItem => addProductToCart(createCartItemElement(cartItem)));
+  }
+
+}
+
 window.onload = function onload() {
+
   displayItems();
   clearCartbuttonEvent();
+  loadCart();
 };
+
+
+
+
