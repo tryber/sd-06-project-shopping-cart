@@ -120,21 +120,18 @@ const fetchItemBySKU = async (sku) => {
 
 const fetchItems = async (query = 'computador') => {
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
-  const sectionItems = document.querySelector('.items');
 
   toggleLoading();
   await fetch(endpoint)
     .then(response => response.json())
     .then((data) => {
-      const products = data.results;
-      const items = products.map((prod) => {
+      const items = data.results.map((prod) => {
         const item = createProductItemElement({
           sku: prod.id,
           name: prod.title,
           image: prod.thumbnail,
         });
-        sectionItems.appendChild(item);
-
+        document.querySelector('.items').appendChild(item);
         return item;
       });
       return items;
@@ -147,7 +144,7 @@ const fetchItems = async (query = 'computador') => {
         });
       });
     });
-    toggleLoading();
+  toggleLoading();
 };
 
 window.onload = async function onload() {
