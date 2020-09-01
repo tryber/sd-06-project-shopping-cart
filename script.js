@@ -25,6 +25,8 @@ function cartItemClickListener(event) {
 function retrieveLocalStorage() {
   const localStorageList = localStorage.getItem('cart_products');
   document.querySelector('.cart__items').innerHTML = localStorageList;
+  const shoppingCart = document.querySelector('.cart__items');
+  shoppingCart.addEventListener('click', cartItemClickListener);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
