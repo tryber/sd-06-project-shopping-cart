@@ -62,8 +62,8 @@ queryApi = () => {
       const itemElement = createProductItemElement(item);
       itemElement.addEventListener('click', (e) => {
         if (e.target.className === 'item__add') {
-          queryApiCart(item.id)
-        };
+          queryApiCart(item.id);
+        }
       });
     });
   });
