@@ -16,23 +16,23 @@ function saveToLocalStorage(id, title, price) {
 }
 
 function removeItemFromLocalStorage(sku) {
-  if (Storage) {
-    const arrayOfItems = JSON.parse(localStorage.getItem('cartML'));
-    for (let index = 0; index < arrayOfItems.length; index += 1) {
-      if (arrayOfItems[index].id === sku) {
-        totalPrice(arrayOfItems[index].price, 'sub');
-        arrayOfItems.splice(index, 1);
-        break;
-      }
+  const arrayOfItems = JSON.parse(localStorage.getItem('cartML'));
+  for (let index = 0; index < arrayOfItems.length; index += 1) {
+    if (arrayOfItems[index].id === sku) {
+      totalPrice(arrayOfItems[index].price, 'sub');
+      arrayOfItems.splice(index, 1);
+      break;
     }
-    localStorage.setItem('cartML', JSON.stringify(arrayOfItems));
   }
+  localStorage.setItem('cartML', JSON.stringify(arrayOfItems));
 }
+
 
 function cartItemClickListener(event) {
   const parentItems = document.querySelector('.cart__items');
   const item = event.target;
   removeItemFromLocalStorage(item.id);
+  console.log(event.target)
   parentItems.removeChild(item);
 }
 
