@@ -46,7 +46,6 @@ const fetchProducts = () => {
   fetch(url)
     .then(response => response.json())
     .then((response) => {
-      console.log(response.results);
       response.results.forEach((element) => {
         const product = createProductItemElement({
           sku: element.id,
@@ -55,7 +54,30 @@ const fetchProducts = () => {
         });
         document.querySelector('.items').appendChild(product);
       });
+      handleButtonsAddtoCart();
     });
+};
+
+const fetchOneProduct = (id) => {
+  const endpoint = 'https://api.mercadolibre.com/items/';
+  fetch(`${endpoint}${id}`)
+    .then(response => response.json())
+    .then((response) => {
+      const product = createCartItemElement({
+        sku: response.id,
+        name: response.title,
+        salePrice: response.price,
+      });
+      document.querySelector('.cart__items').appendChild(product);
+    });
+};
+
+const handleButtonsAddtoCart = () => {
+  document.querySelectorAll('.item__add').forEach(element =>
+  element.addEventListener('click', (event) => {
+    const id = event.target.parentNode.querySelector('span.item__sku').innerText;
+    fetchOneProduct(id);
+  }));
 };
 
 window.onload = function onload() {
