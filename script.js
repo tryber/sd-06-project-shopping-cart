@@ -8,8 +8,18 @@ function mercadoLivreProdcts() {
         const section = document.getElementsByClassName('items')[0];
         const elements = createProductItemElement({ sku: id, name: title, image: thumbnail });
         section.appendChild(elements);
+      });
     });
-  });
+}
+
+function includeInCart(e) {
+  const idInclude = getSkuFromProductItem(e.target.parentElement);
+  fetch(`https://api.mercadolibre.com/items/${idInclude}`)
+      .then(response => response.json())
+      .then(({ id, title, price }) => {
+        const cart = document.getElementsByClassName('cart__items')[0];
+        cart.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
+      });
 }
 
 function createProductImageElement(imageSource) {
