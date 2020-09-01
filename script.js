@@ -14,8 +14,8 @@ const clearCartbuttonEvent = () => {
 };
 
 const removeItemInStorage = (event) => {
-  let li = event.target
-  let i = 1
+  let li = event.target;
+  let i = 1;
   while (li.previousElementSibling) {
     li = li.previousElementSibling;
     i += 1;
@@ -23,7 +23,7 @@ const removeItemInStorage = (event) => {
   let arrayOfItems = JSON.parse(localStorage.getItem('cartItems'));
   arrayOfItems.splice(i,1);
   localStorage.setItem('cartItems',JSON.stringify(arrayOfItems));
-}
+};
 
 function cartItemClickListener(event) {
   event.target.parentNode.removeChild(event.currentTarget);
@@ -120,7 +120,6 @@ function loadCart() {
   if(cartItems !== null) {
     cartItems.forEach(cartItem => addProductToCart(createCartItemElement(cartItem)));
   }
-
 }
 
 window.onload = function onload() {
