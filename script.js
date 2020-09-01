@@ -91,7 +91,7 @@ function loadingMessage() {
 
 window.onload = function onload() {
   loadingMessage();
-  
+
   createItemList();
 
   const buttonEmptyCart = document.querySelector('.empty-cart');
