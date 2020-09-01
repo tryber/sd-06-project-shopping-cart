@@ -43,7 +43,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 function fetchProdutcs() {
   const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   fetch(endpoint)
-    .then((response) => response.json())
+    .then(response => response.json())
     .then((object) => {
       object.results.forEach((element) => {
         const containerElements = document.querySelector('.items');
