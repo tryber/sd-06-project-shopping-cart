@@ -32,7 +32,6 @@ function cartItemClickListener(event) {
   const parentItems = document.querySelector('.cart__items');
   const item = event.target;
   removeItemFromLocalStorage(item.id);
-  console.log(event.target)
   parentItems.removeChild(item);
 }
 
