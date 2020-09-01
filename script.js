@@ -30,7 +30,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener (event) {
+function cartItemClickListener(event) {
   const cartItem = event.target;
   const cart = document.querySelector('.cart__items');
 
