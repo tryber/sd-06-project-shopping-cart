@@ -13,21 +13,25 @@ const clearCartbuttonEvent = () => {
   });
 };
 
-const removeItemInStorage = (event) => {
+const findTargetIndexInlist = (event) => {
   let li = event.target;
   let i = 1;
   while (li.previousElementSibling) {
     li = li.previousElementSibling;
     i += 1;
   }
+  return i
+}
+
+const removeItemInStorage = (event) => {
+  const index = findTargetIndexInlist(event)
   let arrayOfItems = JSON.parse(localStorage.getItem('cartItems'));
-  arrayOfItems.splice(i,1);
+  arrayOfItems.splice(index,1);
   localStorage.setItem('cartItems',JSON.stringify(arrayOfItems));
 };
 
 function cartItemClickListener(event) {
   event.target.parentNode.removeChild(event.currentTarget);
-  console.log(event.target)
   removeItemInStorage(event);
 }
 
@@ -123,7 +127,6 @@ function loadCart() {
 }
 
 window.onload = function onload() {
-
   displayItems();
   clearCartbuttonEvent();
   loadCart();
