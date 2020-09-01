@@ -1,25 +1,25 @@
-const endpoint = "https://api.mercadolibre.com/sites/MLB/search?q=$computador";
-const itemEndpoint = "https://api.mercadolibre.com/items/$ItemID";
+const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+const itemEndpoint = 'https://api.mercadolibre.com/items/$ItemID';
 
 function fetchComputer() {
   fetch(endpoint)
-    .then((response) => response.json())
+    .then(response => response.json())
     .then((object) => {
-      object.results.forEach(computer => {
-        const fatherElement = document.querySelector(".items")
-        fatherElement.appendChild(createProductItemElement(computer))
-        
-      })
-    });
+      object.results.forEach((computer) => {
+        const fatherElement = document.querySelector('.items');
+        fatherElement.appendChild(createProductItemElement(computer));  
+      });
+  });
 }
 
 function fetchBuyedComputer(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then((response) => response.json())
+    .then(response => response.json())
     .then((object) => {
-    const cartItems = document.querySelector('.cart__items')
-    cartItems.appendChild(createCartItemElement({ sku: object.id, name: object.title , salePriceprice: object.price }))
-  })  
+      const cartItems = document.querySelector('.cart__items')
+      cartItems.appendChild(createCartItemElement
+        ({ sku: object.id, name: object.title, salePriceprice: object.price }));
+  });
 }
 
 function createProductImageElement(imageSource) {
@@ -43,11 +43,9 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  
   const buttonId = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   buttonId.addEventListener('click', () => fetchBuyedComputer(sku));
   section.appendChild(buttonId);
-
   return section;
 }
 
@@ -57,7 +55,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   const removeItem = document.querySelector('.cart__items');
-  removeItem.removeChild(event.target)
+  removeItem.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -70,5 +68,5 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 window.onload = function onload() {
   fetchComputer();
-  cartItemClickListener;
+  cartItemClickListener();
 }
