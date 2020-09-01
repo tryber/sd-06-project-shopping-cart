@@ -12,12 +12,21 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-let total = 0;
+let total = [];
 
 const finalPrice = async (price) => {
-  const text = document.querySelector('.total-price');
-  total += await parseFloat(price);
-  text.innerHTML = await Math.round(total * 100) / 100;
+  const value = document.querySelector('.total-price');
+  total.push(parseFloat(price));
+  const result = await total.reduce((acc, curl) => curl + acc);
+  value.innerHTML = await Math.round(result * 100) / 100;
+};
+
+const minus = async (num) => {
+  const value = document.querySelector('.total-price');
+  const result = await total.reduce((acc, curl) => acc + curl);
+  const final = result - num;
+  total = [final];
+  value.innerHTML = await Math.round(final * 100) / 100;
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -38,10 +47,16 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  if (document.querySelector('.cart__items').childElementCount === 0) {
-    total = 0;
-    finalPrice(0);
+  const str = event.target.innerHTML;
+  let value = '';
+  let f = '';
+  if (str.match(/\$[0-9]*\.[0-9]*/)) {
+    value = str.match(/\$[0-9]*\.[0-9]*/)[0];
+  } else {
+    value = str.match(/\$[0-9]*/)[0];
   }
+  f = Number(value.substring(1));
+  minus(f);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -51,6 +66,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   list.appendChild(li);
+  finalPrice(salePrice);
   return li;
 }
 
@@ -69,7 +85,6 @@ const insertCart = (position) => {
           name: title,
           salePrice: price,
         });
-        finalPrice([price]);
       });
   });
 };
@@ -79,8 +94,8 @@ const clearCart = () => {
   clear.addEventListener('click', () => {
     const items = document.querySelector('.cart__items');
     items.innerHTML = '';
-    total = 0;
-    finalPrice(0);
+    total = [0];
+    finalPrice(total);
   });
 };
 
