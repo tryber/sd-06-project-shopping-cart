@@ -36,11 +36,11 @@ function cartItemClickListener(event) {
 
 function createCartItemElement(item) {
   const li = document.createElement('li');
-  const ol = document.querySelector('.cart__items')
+  const ol = document.querySelector('.cart__items');
   li.className = 'cart__item';
   li.innerText = `SKU: ${item.id} | NAME: ${item.title} | PRICE: $${item.price}`;
   li.addEventListener('click', cartItemClickListener());
-  ol.appendChild(li)
+  ol.appendChild(li);
   return li;
 }
 
@@ -48,35 +48,30 @@ const fetchItems = () => {
   const query = url;
   fetch(query)
   .then(response => response.json())
-  .then(response => response.results.forEach(object => createProductItemElement(object)))
+  .then(response => response.results.forEach(object => createProductItemElement(object)));
 };
 
 const addCar = () => {
-  const itemAdd = document.querySelector('.items')
-  itemAdd.addEventListener('click',(e) => {
-
-    const button = document.querySelector('item__add')
-    if(e.target.type ===  'submit') {
-      const item = e.target.parentNode
-      const id = item.querySelector('.item__sku').innerHTML
-      fetchCar(id)
+  const itemAdd = document.querySelector('.items');
+  itemAdd.addEventListener('click', (e) => {
+    if (e.target.type === 'submit') {
+      const item = e.target.parentNode;
+      const id = item.querySelector('.item__sku').innerHTML;
+      fetchCar(id);
     } else {
-      console.log('erro')
+      console.log('erro');
     }
-    })
-}
+  });
+};
 
 const fetchCar = (id) => {
-  const urlId = `https://api.mercadolibre.com/items/${id}`
-  console.log(urlId)
+  const urlId = `https://api.mercadolibre.com/items/${id}`;
   fetch(urlId)
   .then(response => response.json())
-  .then(response => createCartItemElement(response))
-}
+  .then(response => createCartItemElement(response));
+};
 
 window.onload = function onload() {
   fetchItems();
-  addCar()
+  addCar();
 };
-
-
