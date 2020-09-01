@@ -6,6 +6,7 @@ function saveStorage() {
 function cartItemClickListener(event) {
   document.querySelector('.cart__items').removeChild(this);
   saveStorage();
+  cartTotalValue();
 }
 
 function clearCart() {
@@ -15,6 +16,7 @@ function clearCart() {
       cartList.removeChild(cartList.lastChild);
     }
     localStorage.clear();
+    cartTotalValue();
   });
 }
 
@@ -57,6 +59,7 @@ function queryThisAtML(sku) {
       });
       cartItems.appendChild(item);
       saveStorage();
+      cartTotalValue();
     });
 }
 
@@ -96,8 +99,16 @@ function loadStorage() {
   }
 }
 
-window.onload = () => {
+async function cartTotalValue() {
+  const cartItems = document.querySelectorAll('.cart__item');
+  var totalPrice = 0;
+  cartItems.forEach(item => totalPrice += parseFloat(item.innerText.split('$')[1]));
+  document.querySelector('.total__price').innerText = totalPrice;
+}
+
+window.onload = async () => {
   queryAtML();
   clearCart();
   loadStorage();
+  await cartTotalValue();
 };
