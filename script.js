@@ -1,5 +1,5 @@
 let acc = 0;
-let storageNum = 0;
+const newAr = [];
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -17,7 +17,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -33,6 +32,20 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   const list = document.querySelector('#cart-items');
   list.removeChild(event.target);
+  const value = event.target.innerText.split('$')[1];
+  const id = event.target.innerText.split(' ')[1];
+  const price = document.querySelector('#pricesT');
+  acc -= parseFloat(value);
+  localStorage.setItem('total', acc.toFixed(2));
+  newAr.forEach((el, index) => {
+    if (newAr[index] !== null && el.sku === id) {
+      newAr[index] = null;
+    }
+    
+  })
+  localStorage.setItem(`carrinho`, JSON.stringify(newAr));
+  price.innerText = `Preço total: $${(localStorage.total) ? localStorage.total : acc.toFixed(2)}`;
+  
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -55,6 +68,7 @@ const APIReq = () => {
   });
 };
 
+
 async function addItems(event) {
   const id = event.target.parentNode.firstChild.innerText;
   const price = document.querySelector('#pricesT');
@@ -71,12 +85,15 @@ async function addItems(event) {
       name: data.title,
       salePrice: data.price }));
     acc += data.price;
-    price.innerText = `Preço total: $${acc}`;
+    localStorage.setItem('total', acc);
+    price.innerText = `Preço total: $${(localStorage.total) ? localStorage.total : acc.toFixed(2)}`;
+
     const obj = {
       sku: data.id,
       name: data.title,
       salePrice: data.price };
-    localStorage.setItem(`items${storageNum += 1}`, JSON.stringify(obj));
+    newAr.push(obj);
+    localStorage.setItem(`carrinho`, JSON.stringify(newAr));
   }).catch(() => console.log('erro ocorrido'));
 }
 
@@ -86,25 +103,28 @@ window.onload = function onload() {
   const cartItem = document.querySelector('#cart-items');
   items.addEventListener('click', addItems);
 
+  const price = document.querySelector('#pricesT');
   const empty = document.querySelector('#getEmpy');
   empty.addEventListener('click', () => {
-    const price = document.querySelector('#pricesT');
     localStorage.clear();
     cartItem.innerHTML = '';
-    acc = 0;
-    price.innerText = `Preço total: $${acc}`;
+    price.innerText = `Preço total: $${0}`;
+    localStorage.setItem('total', 0)
   });
 
-  const arrayN = [];
-  for (let index = 0; index < localStorage.length; index += 1) {
-    arrayN[index] = JSON.parse(localStorage[`items${index + 1}`]);
+  if (localStorage.carrinho && localStorage.total) {
+    const arrayN = JSON.parse(localStorage.carrinho)
+    arrayN.map((el, index) => {
+      if (arrayN[index] !== null) {
+        const objt = {
+              sku: el.sku,
+              name: el.name,
+              salePrice: el.salePrice,
+            };
+            return cartItem.appendChild(createCartItemElement(objt));
+      }
+    
+    });
+    price.innerText = `Preço total: $${parseFloat(localStorage.total).toFixed(2)}`;
   }
-  arrayN.map((el) => {
-    const objt = {
-      sku: el.sku,
-      name: el.name,
-      salePrice: el.salePrice,
-    };
-    return cartItem.appendChild(createCartItemElement(objt));
-  });
 };
