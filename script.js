@@ -5,18 +5,26 @@ function createProductImageElement(imageSource) {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-}
+};
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
-}
+};
 
 const saveStorage = () => {
   const items = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', items);
+};
+
+const sumPrices = async (li) => {
+  const total = document.querySelector('.total-price');
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.lastChild.innerHTML);
+  const sum = itemPrice + totalPrice;
+  total.lastChild.innerText = sum;
 };
 
 function cartItemClickListener(event) {
@@ -24,17 +32,17 @@ function cartItemClickListener(event) {
   const item = event.target;
   section.removeChild(item);
   saveStorage();
-}
+};
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  sumPrices(li)
+  sumPrices(li);
   li.addEventListener('click', cartItemClickListener);
 
   return li;
-}
+};
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const items = document.querySelector('.items');
@@ -61,7 +69,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   items.appendChild(section);
 
   return section;
-}
+};
 
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
@@ -89,19 +97,6 @@ const storageItems = () => {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
   };
 };
-
-const load = () => {
-  const text = document.querySelector('.loading');
-
-}
-
-const sumPrices = async (li) => {
-  const total = document.querySelector('.total-price');
-  const itemPrice = parseFloat(li.innerText.split('$')[1]);
-  const totalPrice = parseFloat(total.lastChild.innerHTML);
-  const sum = itemPrice + totalPrice;
-  total.lastChild.innerText = sum;
-}
 
 window.onload = function onload() {
   fetchFunction();
