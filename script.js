@@ -1,6 +1,3 @@
-window.onload = function onload() {
-  renderProducts();
- };
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -66,3 +63,8 @@ async function renderProducts() {
     itemsField.appendChild(productElement);
   });
 }
+
+window.onload = function onload() {
+  renderProducts();
+};
+
