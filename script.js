@@ -86,8 +86,8 @@ window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', clearCartList);
 
   if (localStorage.getItem('cartItems')) {
-    document.querySelector('.cart__items').innerHTML = localStorage
-    .getItem('cartItems')
-    .forEach(item => item.addEventListener('click', cartItemClickListener));
+    document.querySelector('.cart__items').innerHTML = localStorage.getItem('cartItems');
+    document.querySelectorAll('.cart__item')
+      .forEach(item => item.addEventListener('click', cartItemClickListener));
   }
 };
