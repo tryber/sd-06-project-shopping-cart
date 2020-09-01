@@ -56,6 +56,10 @@ function createCartItemElement({ id, title, price }) {
   return li;
 }
 
+document.querySelector('.empty-cart').addEventListener('click', () => {
+  document.querySelectorAll('.cart__item').forEach(e => cartItemClickListener(e));
+});
+
 const fetchItem = (productId) => {
   fetch(`https://api.mercadolibre.com/items/${productId}`)
     .then(resp => resp.json())
