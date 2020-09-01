@@ -14,20 +14,21 @@ function totalPrice(value) {
 function decreaseValue(event) {
   let totalValue = event.target.innerHTML;
   totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
-  console.log(totalValue);
   totalPrice(-totalValue);
 }
 
 function saveCart() {
-  const cart = document.querySelector('.cart__items');
-  const totalValue = document.querySelector('.total-price');
-  localStorage.setItem('total-value', totalValue.innerHTML);
-  localStorage.setItem('cart-shop', cart.innerHTML);
+  const ol = document.querySelector('ol').innerHTML;
+  const totalValue = document.querySelector('.total-price').innerHTML;
+  localStorage.setItem('cart', ol);
+  localStorage.setItem('price', (parseFloat(totalValue).toFixed(2)));
 }
 
 function loadSavedCart() {
-  document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart-shop');
-  document.querySelector('.total-price').innerHTML = localStorage.getItem('total-value');
+  const itemsOnCart = document.querySelector('ol');
+  itemsOnCart.innerHTML = localStorage.getItem('cart');
+  const totalValue = document.querySelector('.total-price');
+  totalValue.innerHTML = (parseFloat(localStorage.getItem('price'))).toFixed(2);
   const ol = document.querySelector('.cart__items');
   const allLoadedItens = document.querySelectorAll('li');
   allLoadedItens.forEach((li) => {
