@@ -1,10 +1,10 @@
 function clearCar() {
   document.querySelector('.empty-cart')
-  .addEventListener('click', () => {
-    const prods = document.querySelector('.cart__items');
-    const prod = document.querySelectorAll('.cart__item');
-    prod.forEach(elem => prods.removeChild(elem));
-  });
+    .addEventListener('click', () => {
+      const prods = document.querySelector('.cart__items');
+      const prod = document.querySelectorAll('.cart__item');
+      prod.forEach(elem => prods.removeChild(elem));
+    });
 }
 
 function createProductImageElement(imageSource) {
@@ -42,21 +42,17 @@ function createProductItemElement(sku, name, image) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-  .addEventListener('click', () => {
-    fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(response => response.json())
-    .then((response) => {
-      const produto = createCartItemElement(response.id, response.title, response.price);
-      const lista = document.querySelector('.cart__items');
-      lista.appendChild(produto);
+    .addEventListener('click', () => {
+      fetch(`https://api.mercadolibre.com/items/${sku}`)
+        .then(response => response.json())
+        .then((response) => {
+          const produto = createCartItemElement(response.id, response.title, response.price);
+          const lista = document.querySelector('.cart__items');
+          lista.appendChild(produto);
+        });
     });
-  });
   return section;
 }
-
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
 
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/',
@@ -64,6 +60,15 @@ const apiInfo = {
 };
 
 const url = `${apiInfo.api}${apiInfo.endpoint}`;
+
+function rmLoading() {
+  const prod = document.querySelectorAll('.item');
+  const arr = [];
+  prod.forEach(elem => arr.push(elem));
+  if (arr.length > 0) {
+    document.querySelector('.loading').remove();
+  }
+}
 
 function computerFetch() {
   const endpoint = url;
@@ -75,7 +80,11 @@ function computerFetch() {
         const createItemChild = createProductItemElement(elem.id, elem.title, elem.thumbnail);
         secItems.appendChild(createItemChild);
       });
-    });
+    })
+  .then(rmLoading);
 }
 
-window.onload = function onload() { computerFetch(); clearCar(); };
+window.onload = function onload() {
+  computerFetch();
+  clearCar();
+};
