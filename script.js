@@ -54,7 +54,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   });
   const sectionItems = document.querySelector('.items');
   sectionItems.appendChild(section);
-  return section
+  return section;
 }
 
 function fetchFunction() {
