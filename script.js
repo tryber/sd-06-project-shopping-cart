@@ -88,8 +88,10 @@ async function renderProducts() {
   });
 }
 
-/*function setupEventHandlers() {
-}*/
+/*
+function setupEventHandlers() {
+}
+*/
 
 window.onload = async function onload() {
   await renderProducts();
