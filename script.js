@@ -84,5 +84,8 @@ const fetchProduct = (url) => {
 };
 
 window.onload = () => {
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 500);
   fetchProduct('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
 };
