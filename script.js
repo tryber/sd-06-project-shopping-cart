@@ -83,10 +83,15 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const toggleLoading = () => {
-  if (!document.querySelector('.loading').innerText) {
-    document.querySelector('.loading').innerText = 'loading...';
+  const cartElem = document.querySelector('.cart');
+
+  if (!document.querySelector('.loading')) {
+    const loading = document.createElement('p');
+    loading.className = 'loading';
+    loading.innerText = 'loading...';
+    cartElem.appendChild(loading);
   } else {
-    document.querySelector('.loading').innerText = '';
+    cartElem.removeChild(document.querySelector('.loading'));
   }
 };
 
