@@ -1,5 +1,13 @@
 function cartItemClickListener(event) {
   const itemsList = document.querySelector('.cart__items');
+  const localStorageValues = Object.values(localStorage);
+  localStorageValues.forEach((value) => {
+    if (event.target.innerText.includes(value)) {
+      // learned how to get the key with value here:
+      // https://stackoverflow.com/questions/12949723/html5-localstorage-getting-key-from-value
+      localStorage.removeItem(localStorage.key(value));
+    }
+  });
   itemsList.removeChild(event.target);
 }
 
@@ -40,9 +48,11 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       const item = createCartItemElement(product);
       const shoppingCart = document.querySelector('.cart__items');
       shoppingCart.appendChild(item);
+      localStorage.setItem((shoppingCart.children.length - 1), product.id);
       const cartItems = document.getElementById('cart-items');
       const clearButton = document.getElementById('empty-cart');
       clearButton.addEventListener('click', function () {
+        localStorage.clear();
         let element = cartItems.lastElementChild;
         while (element) {
           cartItems.removeChild(element);
@@ -81,4 +91,15 @@ function getSkuFromProductItem(item) {
 
 window.onload = function onload() {
   fetchAPI('computador');
+  const shoppingCart = document.querySelector('.cart__items');
+  const localStorageKeys = Object.keys(localStorage);
+  for (let index = 0; index < localStorage.length; index += 1) {
+    const itemID = localStorage.getItem(localStorageKeys[index]);
+    fetch(`https://api.mercadolibre.com/items/${itemID}`)
+    .then(r => r.json())
+    .then((product) => {
+      const item = createCartItemElement(product);
+      shoppingCart.appendChild(item);
+    });
+  }
 };
