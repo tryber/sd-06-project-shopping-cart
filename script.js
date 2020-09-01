@@ -36,10 +36,24 @@ function saveCurrentList() {
   localStorage.setItem('SavedList', listSaver);
 }
 
+async function totalValueUpdater() {
+  const cartList = await document.querySelector('.cart__items');
+  const cartItemsValues = await [];
+  for (let x = cartList.firstElementChild; x; x = x.nextElementSibling) {
+    const currentItemText = x.innerText;
+    const currentItemValue = currentItemText.split(' | ')[2].substr(8);
+    cartItemsValues.push(currentItemValue);
+  }
+  const totalValue = await cartItemsValues.reduce((acc, curr) => acc + parseInt(curr, 10), 0);
+  const totalValueDisplay = await document.querySelector('.total-price-display');
+  totalValueDisplay.innerText = await totalValue;
+}
+
 function cartItemClickListener(event) {
   const cartList = document.querySelector('.cart__items');
   cartList.removeChild(event.target);
   saveCurrentList();
+  totalValueUpdater();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -74,6 +88,7 @@ function addItemToCart(eventElement) {
         const cartList = document.querySelector('.cart__items');
         cartList.appendChild(createCartItemElement(data));
         saveCurrentList();
+        totalValueUpdater();
       });
   }
 }
@@ -84,9 +99,9 @@ function cartItensHandler() {
     const cartList = document.querySelector('.cart__items');
     cartList.innerHTML = savedList;
     for (let x = cartList.firstElementChild; x; x = x.nextElementSibling) {
-      console.log(x);
       x.addEventListener('click', cartItemClickListener);
     }
+    totalValueUpdater();
   }
 }
 
