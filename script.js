@@ -46,6 +46,7 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+
 // destructuring nos computadores q vem do fetchUrl
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
@@ -81,6 +82,15 @@ const fetchUrl = () => {
     });
 };
 
+function removeAlItems() {
+  const btnRemoveAllItems = document.querySelector('.empty-cart');
+  const listCar = document.querySelector('.cart__items');
+  btnRemoveAllItems.addEventListener('click', () => {
+    listCar.innerHTML = '';
+  });
+}
+
 window.onload = function onload() {
   fetchUrl();
+  removeAlItems();
 };
