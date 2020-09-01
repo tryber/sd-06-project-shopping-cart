@@ -9,7 +9,6 @@ function createProductImageElement(imageSource) {
 function cartItemClickListener(event) {
   const mainList = document.querySelector('.cart__items');
   mainList.removeChild(event.target);
-  console.log('alô!');
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -98,7 +97,6 @@ const fetchList = () => {
   .then(() => clearCartButton())
   .then(() => loadSavedCart());
 };
-
 
 window.onload = function onload() {
   fetchList();
