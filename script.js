@@ -12,16 +12,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener() {
-  // coloque seu código aqui
+function cartItemClickListener(item) {
+  document.querySelector(`#${item.id}`).remove();
 }
 
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = ` SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.id = `${id}`;
   document.querySelector('.cart__items').appendChild(li);
-  li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
@@ -40,7 +40,7 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  document.querySelector('.item__add').id = `${id}`;
   section.addEventListener('click', () => fetchItem(id));
   return section;
 }
@@ -57,4 +57,6 @@ const ML_URL = () => {
 
 window.onload = function onload() {
   ML_URL();
+  document.querySelector('ol').addEventListener('click', e =>
+  cartItemClickListener(e.target));
 };
