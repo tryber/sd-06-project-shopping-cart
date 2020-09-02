@@ -38,7 +38,7 @@ function createCartItemElement(sku, name, salePrice) {
 
 let sumPrice = 0;
 async function sum(valueOfProd) {
-  sumPrice += valueOfProd;
+  Math.round(sumPrice += valueOfProd);
   document.querySelector('.total-price').innerHTML = sumPrice;
 }
 
