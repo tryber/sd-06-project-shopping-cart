@@ -86,7 +86,7 @@ const ML_URL = () => {
     // .then(CONTAINER.appendChild(createCustomElement('h1', 'loading', 'loading...')))
     .then(resp => resp.json())
     .then(data => data.results.forEach(result => createProductItemElement(result)))
-    .then(document.querySelector('.loading').remove())
+    // .then(document.querySelector('.loading').remove())
     .catch(error => console.error('Error: ', error));
 };
 
@@ -98,4 +98,5 @@ window.onload = function onload() {
     RETRIEVE_CART();
   }
   calcTotalCart();
+  document.querySelector('.loading').remove();
 };
