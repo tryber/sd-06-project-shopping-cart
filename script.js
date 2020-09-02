@@ -110,7 +110,7 @@ function clearCart() {
   const pricePlacer = document.querySelector('.price .total-price');
   const cartList = document.querySelector('ol.cart__items');
   while (cartList.firstChild) {
-    node.removeChild(cartList.firstChild);
+    cartList.removeChild(cartList.firstChild);
   }
   pricePlacer.innerText = '-';
   myCartIds = [];
