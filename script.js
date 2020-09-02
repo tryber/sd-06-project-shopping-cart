@@ -44,6 +44,11 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function cartItemClickListener(event) {
+  const removeItem = document.querySelector('.cart__items');
+  removeItem.removeChild(event.target);
+}
+
 function createCartItemElement({
   sku,
   name,
@@ -92,11 +97,6 @@ function createProductItemElement({
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
-
-function cartItemClickListener(event) {
-  const removeItem = document.querySelector('.cart__items');
-  removeItem.removeChild(event.target);
-}
 
 // let a = (JSON.parse(localStorage[0]));
 // console.log(a.sku);
