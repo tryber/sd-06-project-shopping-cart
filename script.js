@@ -46,10 +46,6 @@ const appendItemToChart = (element) => {
   toChart.appendChild(element);
 };
 
-const saveToLocalStorage = () => {
-
-}
-
 const fetchToChart = (skuName) => {
   const url = 'https://api.mercadolibre.com/items/';
   fetch(`${url}${skuName}`)
@@ -77,10 +73,10 @@ const createElement = () => {
 };
 
 const eraseElement = () => {
-  setTimeout(()=>{
-    const getContainerElement = document.querySelector('.items')
+  setTimeout(() => {
+    const getContainerElement = document.querySelector('.items');
     getContainerElement.removeChild(getContainerElement.firstChild);
-  },2000);
+  }, 2000);
 };
 
 const fetchDisplay = () => {
