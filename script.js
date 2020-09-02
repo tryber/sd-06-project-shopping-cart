@@ -74,7 +74,7 @@ function loadMessage() {
   const items = document.querySelector('.items');
   const span = document.createElement('span');
   span.className = 'loading';
-  span.innerText = 'Loading...';
+  span.innerText = 'Loading';
   items.appendChild(span);
 }
 
