@@ -108,6 +108,7 @@ function getFromLocalStorage() {
   getTotalPrice();
 }
 
+// Busca por um produto específico na API e retorna os dados.
 function fetchProductItem(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(resolve => resolve.json())
@@ -118,6 +119,7 @@ function fetchProductItem(sku) {
     });
 }
 
+// Adiciona os produtos criados na tela.
 function createItem(item) {
   const product = document.querySelector('.items');
   product.appendChild(item);
@@ -129,6 +131,7 @@ function createItem(item) {
   });
 }
 
+// Cria o elemento imagem do produto.
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -136,6 +139,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// Cria um elemento específico e retorna o mesmo.
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -143,6 +147,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// Cria o item produto.
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -155,10 +160,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
+// Busca na API todos os produtos com a palavra chave 'computador'.
 function fetchProducts() {
   showLoading();
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
@@ -170,6 +172,7 @@ function fetchProducts() {
     .then(hideLoading());
 }
 
+// Chama as principais funções após a página ser carregada.
 window.onload = function onload() {
   fetchProducts();
   getFromLocalStorage();
