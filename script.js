@@ -5,7 +5,7 @@ const removeCartElements = () => {
   }
 };
 
-const removeCartTotalPriceElements = () => {
+const removeCartTotalPriceElement = () => {
   const totalPriceElement = document.querySelector('.total-price');
   if (totalPriceElement) {
     totalPriceElement.parentElement.removeChild(totalPriceElement);
@@ -15,7 +15,7 @@ const removeCartTotalPriceElements = () => {
 const clearCart = () => {
   removeCartElements();
   localStorage.clear();
-  removeCartTotalPriceElements();
+  removeCartTotalPriceElement();
 };
 
 const clearCartbuttonEvent = () => {
