@@ -90,7 +90,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
           // makes indexes always higher so i can keep the order when i load localStorage
           let highestIndex = 0;
           Object.keys(localStorage).forEach((key) => {
-            if (parseInt(key) > highestIndex) { highestIndex = parseInt(key); }
+            if (parseInt(key) > highestIndex) { highestIndex = parseInt(key, 0); }
           });
           addToLocalStorage(product, highestIndex + 1);
         }
@@ -145,7 +145,7 @@ window.onload = function onload() {
 
   const cart = document.querySelector('.cart__items');
   Object.keys(localStorage).sort().forEach((key, index) => {
-    console.log(JSON.parse(localStorage[key]));
+    // console.log(JSON.parse(localStorage[key]));
     for (let i = 0; i < localStorage.length; i += 1) {
       if (i === index) {
         const product = JSON.parse(localStorage[key]);
