@@ -38,7 +38,7 @@ async function sumPriceItemShopCart(salePrice) {
   const sumPrice = document.querySelector('.total-price');
   // sum += Math.round(salePrice * 100) / 100;
   sum += salePrice;
-  sumPrice.innerHTML = `Total: R$ ${Math.round(sum * 100) / 100}`;
+  sumPrice.innerHTML = `${Math.round(sum * 100) / 100}`;
 }
 
 // async function decrementPriceItemShopCart() {
@@ -57,7 +57,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
     const sumPrice = document.querySelector('.total-price');
     // sum -= Math.round(salePrice * 100) / 100;
     sum -= salePrice;
-    sumPrice.innerHTML = `Total: R$ ${Math.round(sum * 100) / 100}`;
+    sumPrice.innerHTML = `${Math.round(sum * 100) / 100}`;
     localStorageShopCart();
     // console.log(sumPrice)
   });
@@ -125,7 +125,7 @@ const removeCartItemClickListener = () => {
 
 const cleanItemsCart = () => {
   document.querySelector('.cart__items').innerHTML = '';
-  document.querySelector('.total-price').innerHTML = `Total: R$ ${0}`;
+  document.querySelector('.total-price').innerHTML = `${0}`;
   localStorageShopCart();
 };
 
