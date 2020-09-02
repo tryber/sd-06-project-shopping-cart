@@ -71,11 +71,15 @@ const fetchWindow = () => {
     }));
 };
 
-const imprima = () => console.log('clicando');
+// const imprima = () => console.log('clicando');
 
 const setClearButton = () => {
   const clearButton = document.getElementsByClassName('empty-cart');
-  clearButton[0].addEventListener('click', imprima);
+  clearButton[0].addEventListener('click', () => {
+    const items = document.querySelector('.cart__items');
+    items.innerHTML = '';
+    // items.forEach(item => carShop.removeChild(item));
+  });
 };
 
 window.onload = function onload() {
