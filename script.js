@@ -12,7 +12,7 @@ function hideLoading() {
   setTimeout(() => {
     const parent = document.querySelector('.items');
     parent.removeChild(parent.firstChild);
-  }, 2000)
+  }, 3000);
 }
 
 // Mostra o valor total dos produtos no carrinho de compras.
