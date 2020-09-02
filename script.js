@@ -96,7 +96,7 @@ function eventClickButtonSelectItem() {
 }
 
 function requisitionMercadoLivreItem(pesquisa) {
-  createLoading()
+  createLoading();
 
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$${pesquisa}`)
     .then(response => response.json())
