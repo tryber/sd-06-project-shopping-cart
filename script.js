@@ -43,8 +43,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 function parentList(element) {
   const parentClass = document.querySelector('.items');
   parentClass.appendChild(element);
-};
-
+}
 
 async function fetchProducts() {
   const result = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
