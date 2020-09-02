@@ -15,7 +15,7 @@ async function sum() {
       .then(prices => prices.reduce((acc, curr) => acc + curr).toFixed(0));
     total.innerHTML = `$${result}`;
   } else {
-    total.innerHTML = `$0`;
+    total.innerHTML = '$0';
   }
 }
 
