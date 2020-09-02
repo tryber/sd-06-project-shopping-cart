@@ -46,37 +46,42 @@ function createCartItemElement({ sku, name, salePrice }) {
 // cria URL API:
 const urlML = 'https://api.mercadolibre.com/';
 // requisito 2:
+function findThisSpecificProduct(sku) {
+  return fetch(`${urlML}/items/${sku}`);
+}
 
-function fetchThisProduct(sku) {
+async function listThisProduct(sku) {
   const cartList = document.querySelector('.cart__items');
-  const endpointItem = `${urlML}/items/${sku}`;
-  fetch(endpointItem)
-  .then(response => response.json())
-  .then(product => cartList.appendChild(
-    createCartItemElement({
-      sku: product.id,
-      name: product.title,
-      salePrice: product.price,
-    }),
-  ));
+  const bringIdProduct = await findThisSpecificProduct(sku);
+  const responseIdProduct = await bringIdProduct.json();
+  cartList.appendChild(createCartItemElement({
+    sku: responseIdProduct.id,
+    name: responseIdProduct.title,
+    salePrice: responseIdProduct.price,
+  }),
+  );
 }
 // cria o fetch - requisito1:
-function fetchProduct(term) {
-  const endpointTerm = `${urlML}sites/MLB/search?q=${term}`;
+function findProduct(term) {
+  return fetch(`${urlML}sites/MLB/search?q=${term}`);
+}
+
+async function showAllProducts() {
   const sectionItems = document.querySelector('.items');
-  fetch(endpointTerm).then(response => response.json())
-  .then(query => query.results.forEach(
-    product => sectionItems.appendChild(createProductItemElement({
+  const findProductResponse = await findProduct('computador');
+  const allProductsInfo = await findProductResponse.json();
+  allProductsInfo.results.forEach(product => sectionItems.appendChild(
+    createProductItemElement({
       sku: product.id,
       name: product.title,
       image: product.thumbnail,
-    })).querySelector('.item__add').addEventListener(
-      'click', () => fetchThisProduct(product.id),
-    ),
-  ));
+    }),
+  ).querySelector('.item__add').addEventListener(
+    'click', () => listThisProduct(product.id),
+  ),
+  );
 }
 
-
 window.onload = function onload() {
-  fetchProduct('computador');
+  showAllProducts();
 };
