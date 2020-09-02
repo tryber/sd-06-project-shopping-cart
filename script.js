@@ -111,7 +111,7 @@ function ProductsfromML() {
       });
       container.removeChild(loading);
     });
-}screen
+}
 
 window.onload = function onload() {
   upStorage();
