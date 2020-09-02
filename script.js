@@ -30,10 +30,26 @@ function loadStorageList() {
 //   name: object.title,
 //   salePrice: object.price,
 
+function createProductItemElement({
+  id: sku,
+  title: name,
+  thumbnail: image,
+}) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const buttonId = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  buttonId.addEventListener('click', () => fetchBuyedComputer(sku));
+  section.appendChild(buttonId);
+  return section;
+}
+
 function fetchComputer() {
   fetch(endpoint)
-    .then((response) => response.json())
-    .then((object) => {
+    .then(response => response.json())
+    .then(object => {
       object.results.forEach((computer) => {
         const fatherElement = document.querySelector('.items');
         fatherElement.appendChild(createProductItemElement(computer));
@@ -70,25 +86,9 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({
-  id: sku,
-  title: name,
-  thumbnail: image,
-}) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  const buttonId = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  buttonId.addEventListener('click', () => fetchBuyedComputer(sku));
-  section.appendChild(buttonId);
-  return section;
-}
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 function cartItemClickListener(event) {
   const removeItem = document.querySelector('.cart__items');
@@ -113,5 +113,4 @@ function createCartItemElement({
 window.onload = function onload() {
   fetchComputer();
   loadStorageList();
-  cartItemClickListener(event)
-}
+};
