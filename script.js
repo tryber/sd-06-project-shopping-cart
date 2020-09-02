@@ -13,7 +13,7 @@ function hideLoading() {
   parent.removeChild(parent.firstChild);
 }
 
-// 
+// Mostra o valor total dos produtos no carrinho de compras.
 function showTotalPrice(sum) {
   const total = document.querySelector('.total-price');
   total.innerHTML = sum;
