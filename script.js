@@ -62,7 +62,7 @@ function createProductItemElement(sku, name, image) {
 }
 
 function listReturned(arrOfProducts) {
-  arrOfProducts.map((element) => {
+  arrOfProducts.forEach((element) => {
     const secItems = document.querySelector('.items');
     return secItems
       .appendChild(createProductItemElement(element.id, element.title, element.thumbnail));
@@ -85,5 +85,10 @@ function getSkuFromProductItem(item) {
 }
 
 window.onload = function onload() {
+  // 
+  const loading = document.querySelector('.loading');
   fetchItems();
+  setTimeout(() => {
+    loading.remove();
+  }, 500);
 };
