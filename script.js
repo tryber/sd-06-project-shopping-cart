@@ -46,6 +46,10 @@ const appendItemToChart = (element) => {
   toChart.appendChild(element);
 };
 
+const saveToLocalStorage = () => {
+
+}
+
 const fetchToChart = (skuName) => {
   const url = 'https://api.mercadolibre.com/items/';
   fetch(`${url}${skuName}`)
@@ -64,19 +68,31 @@ const appendItem = (item) => {
   });
 };
 
+const createElement = () => {
+  const pElement = document.createElement('span');
+  pElement.className = 'loading';
+  pElement.innerHTML = 'loading...';
+  const getContainerElement = document.querySelector('.items');
+  getContainerElement.appendChild(pElement);
+};
+
+const eraseElement = () => {
+  setTimeout(()=>{
+    const getContainerElement = document.querySelector('.items')
+    getContainerElement.removeChild(getContainerElement.firstChild);
+  },2000);
+};
+
 const fetchDisplay = () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
   const itemSearch = 'computador';
-  const pElement = document.createElement('p');
-  pElement.className = 'loading';
-  pElement.innerHTML = 'loading...';
-  const getContainerElement = document.querySelector('.container');
-  getContainerElement.appendChild(pElement);
+  createElement();
   fetch(`${url}${itemSearch}`)
   .then(resolve => resolve.json())
   .then(data => data.results.forEach((element) => {
     appendItem(createProductItemElement(element));
-  }));
+  }))
+  .then(eraseElement());
 };
 
 const clearItems = () => {
