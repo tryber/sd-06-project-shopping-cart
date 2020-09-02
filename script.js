@@ -7,11 +7,11 @@ async function mercadoLivreProdcts() {
   fetch(api)
     .then(response => response.json())
     .then(({ id, title, price }) => {
-        const li = createProductItemElement({ sku: id, name: title, image: thumbnail });
-        elements.addEventListener('click', includeInCart);
-        document.querySelector('.cart__items').appendChild(li);
-        addtoStorage();
-      });
+      const li = createProductItemElement({ sku: id, name: title, image: thumbnail });
+      elements.addEventListener('click', includeInCart);
+      document.querySelector('.cart__items').appendChild(li);
+      addtoStorage();
+    });
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
