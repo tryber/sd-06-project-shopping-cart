@@ -74,8 +74,8 @@ const fetchDisplay = () => {
   getContainerElement.appendChild(pElement);
   fetch(`${url}${itemSearch}`)
   .then(resolve => resolve.json())
-  .then(data => data.results.forEach((element) => { 
-  appendItem(createProductItemElement(element));
+  .then(data => data.results.forEach((element) => {
+    appendItem(createProductItemElement(element));
   }));
 };
 
