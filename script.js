@@ -21,6 +21,7 @@ function createCustomElement(element, className, innerText) {
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
+  document.querySelector('.cart__items').appendChild(li);
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
@@ -39,7 +40,7 @@ const renderCart = (itemId) => {
       name: response.title,
       salePrice: response.price,
     };
-    document.querySelector('.cart__items').appendChild(createCartItemElement(itemToAddOnCart));
+    createCartItemElement(itemToAddOnCart);
   });
 };
 
