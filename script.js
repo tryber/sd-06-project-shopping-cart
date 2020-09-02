@@ -104,9 +104,9 @@ const clearButton = () => {
 const sumTotal = (sum) => {
   const totalBuy = document.querySelector('.total-price');
   totalBuy.innerHTML = sum;
-}
+};
 
-async function sumTotalBuy () {
+async function sumTotalBuy() {
   let sum = 0;
   const getTotalItemsInChart = await JSON.parse(localStorage.getItem('cartToBuy'));
   if (getTotalItemsInChart) {
@@ -120,4 +120,5 @@ async function sumTotalBuy () {
 window.onload = function onload() {
   fetchDisplay();
   clearButton();
+  sumTotalBuy();
 };
