@@ -22,10 +22,23 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+function lStorage() {
+  const localStorageItem = document.querySelector('.cart__items').innerHTML;
+  // console.log(X);
+  localStorage.items = localStorageItem;
+}
+
+function keepItens() {
+  if (localStorage.items) {
+    document.querySelector('.cart__items').innerHTML = localStorage.items;
+  }
+}
+
 function cartItemClickListener(event) {
   const selectedItem = event.target;
   const fatherOfProductToClean = document.querySelector('.cart__items');
   fatherOfProductToClean.removeChild(selectedItem);
+  lStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -43,6 +56,7 @@ const sendItemtoCart = (product) => {
   console.log(itemToCart);
   const cartItems = document.querySelector('.cart__items');
   cartItems.appendChild(itemToCart);
+  lStorage();
 };
 
 const computerObjectSearch = (inPutId) => {
@@ -64,7 +78,7 @@ const objectDetails = (productsArray) => {
     const eachProductItem = createProductItemElement(elements);
     section.appendChild(eachProductItem);
     // console.log(eachProductItem);
-    eachProductItem.lastChild.addEventListener('click', function () {
+    eachProductItem.lastChild.addEventListener('click', function() {
       // const { id: sku } = eachProductItem;
       // const idToSend = eachProductItem.results.sku;
       const idToSend = eachProductItem.firstChild.innerText;
@@ -87,6 +101,7 @@ const itemSearch = () => {
 const cleanCart = (event) => {
   const cleanFather = document.querySelector('.cart__items');
   cleanFather.innerHTML = '';
+  lStorage();
 };
 
 const setupCleanEvent = () => {
@@ -97,6 +112,7 @@ const setupCleanEvent = () => {
 window.onload = function onload() {
   itemSearch();
   setupCleanEvent();
+  keepItens();
 };
 
 function getSkuFromProductItem(item) {
