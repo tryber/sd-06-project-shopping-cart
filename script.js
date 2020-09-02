@@ -10,10 +10,10 @@ async function getPrices(allItems) {
 async function sum() {
   const total = document.querySelector('.total-price');
   if (localStorage.length !== 0) {
-  const allItems = document.querySelectorAll('.cart__item');
-  const result = await getPrices(allItems)
-    .then(prices => prices.reduce((acc, curr) => acc + curr).toFixed(2));
-  total.innerHTML = result;
+    const allItems = document.querySelectorAll('.cart__item');
+    const result = await getPrices(allItems)
+      .then(prices => prices.reduce((acc, curr) => acc + curr).toFixed(2));
+    total.innerHTML = result;
   } else {
     total.innerHTML = '';
   }
