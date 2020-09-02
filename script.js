@@ -88,7 +88,7 @@ function createCartItemElement({
 function fetchComputer() {
   fetch(endpoint)
     .then(response => response.json())
-    .then(object => {
+    .then((object) => {
       object.results.forEach((computer) => {
         const fatherElement = document.querySelector('.items');
         fatherElement.appendChild(createProductItemElement(computer));
@@ -98,7 +98,7 @@ function fetchComputer() {
 
 function fetchBuyedComputer(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then((response) => response.json())
+    .then(response => response.json())
     .then((object) => {
       const cartItems = document.querySelector('.cart__items');
       cartItems.appendChild(createCartItemElement({
