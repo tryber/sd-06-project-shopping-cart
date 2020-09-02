@@ -9,7 +9,7 @@ async function getPrices(allItems) {
 }
 async function sum() {
   const allItems = document.querySelectorAll('.cart__item');
-  const total = document.querySelector('.total');
+  const total = document.querySelector('.total-price');
   const result = await getPrices(allItems)
     .then(prices => prices.reduce((acc, curr) => acc + curr).toFixed(2));
   total.innerHTML = result;
