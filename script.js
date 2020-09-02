@@ -119,8 +119,18 @@ function loadLocalStorage() {
   }
 }
 
+function clearShoppingCart() {
+  document.querySelector('.cart__items').innerHTML = '';
+}
+
+function onClickClearShoppingCard() {
+  const emptyCartButton = document.querySelector('.empty-cart');
+  emptyCartButton.addEventListener('click', clearShoppingCart);
+}
+
 window.onload = function onload() {
   fetchComputers();
   getItemId();
   loadLocalStorage();
+  onClickClearShoppingCard();
 };
