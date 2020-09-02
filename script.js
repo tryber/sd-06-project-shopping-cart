@@ -1,6 +1,6 @@
 function showTotalPrice(sum) {
   const total = document.querySelector('.total-price');
-  total.innerHTML = (sum === 0) ? '' : `Preço total: $${sum}`;
+  total.innerHTML = (sum === 0) ? '' : `${sum}`;
 }
 
 async function getTotalPrice() {
