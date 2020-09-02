@@ -1,5 +1,3 @@
-window.onload = function onload() {};
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,16 +27,13 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-const addCartFunction = (itemId) => {
+const addCartFunction = () => {
+  const itemId = event.target.parentNode.children[0].innerText;
   const urlItem = `https://api.mercadolibre.com/items/${itemId}`;
   const cart = document.querySelector('.cart__items');
   fetch(urlItem)
     .then(response => response.json())
     .then(object => cart.appendChild(createCartItemElement(object)));
-};
-const getItemId = () => {
-  const itemId = event.target.parentNode.children[0].innerText;
-  addCartFunction(itemId);
 };
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -49,7 +44,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-  .addEventListener('click', getItemId);
+  .addEventListener('click', addCartFunction);
 
   return section;
 }
@@ -59,9 +54,9 @@ function getSkuFromProductItem(item) {
 }
 
 window.onload = function onload() {
+  const items = document.querySelector('.items');
   const handleResults = (results) => {
     results.forEach((element) => {
-      const items = document.querySelector('.items');
       items.appendChild(createProductItemElement(element));
     });
   };
@@ -69,6 +64,12 @@ window.onload = function onload() {
   fetch(url)
     .then(response => response.json())
     .then(object => handleResults(object.results));
-
-  Object.keys(localStorage).reverse().forEach(key => addCartFunction(key));
+  
+  const cart = document.querySelector('.cart__items');
+  const getobject = (num) => JSON.parse(localStorage.getItem(num));
+  Object.keys(localStorage)
+  .forEach(key => cart.appendChild(createCartItemElement(getobject(key))));
+  
+  // const buttonClean = document.querySelector('.empty-cart');
+  // buttonClean.addEventListener('click', clear() =>  )
 };
