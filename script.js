@@ -72,9 +72,16 @@ window.onload = function onload() {
   };
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   fetch(url)
-    .then(response => response.json())
+    .then((response) => {
+      loading.remove();
+      return response.json();
+    })
     .then(object => handleResults(object.results));
 
+  const loading = document.createElement('p');
+  loading.className = 'loading';
+  loading.innerHTML = 'Loading...';
+  items.appendChild(loading);
   const cart = document.querySelector('.cart__items');
   const getobject = num => JSON.parse(localStorage.getItem(num));
   orderKeys
