@@ -4,6 +4,10 @@ const clearCart = () => {
     cartList.removeChild(cartList.firstChild);
   }
   localStorage.clear();
+  const totalPriceElement = document.querySelector('.total-price');
+  if (totalPriceElement) {
+    totalPriceElement.parentElement.removeChild(totalPriceElement);
+  }
 };
 
 const clearCartbuttonEvent = () => {
@@ -20,8 +24,8 @@ const findTargetIndexInlist = (event) => {
     li = li.previousElementSibling;
     i += 1;
   }
-  return i
-}
+  return i;
+};
 
 const removeItemInStorage = (event) => {
   const index = findTargetIndexInlist(event)
@@ -33,16 +37,19 @@ const removeItemInStorage = (event) => {
 function cartItemClickListener(event) {
   event.target.parentNode.removeChild(event.currentTarget);
   removeItemInStorage(event);
+
 }
 
-function recordOnLocalStorage(item) {
-  if(Storage) {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-    let items = cartItems ?? [];
-    items.push(item);
-    localStorage.setItem('cartItems',JSON.stringify(items));
-  }
-}
+const recordOnLocalStorage = (item) => {
+    if(Storage) {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+      let items = cartItems ?? [];
+      items.push(item);
+      localStorage.setItem('cartItems',JSON.stringify(items));
+    }
+    return Promise.resolve()
+
+};
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
@@ -59,11 +66,48 @@ const addProductToCart = (li) => {
   ol.appendChild(li);
 };
 
+const sumCartItemsPrice =  () => {
+  const cartItems =  JSON.parse(localStorage.getItem('cartItems'))
+  const total =  cartItems.reduce((acc,{price}) => {
+    return acc + Number(price);
+  },0);
+  console.log(total)
+  return new Promise(resolve => resolve(total.toFixed(2)));
+}
+
+const createTotalPriceElement = (totalPrice) => {
+  const totalPriceElement = document.createElement('span');
+  totalPriceElement.innerText = totalPrice
+  totalPriceElement.className = 'total-price'
+  const cartTitleElement = document.querySelector('.cart__title');
+  console.log(totalPrice);
+  cartTitleElement.insertAdjacentElement('afterEnd',totalPriceElement);
+}
+
+const changeTotalPriceElement = (totalPriceElement, totalPrice) => {
+  if(totalPriceElement) {
+    totalPriceElement.innerText = totalPrice;
+    return true;
+  }
+}
+
+const displayItemPrices = async () => {
+  const totalPrice = await sumCartItemsPrice();
+  const totalPriceElement = document.querySelector('.total-price');
+  if (totalPriceElement) {
+    changeTotalPriceElement(totalPriceElement, totalPrice);
+  } else {
+    createTotalPriceElement(totalPrice);
+  }
+
+};
+
 const fetchProductItem = (sku) => {
   fetch(`https://api.mercadolibre.com/items/${sku}`).then(resolve => resolve.json())
-  .then(itemCart => {
+  .then(async (itemCart) => {
     addProductToCart(createCartItemElement(itemCart));
-    recordOnLocalStorage(itemCart);
+    await recordOnLocalStorage(itemCart);
+    displayItemPrices();
   });
 };
 
@@ -127,3 +171,5 @@ window.onload = function onload() {
   clearCartbuttonEvent();
   loadCart();
 };
+
+
