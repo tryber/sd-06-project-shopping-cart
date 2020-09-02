@@ -1,5 +1,13 @@
+let sum = 0;
 // pegando a API
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+
+// testando a soma (em construção!!!!!)
+const sumPrices = (salePrice) => {
+  sum += salePrice;
+  document.querySelector('.total-price').innerText = `Total: R$ ${sum}`;
+  console.log(sum);
+};
 
 // função para criar o localstorage
 const localStorageShopCart = () => {
@@ -9,7 +17,7 @@ const localStorageShopCart = () => {
 
   const priceCart = document.querySelector('.total-price').innerHTML;
   // console.log(priceCart);
-  localStorage.priceCart = priceCart
+  localStorage.priceCart = priceCart;
 };
 
 // função que apaga um item da lista do carrinho quando clicado
@@ -53,9 +61,9 @@ function findId() {
     .then(response => response.json())
     .then((object) => {
       console.log(object);
-      handleCreatListCart(object)
+      handleCreatListCart(object);
     })
-    .then(() => localStorageShopCart())
+    .then(() => localStorageShopCart());
 }
 
 // função correlacionada a função createProductItemElement (parte referente a imagem)
@@ -123,32 +131,24 @@ const removeCartItemClickListener = () => {
   localStorageShopCart();
 };
 
-// testando a soma (em construção!!!!!)
-const sumPrices = (salePrice) => {
-  sum += salePrice;
-  document.querySelector('.total-price').innerText = `Total: R$ ${sum}`;
-  console.log(sum);
-}
 
 // função que limpa a lista e chama para limpar o localstorage
 const cleanItemsCart = () => {
   document.querySelector('.cart__items').innerHTML = '';
   document.querySelector('.total-price').innerHTML = `Total: R$ ${0}`;
   localStorageShopCart();
-}
+};
 
 // função para click do botão limpar tudo
 const clickButtonToCleanCart = () => {
   document.querySelector('.empty-cart')
     .addEventListener('click', cleanItemsCart);
-}
+};
 
 
 window.onload = function onload() {
   handleAPI();
   saveLocalStorage();
   removeCartItemClickListener();
-  clickButtonToCleanCart()
+  clickButtonToCleanCart();
 };
-
-let sum = 0;
