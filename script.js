@@ -90,7 +90,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
           // makes indexes always higher so i can keep the order when i load localStorage
           let highestIndex = 0;
           Object.keys(localStorage).forEach((key) => {
-            if (parseInt(key) > highestIndex) { highestIndex = parseInt(key, 0); }
+            if (parseInt(key, 0) > highestIndex) { highestIndex = parseInt(key, 0); }
           });
           addToLocalStorage(product, highestIndex + 1);
         }
