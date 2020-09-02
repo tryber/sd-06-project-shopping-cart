@@ -1,3 +1,15 @@
+body {
+  background-color: royalblue;
+}
+
+header {
+  background-color: peachpuff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -31,7 +43,8 @@
 }
 
 .item {
-  border: 2px solid blue;
+  background-color: white;
+  border: 2px solid rgb( 96 , 125 , 139 );
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -56,21 +69,59 @@
 }
 
 .item .item__add {
-  background-color: green;
-  border: 0;
+  background-color: rgb( 0 , 204 , 0 );
+  border: 2px solid black;
+  border-radius: 3px;
   cursor: pointer;
   margin: 0;
   padding: 5px;
 }
 
 .cart {
+  background-color: white;
+  border: 2px solid rgb( 96 , 125 , 139 );
+  border-radius: 5px;
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  height: fit-content;
+  padding: 10px;
 }
 
 .cart .cart__title {
   flex-basis: 1;
   font-size: 16pt;
+  margin-bottom: 10px;
   text-align: center;
+}
+
+.empty-cart {
+  background-color: rgb( 31 , 195 , 104 );
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 5px;
+  width: 200px;
+}
+
+.cart__item {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.cart__item:hover {
+  background-color: gainsboro;
+}
+
+.price-container {
+  display: flex;
+}
+
+.total-price {
+  margin-left: 5px;
+}
+
+.loading {
+  color: white;
+  font-size: 2em;
 }
