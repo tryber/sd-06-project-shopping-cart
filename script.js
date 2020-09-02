@@ -1,17 +1,18 @@
 window.onload = function onload() {
-  const endepoint = "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
+  const endepoint = 'https://api.mercadolibre.com/sites/MLB/search?q=$QUERY'
   fetchContent(endepoint);
 };
 
 async function fetchContent(endepoint) {
   const response = await fatch(endepoint);
   const object = await response.json();
-  object.result.forEach(element => {
+  object.result.forEach((element) => {
     const data = {
       sku: element.id,
       name: element.title,
-      image: element.thumbnail
+      image: element.thumbnail,
     };
+    
     const itemElement = createProductItemElement(data);
     appendElementInSectionItems(element);
   });
