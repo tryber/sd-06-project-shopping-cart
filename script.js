@@ -35,7 +35,7 @@ function cartItemClickListener(event) {
   const filterLocalStorage = JSON.parse(localStorage.getItem('arrayIdShoppingCart'))
   .filter(textCartItem => valor !== textCartItem);
   localStorage.setItem('arrayIdShoppingCart', JSON.stringify(filterLocalStorage));
-  list.removeChild(event.target)
+  list.removeChild(event.target);
 }
 
 function saveCart(cartId) {
