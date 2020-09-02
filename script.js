@@ -23,8 +23,8 @@ function itemRequest(event) {
   .then(response => response.json())
   .then((response) => {
     const idObj = {
-      id: response.results.id,
-      title: response.results.title,
+      sku: response.results.id,
+      name: response.results.title,
       price: response.results.price,
     };
     return idObj;
@@ -37,11 +37,10 @@ function cartItemClickListener(event) {
 }
 
 async function createCartItemElement(event) {
-
-  const { id, title, price } = await itemRequest(event);
+  const { sku, name, price } = await itemRequest(event);
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${price}`;
   document.querySelector('.cart__items').appendChild(li);
   li.addEventListener('click', cartItemClickListener);
 
@@ -49,18 +48,18 @@ async function createCartItemElement(event) {
 }
 
 // req 1
-function createProductItemElement({ sku, title, thumbnail }) {
+function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', title));
-  section.appendChild(createProductImageElement(thumbnail));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
     .addEventListener('click', createCartItemElement);
-
-  // return section;
   document.querySelector('.items').appendChild(section);
+  return section;
+  
 }
 
 function getSkuFromProductItem(item) {
@@ -76,8 +75,8 @@ function computerRequest() {
     .then(response => response.forEach((element) => {
       const newObj = {
         sku: element.id,
-        title: element.title,
-        thumbnail: element.thumbnail,
+        name: element.title,
+        image: element.thumbnail,
       };
       createProductItemElement(newObj);
       return newObj;
