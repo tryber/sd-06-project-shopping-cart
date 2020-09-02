@@ -34,16 +34,18 @@ function cartItemClickListener(event) {
   localStorageShopCart();
 }
 
-const sumPriceItemShopCart = (salePrice) => {
+async function sumPriceItemShopCart(salePrice) {
   const sumPrice = document.querySelector('.total-price');
+  // sum += Math.round(salePrice * 100) / 100;
   sum += salePrice;
-  sumPrice.innerHTML = `Total: R$ ${sum}`;
-};
+  sumPrice.innerHTML = `Total: R$ ${Math.round(sum * 100) / 100}`;
+}
 
-// const decrementPriceItemShopCart = (salePrice) => {
+// async function decrementPriceItemShopCart() {
 //   const sumPrice = document.querySelector('.total-price');
+//   // sum -= Math.round(salePrice * 100) / 100;
 //   sum -= salePrice;
-//   sumPrice.innerHTML = `Total: R$ ${sum}`;
+//   sumPrice.innerHTML = `Total: R$ ${Math.round(sum * 100) / 100}`;
 // }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -51,6 +53,14 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', async function decrementPriceItemShopCart() {
+    const sumPrice = document.querySelector('.total-price');
+    // sum -= Math.round(salePrice * 100) / 100;
+    sum -= salePrice;
+    sumPrice.innerHTML = `Total: R$ ${Math.round(sum * 100) / 100}`;
+    localStorageShopCart();
+    // console.log(sumPrice)
+  });
   // console.log(salePrice)
   sumPriceItemShopCart(salePrice);
 
