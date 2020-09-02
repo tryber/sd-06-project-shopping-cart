@@ -13,9 +13,9 @@ async function sum() {
     const allItems = document.querySelectorAll('.cart__item');
     const result = await getPrices(allItems)
       .then(prices => prices.reduce((acc, curr) => acc + curr).toFixed(0));
-    total.innerHTML = `$${result}`;
+    total.innerHTML = `${result}`;
   } else {
-    total.innerHTML = '$0';
+    total.innerHTML = '0';
   }
 }
 
