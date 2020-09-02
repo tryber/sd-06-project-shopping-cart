@@ -114,7 +114,7 @@ const fetchCurrency = (currency) => {
     .catch(error => handleError(error));
 };
 
-function clearAll(){
+function clearAll() {
   document.querySelector('.cart__items').innerHTML = '';
   // localStorage.clear();
 }
