@@ -6,7 +6,7 @@ async function totalPrices() {
   const items = document.querySelectorAll('.cart__item');
   const total = await prices([...items]);
   console.log(prices([...items]));
-  document.querySelector('.total-price').innerText = `Valor total: $${total}`;
+  document.querySelector('.total-price').innerText = total;
 }
 // Referencia: ajuda da galera do discord, entendi a referencia!!
 
