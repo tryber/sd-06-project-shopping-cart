@@ -141,7 +141,7 @@ window.onload = function onload() {
     .catch('deu pau!');
 
   const storedCart = JSON.parse(localStorage.getItem('myCart'));
-  const storedIds = localStorage.getItem('myItemsIds')
+  const storedIds = localStorage.getItem('myItemsIds');
   if (storedCart) {
     loadStoredCart(storedCart, storedIds);
   }
@@ -154,7 +154,7 @@ window.addEventListener('beforeunload', () => {
   const cartList = document.querySelectorAll('ol.cart__items li');
   const itemsArray = [];
   cartList.forEach((curr) => {
-    itemsArray.push({ id: curr.id, title: curr.dataset.title, price: curr.dataset.price, });
+    itemsArray.push({ id: curr.id, title: curr.dataset.title, price: curr.dataset.price });
   });
   localStorage.removeItem('myCart');
   localStorage.removeItem('myItemsIds');
