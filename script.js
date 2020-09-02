@@ -12,15 +12,15 @@ async function fetchContent(endepoint) {
   });
 }
 
-window.onload = function onload() {
-  const endepoint = 'https://api.mercadolibre.com/sites/MLB/search?q=$QUERY';
-  fetchContent(endepoint);
-};
-
 function appendElementInSectionItems(element) {
   const itemSection = document.querySelector('.items');
   itemSection.appendChild(element);
 }
+
+window.onload = function onload() {
+  const endepoint = 'https://api.mercadolibre.com/sites/MLB/search?q=$QUERY';
+  fetchContent(endepoint);
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
