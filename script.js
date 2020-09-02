@@ -1,3 +1,4 @@
+// Cria de forma assincrona um texto 'loading' enquanto faz a requisição à API.
 async function showLoading() {
   const loading = document.createElement('span');
   loading.className = 'loading';
@@ -6,11 +7,13 @@ async function showLoading() {
   parent.appendChild(loading);
 }
 
+// Remove o texto 'loading' quando retornar o resultado da API.
 function hideLoading() {
   const parent = document.querySelector('.items');
   parent.removeChild(parent.firstChild);
 }
 
+// 
 function showTotalPrice(sum) {
   const total = document.querySelector('.total-price');
   total.innerHTML = sum;
@@ -147,19 +150,19 @@ function getSkuFromProductItem(item) {
 }
 
 function fetchProducts() {
+  showLoading();
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(resolve => resolve.json())
     .then(data => data.results.forEach((element) => {
       const createProduct = createProductItemElement(element);
       createItem(createProduct);
     }));
+  hideLoading();
 }
 
 window.onload = function onload() {
-  showLoading();
   fetchProducts();
   getFromLocalStorage();
   getTotalPrice();
   emptyCart();
-  hideLoading();
 };
