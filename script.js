@@ -18,7 +18,7 @@ function cartItemClickListener() {
 }
 let counter = 0;
 
-const numbers = Object.keys(localStorage).map(number => parseInt(number));
+const numbers = Object.keys(localStorage).map(number => parseInt(number), 10);
 const orderKeys = numbers.sort((a, b) => a - b);
 if (orderKeys.length !== 0) {
   counter = orderKeys[orderKeys.length - 1] + 1;
@@ -74,12 +74,12 @@ window.onload = function onload() {
   fetch(url)
     .then(response => response.json())
     .then(object => handleResults(object.results));
-  
+
   const cart = document.querySelector('.cart__items');
-  const getobject = (num) => JSON.parse(localStorage.getItem(num));
+  const getobject = num => JSON.parse(localStorage.getItem(num));
   orderKeys
   .forEach(key => cart.appendChild(createCartItemElement(key, getobject(key))));
-  
+
   // const buttonClean = document.querySelector('.empty-cart');
   // buttonClean.addEventListener('click', clear() =>  )
 };
