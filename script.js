@@ -22,11 +22,11 @@ function itemRequest(event) {
   fetch(urlItem)
   .then(response => response.json())
   .then((response) => {
-    const idObj = { 
-      id:response.results.id,
+    const idObj = {
+      id: response.results.id,
       title: response.results.title,
-      price: response.results.price
-      };
+      price: response.results.price,
+    };
     return idObj;
   });
 }
@@ -37,7 +37,7 @@ function cartItemClickListener(event) {
 }
 
 async function createCartItemElement(event) {
-  console.log(event)
+
   const { id, title, price } = await itemRequest(event);
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -77,8 +77,8 @@ function computerRequest() {
       const newObj = {
         sku: element.id,
         title: element.title,
-        thumbnail: element.thumbnail
-      }
+        thumbnail: element.thumbnail,
+      };
       createProductItemElement(newObj);
       return newObj;
     }));
