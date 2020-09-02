@@ -1,7 +1,3 @@
-window.onload = function onload() {
-  loadStorage();
-};
-
 async function mercadoLivreProdcts() {
   const api = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   fetch(api)
@@ -70,3 +66,7 @@ function includeInCart(e) {
         cart.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
       });
 }
+
+window.onload = function onload() {
+  loadStorage();
+};
