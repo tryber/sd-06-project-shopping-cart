@@ -46,7 +46,7 @@ const sumCartItemsPrice = () => {
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   let total;
   if (cartItems !== null) {
-    total = cartItems.reduce((acc,{ price }) =>   acc + Number(price) , 0);
+    total = cartItems.reduce((acc, { price }) => acc + Number(price), 0);
   } else {
     total = 0;
   }
@@ -58,20 +58,19 @@ const createTotalPriceElement = (totalPrice) => {
   const cartTitleElement = document.querySelector('.cart__title');
   totalPriceElement.innerText = totalPrice;
   totalPriceElement.className = 'total-price';
-  cartTitleElement.insertAdjacentElement('afterEnd',totalPriceElement);
+  cartTitleElement.insertAdjacentElement('afterEnd', totalPriceElement);
 };
 
-function changeTotalPriceElement(totalPriceElement, totalPrice) {
-  if (totalPriceElement) {
-    totalPriceElement.innerText = totalPrice;
-  }
-};
+function changeTotalPriceElement(totalPrice) {
+  const currentPrice = document.querySelector('.total-price')
+  currentPrice.innerText = totalPrice;
+}
 
 const displayItemPrices = async () => {
   const totalPrice = await sumCartItemsPrice();
   const totalPriceElement = document.querySelector('.total-price');
   if (totalPriceElement) {
-    changeTotalPriceElement(totalPriceElement, totalPrice);
+    changeTotalPriceElement(totalPrice);
   } else {
     createTotalPriceElement(totalPrice);
   }
