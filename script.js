@@ -32,8 +32,21 @@ function createProductItemElement({ sku, name, image }) {
 
 function cartItemClickListener(event) {
   const itemToRemove = event.target;
+  const skuToRemoveFromStorage = itemToRemove.innerText.split('|')[0].split(' ')[1];
+  let skuPosition;
+
+  for (let index = 0; index < localStorage.length; index += 1) {
+    if (localStorage.getItem(index) === skuToRemoveFromStorage) {
+      skuPosition = index;
+      break;
+    }
+
+    if (localStorage.length === 1) localStorage.clear();
+  }
+
   const cartItems = document.querySelector('.cart__items');
   cartItems.removeChild(itemToRemove);
+  localStorage.removeItem(skuPosition);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -48,7 +61,10 @@ const sendProductToCart = (retrievedProduct) => {
   const { id: sku, title: name, price: salePrice } = retrievedProduct;
   const itemGoingToCart = createCartItemElement({ sku, name, salePrice });
   const cartItems = document.querySelector('.cart__items');
+  const cartPosition = localStorage.length;
+
   cartItems.appendChild(itemGoingToCart);
+  localStorage.setItem(cartPosition, sku);
 };
 
 const requestCartProduct = (itemSku) => {
@@ -78,6 +94,18 @@ const handleProductList = (crudeProductList) => {
   });
 };
 
+const fetchCartFromStorage = () => {
+  const skusFromStorage = [];
+
+  for (let index = 0; index < localStorage.length; index += 1) {
+    const retrievedSku = localStorage.getItem(index);
+    skusFromStorage.push(retrievedSku);
+  }
+
+  localStorage.clear();
+  skusFromStorage.forEach(sku => requestCartProduct(sku));
+};
+
 const fetchProducts = () => {
   const api = 'https://api.mercadolibre.com/';
   const endpoint = 'sites/MLB/search?q=';
@@ -86,13 +114,19 @@ const fetchProducts = () => {
 
   fetch(requestURL)
     .then(response => response.json())
-    .then(data => handleProductList(data.results));
+    .then((data) => {
+      handleProductList(data.results);
+      if (localStorage.length > 0) {
+        fetchCartFromStorage();
+      }
+    });
 };
 
 const handleRemoveAllButton = () => {
   document.querySelector('.empty-cart').addEventListener('click', function () {
     const cartItems = document.querySelector('.cart__items');
     cartItems.innerHTML = '';
+    localStorage.clear();
   });
 };
 
