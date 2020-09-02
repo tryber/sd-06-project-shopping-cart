@@ -42,38 +42,6 @@ const removeItemInStorage = (indexToRemove) => {
   localStorage.setItem('cartItems',JSON.stringify(arrayOfItems));
 };
 
-function cartItemClickListener(event) {
-  const removedElementIndex = findTargetIndexInlist(event);
-  event.target.parentNode.removeChild(event.currentTarget);
-  removeItemInStorage(removedElementIndex);
-  displayItemPrices();
-}
-
-const recordOnLocalStorage = (item) => {
-    if(Storage) {
-      const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-      let items = cartItems ?? [];
-      items.push(item);
-      localStorage.setItem('cartItems',JSON.stringify(items));
-    }
-    return Promise.resolve();
-};
-
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', (e) => {
-    cartItemClickListener(e);
-  });
-  return li;
-}
-
-const addProductToCart = (li) => {
-  const ol = document.querySelector('.cart__items');
-  ol.appendChild(li);
-};
-
 const sumCartItemsPrice =  () => {
   const cartItems =  JSON.parse(localStorage.getItem('cartItems'))
   let total;
@@ -111,6 +79,38 @@ const displayItemPrices = async () => {
   } else {
     createTotalPriceElement(totalPrice);
   }
+};
+
+function cartItemClickListener(event) {
+  const removedElementIndex = findTargetIndexInlist(event);
+  event.target.parentNode.removeChild(event.currentTarget);
+  removeItemInStorage(removedElementIndex);
+  displayItemPrices();
+}
+
+const recordOnLocalStorage = (item) => {
+    if(Storage) {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+      let items = cartItems ?? [];
+      items.push(item);
+      localStorage.setItem('cartItems',JSON.stringify(items));
+    }
+    return Promise.resolve();
+};
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', (e) => {
+    cartItemClickListener(e);
+  });
+  return li;
+}
+
+const addProductToCart = (li) => {
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(li);
 };
 
 const fetchProductItem = (sku) => {
