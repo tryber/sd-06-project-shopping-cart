@@ -40,6 +40,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  updateCartTotalPrice();
   saveShoppingCartStatus();
 }
 
@@ -47,8 +48,33 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.dataset.price = salePrice;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+function renderTotalPrice(totalPrice) {
+  if (document.querySelector('.total-price')) {
+    document.querySelector('.total-price').remove();
+  }
+
+  const span = document.createElement('span');
+  span.className = 'total-price';
+  span.innerText = totalPrice;
+  const totalPriceContainer = document.querySelector('.total-price-container');
+  totalPriceContainer.appendChild(span);
+}
+
+function getCartTotalPrice(allCartItems) {
+   return Array.from(allCartItems)
+    .reduce((total, cartItem) =>
+      total + parseFloat(cartItem.dataset.price), 0).toFixed(2);
+}
+
+function updateCartTotalPrice() {
+  const allCartItems = document.querySelectorAll('.cart__item');
+  const totalPrice = getCartTotalPrice(allCartItems);
+  renderTotalPrice(totalPrice);
 }
 
 async function addProductToCart(id) {
@@ -59,6 +85,7 @@ async function addProductToCart(id) {
   const formattedProduct = createCartItemElement(product);
   const cartContainer = document.querySelector('.cart__items');
   cartContainer.appendChild(formattedProduct);
+  updateCartTotalPrice();
   saveShoppingCartStatus();
 }
 
@@ -99,6 +126,7 @@ function removeAllProductsFromCart() {
     while (shoppingCart.firstChild) {
       shoppingCart.removeChild(shoppingCart.firstChild);
     }
+    updateCartTotalPrice();
     saveShoppingCartStatus();
   });
 }
@@ -108,6 +136,7 @@ window.onload = async function onload() {
 
   if (localStorage.shoppingCart) {
     loadStorage();
+    updateCartTotalPrice();
   }
 
   removeAllProductsFromCart();
