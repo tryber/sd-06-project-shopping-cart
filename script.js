@@ -10,21 +10,23 @@ function cartItemClickListener() {
   localStorage.removeItem(this.id);
 }
 
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }, keyName) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.id = sku;
+  li.id = keyName;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
 function buttonItemOnClick() {
+
   fetch(`${api.url}${api.endpointItem}${this.id}`)
     .then(response => response.json())
     .then((data) => {
+      const keyName = `${this.id}_${localStorage.length + 1}`
       const cartItems = document.querySelector('.cart__items');
-      cartItems.appendChild(createCartItemElement(data));
+      cartItems.appendChild(createCartItemElement(data, keyName));
 
       const item = {
         id: data.id,
@@ -32,9 +34,7 @@ function buttonItemOnClick() {
         price: data.price
       };
 
-      const localStorageKey = localStorage.length + 1;
-
-      localStorage.setItem(localStorageKey, JSON.stringify(item));
+      localStorage.setItem(keyName, JSON.stringify(item));
     });
 }
 
@@ -45,8 +45,12 @@ function loadStorage() {
     const item = JSON.parse(localStorage.getItem(keyName));
 
     const cartItems = document.querySelector('.cart__items');
-    cartItems.appendChild(createCartItemElement(item));
+    cartItems.appendChild(createCartItemElement(item, keyName));
   }
+}
+
+async function calcTotalPrice() {
+  
 }
 
 /* function calcTotalPrice() {
