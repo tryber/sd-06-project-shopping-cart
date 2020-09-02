@@ -24,6 +24,8 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const selProd = document.querySelector('.cart__items');
   selProd.removeChild(event.target);
+  const aux = event.target.innerText;
+  console.log(aux);
 }
 
 function createCartItemElement(sku, name, salePrice) {
@@ -32,6 +34,12 @@ function createCartItemElement(sku, name, salePrice) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+let sumPrice = 0;
+async function sum(valueOfProd) {
+  sumPrice += valueOfProd;
+  document.querySelector('.total-price').innerHTML = sumPrice;
 }
 
 function createProductItemElement(sku, name, image) {
@@ -49,6 +57,7 @@ function createProductItemElement(sku, name, image) {
           const produto = createCartItemElement(response.id, response.title, response.price);
           const lista = document.querySelector('.cart__items');
           lista.appendChild(produto);
+          sum(response.price);
         });
     });
   return section;
