@@ -1,5 +1,5 @@
 // Cria de forma assíncrona um texto 'loading' enquanto faz a requisição à API.
-async function showLoading() {
+function showLoading() {
   const loading = document.createElement('span');
   loading.className = 'loading';
   loading.innerText = 'Loading...';
@@ -87,12 +87,13 @@ function clearCart() {
   getTotalPrice();
 }
 
+// Adiciona o evento de limpar o carrinho de compras.
 function emptyCart() {
   const emptyButton = document.querySelector('.empty-cart');
   emptyButton.addEventListener('click', clearCart);
-  getTotalPrice();
 }
 
+// Recupera os itens do carrinho do LocalStorage.
 function getFromLocalStorage() {
   if (Storage) {
     const getProductCartItems = JSON.parse(localStorage.getItem('cartML'));
