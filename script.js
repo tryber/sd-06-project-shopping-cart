@@ -12,7 +12,8 @@ async function sum() {
   if (localStorage.length !== 0) {
     const allItems = document.querySelectorAll('.cart__item');
     const result = await getPrices(allItems)
-      .then(prices => prices.reduce((acc, curr) => acc + curr).toFixed(0));
+      .then(prices => prices.reduce((acc, curr) => acc + curr))
+      .then(totalSum => Math.round(totalSum * 100) / 100);
     total.innerHTML = `${result}`;
   } else {
     total.innerHTML = '0';
