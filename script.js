@@ -102,13 +102,13 @@ const clearButton = () => {
 };
 
 const sumTotal = (sum) => {
-  const totalBuy = document.querySelector('.total-price');
+  const totalBuy = document.querySelector('.cart__total');
   totalBuy.innerHTML = sum;
 };
 
 async function sumTotalBuy() {
   let sum = 0;
-  const getTotalItemsInChart = await JSON.parse(localStorage.getItem('cartToBuy'));
+  const getTotalItemsInChart = await JSON.parse(localStorage.getItem());
   if (getTotalItemsInChart) {
     for (let index = 0; index < getTotalItemsInChart.length; index += 1) {
       sum += getTotalItemsInChart[index].price;
