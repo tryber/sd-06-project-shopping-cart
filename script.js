@@ -25,8 +25,25 @@ function buttonItemOnClick() {
     .then((data) => {
       const cartItems = document.querySelector('.cart__items');
       cartItems.appendChild(createCartItemElement(data));
-      localStorage.setItem(this.id, JSON.stringify(data));
+
+      const item = {};
+      item.id = data.id
+      item.title = data.title
+      item.price = data.price
+
+      localStorage.setItem(this.id, JSON.stringify(item));
     });
+}
+
+function loadStorage() {
+  let keyName = '';
+  for (let i = 0; i < localStorage.length; i += 1) {
+    keyName = localStorage.key(i);
+    const item = JSON.parse(localStorage.getItem(keyName));
+
+    const cartItems = document.querySelector('.cart__items');
+    cartItems.appendChild(createCartItemElement(item));
+  }
 }
 
 /* function calcTotalPrice() {
@@ -102,4 +119,6 @@ window.onload = function onload() {
 
   const cleanButton = document.getElementById('empty_cart');
   cleanButton.addEventListener('click', cleanAll);
+
+  loadStorage();
 };
