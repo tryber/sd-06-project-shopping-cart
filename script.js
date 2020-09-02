@@ -54,33 +54,33 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 async function addProductToCart(id) {
   const endpoint = `https://api.mercadolibre.com/items/${id}`;
 
-  await fetch(endpoint)
-    .then(response => response.json())
-    .then((product) => {
-      const formattedProduct = createCartItemElement(product);
-      const cartContainer = document.querySelector('.cart__items');
-      cartContainer.appendChild(formattedProduct);
-      saveShoppingCartStatus();
+  const response = await fetch(endpoint);
+  const product = await response.json();
+  const formattedProduct = createCartItemElement(product);
+  const cartContainer = document.querySelector('.cart__items');
+  cartContainer.appendChild(formattedProduct);
+  saveShoppingCartStatus();
+}
+
+function formatListOfProducts(listOfProducts) {
+  listOfProducts.forEach(({ id, title, thumbnail }) => {
+    const product = createProductItemElement({ sku: id, name: title, image: thumbnail });
+    const productsContainer = document.querySelector('.items');
+    product.children[3].addEventListener('click', function () {
+      const productId = product.children[0].innerText;
+      addProductToCart(productId);
     });
+    productsContainer.appendChild(product);
+  });
 }
 
 async function fetchProducts(query = 'computador') {
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
 
-  await fetch(endpoint)
-    .then(response => response.json())
-    .then((data) => {
-      const results = data.results;
-      results.forEach(({ id, title, thumbnail }) => {
-        const product = createProductItemElement({ sku: id, name: title, image: thumbnail });
-        const productsContainer = document.querySelector('.items');
-        product.children[3].addEventListener('click', function () {
-          const productId = product.children[0].innerText;
-          addProductToCart(productId);
-        });
-        productsContainer.appendChild(product);
-      });
-    });
+  const response = await fetch(endpoint);
+  const data = await response.json();
+  const results = data.results;
+  formatListOfProducts(results);
 }
 
 function loadStorage() {
@@ -102,7 +102,6 @@ function removeAllProductsFromCart() {
     saveShoppingCartStatus();
   });
 }
-
 
 window.onload = async function onload() {
   await fetchProducts();
