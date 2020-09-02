@@ -24,19 +24,18 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+// esqueceu dessa função usa ela depois
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
 function cartItemClickListener(event) {
-  const containerElements = document.querySelector('.items');
-  const idItem = event.target.innerText.split(' ')[1];
-  for (let index = 0; index < containerElements.children.length; index += 1) {
-    const element = containerElements.children[index];
-    if (element.firstElementChild.innerText === idItem) {
-      containerElements.removeChild(element);
-    }
-  }
+  const list = document.querySelector('.cart__items');
+  const valor = event.target.innerHTML;
+  const filterLocalStorage = JSON.parse(localStorage.getItem('arrayIdShoppingCart'))
+  .filter(textCartItem => valor !== textCartItem);
+  localStorage.setItem('arrayIdShoppingCart', JSON.stringify(filterLocalStorage));
+  list.removeChild(event.target)
 }
 
 function saveCart(cartId) {
@@ -53,11 +52,11 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }, textS
   const li = document.createElement('li');
   li.className = 'cart__item';
   if (textSaveCart) {
-    li.innerText = textSaveCart;
+    li.innerHTML = textSaveCart;
   } else {
-    li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+    li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   }
-  saveCart(li.innerText);
+  saveCart(li.innerHTML);
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
