@@ -70,13 +70,13 @@ function itemToCartEventListener(event) {
   buttonItem.addEventListener('click', function () { addToCart(itemID); });
 }
 
-function loadMessage() {
-  const items = document.querySelector('.items');
-  const span = document.createElement('span');
-  span.className = 'loading';
-  span.innerText = 'Loading...';
-  items.appendChild(span);
-}
+// function loadMessage() {
+//   const items = document.querySelector('.items');
+//   const span = document.createElement('span');
+//   span.className = 'loading';
+//   span.innerText = 'Loading...';
+//   items.appendChild(span);
+// }
 
 function fetchComputers() {
   const section = document.querySelector('.items');
