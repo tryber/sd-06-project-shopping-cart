@@ -1,10 +1,10 @@
 const localStorage = () => {
-  const lista = document.querySelector('.cart__items').innerHTML;
-  localStorage.lista = lista;
+  const list = document.querySelector('.cart__items').innerHTML;
+  localStorage.list = list;
 };
 
 loadLocalStorage = () => {
-  if (localStorage.lista) {
+  if (localStorage.list) {
     document.querySelector('.cart__items').innerHTML = localStorage.lista;
   }
 };
@@ -89,8 +89,8 @@ const apiQuery = () => {
 };
 
 window.onload = function onload() {
+  loadLocalStorage();
   apiQuery();
   clearCart();
-  loadLocalStorage();
   document.querySelectorAll('.cart_item').forEach(element => element.addEventListener('click', cartItemClickListener));
 };
