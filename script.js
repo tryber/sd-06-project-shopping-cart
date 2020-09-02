@@ -65,12 +65,16 @@ function fetchComputers() {
     });
 }
 
+function handleLocalStorage() {
+  const cartItems = document.querySelector('.cart__items').innerHTML;
+  localStorage.clear();
+  localStorage.setItem('cartItens', cartItems);
+}
+
 function cartItemClickListener() {
-  const cartItems = document.querySelector('.cart__items');
-  cartItems.addEventListener('click', function (event) {
-    console.log(event.target);
-    cartItems.removeChild(event.target);
-  });
+  event.target.remove();
+  // Pq não posso usar removeChild após carregar o storage se a estrutura do HTML é a mesma.
+  handleLocalStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -90,6 +94,7 @@ function fetchComputersId(newUrlId) {
       document
       .querySelector('.cart__items')
       .appendChild(createCartItemElement(handleCartItemObj(object)));
+      handleLocalStorage();
     });
   }
 }
@@ -97,7 +102,7 @@ function fetchComputersId(newUrlId) {
 function getItemId() {
   const itemsSection = document.querySelector('.items');
   itemsSection.addEventListener('click', function (event) {
-    if (event.target.innerText === 'Adicionar ao carrinho!'); {
+    if (event.target.className === 'item__add') {
       const endpoint = event.target.parentNode.firstChild.innerText;
       urlId = `${urlId}${endpoint}`;
       fetchComputersId(urlId);
@@ -106,8 +111,16 @@ function getItemId() {
   });
 }
 
+function loadLocalStorage() {
+  if (localStorage.length > 0) {
+    const cartList = document.querySelector('.cart__items');
+    cartList.addEventListener('click', cartItemClickListener);
+    cartList.innerHTML = localStorage.getItem('cartItens');
+  }
+}
 
 window.onload = function onload() {
   fetchComputers();
   getItemId();
+  loadLocalStorage();
 };
