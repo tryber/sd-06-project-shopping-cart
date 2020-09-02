@@ -20,7 +20,7 @@ const renderPrice = (price) => {
     text.innerText = price;
   } else {
     const prices = JSON.parse(localStorage.prices);
-    text.innerText = prices.reduce((acc, cur) => acc += cur, 0);
+    text.innerText = prices.reduce((acc, cur) => (acc += cur), 0);
   }
 };
 
@@ -49,7 +49,7 @@ function alterLocalStoradePrices(price) {
 }
 
 function checkLocalStorageState({ id, price, title }) {
-  if(!localStorage.cart) {
+  if (!localStorage.cart) {
     createLocalStorage({ id, price, title });
   } else {
     alterLocalStoradeCart({ id, price, title });
@@ -57,32 +57,8 @@ function checkLocalStorageState({ id, price, title }) {
   }
 }
 
-
-
-// function saveLocalStorage({ id, price, title }) {
-//   if (!localStorage.cart) {
-//     const itemsArray = [];
-//     itemsArray.push({ id, price, title });
-//     localStorage.setItem('cart', JSON.stringify(itemsArray));
-
-//     const pricesArray = [];
-//     pricesArray.push(price);
-//     localStorage.setItem('prices', JSON.stringify(pricesArray));
-//     renderPrice(`${price}`);
-//   } else {
-//     const items = JSON.parse(localStorage.cart);
-//     items.push({ id, price, title });
-//     localStorage.setItem('cart', JSON.stringify(items));
-
-//     const prices = JSON.parse(localStorage.prices);
-//     prices.push(price);
-//     localStorage.setItem('prices', JSON.stringify(prices));
-//     renderPrice();
-//   }
-// }
-
 function removeElementFromSerie(comparator, serie) {
-  const index = serie.findIndex(e => e ===comparator);
+  const index = serie.findIndex(e => e === comparator);
   serie.splice(index, 1);
   return serie;
 }
@@ -114,7 +90,6 @@ function checkStorage(element) {
 }
 
 function cartItemClickListener(event) {
-  console.log(event.target)
   const element = event.target;
   checkStorage(element);
   document.querySelector('.cart__items').removeChild(element);
