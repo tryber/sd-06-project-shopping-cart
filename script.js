@@ -16,12 +16,18 @@ function cartItemClickListener() {
   event.target.remove();
   localStorage.removeItem(event.target.id);
 }
+let counter = 0;
 
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  localStorage.setItem(sku, JSON.stringify({ id: sku, title: name, price: salePrice }));
+const numbers = Object.keys(localStorage).map(number => parseInt(number));
+const orderKeys = numbers.sort((a, b) => a - b);
+if (orderKeys.length !== 0) {
+  counter = orderKeys[orderKeys.length - 1] + 1;
+}
+
+function createCartItemElement(number, { id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.id = sku;
+  li.id = number;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -33,7 +39,11 @@ const addCartFunction = () => {
   const cart = document.querySelector('.cart__items');
   fetch(urlItem)
     .then(response => response.json())
-    .then(object => cart.appendChild(createCartItemElement(object)));
+    .then((object) => {
+      cart.appendChild(createCartItemElement(counter, object));
+      localStorage.setItem(counter, JSON.stringify(object));
+      counter += 1;
+    });
 };
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -67,8 +77,8 @@ window.onload = function onload() {
   
   const cart = document.querySelector('.cart__items');
   const getobject = (num) => JSON.parse(localStorage.getItem(num));
-  Object.keys(localStorage)
-  .forEach(key => cart.appendChild(createCartItemElement(getobject(key))));
+  orderKeys
+  .forEach(key => cart.appendChild(createCartItemElement(key, getobject(key))));
   
   // const buttonClean = document.querySelector('.empty-cart');
   // buttonClean.addEventListener('click', clear() =>  )
