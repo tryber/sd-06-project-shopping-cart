@@ -47,7 +47,7 @@ const recordOnLocalStorage = (item) => {
       items.push(item);
       localStorage.setItem('cartItems',JSON.stringify(items));
     }
-    return Promise.resolve()
+    return Promise.resolve();
 
 };
 
@@ -71,25 +71,23 @@ const sumCartItemsPrice =  () => {
   const total =  cartItems.reduce((acc,{price}) => {
     return acc + Number(price);
   },0);
-  console.log(total)
   return new Promise(resolve => resolve(total.toFixed(2)));
-}
+};
 
 const createTotalPriceElement = (totalPrice) => {
   const totalPriceElement = document.createElement('span');
-  totalPriceElement.innerText = totalPrice
-  totalPriceElement.className = 'total-price'
   const cartTitleElement = document.querySelector('.cart__title');
-  console.log(totalPrice);
+  totalPriceElement.innerText = totalPrice;
+  totalPriceElement.className = 'total-price';
   cartTitleElement.insertAdjacentElement('afterEnd',totalPriceElement);
-}
+};
 
 const changeTotalPriceElement = (totalPriceElement, totalPrice) => {
   if(totalPriceElement) {
     totalPriceElement.innerText = totalPrice;
     return true;
   }
-}
+};
 
 const displayItemPrices = async () => {
   const totalPrice = await sumCartItemsPrice();
@@ -99,7 +97,6 @@ const displayItemPrices = async () => {
   } else {
     createTotalPriceElement(totalPrice);
   }
-
 };
 
 const fetchProductItem = (sku) => {
@@ -163,6 +160,7 @@ function loadCart() {
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   if(cartItems !== null) {
     cartItems.forEach(cartItem => addProductToCart(createCartItemElement(cartItem)));
+    displayItemPrices();
   }
 }
 
