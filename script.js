@@ -8,11 +8,15 @@ async function getPrices(allItems) {
   return arrayPrices;
 }
 async function sum() {
-  const allItems = document.querySelectorAll('.cart__item');
   const total = document.querySelector('.total-price');
+  if (localStorage.length !== 0) {
+  const allItems = document.querySelectorAll('.cart__item');
   const result = await getPrices(allItems)
     .then(prices => prices.reduce((acc, curr) => acc + curr).toFixed(2));
   total.innerHTML = result;
+  } else {
+    total.innerHTML = '';
+  }
 }
 
 function createProductImageElement(imageSource) {
@@ -102,11 +106,11 @@ window.onload = function onload() {
   const cart = document.querySelector('.cart__items');
   const getobject = num => JSON.parse(localStorage.getItem(num));
   orderKeys.forEach(key => cart.appendChild(createCartItemElement(key, getobject(key))));
-
   const buttonClean = document.querySelector('.empty-cart');
   buttonClean.addEventListener('click', () => {
     cart.innerHTML = '';
     localStorage.clear();
+    sum();
   });
   sum();
 };
