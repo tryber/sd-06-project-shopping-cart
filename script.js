@@ -1,3 +1,27 @@
+function renderTotalPrice(totalPrice) {
+  if (document.querySelector('.total-price')) {
+    document.querySelector('.total-price').remove();
+  }
+
+  const span = document.createElement('span');
+  span.className = 'total-price';
+  span.innerText = totalPrice;
+  const totalPriceContainer = document.querySelector('.total-price-container');
+  totalPriceContainer.appendChild(span);
+}
+
+function getCartTotalPrice(allCartItems) {
+  return Array.from(allCartItems)
+  .reduce((total, cartItem) =>
+    total + parseFloat(cartItem.dataset.price), 0).toFixed(2);
+}
+
+function updateCartTotalPrice() {
+  const allCartItems = document.querySelectorAll('.cart__item');
+  const totalPrice = getCartTotalPrice(allCartItems);
+  renderTotalPrice(totalPrice);
+}
+
 function saveShoppingCartStatus() {
   const shoppingCart = document.querySelector('.cart__items');
   localStorage.shoppingCart = shoppingCart.innerHTML;
@@ -34,10 +58,6 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
 function cartItemClickListener(event) {
   event.target.remove();
   updateCartTotalPrice();
@@ -51,30 +71,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.dataset.price = salePrice;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-function renderTotalPrice(totalPrice) {
-  if (document.querySelector('.total-price')) {
-    document.querySelector('.total-price').remove();
-  }
-
-  const span = document.createElement('span');
-  span.className = 'total-price';
-  span.innerText = totalPrice;
-  const totalPriceContainer = document.querySelector('.total-price-container');
-  totalPriceContainer.appendChild(span);
-}
-
-function getCartTotalPrice(allCartItems) {
-   return Array.from(allCartItems)
-    .reduce((total, cartItem) =>
-      total + parseFloat(cartItem.dataset.price), 0).toFixed(2);
-}
-
-function updateCartTotalPrice() {
-  const allCartItems = document.querySelectorAll('.cart__item');
-  const totalPrice = getCartTotalPrice(allCartItems);
-  renderTotalPrice(totalPrice);
 }
 
 async function addProductToCart(id) {
