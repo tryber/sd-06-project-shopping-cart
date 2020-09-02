@@ -1,10 +1,10 @@
 const localStorage = () => {
   const lista = document.querySelector('.cart__items').innerHTML;
-  localStorage.list = lista;
+  localStorage.lista = lista;
 };
 
 loadLocalStorage = () => {
-  if (localStorage.list) {
+  if (localStorage.lista) {
     document.querySelector('.cart__items').innerHTML = localStorage.list;
   }
 };
@@ -92,4 +92,5 @@ window.onload = function onload() {
   apiQuery();
   clearCart();
   loadLocalStorage();
+  document.querySelectorAll('.cart_items').forEach(element => element.addEventListener('click', cartItemClickListener))
 };
