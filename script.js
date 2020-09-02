@@ -179,5 +179,3 @@ window.onload = function onload() {
   clearCartbuttonEvent();
   loadCart();
 };
-
-
