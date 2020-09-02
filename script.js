@@ -62,7 +62,7 @@ const createTotalPriceElement = (totalPrice) => {
 };
 
 function changeTotalPriceElement(totalPrice) {
-  const currentPrice = document.querySelector('.total-price')
+  const currentPrice = document.querySelector('.total-price');
   currentPrice.innerText = totalPrice;
 }
 
