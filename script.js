@@ -7,6 +7,11 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function saveToStorageCar() {
+  const olList = document.querySelector('.cart__items');
+  window.localStorage.setItem('car_list', olList.innerHTML);
+}
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
