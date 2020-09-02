@@ -110,12 +110,12 @@ function clearCart() {
   const pricePlacer = document.querySelector('.price .total-price');
   const cartList = document.querySelector('ol.cart__items');
   while (cartList.firstChild) {
-    node.removeChild(myNode.firstChild);
+    node.removeChild(cartList.firstChild);
   }
   pricePlacer.innerText = '-';
   myCartIds = [];
   localStorage.removeItem('myCart');
-  localStorage.removeItem('myItemsIds')
+  localStorage.removeItem('myItemsIds');
 }
 
 function loaderElement() {
