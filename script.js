@@ -85,7 +85,6 @@ function getSkuFromProductItem(item) {
 }
 
 window.onload = function onload() {
-  // 
   const loading = document.querySelector('.loading');
   fetchItems();
   setTimeout(() => {
