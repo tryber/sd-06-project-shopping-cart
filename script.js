@@ -1,4 +1,4 @@
-// Cria de forma assincrona um texto 'loading' enquanto faz a requisição à API.
+// Cria de forma assíncrona um texto 'loading' enquanto faz a requisição à API.
 async function showLoading() {
   const loading = document.createElement('span');
   loading.className = 'loading';
@@ -19,6 +19,7 @@ function showTotalPrice(sum) {
   total.innerHTML = sum;
 }
 
+// Calcula de forma assíncrona o preço total dos produtos adicionados ao carrinho.
 async function getTotalPrice() {
   let sum = 0;
   const getCartItems = await JSON.parse(localStorage.getItem('cartML'));
@@ -30,6 +31,7 @@ async function getTotalPrice() {
   showTotalPrice(sum);
 }
 
+// Salva os itens do carrinho no LocalStorage.
 function saveToLocalStorage(id, title, price) {
   if (Storage) {
     const getCartItems = JSON.parse(localStorage.getItem('cartML'));
@@ -40,6 +42,7 @@ function saveToLocalStorage(id, title, price) {
   getTotalPrice();
 }
 
+// Remove um item específico do LocalStorage.
 function removeItemFromLocalStorage(sku) {
   const arrayOfItems = JSON.parse(localStorage.getItem('cartML'));
   for (let index = 0; index < arrayOfItems.length; index += 1) {
@@ -52,7 +55,7 @@ function removeItemFromLocalStorage(sku) {
   getTotalPrice();
 }
 
-
+// Remove um item do carrinho de compras.
 function cartItemClickListener(event) {
   const parentItems = document.querySelector('.cart__items');
   const item = event.target;
@@ -60,6 +63,7 @@ function cartItemClickListener(event) {
   parentItems.removeChild(item);
 }
 
+// Cria um item para ser adicionado no carrinho de compras.
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -68,16 +72,19 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
+// Adiciona o item criado no carrinho de compras.
 function addToCart(product) {
   const itemCart = document.querySelector('.cart__items');
   itemCart.addEventListener('click', cartItemClickListener);
   itemCart.appendChild(product);
 }
 
+// Limpa o carrinho de compras e o LocalStorage.
 function clearCart() {
   const allItems = document.querySelector('.cart__items');
   allItems.innerHTML = '';
   localStorage.clear();
+  getTotalPrice();
 }
 
 function emptyCart() {
@@ -156,8 +163,8 @@ function fetchProducts() {
     .then(data => data.results.forEach((element) => {
       const createProduct = createProductItemElement(element);
       createItem(createProduct);
-    }));
-  hideLoading();
+    }))
+    .then(hideLoading());
 }
 
 window.onload = function onload() {
