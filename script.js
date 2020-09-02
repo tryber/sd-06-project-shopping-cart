@@ -56,4 +56,3 @@ function fetchMercadoLivre() {
 window.onload = function onload() {
   fetchMercadoLivre();
 };
-
