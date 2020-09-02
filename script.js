@@ -27,7 +27,7 @@ const clearCartbuttonEvent = () => {
 
 const findTargetIndexInlist = (event) => {
   const ol = document.querySelector('ol');
-  let removedElementIndex ;
+  let removedElementIndex;
   ol.childNodes.forEach((node, index) => {
     if (event.currentTarget === node) {
       removedElementIndex = index;
@@ -37,18 +37,16 @@ const findTargetIndexInlist = (event) => {
 };
 
 const removeItemInStorage = (indexToRemove) => {
-  let arrayOfItems = JSON.parse(localStorage.getItem('cartItems'));
-  arrayOfItems.splice(indexToRemove,1);
-  localStorage.setItem('cartItems',JSON.stringify(arrayOfItems));
+  const arrayOfItems = JSON.parse(localStorage.getItem('cartItems'));
+  arrayOfItems.splice(indexToRemove, 1);
+  localStorage.setItem('cartItems', JSON.stringify(arrayOfItems));
 };
 
-const sumCartItemsPrice =  () => {
-  const cartItems =  JSON.parse(localStorage.getItem('cartItems'))
+const sumCartItemsPrice = () => {
+  const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   let total;
   if (cartItems !== null) {
-    total =  cartItems.reduce((acc,{price}) => {
-    return acc + Number(price);
-    },0);
+    total = cartItems.reduce((acc,{ price }) =>   acc + Number(price) , 0);
   } else {
     total = 0;
   }
@@ -63,10 +61,9 @@ const createTotalPriceElement = (totalPrice) => {
   cartTitleElement.insertAdjacentElement('afterEnd',totalPriceElement);
 };
 
-const changeTotalPriceElement = (totalPriceElement, totalPrice) => {
-  if(totalPriceElement) {
+function changeTotalPriceElement(totalPriceElement, totalPrice) {
+  if (totalPriceElement) {
     totalPriceElement.innerText = totalPrice;
-    return true;
   }
 };
 
@@ -88,16 +85,16 @@ function cartItemClickListener(event) {
 }
 
 const recordOnLocalStorage = (item) => {
-    if(Storage) {
-      const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-      let items = [];
-      if (cartItems !== null) {
-         items = cartItems;
-      }
-      items.push(item);
-      localStorage.setItem('cartItems',JSON.stringify(items));
+  if (Storage) {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    let items = [];
+    if (cartItems !== null) {
+      items = cartItems;
     }
-    return Promise.resolve();
+    items.push(item);
+    localStorage.setItem('cartItems', JSON.stringify(items));
+  }
+  return Promise.resolve();
 };
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -170,7 +167,7 @@ const displayItems = async () => {
 
 function loadCart() {
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-  if(cartItems !== null) {
+  if (cartItems !== null) {
     cartItems.forEach(cartItem => addProductToCart(createCartItemElement(cartItem)));
     displayItemPrices();
   }
