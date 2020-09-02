@@ -43,6 +43,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+// botão financeiramente consciente:
+function clearAllItemsListed() {
+  const emptyAllButton = document.querySelector('.empty-cart');
+  console.log(emptyAllButton);
+  emptyAllButton.addEventListener(
+    'click',
+    function () {
+      document.querySelector('.cart__items').innerHTML = '';
+    },
+  );
+}
+
 // cria URL API:
 const urlML = 'https://api.mercadolibre.com/';
 // requisito 2:
@@ -84,4 +96,5 @@ async function showAllProducts() {
 
 window.onload = function onload() {
   showAllProducts();
+  clearAllItemsListed();
 };
