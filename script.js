@@ -73,7 +73,7 @@ window.onload = function onload() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   fetch(url)
     .then((response) => {
-      loading.remove();
+      items.removeChild(items.childNodes[0]);
       return response.json();
     })
     .then(object => handleResults(object.results));
@@ -84,8 +84,7 @@ window.onload = function onload() {
   items.appendChild(loading);
   const cart = document.querySelector('.cart__items');
   const getobject = num => JSON.parse(localStorage.getItem(num));
-  orderKeys
-  .forEach(key => cart.appendChild(createCartItemElement(key, getobject(key))));
+  orderKeys.forEach(key => cart.appendChild(createCartItemElement(key, getobject(key))));
 
   const buttonClean = document.querySelector('.empty-cart');
   buttonClean.addEventListener('click', () => {
