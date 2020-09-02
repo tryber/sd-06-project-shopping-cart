@@ -1,6 +1,16 @@
+async function showLoading() {
+  const loading = document.querySelector('.loading');
+  loading.innerText = 'Loading...';
+}
+
+function hideLoading() {
+  const loading = document.querySelector('.loading');
+  loading.innerHTML = '';
+}
+
 function showTotalPrice(sum) {
   const total = document.querySelector('.total-price');
-  total.innerHTML = (sum === 0) ? '' : `${sum}`;
+  total.innerHTML = sum;
 }
 
 async function getTotalPrice() {
@@ -143,8 +153,10 @@ const fetchProducts = () => {
 };
 
 window.onload = function onload() {
+  showLoading();
   fetchProducts();
   getFromLocalStorage();
   getTotalPrice();
   emptyCart();
+  hideLoading();
 };
