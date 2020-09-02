@@ -115,15 +115,17 @@ const fetchCurrency = (currency) => {
 };
 
 function clearAll(){
-  document.getElementsByClassName('cart__items').innerHTML = '';
+  document.querySelector('.cart__items').innerHTML = '';
   localStorage.clear();
 }
 
-const bill = document.querySelector('.empty-cart')
-console.log(bill)
-bill.addEventListener('click', clearAll)
+function methodClearList() {
+  const buttonClearAll = document.querySelector('.empty-cart');
+  buttonClearAll.addEventListener('click', clearAll);
+}
 
 window.onload = function onload() {
   fetchCurrency();
   localStorageLoad(); // carrega lista qndo inicia
+  methodClearList();
 };
