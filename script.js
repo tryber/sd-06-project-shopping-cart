@@ -26,12 +26,15 @@ function buttonItemOnClick() {
       const cartItems = document.querySelector('.cart__items');
       cartItems.appendChild(createCartItemElement(data));
 
-      const item = {};
-      item.id = data.id;
-      item.title = data.title;
-      item.price = data.price;
+      const item = {
+        id: data.id,
+        title: data.title,
+        price: data.price
+      };
 
-      localStorage.setItem(this.id, JSON.stringify(item));
+      const localStorageKey = localStorage.length + 1;
+
+      localStorage.setItem(localStorageKey, JSON.stringify(item));
     });
 }
 
