@@ -80,6 +80,9 @@ window.onload = function onload() {
   orderKeys
   .forEach(key => cart.appendChild(createCartItemElement(key, getobject(key))));
 
-  // const buttonClean = document.querySelector('.empty-cart');
-  // buttonClean.addEventListener('click', clear() =>  )
+  const buttonClean = document.querySelector('.empty-cart');
+  buttonClean.addEventListener('click', () => {
+    cart.innerHTML = '';
+    localStorage.clear();
+  });
 };
