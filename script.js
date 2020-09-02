@@ -12,7 +12,7 @@ async function fetchContent(endepoint) {
       name: element.title,
       image: element.thumbnail,
     };
-    const element = createProductItemElement(data);
+    const elemento = createProductItemElement(data);
     appendElementInSectionItems(element);
   });
 }
