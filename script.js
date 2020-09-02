@@ -101,6 +101,22 @@ const clearButton = () => {
   getButton.addEventListener('click', clearItems);
 };
 
+const sumTotal = (sum) => {
+  const totalBuy = document.querySelector('.total-price');
+  totalBuy.innerHTML = sum;
+}
+
+async function sumTotalBuy () {
+  let sum = 0;
+  const getTotalItemsInChart = await JSON.parse(localStorage.getItem('cartToBuy'));
+  if (getTotalItemsInChart) {
+    for (let index =0; index < getTotalItemsInChart.length; index += 1) {
+      sum += getTotalItemsInChart[index].price;
+    }
+  }
+  sumTotal(sum);
+}
+
 window.onload = function onload() {
   fetchDisplay();
   clearButton();
