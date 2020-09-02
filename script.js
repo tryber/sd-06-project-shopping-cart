@@ -9,8 +9,10 @@ function showLoading() {
 
 // Remove o texto 'loading' quando retornar o resultado da API.
 function hideLoading() {
-  const parent = document.querySelector('.items');
-  parent.removeChild(parent.firstChild);
+  setTimeout(() => {
+    const parent = document.querySelector('.items');
+    parent.removeChild(parent.firstChild);
+  }, 2000)
 }
 
 // Mostra o valor total dos produtos no carrinho de compras.
