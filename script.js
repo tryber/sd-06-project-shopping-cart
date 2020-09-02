@@ -74,7 +74,7 @@ function loadMessage() {
   const items = document.querySelector('.items');
   const span = document.createElement('span');
   span.className = 'loading';
-  span.innerText = 'Loading';
+  span.innerText = 'Loading...';
   items.appendChild(span);
 }
 
@@ -90,7 +90,7 @@ function fetchComputers() {
       section.appendChild(product);
     }));
 
-  section.removeChild(section.childNodes[0]);
+    section.removeChild(section.firstChild);
 }
 
 function loadCartSaved() {
@@ -109,7 +109,7 @@ function cleanCart() {
 
 window.onload = function onload() {
   loadMessage();
-  fetchComputers();
+  setTimeout(() => fetchComputers(), 5000);
   loadCartSaved();
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', cleanCart);
