@@ -1,4 +1,11 @@
 
+function loadText() {
+  const pText = document.createElement('p');
+  const containerText = document.querySelector('.container');
+  pText.className = 'loading';
+  pText.innerHTML = 'loading...';
+  containerText.appendChild(pText);
+}
 function saveOrDelete() {
   const ol = document.querySelector('.cart__items');
   localStorage.setItem('Item', ol.innerHTML);
@@ -65,9 +72,12 @@ function cleanAll() {
     ol.innerHTML = '';
   });
 }
-  //  const nav = document.querySelector('.cart')
 window.onload = function onload() {
-  urlItemOnload();
+  loadText();
+  setTimeout(() => {
+    document.querySelector('.loading').innerHTML = '';
+    urlItemOnload();
+  }, 1000);
   if (localStorage.Item) {
     document.querySelector('.cart__items').innerHTML = localStorage.Item;
   }
