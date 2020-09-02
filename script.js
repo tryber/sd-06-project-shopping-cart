@@ -1,15 +1,17 @@
+function showTotalPrice(sum) {
+  const total = document.querySelector('.total-price');
+  total.innerHTML = (sum === 0) ? '' : `Preço total: $${sum}`;
+}
+
 async function getTotalPrice() {
-  if (Storage) {
-    let sum = 0;
-    const getCartItems = await JSON.parse(localStorage.getItem('cartML'));
-    if (getCartItems) {
-      for (let index = 0; index < getCartItems.length; index += 1) {
-        sum += getCartItems[index].price;
-      }
+  let sum = 0;
+  const getCartItems = await JSON.parse(localStorage.getItem('cartML'));
+  if (getCartItems) {
+    for (let index = 0; index < getCartItems.length; index += 1) {
+      sum += getCartItems[index].price;
     }
-    const total = document.querySelector('.total-price');
-    total.innerHTML = (sum === 0) ? '' : `Preço total: $${sum}`;
   }
+  showTotalPrice(sum);
 }
 
 function saveToLocalStorage(id, title, price) {
