@@ -18,7 +18,7 @@ function cartItemClickListener() {
 }
 let counter = 0;
 
-const numbers = Object.keys(localStorage).map(number => parseInt(number), 10);
+const numbers = Object.keys(localStorage).map(number => parseInt(number, 10));
 const orderKeys = numbers.sort((a, b) => a - b);
 if (orderKeys.length !== 0) {
   counter = orderKeys[orderKeys.length - 1] + 1;
