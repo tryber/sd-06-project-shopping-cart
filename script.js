@@ -90,7 +90,7 @@ function fetchComputers() {
       section.appendChild(product);
     }));
 
-    section.removeChild(section.childNodes[0]);
+  section.removeChild(section.childNodes[0]);
 }
 
 function loadCartSaved() {
