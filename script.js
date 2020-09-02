@@ -67,10 +67,15 @@ const appendItem = (item) => {
 const fetchDisplay = () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
   const itemSearch = 'computador';
+  const pElement = document.createElement('p');
+  pElement.className = 'loading';
+  pElement.innerHTML = 'loading...';
+  const getContainerElement = document.querySelector('.container');
+  getContainerElement.appendChild(pElement);
   fetch(`${url}${itemSearch}`)
   .then(resolve => resolve.json())
-  .then(data => data.results.forEach((element) => {
-    appendItem(createProductItemElement(element));
+  .then(data => data.results.forEach((element) => { 
+  appendItem(createProductItemElement(element));
   }));
 };
 
