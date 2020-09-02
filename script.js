@@ -108,7 +108,7 @@ const removeAlItems = () => {
   const listCar = document.querySelector('.cart__items');
   listCar.innerHTML = '';
   storageCar();
-}
+};
 
 window.onload = function onload() {
   fetchUrl();
