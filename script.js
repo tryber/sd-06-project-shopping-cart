@@ -90,7 +90,7 @@ function fetchComputers() {
       section.appendChild(product);
     }));
 
-  section.removeChild(section.firstChild);
+  // section.removeChild(section.firstChild);
 }
 
 function loadCartSaved() {
@@ -108,8 +108,7 @@ function cleanCart() {
 }
 
 window.onload = function onload() {
-  loadMessage();
-  setTimeout(() => fetchComputers(), 5000);
+  fetchComputers();
   loadCartSaved();
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', cleanCart);
