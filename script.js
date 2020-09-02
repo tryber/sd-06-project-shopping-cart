@@ -88,7 +88,7 @@ function ProductsfromML() {
       });
       container.removeChild(loading);
     });
-}screen
+}
 
 function upStorage() {
   if (localStorage.myList) {
