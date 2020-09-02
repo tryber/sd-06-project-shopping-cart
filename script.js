@@ -22,18 +22,22 @@ function itemRequest(event) {
   fetch(urlItem)
   .then(response => response.json())
   .then((response) => {
-    const { id, title, price } = response.results;
-    const idObj = { id, title, price };
+    const idObj = { 
+      id:response.results.id,
+      title: response.results.title,
+      price: response.results.price
+      };
     return idObj;
   });
 }
 
 // usada para remover algum item do carrinho
 function cartItemClickListener(event) {
-
+  document.querySelector('.cart__items').removeChild(event.target);
 }
 
 async function createCartItemElement(event) {
+  console.log(event)
   const { id, title, price } = await itemRequest(event);
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -63,21 +67,18 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-
-// desestruturando o obj da API e pegando apenas as informações que preciso
-function needInfo({ id, title, price, thumbnail }) {
-  const compInfo = { id, title, price, thumbnail };
-  return compInfo;
-}
-
 // criando requisição - requisito 1
 function computerRequest() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   return fetch(url)
     .then(response => response.json())
     .then(response => response.results)
-    .then(response => response.map((element) => {
-      const newObj = needInfo(element);
+    .then(response => response.forEach((element) => {
+      const newObj = {
+        sku: element.id,
+        title: element.title,
+        thumbnail: element.thumbnail
+      }
       createProductItemElement(newObj);
       return newObj;
     }));
