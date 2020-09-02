@@ -92,5 +92,5 @@ window.onload = function onload() {
   apiQuery();
   clearCart();
   loadLocalStorage();
-  document.querySelectorAll('.cart_items').forEach(element => element.addEventListener('click', cartItemClickListener))
+  document.querySelectorAll('.cart_items').forEach(element => element.addEventListener('click', cartItemClickListener));
 };
