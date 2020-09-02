@@ -13,7 +13,8 @@ function renderTotalPrice(totalPrice) {
 function getCartTotalPrice(allCartItems) {
   return Array.from(allCartItems)
   .reduce((total, cartItem) =>
-    total + parseFloat(cartItem.dataset.price), 0).toFixed(2);
+    total + ((Math.round(cartItem.dataset.price * 100)) / 100), 0);
+    // !total + parseFloat(cartItem.dataset.price), 0).toFixed(2);
 }
 
 function updateCartTotalPrice() {
