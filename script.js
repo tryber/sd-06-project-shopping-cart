@@ -5,7 +5,7 @@ const localStorage = () => {
 
 loadLocalStorage = () => {
   if (localStorage.lista) {
-    document.querySelector('.cart__items').innerHTML = localStorage.list;
+    document.querySelector('.cart__items').innerHTML = localStorage.lista;
   }
 };
 
@@ -92,5 +92,5 @@ window.onload = function onload() {
   apiQuery();
   clearCart();
   loadLocalStorage();
-  document.querySelectorAll('.cart_items').forEach(element => element.addEventListener('click', cartItemClickListener));
+  document.querySelectorAll('.cart_item').forEach(element => element.addEventListener('click', cartItemClickListener));
 };
