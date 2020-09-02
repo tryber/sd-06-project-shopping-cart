@@ -1,9 +1,11 @@
-function getTotalPrice() {
+async function getTotalPrice() {
   if (Storage) {
     let sum = 0;
-    const getCartItems = JSON.parse(localStorage.getItem('cartML'));
+    const getCartItems = await JSON.parse(localStorage.getItem('cartML'));
     if (getCartItems) {
-      getCartItems.forEach(element => sum += element.price);
+      for (let index = 0; index < getCartItems.length; index += 1) {
+        sum += getCartItems[index].price;
+      }
     }
     const total = document.querySelector('.total-price');
     total.innerHTML = (sum === 0) ? '' : `Preço total: $${sum}`;
