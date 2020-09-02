@@ -19,6 +19,7 @@ function removeItemFromLocalStorage(sku) {
   const arrayOfItems = JSON.parse(localStorage.getItem('cartML'));
   for (let index = 0; index < arrayOfItems.length; index += 1) {
     if (arrayOfItems[index].id === sku) {
+      totalPrice(arrayOfItems[index].price, 'sub');
       arrayOfItems.splice(index, 1);
       break;
     }
