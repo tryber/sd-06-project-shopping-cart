@@ -78,7 +78,7 @@ const objectDetails = (productsArray) => {
     const eachProductItem = createProductItemElement(elements);
     section.appendChild(eachProductItem);
     // console.log(eachProductItem);
-    eachProductItem.lastChild.addEventListener('click', function() {
+    eachProductItem.lastChild.addEventListener('click', function () {
       // const { id: sku } = eachProductItem;
       // const idToSend = eachProductItem.results.sku;
       const idToSend = eachProductItem.firstChild.innerText;
