@@ -117,7 +117,8 @@ const renderProduct = (arrayOfProducts) => {
 
 async function loading() {
   const element = document.createElement('h2');
-  element.innerText = 'Loading...';
+  element.innerText = 'loading...';
+  element.className = 'loading';
   element.style.textAlign = 'center';
   // learned prepend here: https://developer.mozilla.org/en-US/docs/Web/API/ParentNode/prepend
   document.body.prepend(element);
