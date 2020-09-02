@@ -31,8 +31,7 @@ function cartItemClickListener() {
 // carrega storage
 const localStorageLoad = () => {
   const saveItem = document.querySelector('.cart__items');
-  const savedKeyItems = localStorage.getItem('items');
-  saveItem.innerHTML = savedKeyItems;
+  saveItem.innerHTML = localStorage.getItem('items');
   saveItem.addEventListener('click', cartItemClickListener);
 };
 
@@ -114,6 +113,15 @@ const fetchCurrency = (currency) => {
     })
     .catch(error => handleError(error));
 };
+
+function clearAll(){
+  document.getElementsByClassName('cart__items').innerHTML = '';
+  localStorage.clear();
+}
+
+const bill = document.querySelector('.empty-cart')
+console.log(bill)
+bill.addEventListener('click', clearAll)
 
 window.onload = function onload() {
   fetchCurrency();
