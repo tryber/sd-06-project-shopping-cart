@@ -2,7 +2,7 @@ async function getPrices(allItems) {
   const arrayPrices = [];
   allItems.forEach((item) => {
     const text = item.innerHTML;
-    const price = parseFloat(text.substring(text.lastIndexOf("$") + 1));
+    const price = parseFloat(text.substring(text.lastIndexOf('$') + 1));
     arrayPrices.push(price);
   });
   return arrayPrices;
@@ -11,7 +11,7 @@ async function sum() {
   const allItems = document.querySelectorAll('.cart__item');
   const total = document.querySelector('.total');
   const result = await getPrices(allItems)
-    .then((total) => total.reduce((acc, curr) => acc + curr).toFixed(2));
+    .then(prices => prices.reduce((acc, curr) => acc + curr).toFixed(2));
   total.innerHTML = result;
 }
 
@@ -81,9 +81,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
+const items = document.querySelector('.items');
 window.onload = function onload() {
-  const items = document.querySelector('.items');
   const handleResults = (results) => {
     results.forEach((element) => {
       items.appendChild(createProductItemElement(element));
@@ -112,5 +111,3 @@ window.onload = function onload() {
   });
   sum();
 };
-
-
