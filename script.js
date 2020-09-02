@@ -145,9 +145,10 @@ window.onload = function onload() {
 
   const cart = document.querySelector('.cart__items');
   Object.keys(localStorage).sort().forEach((key, index) => {
+    console.log(JSON.parse(localStorage[key]));
     for (let i = 0; i < localStorage.length; i += 1) {
       if (i === index) {
-        const product = JSON.parse(localStorage[index]);
+        const product = JSON.parse(localStorage[key]);
         const item = createCartItemElement(product);
         cart.appendChild(item);
         getTotalPrice(product.price);
