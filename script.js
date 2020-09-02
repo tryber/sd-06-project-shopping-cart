@@ -131,7 +131,8 @@ window.onload = function onload() {
     .then((object) => {
       const itemSection = document.querySelector('section.items');
       setTimeout(() => {
-        itemSection.innerHTML = '';
+        const divLoading = document.querySelector('.loading');
+        divLoading.remove();
         object.results.forEach((queryItem) => {
           itemSection.appendChild(createProductItemElement(queryItem));
         });
