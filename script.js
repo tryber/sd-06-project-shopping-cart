@@ -27,9 +27,9 @@ function buttonItemOnClick() {
       cartItems.appendChild(createCartItemElement(data));
 
       const item = {};
-      item.id = data.id
-      item.title = data.title
-      item.price = data.price
+      item.id = data.id;
+      item.title = data.title;
+      item.price = data.price;
 
       localStorage.setItem(this.id, JSON.stringify(item));
     });
