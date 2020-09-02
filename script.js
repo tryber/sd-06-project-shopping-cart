@@ -109,10 +109,13 @@ function loadStoredCart(cartItems, itemsArray) {
 function clearCart() {
   const pricePlacer = document.querySelector('.price .total-price');
   const cartList = document.querySelector('ol.cart__items');
-  cartList.innerHTML = '';
+  while (cartList.firstChild) {
+    node.removeChild(myNode.firstChild);
+  }
   pricePlacer.innerText = '-';
   myCartIds = [];
   localStorage.removeItem('myCart');
+  localStorage.removeItem('myItemsIds')
 }
 
 function loaderElement() {
