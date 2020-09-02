@@ -70,16 +70,17 @@ function itemToCartEventListener(event) {
   buttonItem.addEventListener('click', function () { addToCart(itemID); });
 }
 
-// function loadMessage() {
-//   const items = document.querySelector('.items');
-//   const span = document.createElement('span');
-//   span.className = 'loading';
-//   span.innerText = 'Loading...';
-//   items.appendChild(span);
-// }
+function loadMessage() {
+  const items = document.querySelector('.items');
+  const span = document.createElement('span');
+  span.className = 'loading';
+  span.innerText = 'Loading...';
+  items.appendChild(span);
+}
 
 function fetchComputers() {
   const section = document.querySelector('.items');
+  const loadMessage = document.querySelector('.loading');
 
   fetch(url)
     .then(response => response.json())
@@ -88,9 +89,8 @@ function fetchComputers() {
       const product = createProductItemElement(computer);
       itemToCartEventListener(product);
       section.appendChild(product);
-    }));
-
-  // section.removeChild(section.firstChild);
+    }))
+    .finally(() => section.removeChild(loadMessage));
 }
 
 function loadCartSaved() {
@@ -108,6 +108,7 @@ function cleanCart() {
 }
 
 window.onload = function onload() {
+  loadMessage();
   fetchComputers();
   loadCartSaved();
   const clearButton = document.querySelector('.empty-cart');
