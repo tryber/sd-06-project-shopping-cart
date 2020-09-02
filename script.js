@@ -30,6 +30,13 @@ function loadStorageList() {
 //   name: object.title,
 //   salePrice: object.price,
 
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
+
 function createProductItemElement({
   id: sku,
   title: name,
@@ -52,13 +59,6 @@ function createProductImageElement(imageSource) {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-}
-
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
 }
 
 // function getSkuFromProductItem(item) {
