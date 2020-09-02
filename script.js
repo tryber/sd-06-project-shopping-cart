@@ -23,7 +23,7 @@ async function sumCart() {
     if (myCart.length > 0) {
       let sum = 0;
       myCart.forEach((item) => {
-        sum += parseFloat(item.price);
+        sum += parseFloat(item.dataset.price);
       });
       pricePlacer.innerText = sum.toFixed(2);
     } else {
@@ -34,11 +34,11 @@ async function sumCart() {
   }
 }
 
-let myCartArray = [];
+let myCartIds = [];
 
 function cartItemClickListener(event) {
-  const indexOfItem = myCartArray.indexOf(event.target.id);
-  if (indexOfItem > -1) myCartArray.splice(indexOfItem, 1);
+  const indexOfItem = myCartIds.indexOf(event.target.id);
+  if (indexOfItem > -1) myCartIds.splice(indexOfItem, 1);
   event.target.remove();
   sumCart()
     .catch(error => console.log(error));
@@ -48,21 +48,22 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.id = sku;
-  li.price = salePrice;
+  li.setAttribute('data-price', salePrice);
+  li.setAttribute('data-title', name);
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
 async function addItemInCart(url, id) {
-  if (myCartArray.find(currId => currId === id)) return 'item já está no carrinho.';
+  if (myCartIds.find(currId => currId === id)) return 'item já está no carrinho.';
   try {
     const fetchId = await fetch(url);
     const object = await fetchId.json();
     if (object.error) throw new Error(object.error);
     const cartList = document.querySelector('ol.cart__items');
     cartList.appendChild(createCartItemElement(object));
-    myCartArray.push(object.id);
+    myCartIds.push(id);
     sumCart();
   } catch (error) {
     throw new Error(error);
@@ -79,7 +80,6 @@ function itemClickListener(event) {
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -91,12 +91,14 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-function addStoredItemInCart(item) {
-  if (myCartArray.find(currId => currId === item.id)) return 'item já está no carrinho.';
+function loadStoredCart(cartItems, itemsArray) {
   try {
     const cartList = document.querySelector('ol.cart__items');
-    cartList.appendChild(createCartItemElement(item));
-    myCartArray.push(item.id);
+    cartItems.forEach((item) => {
+      cartList.appendChild(createCartItemElement(item));
+    });
+
+    myCartIds.push(itemsArray.split(','));
     sumCart();
   } catch (error) {
     throw new Error(error);
@@ -104,33 +106,12 @@ function addStoredItemInCart(item) {
   return 'Sucess';
 }
 
-async function fetchItem(url) {
-  const objectJSON = await fetch(url);
-  const objectJS = await objectJSON.json();
-  return objectJS;
-}
-
-function loadStoredCart(array) {
-  const promises = [];
-  array.forEach((id) => {
-    const url = `https://api.mercadolibre.com/items/${id}`;
-    promises.push(fetchItem(url));
-  });
-
-  Promise.all(promises)
-    .then((items) => {
-      items.forEach((item) => {
-        addStoredItemInCart(item);
-      });
-    });
-}
-
 function clearCart() {
   const pricePlacer = document.querySelector('.price .total-price');
   const cartList = document.querySelector('ol.cart__items');
   cartList.innerHTML = '';
   pricePlacer.innerText = '-';
-  myCartArray = [];
+  myCartIds = [];
   localStorage.removeItem('myCart');
 }
 
@@ -159,10 +140,10 @@ window.onload = function onload() {
     })
     .catch('deu pau!');
 
-  const storedCart = localStorage.getItem('myCart');
+  const storedCart = JSON.parse(localStorage.getItem('myCart'));
+  const storedIds = localStorage.getItem('myItemsIds')
   if (storedCart) {
-    tempArray = storedCart.split(',');
-    loadStoredCart(tempArray);
+    loadStoredCart(storedCart, storedIds);
   }
 
   const clearCartButton = document.querySelector('button.empty-cart');
@@ -170,6 +151,13 @@ window.onload = function onload() {
 };
 
 window.addEventListener('beforeunload', () => {
+  const cartList = document.querySelectorAll('ol.cart__items li');
+  const itemsArray = [];
+  cartList.forEach((curr) => {
+    itemsArray.push({ id: curr.id, title: curr.dataset.title, price: curr.dataset.price, });
+  });
   localStorage.removeItem('myCart');
-  localStorage.setItem('myCart', myCartArray.toString());
+  localStorage.removeItem('myItemsIds');
+  localStorage.setItem('myCart', JSON.stringify(itemsArray));
+  localStorage.setItem('myItemsIds', myCartIds.toString());
 });
