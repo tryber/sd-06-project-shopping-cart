@@ -80,7 +80,7 @@ function loadMessage() {
 
 function fetchComputers() {
   const section = document.querySelector('.items');
-  const loadMessage = document.querySelector('.loading');
+  const message = document.querySelector('.loading');
 
   fetch(url)
     .then(response => response.json())
@@ -90,7 +90,7 @@ function fetchComputers() {
       itemToCartEventListener(product);
       section.appendChild(product);
     }))
-    .finally(() => section.removeChild(loadMessage));
+    .finally(() => section.removeChild(message));
 }
 
 function loadCartSaved() {
