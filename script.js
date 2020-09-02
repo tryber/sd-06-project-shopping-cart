@@ -1,9 +1,13 @@
-let sum = 0;
-
-async function totalPrice(price, operator) {
-  const total = document.querySelector('.total-price');
-  sum = (operator === 'add' ? sum += price : sum -= price);
-  total.innerHTML = (sum === 0) ? '' : `Preço total: $${sum}`;
+function getTotalPrice() {
+  if (Storage) {
+    let sum = 0;
+    const getCartItems = JSON.parse(localStorage.getItem('cartML'));
+    if (getCartItems) {
+      getCartItems.forEach(element => sum += element.price);
+    }
+    const total = document.querySelector('.total-price');
+    total.innerHTML = (sum === 0) ? '' : `Preço total: $${sum}`;
+  }
 }
 
 function saveToLocalStorage(id, title, price) {
@@ -13,18 +17,19 @@ function saveToLocalStorage(id, title, price) {
     arrayOfItems.push({ id, title, price });
     localStorage.setItem('cartML', JSON.stringify(arrayOfItems));
   }
+  getTotalPrice();
 }
 
 function removeItemFromLocalStorage(sku) {
   const arrayOfItems = JSON.parse(localStorage.getItem('cartML'));
   for (let index = 0; index < arrayOfItems.length; index += 1) {
     if (arrayOfItems[index].id === sku) {
-      totalPrice(arrayOfItems[index].price, 'sub');
       arrayOfItems.splice(index, 1);
       break;
     }
   }
   localStorage.setItem('cartML', JSON.stringify(arrayOfItems));
+  getTotalPrice();
 }
 
 
@@ -40,7 +45,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.id = sku;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  totalPrice(salePrice, 'add');
   return li;
 }
 
@@ -59,6 +63,7 @@ function clearCart() {
 function emptyCart() {
   const emptyButton = document.querySelector('.empty-cart');
   emptyButton.addEventListener('click', clearCart);
+  getTotalPrice();
 }
 
 function getFromLocalStorage() {
@@ -70,6 +75,7 @@ function getFromLocalStorage() {
       addToCart(itemProduct);
     });
   }
+  getTotalPrice();
 }
 
 const fetchProductItem = (sku) => {
@@ -135,5 +141,6 @@ const fetchProducts = () => {
 window.onload = function onload() {
   fetchProducts();
   getFromLocalStorage();
+  getTotalPrice();
   emptyCart();
 };
