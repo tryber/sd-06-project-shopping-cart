@@ -20,18 +20,17 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }, keyNa
 }
 
 function buttonItemOnClick() {
-
   fetch(`${api.url}${api.endpointItem}${this.id}`)
     .then(response => response.json())
     .then((data) => {
-      const keyName = `${this.id}_${localStorage.length + 1}`
+      const keyName = `${this.id}_${localStorage.length + 1}`;
       const cartItems = document.querySelector('.cart__items');
       cartItems.appendChild(createCartItemElement(data, keyName));
 
       const item = {
         id: data.id,
         title: data.title,
-        price: data.price
+        price: data.price,
       };
 
       localStorage.setItem(keyName, JSON.stringify(item));
@@ -47,10 +46,6 @@ function loadStorage() {
     const cartItems = document.querySelector('.cart__items');
     cartItems.appendChild(createCartItemElement(item, keyName));
   }
-}
-
-async function calcTotalPrice() {
-  
 }
 
 /* function calcTotalPrice() {
@@ -119,7 +114,6 @@ function cleanAll() {
     tagOl.removeChild(tagOl.firstChild);
   }
 }
-
 
 window.onload = function onload() {
   fetchProduct();
