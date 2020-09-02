@@ -90,7 +90,10 @@ function cartItemClickListener(event) {
 const recordOnLocalStorage = (item) => {
     if(Storage) {
       const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-      let items = cartItems ?? [];
+      let items = [];
+      if (cartItems !== null) {
+         items = cartItems;
+      }
       items.push(item);
       localStorage.setItem('cartItems',JSON.stringify(items));
     }
