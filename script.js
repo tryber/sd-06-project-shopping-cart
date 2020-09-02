@@ -1,3 +1,8 @@
+function appendElementInSectionItems(element) {
+  const itemSection = document.querySelector('.items');
+  itemSection.appendChild(element);
+}
+
 async function fetchContent(endepoint) {
   const response = await fetch(endepoint);
   const object = await response.json();
@@ -10,11 +15,6 @@ async function fetchContent(endepoint) {
     const element = createProductItemElement(data);
     appendElementInSectionItems(element);
   });
-}
-
-function appendElementInSectionItems(element) {
-  const itemSection = document.querySelector('.items');
-  itemSection.appendChild(element);
 }
 
 window.onload = function onload() {
@@ -63,4 +63,3 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
