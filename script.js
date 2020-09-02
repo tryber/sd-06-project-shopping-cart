@@ -1,11 +1,14 @@
 async function showLoading() {
-  const loading = document.querySelector('.loading');
+  const loading = document.createElement('span');
+  loading.className = 'loading';
   loading.innerText = 'Loading...';
+  const parent = document.querySelector('.items');
+  parent.appendChild(loading);
 }
 
 function hideLoading() {
-  const loading = document.querySelector('.loading');
-  loading.innerHTML = '';
+  const parent = document.querySelector('.items');
+  parent.removeChild(parent.firstChild);
 }
 
 function showTotalPrice(sum) {
@@ -143,7 +146,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const fetchProducts = () => {
+function fetchProducts() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(resolve => resolve.json())
     .then(data => data.results.forEach((element) => {
