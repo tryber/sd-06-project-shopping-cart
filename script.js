@@ -23,10 +23,25 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
+// const subtrairItensCarrinho = (event) => {
+//   console.log(event.target)
+//   const totalprice = document.querySelector('.total__price')
+//   totalprice.innerText = Number(price.innerText) - Number(totalprice.innerText)
+// }
+
+async function cartItemClickListener(event) {
   const carrinho = document.querySelector('.cart__items');
   const remover = event.target;
   carrinho.removeChild(remover);
+  if (carrinho.childNodes.length === 0) {
+    localStorage.removeItem('Carrinho');
+  }
+}
+
+async function somarItemsCarrinho(price) {
+  const totalprice = document.querySelector('.total-price');
+  totalprice.innerText = await Number(totalprice.innerText) + Number(price);
+  // localStorage.Carrinho = carrinho.innerHTML;
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -36,16 +51,16 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   carrinho.appendChild(li);
-  localStorage.Carrinho = carrinho.innerHTML;
   return li;
 }
 
-function itemClickListener(event) {
-  const site = `https://api.mercadolibre.com/items/${getSkuFromProductItem(event.target.parentNode)}`;
+async function itemClickListener(event) {
+  const site = await `https://api.mercadolibre.com/items/${getSkuFromProductItem(event.target.parentNode)}`;
   fetch(site)
     .then(response => response.json())
-    .then((objeto) => {
-      createCartItemElement(objeto);
+    .then(({ id, title, price }) => {
+      createCartItemElement({ id, title, price });
+      somarItemsCarrinho(price);
     });
 }
 
@@ -53,6 +68,9 @@ const removerItemsCarrinho = () => {
   const cartItems = document.querySelector('.cart__items');
   while (cartItems.firstChild) {
     cartItems.removeChild(cartItems.firstChild);
+  }
+  if (cartItems.childNodes.length === 0) {
+    localStorage.removeItem('Carrinho');
   }
 };
 
