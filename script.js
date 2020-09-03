@@ -40,8 +40,7 @@ async function cartItemClickListener(event) {
 
 async function somarItemsCarrinho(price) {
   const totalprice = document.querySelector('.total-price');
-  totalprice.innerText = await Number(totalprice.innerText) + Number(price);
-  // localStorage.Carrinho = carrinho.innerHTML;
+  totalprice.innerText = Math.round((Number(totalprice.innerText) + price) * 100) / 100;
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -51,6 +50,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   carrinho.appendChild(li);
+  localStorage.Carrinho = carrinho.innerHTML;
   return li;
 }
 
