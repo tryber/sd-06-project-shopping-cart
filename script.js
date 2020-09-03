@@ -66,6 +66,7 @@ function queryThisAtML(sku) {
   fetch(queryUrl)
     .then(response => response.json())
     .then((response) => {
+      console.log(response)
       const cartItems = document.querySelector('.cart__items');
       const item = createCartItemElement({
         sku: response.id,
@@ -90,12 +91,18 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function loading() {
+  document.querySelector('.items').innerHTML = '<section class="loading">loading...</section>';
+}
+
 function queryAtML() {
   const queryUrl = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  loading();
   fetch(queryUrl)
     .then(response => response.json())
     .then(response => response.results)
     .then((items) => {
+      document.querySelector('.items').innerHTML = '';
       items.forEach(item => document.querySelector('.items')
         .appendChild(createProductItemElement({
           sku: item.id,
