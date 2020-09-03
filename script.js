@@ -21,6 +21,18 @@ function removeItem() {
     ol.removeChild(cartItems[index]);
   }
 }
+const handlerLoading = () => {
+  const cart = document.querySelector('.cart');
+  if (!document.querySelector('.loading')) {
+    const loading = document.createElement('span');
+    loading.className = 'loading';
+    loading.innerText = 'loading...';
+    cart.appendChild(loading);
+  } else {
+    cart.removeChild(document.querySelector('.loading'));
+  }
+};
+
 function clearList() {
   const clearListItem = document.querySelector('.empty-cart');
   clearListItem.addEventListener('click', removeItem);
@@ -38,6 +50,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 // quesito dois, ajuda de Willan Gomes
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  handlerLoading();
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -58,12 +71,10 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       localStorage.setItem('cartItemsSaved', saveCart.innerHTML);
     });
   });
+  handlerLoading();
   return section;
 }
 function handlersectionsComputer(arrayComputer) {
-  setTimeout(() => {
-    document.querySelector('.loading').remove();
-  }, 5000);
   arrayComputer.forEach((product) => {
     const productNewPay = createProductItemElement(product);
     const section = document.querySelector('.items');
@@ -72,6 +83,7 @@ function handlersectionsComputer(arrayComputer) {
 }
 
 function handlerStrutor() {
+  handlerLoading();
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computer';
   fetch(url)
 .then(response => response.json())
@@ -79,6 +91,7 @@ function handlerStrutor() {
   const arrayComputer = object.results;
   handlersectionsComputer(arrayComputer);
 });
+ handlerLoading();
 }
 
 const saveStorage = () => {
