@@ -12,6 +12,21 @@ function saveToStorageCar() {
   window.localStorage.setItem('car_list', olList.innerHTML);
 }
 
+function cartItemClickListener(event) {
+  const carList = document.querySelector('.cart__items');
+  carList.removeChild(event.target);
+  storageCar();
+}
+
+function storageList() {
+  const olList = document.querySelector('.cart__items');
+  olList.innerHTML = window.localStorage.getItem('car_list');
+  const liList = document.querySelectorAll('li');
+  liList.forEach((li) => {
+    li.addEventListener('click', cartItemClickListener);
+  });
+}
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -81,4 +96,7 @@ const removeAlItems = () => {
 
 window.onload = function onload() {
   urlInclude();
+  storageList();
+  const btnRemoveAllItems = document.querySelector('.empty-cart');
+  btnRemoveAllItems.addEventListener('click', removeAlItems);
 };
