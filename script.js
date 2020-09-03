@@ -1,16 +1,16 @@
 window.onload = function onload() {
   getItems();
   let keys = Object.keys(localStorage)
+  console.log(keys)
   let cart__items = document.querySelector('.cart__items');
   let inner = '';
   let li;
   for (let i = 0; i < keys.length; i++) {
-    inner = localStorage.getItem(keys[i]);
-    li = document.createElement('li');
-    li.innerText = inner;
-    li.id = `${sku}`;
-    li.addEventListener('click', (event) => cartItemClickListener(event));
-    cart__items.appendChild(li);
+    fetch(`https://api.mercadolibre.com/items/${keys[i]}`)
+      .then(r => r.json())
+      .then(product => createCartItemElement(product))
+      .then((li) => cart__items.appendChild(li))
+      .then(() => localStorage.setItem(keys[i], keys[i]))
   }
 };
 
@@ -40,7 +40,7 @@ function addToCart(event) {
     .then(r => r.json())
     .then(product => createCartItemElement(product))
     .then((li) => cart__items.appendChild(li))
-    .then((li) => localStorage.setItem(itemID, li.innerHTML))
+    .then(() => localStorage.setItem(itemID, itemID))
 }
 
 function createProductImageElement(imageSource) {
@@ -74,10 +74,19 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // localStorage.removeItem(event.target.id);
+  localStorage.removeItem(event.target.id);
   console.log(event.target.id)
   event.target.remove();
 }
+
+// preciso que os items que são adicionados pelo localstorage tenham id
+// mas pra isso não posso dar stringify neles
+// na real eu posso adicionar ao localstorage só o id como string.....
+// e no load ele chama o fetch (o mesmo do addtocart, passando cada id naquele loop), 
+// pega o json, envia o resultado pra createcartitemelement 
+// e appendchild esse li ao cart_items
+
+// será que eu consigo refatorar o addtocart pra usar no onload
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
