@@ -36,6 +36,7 @@ function createCartItemElement({ id, title, price }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
+  upStorage();
   return li;
 }
 
@@ -62,7 +63,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
-
 
 window.onload = () => {
   const itemCart = document.querySelector('.items');
