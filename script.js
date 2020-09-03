@@ -74,7 +74,7 @@ window.onload = function onload() { // usei
         const productSection = createProductItemElement(product);
         productContainer.appendChild(productSection);
 
-        productSection.children[3].addEventListener('click', productItemListener); // 
+        productSection.children[3].addEventListener('click', productItemListener);
       });
     })
     .then(() => {
