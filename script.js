@@ -29,8 +29,16 @@ function getSkuFromProductItem(item) { // usei
 }
 
 function cartItemClickListener(event) { // usei
-  console.log(event.target.innerText.split('$')[1]);
-  this.remove();
+  const minusPrice = Number(event.target.innerText.split('$')[1]) * -1;
+  sumValues(minusPrice);
+  this.remove(); ///////////////////// tira o valor quando remover item
+}
+
+async function sumValues(value) {
+  const priceSpan = document.getElementById('price');
+  let price = Number(priceSpan.innerText);
+  price += value;
+  priceSpan.innerText = (Math.round(price * 100) / 100).toFixed(2);
 }
 
 function createCartItemElement({ sku, name, salePrice }) { // usei
@@ -38,6 +46,7 @@ function createCartItemElement({ sku, name, salePrice }) { // usei
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  sumValues(salePrice)
   return li;
 }
 
