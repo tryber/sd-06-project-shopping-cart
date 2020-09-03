@@ -66,7 +66,6 @@ function queryThisAtML(sku) {
   fetch(queryUrl)
     .then(response => response.json())
     .then((response) => {
-      console.log(response)
       const cartItems = document.querySelector('.cart__items');
       const item = createCartItemElement({
         sku: response.id,
