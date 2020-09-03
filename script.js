@@ -157,4 +157,5 @@ window.onload = function onload() {
   fetchDisplay();
   clearButton();
   retrieveItemsSavedBeforeFromLocalStorage();
+  getSumTotalBill();
 };
