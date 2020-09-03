@@ -50,7 +50,6 @@ const removeItemsFromLocalStorage = (sku) => {
 
 function cartItemClickListener(event) {
   event.target.parentNode.removeChild(event.target);
-  removeItemsFromLocalStorage(item.id);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -126,4 +125,5 @@ window.onload = function onload() {
   fetchDisplay();
   clearButton();
   loadItemsToLocalStorage();
+  removeItemsFromLocalStorage();
 };
