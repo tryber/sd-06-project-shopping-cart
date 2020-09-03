@@ -119,15 +119,14 @@ const generateLoadingItem = () => {
   loadingItem.classList = 'loading';
 };
 
-const getResponseFromApi = async (subPageUrl, searchedItem) => {
-  return new Promise(resolve => {
+const getResponseFromApi = async (subPageUrl, searchedItem) =>
+  new Promise((resolve) => {
     setTimeout(async () => {
       const responseFromApi = await fetch(`https://api.mercadolibre.com${subPageUrl}${searchedItem}`);
       const itemsFound = await responseFromApi.json();
       resolve(itemsFound);
     }, 2000);
   });
-};
 
 const removeLoadingItem = () => {
   const loadingItem = document.querySelector('.loading');
