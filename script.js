@@ -86,7 +86,6 @@ const fetchWindow = () => {
 };
 
 // const imprima = () => console.log('clicando');
-
 const setClearButton = () => {
   const clearButton = document.getElementsByClassName('empty-cart');
   clearButton[0].addEventListener('click', () => {
