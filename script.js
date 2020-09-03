@@ -96,6 +96,8 @@ const carregarResultados = (resultado) => {
 };
 
 const carregarApi = (produto) => {
+  const container = document.querySelector('.container');
+  const loading = document.querySelector('.loading');
   const site = `${url}search?q=$${produto}`;
   fetch(site)
     .then(resposta => resposta.json())
@@ -103,6 +105,7 @@ const carregarApi = (produto) => {
       if (objeto.error) throw new Error(objeto.error);
       else carregarResultados(objeto.results);
     });
+  container.removeChild(loading);
 };
 
 const carregarCarrinho = () => {
