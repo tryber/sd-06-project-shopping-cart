@@ -71,8 +71,8 @@ const retrieveItemsSavedBeforeFromLocalStorage = () => {
   const getItemsFromLocalStorage = JSON.parse(localStorage.getItem('cart'));
   if (getItemsFromLocalStorage !== null) {
     for (let index = 0; index < getItemsFromLocalStorage.length; index += 1) {
-     const cart = createCartItemElement(getItemsFromLocalStorage[index]);
-     appendItemToChart(cart);
+      const cart = createCartItemElement(getItemsFromLocalStorage[index]);
+      appendItemToChart(cart);
     }
   }
 };
