@@ -50,5 +50,4 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-  }
-  
+}
