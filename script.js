@@ -79,6 +79,10 @@ const addCart = (id) => {
 
 const apiQuery = () => {
   const endpoint = `${URL}sites/MLB/search?q=computador`;
+  const load = document.createElement('div')
+  load.classList.add('loading');
+  load.innerHTML = 'loading...';
+  document.querySelector('.container').appendChild(load);
   fetch(endpoint)
     .then(response => response.json())
     .then(item => item.results.forEach((element) => {
@@ -86,8 +90,10 @@ const apiQuery = () => {
       section.lastChild.addEventListener('click', (event) => {
         const idRequest = getSkuFromProductItem(event.target.parentElement);
         addCart(idRequest);
-      });
-    }));
+        
+      })
+    }))
+    .finally(() => document.querySelector('.container').removeChild(load));
 };
 
 window.onload = function onload() {
