@@ -74,9 +74,9 @@ function fetchItems() {
   const query = url;
   fetch(query)
   .then(response => response.json())
-  .then(response => { response.results.forEach(object => createProductItemElement(object));
-  document.querySelector('.loading').remove();
-});
+  .then((response) => {response.results.forEach(object => createProductItemElement(object));
+    document.querySelector('.loading').remove();
+  });
 }
 
 function fetchCar(id) {
@@ -105,7 +105,7 @@ const emptyCart = () => {
     const itemsCart = document.querySelectorAll('.cart__item');
     itemsCart.forEach((element) => {
       element.remove();
-    })
+    });
     localStorage.clear();
   });
 };
