@@ -24,16 +24,16 @@ function getSkuFromProductItem(item) {
 }
 
 const subtrairItensCarrinho = (event) => {
-  const preco = event.innerText.slice(-4)
+  const preco = event.innerText.slice(-4);
   const totalprice = document.querySelector('.total-price');
-  totalprice.innerText = Number(totalprice.innerText) - Number(preco)
-}
+  totalprice.innerText = Number(totalprice.innerText) - Number(preco);
+};
 
 async function cartItemClickListener(event) {
   const carrinho = document.querySelector('.cart__items');
   const remover = event.target;
   carrinho.removeChild(remover);
-  subtrairItensCarrinho(event.target)
+  subtrairItensCarrinho(event.target);
   if (carrinho.childNodes.length === 0) {
     localStorage.removeItem('Carrinho');
   }
@@ -97,7 +97,6 @@ const carregarResultados = (resultado) => {
 };
 
 const carregarApi = (produto) => {
-  const container = document.querySelector('.container');
   const site = `${url}search?q=$${produto}`;
   fetch(site)
     .then(resposta => resposta.json())
