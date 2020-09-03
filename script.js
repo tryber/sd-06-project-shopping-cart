@@ -63,7 +63,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createProductImageElement(image));
   const btnAddCar = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddCar.addEventListener('click', getInTheCarList);
-  section.appendChild(btnAddCar)
+  section.appendChild(btnAddCar);
   return section;
 }
 
