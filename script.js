@@ -55,7 +55,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-async function addItemInCart(url, id) {
+async function addToCart(url, id) {
   if (myCartIds.find(currId => currId === id)) throw new Error('Item NOT added - in cart already.');
   try {
     const fetchId = await fetch(url);
@@ -74,7 +74,7 @@ async function addItemInCart(url, id) {
 function itemClickListener(event) {
   const itemSku = getSkuFromProductItem(event.target.parentNode);
   const url = `https://api.mercadolibre.com/items/${itemSku}`;
-  addItemInCart(url, itemSku)
+  addToCart(url, itemSku)
     .catch(error => console.log(error));
 }
 
