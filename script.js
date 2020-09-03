@@ -104,8 +104,9 @@ const carregarApi = (produto) => {
     .then((objeto) => {
       if (objeto.error) throw new Error(objeto.error);
       else carregarResultados(objeto.results);
+      container.removeChild(loading);
     });
-  container.removeChild(loading);
+  
 };
 
 const carregarCarrinho = () => {
