@@ -63,7 +63,7 @@ function createProductItemElement({ sku, name, image }) {
       const cart = document.querySelector('.cart__items');
       cart.appendChild(item);
     })
-    .then(() => saveCart());
+    .then(() => localSave());
   });
   return section;
 }
