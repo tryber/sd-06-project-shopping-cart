@@ -56,7 +56,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 async function addItemInCart(url, id) {
-  if (myCartIds.find(currId => currId === id)) return 'item já está no carrinho.';
+  if (myCartIds.find(currId => currId === id)) throw new Error('Item NOT added - in cart already.');
   try {
     const fetchId = await fetch(url);
     const object = await fetchId.json();
@@ -68,13 +68,14 @@ async function addItemInCart(url, id) {
   } catch (error) {
     throw new Error(error);
   }
-  return 'Sucess';
+  return 'Item added.';
 }
 
 function itemClickListener(event) {
   const itemSku = getSkuFromProductItem(event.target.parentNode);
   const url = `https://api.mercadolibre.com/items/${itemSku}`;
-  addItemInCart(url, itemSku);
+  addItemInCart(url, itemSku)
+    .catch(error => console.log(error));
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -127,8 +128,8 @@ function loaderElement() {
 }
 
 window.onload = function onload() {
-  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   loaderElement();
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   fetch(url)
     .then(jsonReceived => jsonReceived.json())
     .then((object) => {
@@ -142,7 +143,7 @@ window.onload = function onload() {
       },
       2000);
     })
-    .catch('deu pau!');
+    .catch('deu pau no carregamento dos produtos!');
 
   const storedCart = JSON.parse(localStorage.getItem('myCart'));
   const storedIds = localStorage.getItem('myItemsIds');
@@ -155,10 +156,10 @@ window.onload = function onload() {
 };
 
 window.addEventListener('beforeunload', () => {
-  const cartList = document.querySelectorAll('ol.cart__items li');
   const itemsArray = [];
-  cartList.forEach((curr) => {
-    itemsArray.push({ id: curr.id, title: curr.dataset.title, price: curr.dataset.price });
+  const cartList = document.querySelectorAll('ol.cart__items li');
+  cartList.forEach((item) => {
+    itemsArray.push({ id: item.id, title: item.dataset.title, price: item.dataset.price });
   });
   localStorage.removeItem('myCart');
   localStorage.removeItem('myItemsIds');
