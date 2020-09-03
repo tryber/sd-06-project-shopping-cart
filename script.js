@@ -56,12 +56,9 @@ const urlInclude = () => {
   .then(response => response.json())
   .then((data) => {
     data.results.forEach((cpu) => {
-      const myCpu = {
-        sku: cpu.id,
-        name: cpu.title,
-        image: cpu.thumbnail,
-      };
-      createProductItemElement(myCpu);
+      const myItems = document.querySelector('.items');
+      const pcs = createProductItemElement(cpu);
+      myItems.appendChild(pcs);
     });
   });
 };
