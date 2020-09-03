@@ -1,5 +1,4 @@
 
-// criei uma URL com o endPoint do mercado livre
 const url = {
   endPointWeb: 'https://api.mercadolibre.com/sites/MLB/search?q=computador',
   endPointItem: 'https://api.mercadolibre.com/items/',
@@ -19,16 +18,22 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// const saveOnStorage = () => {
-//   const shopCart = document.querySelector('.cart__items');
-//   const local = JSON.stringify(shopCart.innerHTML);
-//   localStorage.setItem('local', local);
-// };
+const saveOnStorage = () => {
+  const local = document.querySelector('.cart__items').innerHTML;
+  localStorage.list = local;
+};
+
+const loadLocalStorage = () => {
+  if (localStorage.list) {
+    document.querySelector('.cart__items').innerHTML = localStorage.list;
+  }
+}
+
 
 function cartItemClickListener(event) {
   const cartItems = document.querySelector('.cart__items');
   cartItems.removeChild(event.target);
-  // saveOnStorage();
+  saveOnStorage();
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -39,6 +44,7 @@ function createCartItemElement({ id, title, price }) {
   li.addEventListener('click', cartItemClickListener);
 
   carShop.appendChild(li);
+  saveOnStorage();
 }
 
 const fetchItem = (sku) => {
@@ -52,7 +58,7 @@ function createProductItemElement({ sku, name, image }) {
   const addButtonCar = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   addButtonCar.addEventListener('click', () => {
     fetchItem(sku);
-    // saveOnStorage();
+    saveOnStorage();
   });
   const section = document.createElement('section');
   section.className = 'item';
@@ -85,27 +91,18 @@ const fetchWindow = () => {
     });
 };
 
-// const imprima = () => console.log('clicando');
 const setClearButton = () => {
   const clearButton = document.getElementsByClassName('empty-cart');
   clearButton[0].addEventListener('click', () => {
     const items = document.querySelector('.cart__items');
     items.innerHTML = '';
-    // saveOnStorage();
+    localStorage.clear();
   });
 };
 
-// const storageOnLoad = () => {
-//   const localOnLoad = JSON.parse(localStorage.local);
-//   console.log(localOnLoad);
-// };
 
 window.onload = function onload() {
   fetchWindow();
   setClearButton();
-  // storageOnLoad();
+  loadLocalStorage();
 };
-
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
