@@ -1,5 +1,10 @@
 window.onload = function onload() { };
 
+function cartLocalStorage () {
+  const cartLocalStorage = document.getElementsByClassName('cart__items')[0];
+  localStorage.setItem('Cart', cart.innerHTML);
+}
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
@@ -41,6 +46,7 @@ const renderCart = (itemId) => {
       salePrice: response.price,
     };
     createCartItemElement(itemToAddOnCart);
+    cartLocalStorage();
   });
 };
 
@@ -77,7 +83,10 @@ const apiSearch = () => {
       });
     });
 };
-
+// const btnEmpty = document.querySelector('.empty-cart');
+// btnEmpty.addEventListener('click', () => {
+//   document.querySelectorAll('.cart__items').innerHTML = '';
+// }); 
 
 // function showImage(e) {
 //   const getFile = e.target.files[0];
