@@ -69,13 +69,11 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   // sumItemsCart(salePrice);
   li.addEventListener('click', cartItemClickListener);
-  // saveCart(li);
   return li;
 }
 
 // Incluindo o ítem no carrinho ao clicar no botão 'Adicionar ao carrinho!'
 function ItemclickListener(event) {
-  saveData();
   const id = event.target.parentNode.firstChild.innerText;
   const endpoint = `https://api.mercadolibre.com/items/${id}`;
   fetch(endpoint)
@@ -84,8 +82,8 @@ function ItemclickListener(event) {
       const item = createCartItemElement(object);
       includeItemcart(item);
       totalSum();
+      saveData();
     });
-  // saveData();
 }
 
 // Criando o ítem retornado da API no HTML
