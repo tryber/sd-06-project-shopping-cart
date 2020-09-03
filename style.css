@@ -3,6 +3,14 @@ body {
   width: 1366px;
 }
 
+.loading {
+  align-items: center;
+  display: flex;
+  font-size: 80px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: rgb(42, 42, 179);
+}
+
 .top-bar {
   align-items: center;
   display: flex;
