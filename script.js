@@ -32,7 +32,7 @@ const loadItemsToLocalStorage = (id, title, price) => {
   if (Storage) {
     const getItemsSaved = JSON.parse(localStorage.getItem('cart'));
     const values = (getItemsSaved === null ? [] : getItemsSaved);
-    values.push({id, title, price});
+    values.push({ id, title, price });
     localStorage.setItem('cart', JSON.stringify(values));
   }
 };
@@ -40,13 +40,18 @@ const loadItemsToLocalStorage = (id, title, price) => {
 const removeItemsFromLocalStorage = (sku) => {
   const getItemsFromLocalStorage = JSON.parse(localStorage.getItem('cart'));
   for (let index = 0; index < getItemsFromLocalStorage.length; index += 1) {
-    if (getItemsFromLocalStorage[index].id === sku){
+    if (getItemsFromLocalStorage[index].id === sku) {
       getItemsFromLocalStorage.splice(index, 1);
       break;
     }
   }
   localStorage.setItem('cart', JSON.stringify(getItemsFromLocalStorage));
 };
+
+function cartItemClickListener(event) {
+  removeItemsFromLocalStorage(event.target.id);
+  event.target.parentNode.removeChild(event.target);
+}
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
@@ -57,24 +62,19 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-const retrieveItemsSavedBeforeFromLocalStorage = () => {
-  const getItemsFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
-  if (getItemsFromLocalStorage !== null) {
-  for (let index = 0; index < getItemsFromLocalStorage.length; index += 1) {
-   const cart = createCartItemElement(getItemsFromLocalStorage[index]);
-   appendItemToChart(cart);
-  }
-}
-};
-
-function cartItemClickListener(event) {
-  removeItemsFromLocalStorage(event.target.id);
-  event.target.parentNode.removeChild(event.target);
-}
-
 const appendItemToChart = (element) => {
   const toChart = document.querySelector('.cart__items');
   toChart.appendChild(element);
+};
+
+const retrieveItemsSavedBeforeFromLocalStorage = () => {
+  const getItemsFromLocalStorage = JSON.parse(localStorage.getItem('cart'));
+  if (getItemsFromLocalStorage !== null) {
+    for (let index = 0; index < getItemsFromLocalStorage.length; index += 1) {
+     const cart = createCartItemElement(getItemsFromLocalStorage[index]);
+     appendItemToChart(cart);
+    }
+  }
 };
 
 const fetchToChart = (skuName) => {
