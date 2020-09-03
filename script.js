@@ -113,7 +113,7 @@ const addProductToCart = (li) => {
 
 const fetchProductItem = async (sku) => {
   try {
-    const response  = await fetch(`https://api.mercadolibre.com/items/${sku}`);
+    const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
     const itemCart = await response.json();
     if (itemCart.error) {
       throw new Error(itemCart.error);
@@ -127,7 +127,6 @@ const fetchProductItem = async (sku) => {
   }
 
 };
-
 const appendItem = (product) => {
   const parentSection = document.querySelector('.items');
   parentSection.appendChild(product);
