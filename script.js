@@ -10,7 +10,10 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
+function cartItemClickListener(event) {
+  const aux = event.target;
+  aux.remove();
+}
 function removeItem() {
   const cartItems = document.querySelectorAll('.cart__item');
   const ol = document.querySelector('.cart__items');
@@ -26,20 +29,6 @@ function clearList() {
     localStorage.setItem('cartItemsSaved', '');
   });
 }
-let totalprice = 0;
-const getPrice = text => Number(text.slice(text.indexOf('$') + 1));
-
-const totalPrice = (price) => {
-  totalprice -= Math.round(price * 100) / 100;
-  document.querySelector('.total-price').innerText = `${Math.round(totalprice * 100) / 100}`;
-};
-
-function cartItemClickListener(event) {
-  const aux = event.target;
-  aux.remove();
-  totalPrice(getPrice(clickedItem.innerText));
-}
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -101,7 +90,6 @@ const loadStorage = () => {
     saveCart.innerHTML = localStorage.getItem('cartItemsSaved');
   }
 };
-
 
 window.onload = function onload() {
   clearList();
