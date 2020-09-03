@@ -106,7 +106,6 @@ const carregarApi = (produto) => {
       else carregarResultados(objeto.results);
       container.removeChild(loading);
     });
-  
 };
 
 const carregarCarrinho = () => {
