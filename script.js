@@ -2,10 +2,10 @@
 
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/search?q=',
-  endpoint: 'computador'
-}
+  endpoint: 'computador',
+};
 
-const url = `${apiInfo.api}${apiInfo.endpoint}`
+const urlInitial = `${apiInfo.api}${apiInfo.endpoint}`;
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -25,9 +25,9 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
+// }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -35,20 +35,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-const fetchCurrency = () => {
-  const endpoint = `${apiInfo.api}${apiInfo.endpoint}`;
-
-  fetch(endpoint)
-  .then((response) => response.json())
-  .then((object) => {
-    object.results.forEach((item) => {
-      const productList = document.querySelector('.items');
-      const productArray = createProductItemElement(item);
-      productList.appendChild(productArray);
-    });
-  });
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -63,6 +49,22 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+const fetchCurrency = () => {
+  const endpoint = urlInitial;
+
+  fetch(endpoint)
+  .then((response) => response.json())
+  .then((object) => {
+    object.results.forEach((item) => {
+      const productList = document.querySelector('.items');
+      const productArray = createProductItemElement(item);
+      productList.appendChild(productArray);
+    })
+  })
+}
+
 window.onload = function onload() {
   fetchCurrency();
- };
+  getSkuFromProductItem();
+  createCartItemElement();
+};
