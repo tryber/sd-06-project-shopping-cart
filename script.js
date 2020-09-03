@@ -1,31 +1,37 @@
 window.onload = function onload() {
-  createList();
+  getItems();
 };
 
-async function createList() {
-  const items = document.getElementsByClassName('items')[0];
+function getItems() {
+  const items = document.querySelector(".items");
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-  await fetch(url)
+  fetch(url)
     .then(r => r.json())
     .then(r => r.results.map(item => createProductItemElement(item)))
     .then(itemList => itemList.forEach((item) => {
       items.appendChild(item);
     }))
+
     .then(() => {
-      let item__add = document.getElementsByClassName("item__add")[0];
-      item__add.addEventListener("click", (e) => addToCart(e));
+      let item__add = document.querySelectorAll('.item__add');
+      item__add.forEach(element => {
+        element.addEventListener("click", (e) => addToCart(e))
+      })
     })
-  
 }
 
-async function addToCart(e) {
-  let cart__items = document.querySelector(".cart__items");
-  let itemID = getSkuFromProductItem(e.path[1].childNodes);
+function addToCart(event) {
+  let parent = event.target.parentNode;
+  let cart__items = document.querySelector('.cart__items');
+  let itemID = getSkuFromProductItem(parent);
   console.log(itemID)
-  await fetch(`https://api.mercadolibre.com/items/${itemID}`)
+  fetch(`https://api.mercadolibre.com/items/${itemID}`)
     .then(r => r.json())
     .then(product => createCartItemElement(product))
     .then((li) => cart__items.appendChild(li))
+    .then(() => {
+    
+    })
 }
 
 function createProductImageElement(imageSource) {
@@ -55,18 +61,18 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 function getSkuFromProductItem(item) {
-  return item[0].innerText
+  return item.querySelector('span.item__sku').innerText;
 }
 
 function cartItemClickListener(event) {
- 
+  event.target.remove();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', (event) => cartItemClickListener(event));
   return li;
 }
 
