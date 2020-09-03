@@ -50,7 +50,7 @@ function productId(sku) {
     // onde serão appendados na seção do carrinho de
     // compras apos ser chamado no fetch 1 após criação
     // do ol no index.html
-    (document.querySelector('.cart__items').appendChildaddedProductOnCart);
+    (document.querySelector('.cart__items').appendChild(addedProductOnCart));
   });
 }
 function fetchMercadoLivre() {
