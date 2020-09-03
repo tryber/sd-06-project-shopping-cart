@@ -105,12 +105,12 @@ const loadItemsToLocalStorage = (id, title, price) => {
   if (Storage) {
     const itemnsToLoad = JSON.parse(localStorage.getItem('cart'));
     const arrayOfItems = (itemnsToLoad === null ? [] : itemnsToLoad);
-    arrayOfItems.push( {id, title, price} );
+    arrayOfItems.push({ id, title, price });
     localStorage.setItem('cart', JSON.stringify(arrayOfItems));
   }
 };
 
-const removeItemsFromLocalStorage = (sku) => {
+const removeItemsFromLocalStorage = () => {
   const arrayOfItems = JSON.parse(localStorage.getItem('cart'));
   for (let i = 0; i < arrayOfItems.length; index += 1) {
     if (arrayOfItems[index].id === sku) {
