@@ -1,3 +1,7 @@
+function loading() {
+  setTimeout(document.querySelector('.loading').remove(), 2000);
+}
+
 function allocateLStorage() {
   const cart = document.getElementsByClassName('cart__items')[0];
   localStorage.setItem('cartItems', cart.innerHTML);
@@ -113,12 +117,28 @@ const apiFetch = async function () {
 };
 
 window.onload = () => {
+  loading();
   apiFetch();
   reloadLStorage();
 };
-// IE = ItemElement
-// I = Item
-// i = item
-// Se = Section
-// REFERENCIAS
-// fetch
+
+/*
+PRINCIPAIS REFERENCIAS
+GITHUB CONSULTADOS:
+ANDERSSON STUBER, HAVYNER CAETANO, ISADORA KOGA.
+
+OUTROS SITES:
+https://developer.mozilla.org
+https://www.w3schools.com
+https://medium.com
+https://www.devmedia.com.br
+https://pt.stackoverflow.com
+
+YOUTUBE = "tantaum de canal"
+
+DESENVOLVIDO COM O APOIOD DE:
+ANDERSSON STUBER, ANDRÉ POSSAS, LUCIVAL DOS SANTOS(LUGH), PAULO LINS, RICHARD WELLERSON.
+
+AGRADECIMETNOS ESPECIAIS:
+ANDERSSON STUBER QUE ME AJUDOU DO INCIO AO FIM DO PROJETO!(mais uma vez)
+*/
