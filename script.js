@@ -1,16 +1,18 @@
 const removeElement = (cssClass) => {
-  const element = document.querySelector(`.${cssClass}`);
-  while (element) {
-    element.parentElement.removeChild(element);
+  const elements = document.querySelectorAll(`.${cssClass}`);
+  if (elements !== null) {
+    elements.forEach(element => {
+      element.parentElement.removeChild(element);
+    });
   }
 };
 
 const removeCartElements = () => {
-  removeElement('.cart__item');
+  removeElement('cart__item');
 };
 
 const removeCartTotalPriceElement = () => {
-  removeElement('.total-price');
+  removeElement('total-price');
 };
 
 const clearCart = () => {
