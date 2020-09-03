@@ -76,7 +76,7 @@
 }
 
 .loading {
-  font-family: -apple-system;
+  font-family: -apple-system, sans-serif;
   font-size: 64px;
   left: 40%;
   position: absolute;
