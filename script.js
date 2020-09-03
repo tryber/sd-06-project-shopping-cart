@@ -53,7 +53,7 @@ const sumCartItemsPrice = () => {
   } else {
     total = 0;
   }
-  return new Promise(resolve => resolve(total.toPrecision(6)));
+  return new Promise(resolve => resolve(parseFloat(total.toFixed(2))));
 };
 
 const createTotalPriceElement = (totalPrice) => {
@@ -128,7 +128,7 @@ const getResponseFromApi = async (subPageUrl, searchedItem) =>
       const responseFromApi = await fetch(`https://api.mercadolibre.com${subPageUrl}${searchedItem}`);
       const itemsFound = await responseFromApi.json();
       resolve(itemsFound);
-    }, 2000);
+    }, 1000);
   });
 
 const removeLoadingItem = () => {
