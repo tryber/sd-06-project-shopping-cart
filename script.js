@@ -90,7 +90,7 @@ const apiQuery = () => {
       section.lastChild.addEventListener('click', (event) => {
         const idRequest = getSkuFromProductItem(event.target.parentElement);
         addCart(idRequest);
-      })
+      });
     }))
     .finally(() => document.querySelector('.container').removeChild(load));
 };
