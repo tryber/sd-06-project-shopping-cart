@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 const sumTotalBill = (sum) => {
-  const totalBill = document.querySelector('.cart__total');
+  const totalBill = document.querySelector('.total-price');
   totalBill.innerHTML = sum;
 };
 
