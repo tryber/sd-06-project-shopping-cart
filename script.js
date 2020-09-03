@@ -47,10 +47,10 @@ function productId(sku) {
         name: title,
         salePrice: price,
       });
-    // onde serão appendados na 
-    //seção do carrinho de 
+    // onde serão appendados na
+    //seção do carrinho de
     //compras apos ser chamado
-    // no fetch 1 após criação 
+    // no fetch 1 após criação
     //do ol no index.html
         document.querySelector('.cart__items').appendChild(addedProductOnCart);
     });
@@ -67,11 +67,11 @@ function fetchMercadoLivre() {
           name: title,
           image: thumbnail
         });
-          product.addEventListener('click', (event) =>{
-            if(event.target.className === 'item__add'){
+          product.addEventListener('click', (event) => {
+            if(event.target.className === 'item__add') {
               productId(getSkuFromProductItem(event.target.parentElement));
           }
-        })
+        });
         // retrieve images done
         document.querySelector('.items').appendChild(product);
         // adição das imagens
