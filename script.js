@@ -115,7 +115,6 @@ const fetchProductItem = async (sku) => {
   try {
     const response  = await fetch(`https://api.mercadolibre.com/items/${sku}`);
     const itemCart = await response.json();
-
     if (itemCart.error) {
       throw new Error(itemCart.error);
     } else {
