@@ -111,10 +111,18 @@ const addProductToCart = (li) => {
   ol.appendChild(li);
 };
 
+const generateLoadingItem =  () => {
+  const loadingItem = document.createElement('div');
+  const body = document.body;
+  loadingItem.innerText = 'Loading';
+  body.appendChild(loadingItem);
+  loadingItem.classList = 'loading';
+};
+
 const fetchProductItem = async (sku) => {
   try {
-    generateLoadingItem()
-    const response = await getResponseFromApi('/items', sku);
+    generateLoadingItem();
+    const response = await getResponseFromApi('/items/', sku);
     removeLoadingItem();
     if (response.error) {
       throw new Error(response.error);
@@ -171,14 +179,6 @@ const getResponseFromApi = async (subPageUrl, searchedItem) => {
       resolve(itemsFound);
     }, 2000);
   });
-}
-
-const generateLoadingItem =  () => {
-  const loadingItem = document.createElement('div');
-  const body = document.body;
-  loadingItem.innerText = 'Loading';
-  body.appendChild(loadingItem);
-  loadingItem.classList = 'loading';
 };
 
 const removeLoadingItem = () => {

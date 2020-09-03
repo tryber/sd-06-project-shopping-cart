@@ -79,4 +79,8 @@
   font-family: -apple-system;
   font-size: 64px;
   text-align: center;
+  z-index: 1000;
+  position: absolute;
+  top:200px;
+  left: 40%;
 }
