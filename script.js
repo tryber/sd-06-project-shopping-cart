@@ -50,7 +50,7 @@ const sumCartItemsPrice = () => {
   } else {
     total = 0;
   }
-  return new Promise(resolve => resolve(total.toFixed(2)));
+  return new Promise(resolve => resolve(total.toPrecision(6)));
 };
 
 const createTotalPriceElement = (totalPrice) => {
