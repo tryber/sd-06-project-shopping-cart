@@ -14,6 +14,7 @@ function loadStorageList() {
   if (localStorage.computerLocalStorage) {
     const loadOl = document.querySelector('.cart__items');
     loadOl.innerHTML = localStorage.getItem('computerLocalStorage');
+    document.querySelectorAll('li').forEach(element => element.addEventListener('click', cartItemClickListener));
   }
 }
 
@@ -51,6 +52,7 @@ function createProductImageElement(imageSource) {
 function cartItemClickListener(event) {
   const removeItem = document.querySelector('.cart__items');
   removeItem.removeChild(event.target);
+  addLocalItem();
 }
 
 function createCartItemElement({
@@ -121,7 +123,7 @@ function createProductItemElement({
 function loadingQuery() {
   const newElement = document.createElement('div');
   newElement.className = 'loading';
-  newElement.innerText = 'loading';
+  newElement.innerText = 'loading...';
   const fatherLoad = document.querySelector('.items');
   fatherLoad.appendChild(newElement);
 }
@@ -144,6 +146,6 @@ function fetchComputer() {
 window.onload = function onload() {
   fetchComputer();
   loadStorageList();
-  // clearCart();
+
   emptyCartButton();
 };
