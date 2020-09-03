@@ -42,7 +42,7 @@ async function getSumTotalBill() {
     }
   }
   sumTotalBill(sum);
-};
+}
 
 const loadItemsToLocalStorage = (id, title, price) => {
   if (Storage) {
