@@ -74,7 +74,8 @@ function fetchItems() {
   const query = url;
   fetch(query)
   .then(response => response.json())
-  .then((response) => {response.results.forEach(object => createProductItemElement(object));
+  .then((response) => {
+    response.results.forEach(object => createProductItemElement(object));
     document.querySelector('.loading').remove();
   });
 }
