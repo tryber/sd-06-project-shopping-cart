@@ -75,7 +75,7 @@ function cleanAll() {
   });
 }
 window.onload = function onload() {
-    urlItemOnload();
+  urlItemOnload();
   if (localStorage.Item) {
     document.querySelector('.cart__items').innerHTML = localStorage.Item;
   }
