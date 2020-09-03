@@ -84,14 +84,14 @@ function getSkuFromProductItem(item) {
 
 function loadText() {
   const loadingText = document.createElement('h1');
-  loadingText.innerHTML = 'loading...'
-  loadingText.className = 'loading'
-  const father = document.querySelector('.items')
-  father.appendChild(loadingText)
+  loadingText.innerHTML = 'loading...';
+  loadingText.className = 'loading';
+  const father = document.querySelector('.items');
+  father.appendChild(loadingText);
 }
 
 function delText() {
-  const loadingText = document.querySelector('.loading')
+  const loadingText = document.querySelector('.loading');
   loadingText.remove();
 }
 
