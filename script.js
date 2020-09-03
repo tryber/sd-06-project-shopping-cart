@@ -22,7 +22,7 @@ async function sumCart() {
     const myCart = document.querySelectorAll('ol.cart__items li');
     if (myCart.length > 0) {
       let sum = 0;
-      myCart.forEach((item) => {
+      await myCart.forEach((item) => {
         sum += parseFloat(item.dataset.price);
       });
       pricePlacer.innerText = sum.toFixed(2);
