@@ -1,3 +1,14 @@
+function localSave() {
+  const savedItems = document.querySelector('.cart__items').innerHTML;
+  localStorage.cart = savedItems;
+}
+
+function loadItems() {
+  if (localStorage.cart) {
+    document.querySelector('.cart__items').innerHTML = localStorage.cart;
+  }
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,17 +25,6 @@ function createCustomElement(element, className, innerText) {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-function localSave() {
-  const savedItems = document.querySelector('.cart__items').innerHTML;
-  localStorage.cart = savedItems;
-}
-
-function loadItems() {
-  if (localStorage.cart) {
-    document.querySelector('.cart__items').innerHTML = localStorage.cart;
-  }
 }
 
 function cartItemClickListener(event) {
@@ -98,6 +98,9 @@ function emptyCartButton(event) {
 window.onload = function onload() {
   fetchProducts();
   loadItems();
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 500);
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', emptyCartButton);
 };
