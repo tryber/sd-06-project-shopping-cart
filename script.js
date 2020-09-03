@@ -48,6 +48,7 @@ const clearCart = () => {
   const buttonClear = document.querySelector('.empty-cart');
   buttonClear.addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
+    loclStorage();
   },
   );
 };
@@ -72,7 +73,8 @@ const addCart = (id) => {
       const li = createCartItemElement({ sku: id, name: title, salePrice: price });
       const cartList = document.querySelector('.cart__items');
       cartList.appendChild(li);
-    });
+    })
+    .finally(() => loclStorage()); 
 };
 
 const apiQuery = () => {
@@ -92,5 +94,5 @@ window.onload = function onload() {
   loadLocalStorage();
   apiQuery();
   clearCart();
-  document.querySelectorAll('.cart_item').forEach(element => element.addEventListener('click', cartItemClickListener));
+  document.querySelectorAll('.cart__item').forEach(element => element.addEventListener('click', cartItemClickListener));
 };
