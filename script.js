@@ -91,7 +91,7 @@ function handlerStrutor() {
   const arrayComputer = object.results;
   handlersectionsComputer(arrayComputer);
 });
- handlerLoading();
+  handlerLoading();
 }
 
 const saveStorage = () => {
