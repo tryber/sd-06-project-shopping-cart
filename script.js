@@ -99,7 +99,7 @@ const itemSearch = () => {
   return fetch(endpoint)
     .then(response => response.json())
     .then((object) => {
-      childH1.innerHTML = '';
+      itemSelector.innerHTML = '';
       // console.log(object);
       objectDetails(object.results);
     });
