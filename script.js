@@ -11,7 +11,7 @@ function cartItemClickListener() {
   for (let i = 0; i < localStorage.length; i += 1) {
     keyName = localStorage.key(i);
   }
-  localStorage.removeItem(keyName);;
+  localStorage.removeItem(keyName);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
