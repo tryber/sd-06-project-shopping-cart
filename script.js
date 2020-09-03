@@ -10,15 +10,31 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// Soma todo o valor que está dentro do span
+function addValueCar(price) {
+  const allValue = document.querySelector('.total-price');
+  allValue.innerHTML = (parseFloat(allValue.innerHTML) + price);
+}
+
+// Referência : https://www.devmedia.com.br/javascript-substring-selecionando-parte-de-uma-string/39232
+function removeValue(event) {
+  let eventValue = event.target.innerHTML;
+  eventValue = parseFloat(eventValue.substring(eventValue.indexOf('$') + 1));
+  addValueCar(-eventValue);
+}
+
 // salva no storage
 function storageCar() {
   const olList = document.querySelector('.cart__items');
   window.localStorage.setItem('car_list', olList.innerHTML);
+  const allValueCar = document.querySelector('.total-price');
+  localStorage.setItem('car_list_value', allValueCar.innerHTML);
 }
 
 function cartItemClickListener(event) {
   const carList = document.querySelector('.cart__items');
   carList.removeChild(event.target);
+  removeValue(event);
   storageCar();
 }
 
@@ -26,12 +42,14 @@ function cartItemClickListener(event) {
 function storageSavedList() {
   const olList = document.querySelector('.cart__items');
   olList.innerHTML = window.localStorage.getItem('car_list');
+  const listValue = document.querySelector('.total-price');
+  listValue.innerHTML = window.localStorage.getItem('car_list_value');
+
   const liList = document.querySelectorAll('li'); // array c/ li da list
   liList.forEach((li) => {
     li.addEventListener('click', cartItemClickListener);
   });
 }
-
 
 // Retorna li com classe, txt(par), evento p/ sair de carrinho
 // destructuring do data q vem cartItemClickListener
@@ -42,6 +60,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   // Depois customizar btn...
   // const btn = document.createElement('button');
   // li.appendChild(btn);
+  addValueCar(salePrice);
   li.addEventListener('click', cartItemClickListener);
 
   return li;
@@ -107,6 +126,7 @@ const fetchUrl = () => {
 const removeAlItems = () => {
   const listCar = document.querySelector('.cart__items');
   listCar.innerHTML = '';
+  document.querySelector('.total-price').innerHTML = 0;
   storageCar();
 };
 
