@@ -1,7 +1,7 @@
 const removeElement = (cssClass) => {
   const elements = document.querySelectorAll(`.${cssClass}`);
   if (elements !== null) {
-    elements.forEach(element => {
+    elements.forEach((element) => {
       element.parentElement.removeChild(element);
     });
   }
