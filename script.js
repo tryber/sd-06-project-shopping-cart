@@ -64,5 +64,5 @@ window.onload = function onload() { // usei
     })
     .then(() => {
       // console.log('vou usar depois');
-    })
+    });
 };
