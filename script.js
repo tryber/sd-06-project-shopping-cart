@@ -3,7 +3,7 @@ function loadText() {
   const pText = document.createElement('span');
   const containerText = document.querySelector('.container');
   pText.className = 'loading';
-  pText.innerHTML = 'loading';
+  pText.innerHTML = 'loading...';
   containerText.appendChild(pText);
 }
 function saveOrDelete() {
