@@ -11,6 +11,7 @@ const createProductImageElement = (imageSource) => {
 
 const getSkuFromProductItem = item => item.querySelector('span.item__sku').innerText;
 
+// Atualizando valores no LocalStorage
 const totalValueUpdate = async (value) => {
   totalValue += value;
   const totalValueFormated = Math.round(totalValue * 100) / 100;
@@ -100,7 +101,7 @@ const totalResults = (results) => {
 // Fazendo requisição de todos os produtos
 const resultFetch = (url) => {
   const section = document.querySelector('.items');
-  const h4 = document.querySelector('.loading');
+  const h4 = document.querySelector('.load');
 
   fetch(url)
     .then(response => response.json())
