@@ -14,14 +14,17 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener(
+      'click', () => listThisProduct(sku),
+    )
 
   return section;
 }
@@ -46,7 +49,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 // botão financeiramente consciente:
 function clearAllItemsListed() {
   const emptyAllButton = document.querySelector('.empty-cart');
-  console.log(emptyAllButton);
   emptyAllButton.addEventListener(
     'click',
     function () {
@@ -62,15 +64,17 @@ function findThisSpecificProduct(sku) {
   return fetch(`${urlML}/items/${sku}`);
 }
 
-async function listThisProduct(sku) {
+function listThisProduct(sku) {
   const cartList = document.querySelector('.cart__items');
-  const bringIdProduct = await findThisSpecificProduct(sku);
-  const responseIdProduct = await bringIdProduct.json();
-  cartList.appendChild(createCartItemElement({
-    sku: responseIdProduct.id,
-    name: responseIdProduct.title,
-    salePrice: responseIdProduct.price,
-  }),
+  findThisSpecificProduct(sku)
+  .then(bringIdProduct => bringIdProduct.json())
+  .then(responseIdProduct =>
+    cartList.appendChild(createCartItemElement({
+      sku: responseIdProduct.id,
+      name: responseIdProduct.title,
+      salePrice: responseIdProduct.price,
+    }),
+  )
   );
 }
 // cria o fetch - requisito1:
@@ -78,19 +82,14 @@ function findProduct(term) {
   return fetch(`${urlML}sites/MLB/search?q=${term}`);
 }
 
-async function showAllProducts() {
+function showAllProducts() {
   const sectionItems = document.querySelector('.items');
-  const findProductResponse = await findProduct('computador');
-  const allProductsInfo = await findProductResponse.json();
-  allProductsInfo.results.forEach(product => sectionItems.appendChild(
-    createProductItemElement({
-      sku: product.id,
-      name: product.title,
-      image: product.thumbnail,
-    }),
-  ).querySelector('.item__add').addEventListener(
-    'click', () => listThisProduct(product.id),
-  ),
+  findProduct('computador')
+  .then( query => query.json())
+  .then( allProductsInfo =>
+    allProductsInfo.results.forEach(product => sectionItems.appendChild(
+      createProductItemElement(product),
+    ))
   );
 }
 
