@@ -112,12 +112,20 @@ const addProductToCart = (li) => {
 };
 
 const fetchProductItem = async (sku) => {
-  fetch(`https://api.mercadolibre.com/items/${sku}`).then(resolve => resolve.json())
-  .then(async (itemCart) => {
-    addProductToCart(createCartItemElement(itemCart));
-    await recordOnLocalStorage(itemCart);
-    displayItemPrices();
-  });
+  try {
+    const response  = await fetch(`https://api.mercadolibre.com/items/${sku}`)
+    const itemCart = await response.json()
+
+    if (itemCart.error) {
+      throw new Error(itemCart.error)
+    } else {
+      addProductToCart(createCartItemElement(itemCart));
+      await recordOnLocalStorage(itemCart);
+      displayItemPrices();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const appendItem = (product) => {
