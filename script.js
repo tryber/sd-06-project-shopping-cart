@@ -27,7 +27,7 @@ function cartItemClickListener(event) {
 function loadStorage() {
   if (localStorage.loadCart) {
     document.querySelector('.cart__items').innerHTML = localStorage.loadCart;
-    cartItemClickListener();
+    addEventListener('click', cartItemClickListener)
   }
 }
 
