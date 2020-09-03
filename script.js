@@ -101,24 +101,28 @@ const clearButton = () => {
   getButton.addEventListener('click', clearItems);
 };
 
-const sumTotal = (sum) => {
-  const totalBuy = document.querySelector('.cart__total');
-  totalBuy.innerHTML = sum;
-};
+const loadItemsToLocalStorage = (id, title, price) => {
+  if (Storage) {
+    const itemnsToLoad = JSON.parse(localStorage.getItem('cart'));
+    const arrayOfItems = (itemnsToLoad === null ? [] : itemnsToLoad);
+    arrayOfItems.push({id, title, price});
+    localStorage.setItem('cart', JSON.stringify(arrayOfItems));
+  }
+}
 
-async function sumTotalBuy() {
-  let sum = 0;
-  const getTotalItemsInChart = await JSON.parse(localStorage.getItem());
-  if (getTotalItemsInChart) {
-    for (let index = 0; index < getTotalItemsInChart.length; index += 1) {
-      sum += getTotalItemsInChart[index].price;
+const removeItemsFromLocalStorage =(sku) => {
+  const arrayOfItems = JSON.parse(localStorage.getItem('cart'));
+  for (let i = 0; i < arrayOfItems.length; index += 1) {
+    if (arrayOfItems[index].id === sku) {
+      arrayOfItems.splice(index, 1);
+      break;
     }
   }
-  sumTotal(sum);
+  localStorage.setItem('cart', JSON.stringify(arrayOfItems));
 }
 
 window.onload = function onload() {
   fetchDisplay();
   clearButton();
-  sumTotalBuy();
+  loadItemsToLocalStorage();
 };
