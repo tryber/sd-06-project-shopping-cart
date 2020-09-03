@@ -81,7 +81,7 @@ window.onload = () => {
     data.results.forEach((elemento) => {
       itemCart.appendChild(createProductItemElement(elemento));
     });
-    document.querySelector('.loading').innerHTML = '';
+    document.querySelector('.loading').remove();
   });
   loadStorage();
   clearCart();
