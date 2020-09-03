@@ -19,9 +19,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const saveOnStorage = () => {
+  const shopCart = document.querySelector('.cart__items');
+  const local = JSON.stringify(shopCart.innerHTML);
+  localStorage.setItem('local', local);
+};
+
 function cartItemClickListener(event) {
   const cartItems = document.querySelector('.cart__items');
   cartItems.removeChild(event.target);
+  saveOnStorage();
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -41,10 +48,12 @@ const fetchItem = (sku) => {
     .then(objeto => createCartItemElement(objeto));
 };
 
-
 function createProductItemElement({ sku, name, image }) {
   const addButtonCar = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  addButtonCar.addEventListener('click', () => fetchItem(sku));
+  addButtonCar.addEventListener('click', () => {
+    fetchItem(sku);
+    saveOnStorage();
+  });
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -58,17 +67,22 @@ function createProductItemElement({ sku, name, image }) {
 
 const fetchWindow = () => {
   const endPoint = `${url.endPointWeb}`;
+  const load = document.querySelector('.items');
+  load.innerHTML = '<h1 class="loading">loading...</h1>';
   fetch(endPoint)
     .then(response => response.json())
-    .then(objShowCase => objShowCase.results.forEach((item) => {
-      const objShowC = {
-        sku: item.id,
-        name: item.title,
-        image: item.thumbnail,
-      };
-      const showcase = document.querySelector('.items');
-      showcase.appendChild(createProductItemElement(objShowC));
-    }));
+    .then((objShowCase) => {
+      load.innerHTML = '';
+      objShowCase.results.forEach((item) => {
+        const objShowC = {
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
+        };
+        const showcase = document.querySelector('.items');
+        showcase.appendChild(createProductItemElement(objShowC));
+      });
+    });
 };
 
 // const imprima = () => console.log('clicando');
@@ -78,13 +92,19 @@ const setClearButton = () => {
   clearButton[0].addEventListener('click', () => {
     const items = document.querySelector('.cart__items');
     items.innerHTML = '';
-    // items.forEach(item => carShop.removeChild(item));
+    saveOnStorage();
   });
+};
+
+const storageOnLoad = () => {
+  const localOnLoad = JSON.parse(localStorage.local);
+  console.log(localOnLoad);
 };
 
 window.onload = function onload() {
   fetchWindow();
   setClearButton();
+  storageOnLoad();
 };
 
 // function getSkuFromProductItem(item) {
