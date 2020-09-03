@@ -61,19 +61,23 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 function handlersectionsComputer(arrayComputer) {
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 5000);
   arrayComputer.forEach((product) => {
     const productNewPay = createProductItemElement(product);
     const section = document.querySelector('.items');
     section.appendChild(productNewPay);
   });
 }
+
 function handlerStrutor() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computer';
   fetch(url)
 .then(response => response.json())
 .then((object) => {
+  loadingProducts(object.results)
   const arrayComputer = object.results;
-  console.log(arrayComputer);
   handlersectionsComputer(arrayComputer);
 });
 }
