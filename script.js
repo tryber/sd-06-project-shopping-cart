@@ -53,15 +53,15 @@ const fetchCurrency = () => {
   const endpoint = urlInitial;
 
   fetch(endpoint)
-  .then((response) => response.json())
+  .then(response => response.json())
   .then((object) => {
     object.results.forEach((item) => {
       const productList = document.querySelector('.items');
       const productArray = createProductItemElement(item);
       productList.appendChild(productArray);
-    })
-  })
-}
+    });
+  });
+};
 
 window.onload = function onload() {
   fetchCurrency();
