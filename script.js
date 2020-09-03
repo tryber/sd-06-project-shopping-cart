@@ -76,7 +76,6 @@ function handlerStrutor() {
   fetch(url)
 .then(response => response.json())
 .then((object) => {
-  loadingProducts(object.results)
   const arrayComputer = object.results;
   handlersectionsComputer(arrayComputer);
 });
