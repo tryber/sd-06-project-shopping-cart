@@ -1,3 +1,10 @@
+const removeElement = (cssClass) => {
+  const element = document.querySelector(`.${cssClass}`);
+  while (element) {
+    element.parentElement.removeChild(element);
+  }
+};
+
 const removeCartElements = () => {
   removeElement('.cart__item');
 };
