@@ -27,7 +27,7 @@ const loadLocalStorage = () => {
   if (localStorage.list) {
     document.querySelector('.cart__items').innerHTML = localStorage.list;
   }
-}
+};
 
 
 function cartItemClickListener(event) {
