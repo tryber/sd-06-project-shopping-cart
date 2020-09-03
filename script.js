@@ -82,6 +82,19 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function loadText() {
+  const loadingText = document.createElement('h1');
+  loadingText.innerHTML = 'loading...'
+  loadingText.className = 'loading'
+  const father = document.querySelector('.items')
+  father.appendChild(loadingText)
+}
+
+function delText() {
+  const loadingText = document.querySelector('.loading')
+  loadingText.remove();
+}
+
 // construção da api url
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/search?q=$',
@@ -91,7 +104,8 @@ const apiInfo = {
 const url = `${apiInfo.api}${apiInfo.endpoint}`;
 
 // função fetch para pegar o obj do api do mercado livre
-const fetchCurrency = (currency) => {
+const fetchMain = () => {
+  loadText();
   fetch(url)
     .then(response => response.json())
     .then((object) => {
@@ -99,6 +113,7 @@ const fetchCurrency = (currency) => {
       if (object.error) {
         throw new Error(object.error);
       } else {
+        delText();
         // console.log(object.results);
         // caminha na array object.results
         object.results.forEach((item) => {
@@ -125,7 +140,7 @@ function methodClearList() {
 }
 
 window.onload = function onload() {
-  fetchCurrency();
+  fetchMain();
   localStorageLoad(); // carrega lista qndo inicia
   methodClearList();
 };
