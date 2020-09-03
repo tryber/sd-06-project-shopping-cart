@@ -1,16 +1,17 @@
 const removeCartElements = () => {
-  const cartList = document.querySelector('.cart__items');
-  while (cartList.firstChild) {
-    cartList.removeChild(cartList.firstChild);
-  }
+  removeElement('.cart__item');
 };
 
-const removeCartTotalPriceElement = () => {
-  const totalPriceElement = document.querySelector('.total-price');
-  if (totalPriceElement) {
-    totalPriceElement.parentElement.removeChild(totalPriceElement);
+const removeElement = (cssClass) => {
+  const element = document.querySelector(`.${cssClass}`);
+  while (element) {
+    element.parentElement.removeChild(element);
   }
-};
+}
+
+const removeCartTotalPriceElement = () => {
+  removeElement('.total-price');
+}
 
 const clearCart = () => {
   removeCartElements();
