@@ -73,6 +73,13 @@ async function addItemToCart(product) {
   localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
+async function getTotal() {
+  const cartItemsField = document.querySelector('.cart__items');
+  const cartItems = cartItemsField.children;
+  const prices = cartItems.forEach(element => element.innerText.split('$')[1]);
+  console.log(prices);
+}
+
 async function renderProducts() {
   const productsRetrieved = await getListOfProducts();
   const itemsField = document.querySelector('.items');
@@ -114,5 +121,6 @@ function setupEventHandlers() {
 window.onload = async function onload() {
   // setupEventHandlers();
   await renderProducts();
-  showStoredCartItems();
+  await showStoredCartItems();
+  getTotal()
 };
