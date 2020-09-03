@@ -67,6 +67,14 @@ function createCartItemElement({
   return li;
 }
 
+function loadStorageList() {
+  if (localStorage.computerLocalStorage) {
+    const loadOl = document.querySelector('.cart__items');
+    loadOl.innerHTML = localStorage.getItem('computerLocalStorage');
+    document.querySelectorAll('li').forEach(element => element.addEventListener('click', cartItemClickListener));
+  }
+}
+
 // function clearCart() {
 //   const removeAllItems = document.querySelector('.empty-cart');
 //   const fatherElementToRemove = document.querySelector('.cart__items');
