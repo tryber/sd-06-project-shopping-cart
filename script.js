@@ -2,9 +2,13 @@ const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 
 function addLocalItem() {
   const buyToLocal = document.querySelector('.cart__items').innerHTML;
-  console.log(buyToLocal);
   localStorage.setItem('computerLocalStorage', buyToLocal);
 }
+
+// function removeLocalItem() {
+//   const removeFromLocal = document.querySelector('.cart__item').innerHTML;
+//   // localStorage.removeItem('computerLocalStorage', removeFromLocal);
+// }
 
 function loadStorageList() {
   if (localStorage.computerLocalStorage) {
@@ -61,6 +65,19 @@ function createCartItemElement({
   return li;
 }
 
+// function clearCart() {
+//   const removeAllItems = document.querySelector('.empty-cart');
+//   const fatherElementToRemove = document.querySelector('.cart__items');
+//   removeAllItems.addEventListener('click', fatherElementToRemove.removeChild());
+// }
+
+function emptyCartButton() {
+  document.querySelector('.empty-cart').addEventListener('click', () => {
+    document.querySelector('.cart__items').innerHTML = '';
+    addLocalItem();
+  });
+}
+
 function fetchBuyedComputer(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
@@ -101,10 +118,22 @@ function createProductItemElement({
 // let a = (JSON.parse(localStorage[0]));
 // console.log(a.sku);
 
+function loadingQuery() {
+  const newElement = document.createElement('div');
+  newElement.className = 'loading';
+  newElement.innerText = 'loading';
+  const fatherLoad = document.querySelector('.items');
+  fatherLoad.appendChild(newElement);
+}
+
+// loadingQuery();
+
 function fetchComputer() {
+  loadingQuery();
   fetch(endpoint)
     .then(response => response.json())
     .then((object) => {
+      document.querySelector('.items').innerHTML = '';
       object.results.forEach((computer) => {
         const fatherElement = document.querySelector('.items');
         fatherElement.appendChild(createProductItemElement(computer));
@@ -115,4 +144,6 @@ function fetchComputer() {
 window.onload = function onload() {
   fetchComputer();
   loadStorageList();
+  // clearCart();
+  emptyCartButton();
 };
