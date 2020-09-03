@@ -113,11 +113,11 @@ const addProductToCart = (li) => {
 
 const fetchProductItem = async (sku) => {
   try {
-    const response  = await fetch(`https://api.mercadolibre.com/items/${sku}`)
-    const itemCart = await response.json()
+    const response  = await fetch(`https://api.mercadolibre.com/items/${sku}`);
+    const itemCart = await response.json();
 
     if (itemCart.error) {
-      throw new Error(itemCart.error)
+      throw new Error(itemCart.error);
     } else {
       addProductToCart(createCartItemElement(itemCart));
       await recordOnLocalStorage(itemCart);
@@ -126,6 +126,7 @@ const fetchProductItem = async (sku) => {
   } catch (error) {
     console.log(error);
   }
+
 };
 
 const appendItem = (product) => {
@@ -164,12 +165,10 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 const displayItems = async () => {
-  const itemBuscado = 'computador';
-  await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${itemBuscado}`).then(resolve => resolve.json())
-    .then(data => data.results.forEach((product) => {
-      appendItem(createProductItemElement(product));
-    }),
-  );
+  const searchedItem = 'computador';
+  const responseFromApi = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${searchedItem}`);
+  const itemsFound = await responseFromApi.json();
+  itemsFound.results.forEach(itemFound => appendItem(createProductItemElement(itemFound)));
 };
 
 function loadCart() {
