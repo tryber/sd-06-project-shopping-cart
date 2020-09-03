@@ -113,13 +113,14 @@ const addProductToCart = (li) => {
 
 const fetchProductItem = async (sku) => {
   try {
-    const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
-    const itemCart = await response.json();
-    if (itemCart.error) {
-      throw new Error(itemCart.error);
+    generateLoadingItem()
+    const response = await getResponseFromApi('/items', sku);
+    removeLoadingItem();
+    if (response.error) {
+      throw new Error(response.error);
     } else {
-      addProductToCart(createCartItemElement(itemCart));
-      await recordOnLocalStorage(itemCart);
+      addProductToCart(createCartItemElement(response));
+      await recordOnLocalStorage(response);
       displayItemPrices();
     }
   } catch (error) {
@@ -162,10 +163,37 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+const getResponseFromApi = async (subPageUrl, searchedItem) => {
+  return new Promise(resolve => {
+    setTimeout(async () => {
+      const responseFromApi = await fetch(`https://api.mercadolibre.com${subPageUrl}${searchedItem}`);
+      const itemsFound = await responseFromApi.json();
+      resolve(itemsFound);
+    }, 2000);
+  });
+}
+
+const generateLoadingItem =  () => {
+  const loadingItem = document.createElement('div');
+  const body = document.body;
+  loadingItem.innerText = 'Loading';
+  body.appendChild(loadingItem);
+  loadingItem.classList = 'loading';
+};
+
+const removeLoadingItem = () => {
+  const loadingItem = document.querySelector('.loading');
+  if (loadingItem) {
+    loadingItem.parentNode.removeChild(loadingItem);
+  }
+};
+
 const displayItems = async () => {
   const searchedItem = 'computador';
-  const responseFromApi = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${searchedItem}`);
-  const itemsFound = await responseFromApi.json();
+  const subPageUrl = '/sites/MLB/search?q=';
+  generateLoadingItem();
+  const itemsFound = await getResponseFromApi(subPageUrl, searchedItem);
+  removeLoadingItem();
   itemsFound.results.forEach(itemFound => appendItem(createProductItemElement(itemFound)));
 };
 

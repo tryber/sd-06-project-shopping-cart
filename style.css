@@ -74,3 +74,9 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.loading {
+  font-family: -apple-system;
+  font-size: 64px;
+  text-align: center;
+}
