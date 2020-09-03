@@ -125,8 +125,8 @@ const fetchProductItem = async (sku) => {
   } catch (error) {
     console.log(error);
   }
-
 };
+
 const appendItem = (product) => {
   const parentSection = document.querySelector('.items');
   parentSection.appendChild(product);
