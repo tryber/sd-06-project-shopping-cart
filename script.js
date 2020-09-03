@@ -28,6 +28,22 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const sumTotalBill = (sum) => {
+  const totalBill = document.querySelector('.cart__total');
+  totalBill.innerHTML = sum;
+};
+
+async function getSumTotalBill() {
+  let sum = 0;
+  const totalBill = await JSON.parse(localStorage.getItem('cart'));
+  if (totalBill) {
+    for (let index = 0; index < totalBill.length; index += 1) {
+      sum += totalBill[index].price;
+    }
+  }
+  sumTotalBill(sum);
+};
+
 const loadItemsToLocalStorage = (id, title, price) => {
   if (Storage) {
     const getItemsSaved = JSON.parse(localStorage.getItem('cart'));
@@ -35,6 +51,7 @@ const loadItemsToLocalStorage = (id, title, price) => {
     values.push({ id, title, price });
     localStorage.setItem('cart', JSON.stringify(values));
   }
+  getSumTotalBill();
 };
 
 const removeItemsFromLocalStorage = (sku) => {
@@ -46,6 +63,7 @@ const removeItemsFromLocalStorage = (sku) => {
     }
   }
   localStorage.setItem('cart', JSON.stringify(getItemsFromLocalStorage));
+  getSumTotalBill();
 };
 
 function cartItemClickListener(event) {
@@ -127,6 +145,7 @@ const clearItems = () => {
   const itemsToKill = document.querySelector('.cart__items');
   itemsToKill.innerHTML = '';
   localStorage.clear();
+  getSumTotalBill();
 };
 
 const clearButton = () => {
