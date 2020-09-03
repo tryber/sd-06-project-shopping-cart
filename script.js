@@ -1,4 +1,25 @@
-window.onload = function onload() { };
+// const fetch = require('node-fetch');
+const api = 'https://api.mercadolibre.com/';
+const endpoint = 'sites';
+const siteId = 'MLB';
+const resourse = 'search?q=';
+const query = 'computador';
+
+function makeQuery (url) {
+  return new Promise((resolve, reject) => {
+    if (url === `${api}${endpoint}/${siteId}/${resourse}${query}`) {
+      const myObject = {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      };
+      fetch(url)
+        .then(response => response.json())
+        .then(data => resolve(data));
+    } else {
+      reject(new Error('Endpoint not found'));
+    }
+  })
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -41,3 +62,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+function logData() {
+  const data = makeQuery('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+    .then(resolved => resolved['results'])
+    .catch(err => console.log(err));
+}
+
+window.onload = function onload() { 
+  const hey = logData();
+};
