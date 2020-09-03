@@ -2,16 +2,9 @@ const removeCartElements = () => {
   removeElement('.cart__item');
 };
 
-const removeElement = (cssClass) => {
-  const element = document.querySelector(`.${cssClass}`);
-  while (element) {
-    element.parentElement.removeChild(element);
-  }
-}
-
 const removeCartTotalPriceElement = () => {
   removeElement('.total-price');
-}
+};
 
 const clearCart = () => {
   removeCartElements();
