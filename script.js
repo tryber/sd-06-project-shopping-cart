@@ -40,19 +40,17 @@ function createCartItemElement({ sku, name, salePrice }) {
 function productId(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
-  .then(({id, title, price}) => {
+  .then(({ id, title, price }) => {
       // retornar essas propriedades
-      const addedProductOnCart = createCartItemElement({
+    const addedProductOnCart = createCartItemElement({
         sku: id,
         name: title,
         salePrice: price,
       });
-    // onde serão appendados na
-    //seção do carrinho de
-    //compras apos ser chamado
-    // no fetch 1 após criação
-    //do ol no index.html
-        document.querySelector('.cart__items').appendChild(addedProductOnCart);
+    // onde serão appendados na seção do carrinho de
+    // compras apos ser chamado no fetch 1 após criação
+    // do ol no index.html
+    document.querySelector('.cart__items').appendChild(addedProductOnCart);
     });
   }
 
