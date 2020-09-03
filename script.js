@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) { // usei
 }
 
 function cartItemClickListener(event) { // usei
-  console.log(event.target.innerText.split('$')[1])
+  console.log(event.target.innerText.split('$')[1]);
   this.remove();
 }
 
@@ -54,7 +54,7 @@ function productItemListener(event) { // usei
       };
 
       productLi = createCartItemElement(product);
-      productLi.addEventListener('click', cartItemClickListener)
+      productLi.addEventListener('click', cartItemClickListener);
 
       const cartItemsOl = document.querySelector('.cart__items');
       cartItemsOl.appendChild(productLi);
