@@ -31,22 +31,18 @@ const requiredUrl = 'https://api.mercadolibre.com/items/';
 
 function cartItemClickListener(event) {
   document.querySelector('.cart__items').removeChild(event.target);
+  const removeId = event.target;
+  console.log(removeId);
+  localStorage.removeItem(removeId);
 }
+
 const clearCart = () => {
   document.querySelector('.empty-cart')
   .addEventListener('click', () => {
     const clearAll = document.querySelector('.cart__items');
     clearAll.innerHTML = '';
+    localStorage.clear();
   });
-};
-
-const getItemToPushInLocalStorage = (id, title, basePrice) => {
-  const objCartList = {
-    SKU: id,
-    name: title,
-    price: basePrice,
-  };
-  return objCartList;
 };
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -54,8 +50,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  const localStorageItem = getItemToPushInLocalStorage(sku, name, salePrice);
-  localStorage.setItem(sku, JSON.stringify(localStorageItem));
   return li;
 }
 
@@ -66,6 +60,13 @@ const api = {
 
 const url = `${api.api}${api.endpoint}`;
 
+const cartList = (getResponse) => {
+  const list = createCartItemElement(getResponse);
+  document.querySelector('.cart__items').appendChild(list);
+  const localId = list.innerHTML;
+  localStorage.setItem(localId, localId);
+};
+
 const insertElement = (obj) => {
   obj.forEach((itens) => {
     const tag = createProductItemElement(itens);
@@ -75,11 +76,18 @@ const insertElement = (obj) => {
       fetch(`${requiredUrl}${endPoint}`)
       .then(response => response.json())
       .then((getResponse) => {
-        const cartList = createCartItemElement(getResponse);
-        document.querySelector('.cart__items').appendChild(cartList);
-        console.log(cartList);
+        cartList(getResponse);
       });
     });
+  });
+};
+
+const loadLocalStorage = () => {
+  const chave = (Object.keys(localStorage));
+  chave.forEach((storageElement) => {
+    const tag = document.createElement('li');
+    tag.innerText = storageElement;
+    document.querySelector('.cart__items').appendChild(tag);
   });
 };
 
@@ -94,4 +102,8 @@ const fetchObj = () => {
 window.onload = function onload() {
   fetchObj();
   clearCart();
+  loadLocalStorage();
+  // getStorage();
+  // createNewCart(fillingCartWithLocalStorage);
+  // localStorage.clear();
 };
