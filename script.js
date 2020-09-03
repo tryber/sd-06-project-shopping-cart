@@ -39,7 +39,9 @@ let myCartIds = [];
 function cartItemClickListener(event) {
   const indexOfItem = myCartIds.indexOf(event.target.id);
   if (indexOfItem > -1) myCartIds.splice(indexOfItem, 1);
-  event.target.remove();
+  const element = event.target;
+  const parent = document.querySelector('.cart__items');
+  parent.removeChild(element);
   sumCart()
     .catch(error => console.log(error));
 }
