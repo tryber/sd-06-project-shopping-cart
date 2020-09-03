@@ -39,9 +39,7 @@ let myCartIds = [];
 function cartItemClickListener(event) {
   const indexOfItem = myCartIds.indexOf(event.target.id);
   if (indexOfItem > -1) myCartIds.splice(indexOfItem, 1);
-  const element = event.target;
-  const parent = document.querySelector('.cart__items');
-  parent.removeChild(element);
+  event.target.remove();
   sumCart()
     .catch(error => console.log(error));
 }
@@ -53,7 +51,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.setAttribute('data-price', salePrice);
   li.setAttribute('data-title', name);
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
@@ -64,7 +62,9 @@ async function addToCart(url, id) {
     const object = await fetchId.json();
     if (object.error) throw new Error(object.error);
     const cartList = document.querySelector('ol.cart__items');
-    cartList.appendChild(createCartItemElement(object));
+    const cartItem = createCartItemElement(object);
+    cartItem.addEventListener('click', cartItemClickListener);
+    cartList.appendChild(cartItem);
     myCartIds.push(id);
     sumCart();
   } catch (error) {
