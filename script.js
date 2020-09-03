@@ -30,8 +30,9 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // event.parentNode.removeChild(event);
   event.target.remove();
+  const cartItemsField = document.querySelector('.cart__items');
+  localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -69,7 +70,7 @@ async function addItemToCart(product) {
   const cartItemsField = document.querySelector('.cart__items');
   const cartItemElement = createCartItemElement(mountedCartItem);
   cartItemsField.appendChild(cartItemElement);
-  // localStorage.setItem('cartItems', cartItemsField.innerHTML);
+  localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
 async function renderProducts() {
@@ -101,15 +102,17 @@ function showStoredCartItems() {
   }
 }
 
+/*
 function setupEventHandlers() {
   window.addEventListener('beforeunload', () => {
     const cartItemsElement = document.querySelector('.cart__items');
     localStorage.setItem('cartItems', cartItemsElement.innerHTML);
   });
 }
+*/
 
 window.onload = async function onload() {
-  setupEventHandlers();
+  // setupEventHandlers();
   await renderProducts();
   showStoredCartItems();
 };
