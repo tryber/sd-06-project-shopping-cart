@@ -5,36 +5,6 @@ function addLocalItem() {
   localStorage.setItem('computerLocalStorage', buyToLocal);
 }
 
-// function removeLocalItem() {
-//   const removeFromLocal = document.querySelector('.cart__item').innerHTML;
-//   // localStorage.removeItem('computerLocalStorage', removeFromLocal);
-// }
-
-function loadStorageList() {
-  if (localStorage.computerLocalStorage) {
-    const loadOl = document.querySelector('.cart__items');
-    loadOl.innerHTML = localStorage.getItem('computerLocalStorage');
-    document.querySelectorAll('li').forEach(element => element.addEventListener('click', cartItemClickListener));
-  }
-}
-
-// async function fetchComputer (endpoint) {
-//   const response = await fetch(endpoint);
-//   const object = await response.json();
-
-//   const data = {
-//     sku: object.result.id,
-
-//   }
-
-//   createProductItemElement(object.result);
-// }
-
-// addLocalItem(JSON.stringify({
-//   sku: object.id,
-//   name: object.title,
-//   salePrice: object.price,
-
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
