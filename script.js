@@ -1,6 +1,6 @@
-// function cartItemClickListener(event) {
-function cartItemClickListener() {
-  // coloque seu código aqui
+function cartItemClickListener(event) {
+  const selectItem = event.target;
+  selectItem.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
