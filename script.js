@@ -7,11 +7,6 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function saveToStorageCar() {
-  const olList = document.querySelector('.cart__items');
-  window.localStorage.setItem('car_list', olList.innerHTML);
-}
-
 function cartItemClickListener(event) {
   const carList = document.querySelector('.cart__items');
   carList.removeChild(event.target);
@@ -52,10 +47,6 @@ const displayItems = async () => {
     }),
   );
 };
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
 
 function cartItemClickListener(event) {
   const cartList = document.querySelector('.cart__items');
