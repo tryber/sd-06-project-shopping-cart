@@ -4,7 +4,7 @@ let total = 0;
 function sumPrice(price) {
   total += price;
   totalText = document.querySelector('.total-price');
-  totalText.innerHTML = total.toFixed(2);
+  totalText.innerHTML = total;
 }
 // função de erro, caso de erro
 const handleError = (errorMessage) => {
@@ -45,7 +45,7 @@ function cartItemClickListener() {
     save = xprice[1];
     total -= parseFloat(xprice[1]);
     totalText = document.querySelector('.total-price');
-    totalText.innerHTML = total.toFixed(2);
+    totalText.innerHTML = total;
   }
 }
 // carrega storage
