@@ -13,6 +13,13 @@ function getTotal() {
   totalContainer.innerHTML = `Total: ${reduced.toFixed(2)}`;
 }
 
+function emptyCart() {
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.innerHTML = '';
+  localStorage.setItem('storageItems', '');
+  getTotal();
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -99,7 +106,11 @@ window.onload = function onload() {
   [...cartItems.children].forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
   });
+
   getTotal();
+
+  const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', emptyCart);
 
   // const keys = Object.keys(localStorage);
   // const cartItems = document.querySelector('.cart__items');
