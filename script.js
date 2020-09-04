@@ -85,11 +85,7 @@ const fetchProducts = () => {
     });
 };
 
-window.onload = function onload() {
-  fetchProducts();
-};
-
-window.addEventListener('load', () => {
+function loadStorage() {
   dataFromStorage = JSON.parse(localStorage.getItem('products'));
   console.log(dataFromStorage);
   for (i = 0; i < dataFromStorage.length; i += 1) {
@@ -97,4 +93,9 @@ window.addEventListener('load', () => {
     li.innerText = dataFromStorage[i];
     document.querySelector('ol').appendChild(li);
   }
-});
+}
+
+window.onload = function onload() {
+  fetchProducts();
+  loadStorage();
+};
