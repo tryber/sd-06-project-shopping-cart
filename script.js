@@ -25,7 +25,7 @@ async function sumCart() {
       await myCart.forEach((item) => {
         sum += parseFloat(item.dataset.price);
       });
-      pricePlacer.innerText = sum;
+      pricePlacer.innerText = (Number.isInteger(sum)) ? sum : sum.toFixed(2);
     } else {
       pricePlacer.innerText = '-';
     }
@@ -34,20 +34,26 @@ async function sumCart() {
   }
 }
 
-let storedIds = localStorage.getItem('myCartIds');
-if (storedIds === null) storedIds = [];
+let storedIds = [];
 
 function manageCartInStorage(operation, id) {
+  storedIds = localStorage.getItem('myCartIds');
+  storedIds = (!storedIds) ? [] : storedIds.split(',');
+
   if (operation === 'add') {
     storedIds.push(id);
     localStorage.setItem('myCartIds', storedIds.toString());
-  } else if (operation === 'remove') {
+    return 'item added to storage';
+  }
+
+  if (operation === 'remove') {
     const indexOfItem = storedIds.indexOf(id);
     if (indexOfItem > -1) storedIds.splice(indexOfItem, 1);
     localStorage.setItem('myCartIds', storedIds.toString());
-  } else {
-    throw new Error('invalid operation for managing of local storage cart.');
+    return 'item removed from storage.';
   }
+
+  throw new Error('invalid operation for managing of local storage cart.');
 }
 
 function cartItemClickListener(event) {
@@ -110,6 +116,7 @@ function loadStoredCart(storedCartItems) {
   storedCartItems.forEach((item) => {
     const url = `https://api.mercadolibre.com/items/${item}`;
     fetchPromises.push(fetch(url)
+      .then(objectJson => objectJson.json())
       .catch(error => console.log(error)),
     );
   });
@@ -120,7 +127,6 @@ function loadStoredCart(storedCartItems) {
         const cartList = document.querySelector('ol.cart__items');
         const cartItem = createCartItemElement(item);
         cartList.appendChild(cartItem);
-        manageCartInStorage('add', id);
         sumCart();
       });
     })
@@ -165,7 +171,10 @@ window.onload = function onload() {
     .catch('deu pau no carregamento dos produtos!');
 
   storedIds = localStorage.getItem('myCartIds');
-  if (storedIds) loadStoredCart(storedIds);
+  if (storedIds) {
+    storedIds = storedIds.split(',');
+    loadStoredCart(storedIds);
+  }
 
   const clearCartButton = document.querySelector('button.empty-cart');
   clearCartButton.addEventListener('click', clearCart);
