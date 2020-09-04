@@ -74,3 +74,8 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.containerLoading {
+  text-align: center;
+  margin-top: 10px;
+}
