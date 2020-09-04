@@ -25,7 +25,7 @@ async function sumCart() {
       myCart.forEach((item) => {
         sum += Number(item.dataset.price);
       });
-      pricePlacer.innerText = (Number.isInteger(sum)) ? sum : sum.toFixed(1);
+      pricePlacer.innerText = sum;
     } else {
       pricePlacer.innerText = '-';
     }
