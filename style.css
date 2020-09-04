@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  font-family: 'Kumbh Sans', sans-serif;
+  font-family: "Kumbh Sans", sans-serif;
 }
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -28,20 +29,20 @@ body {
 }
 
 .items {
-  /* border: 1px solid; */
-  background-color: rgb(242, 242, 242);
+  background-color: rgb(242 ,242 ,242);
   display: flex;
   flex-basis: 70%;
   flex-wrap: wrap;
-  font-size:0.8em;
+  font-size: 0.8em;
   justify-content: center;
   padding-top: 10px;
 }
 
 .item {
-  border: 2px solid rgb(103, 146, 137);
+  border: 2px solid rgb(103 ,146 ,137);
   border-radius: 5px;
   box-sizing: border-box;
+  color: rgb(0, 14, 30);
   display: flex;
   flex-direction: column;
   height: auto;
@@ -64,16 +65,18 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb(103, 146, 137);
+  background-color: rgb(103 ,146 ,137);
   border: 0;
+  color: rgb(7 ,30 ,34);
   cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
   margin: 0;
   padding: 5px;
 }
 
 .cart {
-  background-color: rgb(103, 146, 137);
-  /* border: 1px solid; */
+  background-color: rgb(103 ,146 ,137);
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
@@ -81,9 +84,10 @@ body {
 }
 
 .cart .cart__title {
+  color: rgb(7 ,30 ,34);
   flex-basis: 1;
   font-size: 16pt;
-  font-weight: bold;
+  font-weight: 800;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -97,5 +101,6 @@ section .total-price {
 }
 
 .total-align {
+  color: rgb(0 ,14 ,30);
   display: flex;
 }
