@@ -47,7 +47,6 @@ function removeItemFromLocalStorage(sku) {
 function cartItemClickListener(event) {
   const item = event.target;
   item.remove();
-  // console.log('target:' + event.target.innerHTML.slice(5, 17));
   removeItemFromLocalStorage(event.target.innerHTML.slice(5, 17));
   removeItemFromLocalStorage(event.target.innerHTML.slice(5, 18));
 }
@@ -59,7 +58,6 @@ function createCartItemElement(sku, name, salePrice) {
   li.addEventListener('click', cartItemClickListener);
   const cartOl = document.querySelector('.cart__items');
   cartOl.appendChild(li);
-  console.log(cartOl.appendChild(li));
   return li;
 }
 // Da um fetch no item pelo ID e chama as funções: createCartItemElement e saveToLocalStorage.
@@ -134,11 +132,24 @@ function fetchItems() {
     })
     .catch(error => window.alert(error));
 }
+// Limpa Carrinho com click no botão.
+function clearCart() {
+  const currentCartItems = document.querySelector('.cart__items');
+  currentCartItems.innerHTML = '';
+  localStorage.clear();
+  getTotalPrice();
+}
+// Função adiciona eventListener no botão para Limpar Carrinho.
+function cartEmptyButton() {
+  const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', clearCart);
+}
 
 window.onload = function onload() {
   const loading = document.querySelector('.loading');
   fetchItems();
   getFromLocalStorage();
+  cartEmptyButton();
   setTimeout(() => {
     loading.remove();
   }, 500);
