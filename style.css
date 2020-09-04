@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: "Kumbh Sans", sans-serif;
+  font-family: Kumbh Sans, sans-serif;
 }
 
 .top-bar {
@@ -65,18 +65,18 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb(103 ,146 ,137);
+  background-color: rgb(103, 146, 137);
   border: 0;
-  color: rgb(7 ,30 ,34);
+  color: rgb(7, 30, 34);
   cursor: pointer;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 800;
   margin: 0;
   padding: 5px;
 }
 
 .cart {
-  background-color: rgb(103 ,146 ,137);
+  background-color: rgb(103, 146, 137);
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
@@ -84,7 +84,7 @@ body {
 }
 
 .cart .cart__title {
-  color: rgb(7 ,30 ,34);
+  color: rgb(7, 30, 34);
   flex-basis: 1;
   font-size: 16pt;
   font-weight: 800;
@@ -101,6 +101,6 @@ section .total-price {
 }
 
 .total-align {
-  color: rgb(0 ,14 ,30);
+  color: rgb(0, 14, 30);
   display: flex;
 }
