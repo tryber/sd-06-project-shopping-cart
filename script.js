@@ -8,7 +8,8 @@ function getTotal() {
     const c = a.substring(b + 1, a.length);
     totalArray.push(parseFloat(c));
   });
-  const reduced = totalArray.reduce((item1, item2) => item1 + item2);
+  const reduced = totalArray.reduce((item1, item2) => item1 + item2, 0);
+  // TypeError: reduce of empty array with no initial value
   totalContainer.innerHTML = reduced;
 }
 
