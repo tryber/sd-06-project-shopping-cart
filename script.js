@@ -53,12 +53,37 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }, textS
   li.className = 'cart__item';
   if (textSaveCart) {
     li.innerHTML = textSaveCart;
+    sumTotalPrice(textSaveCart);
   } else {
     li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+    sumTotalPrice(salePrice);
   }
   saveCart(li.innerHTML);
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+async function sumTotalPrice(priceItem) {
+  const tagTotalPrice = document.querySelector('.total-price');
+  if (typeof priceItem === "number") {
+    const totalPrice = parseFloat(tagTotalPrice.innerText)
+    console.log(typeof totalPrice);
+    tagTotalPrice.innerText = totalPrice + priceItem;
+  } else {
+    const arrayPrice = priceItem.split(' ');
+    const stringPrice = arrayPrice[arrayPrice.length - 1];
+    const priceCompleto = stringPrice.split('')
+    .reduce((total, character, index) => {
+      if (index === 0) {
+        return total;
+      } else {
+        return `${total}${character}`;
+      }
+    }, '');
+    const price = parseFloat(priceCompleto);
+    const totalPrice = parseFloat(tagTotalPrice.innerText);
+    tagTotalPrice.innerText = totalPrice + price;
+  }
 }
 
 function createLoading() {
@@ -136,4 +161,5 @@ window.onload = function onload() {
   requisitionMercadoLivreItem('computador');
   renderShoppingCartSave();
   clearCart();
+  // document.querySelector('.oi').innerText = [1, 2, 'ola'];
 };
