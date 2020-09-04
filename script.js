@@ -105,7 +105,7 @@ async function getItems() {
 window.onload = function onload() {
   const loading = document.querySelector('.loading');
   getItems().then(() => {
-    loading.innerHTML = '';
+    loading.remove();
     return true;
   });
   const cartItems = document.querySelector('.cart__items');
