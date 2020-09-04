@@ -36,20 +36,19 @@ async function sumCart() {
 
 let storedIds = [];
 
-function manageCartInStorage(operation, id) {
-  storedIds = localStorage.getItem('myCartIds');
-  storedIds = (!storedIds) ? [] : storedIds.split(',');
+function manageCartInStorage(operation, item) {
+  storedIds = localStorage.getItem('myCartItems');
+  storedIds = (!storedIds) ? [] : JSON.parse(storedIds);
 
   if (operation === 'add') {
-    storedIds.push(id);
-    localStorage.setItem('myCartIds', storedIds.toString());
+    storedIds.push(item);
+    localStorage.setItem('myCartItems', JSON.stringify(storedIds));
     return 'item added to storage';
   }
 
   if (operation === 'remove') {
-    const indexOfItem = storedIds.indexOf(id);
-    if (indexOfItem > -1) storedIds.splice(indexOfItem, 1);
-    localStorage.setItem('myCartIds', storedIds.toString());
+    storedIds = storedIds.filter(currentItem => currentItem.id !== item.id);
+    localStorage.setItem('myCartItems', JSON.stringify(storedIds));
     return 'item removed from storage.';
   }
 
@@ -57,7 +56,11 @@ function manageCartInStorage(operation, id) {
 }
 
 function cartItemClickListener(event) {
-  manageCartInStorage('remove', event.target.id);
+  const item = {};
+  item.id = event.target.id;
+  item.title = event.target.dataset.title;
+  item.price = event.target.dataset.price;
+  manageCartInStorage('remove', item);
   event.target.remove();
   sumCart()
     .catch(error => console.log(error));
@@ -83,7 +86,11 @@ async function addToCart(url, id) {
     const cartList = document.querySelector('ol.cart__items');
     const cartItem = createCartItemElement(object);
     cartList.appendChild(cartItem);
-    manageCartInStorage('add', id);
+    const item = {};
+    item.id = object.id;
+    item.title = object.title;
+    item.price = object.price;
+    manageCartInStorage('add', item);
     sumCart();
   } catch (error) {
     throw new Error(error);
@@ -112,25 +119,13 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 function loadStoredCart(storedCartItems) {
-  const fetchPromises = [];
   storedCartItems.forEach((item) => {
-    const url = `https://api.mercadolibre.com/items/${item}`;
-    fetchPromises.push(fetch(url)
-      .then(objectJson => objectJson.json())
-      .catch(error => console.log(error)),
-    );
+    const cartList = document.querySelector('ol.cart__items');
+    const cartItem = createCartItemElement(item);
+    cartList.appendChild(cartItem);
   });
 
-  Promise.all(fetchPromises)
-    .then((promises) => {
-      promises.forEach((item) => {
-        const cartList = document.querySelector('ol.cart__items');
-        const cartItem = createCartItemElement(item);
-        cartList.appendChild(cartItem);
-        sumCart();
-      });
-    })
-    .catch(error => console.log(error));
+  sumCart();
 }
 
 function clearCart() {
@@ -141,7 +136,7 @@ function clearCart() {
   }
   pricePlacer.innerText = '-';
   storedIds = [];
-  localStorage.removeItem('myCartIds');
+  localStorage.removeItem('myCartItems');
 }
 
 function loaderElement() {
@@ -170,9 +165,9 @@ window.onload = function onload() {
     })
     .catch('deu pau no carregamento dos produtos!');
 
-  storedIds = localStorage.getItem('myCartIds');
+  storedIds = localStorage.getItem('myCartItems');
   if (storedIds) {
-    storedIds = storedIds.split(',');
+    storedIds = JSON.parse(storedIds);
     loadStoredCart(storedIds);
   }
 
