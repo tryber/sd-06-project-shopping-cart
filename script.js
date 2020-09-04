@@ -120,7 +120,8 @@ const fetchUrl = () => {
         const productSection = document.querySelector('.items');
         const computadores = createProductItemElement(cpu);// append c/ resultados
         productSection.appendChild(computadores);
-      });
+        setTimeout(() => document.querySelector('.loading').remove(),2000)
+        });
     });
 };
 
@@ -131,7 +132,14 @@ const removeAlItems = () => {
   storageCar();
 };
 
+function loadFile() {
+  const idLoad = document.querySelector('#load');
+  idLoad.className = 'loading';
+  idLoad.innerText = 'loading...';
+}
+
 window.onload = function onload() {
+  loadFile();
   fetchUrl();
   storageSavedList();
   const btnRemoveAllItems = document.querySelector('.empty-cart');
