@@ -112,6 +112,10 @@ function emptyButtonSetup() {
   const emptyButton = document.getElementsByClassName('empty-cart')[0];
 
   emptyButton.addEventListener('click', function () {
+    const cartItemsOl = document.querySelector('.cart__items');
+    cartItemsOl.innerHTML = '';
+    const priceSpan = document.getElementById('price');
+    priceSpan.innerHTML = '0';
     localStorage.clear();
   });
 }
