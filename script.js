@@ -99,7 +99,6 @@ function emptyCart() {
     cartItemsField.firstElementChild.remove();
     updateTotalValueOfCart();
     localStorage.setItem('cartItems', cartItemsField.innerHTML);
-
   }
 }
 
@@ -128,7 +127,6 @@ function showStoredCartItems() {
       .forEach((cartItem) => {
         cartItem.addEventListener('click', cartItemClickListener);
       });
-    // console.log(cartItemsListElement);
   }
 }
 
@@ -137,7 +135,6 @@ function setupEventHandlers() {
   const emptyCartButton = document.querySelector('.empty-cart');
   emptyCartButton.addEventListener('click', emptyCart);
 }
-
 
 window.onload = async function onload() {
   await renderProducts();
