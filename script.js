@@ -32,7 +32,6 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  const valor = event.target.innerText;
   event.target.remove();
 }
 
