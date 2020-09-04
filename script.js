@@ -165,7 +165,7 @@ window.onload = function onload() {
     .catch('deu pau no carregamento dos produtos!');
 
   storedIds = localStorage.getItem('myCartIds');
-  if (storedIds.length > 0) loadStoredCart(storedIds);
+  if (storedIds) loadStoredCart(storedIds);
 
   const clearCartButton = document.querySelector('button.empty-cart');
   clearCartButton.addEventListener('click', clearCart);
