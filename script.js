@@ -191,7 +191,7 @@ const fetchItems = async () => {
   generateLoadingItem();
   const itemsFound = await getResponseFromApi(subPageUrl, searchedItem);
   removeLoadingItem();
-  itemsFound.results.forEach(itemFound => {
+  itemsFound.results.forEach((itemFound) => {
     appendItem(createProductItemElement(itemFound));
   });
 };
