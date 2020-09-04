@@ -1,9 +1,3 @@
-
-window.onload = function onload() {
-  fetchMercadoLivre();
-  cartItemClickListener();
-
-};
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -30,10 +24,11 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
- function cartItemClickListener(event) {
-  event.target.remove()
+
+function cartItemClickListener(event) {
+  event.target.remove();
   // apagar item do carrinho
- }
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -76,12 +71,15 @@ function fetchMercadoLivre() {
           productId(getSkuFromProductItem(event.target.parentElement));
         }
       });
-      
+
       document.querySelector('.items').appendChild(product);
       // adição ao carrinho
     });
   });
 }
 
+window.onload = function onload() {
+  fetchMercadoLivre();
+  cartItemClickListener();
 
-
+};
