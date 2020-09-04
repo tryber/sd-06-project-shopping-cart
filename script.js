@@ -80,7 +80,6 @@ function cartItemClickListener(event) {
   event.target.remove();
   removeItemInStorage(removedElementIndex);
   updateOrCreateTotalCartValue();
-
 }
 
 const recordOnLocalStorage = (item) => {
