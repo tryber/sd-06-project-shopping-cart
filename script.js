@@ -39,6 +39,11 @@ function cartItemClickListener(event) { // usei
   const minusPrice = Number(event.target.innerText.split('$')[1]) * -1;
   sumValues(minusPrice);
   this.remove();
+
+  // tentando
+  cart = document.getElementsByClassName('cart__items')[0].innerHTML;
+  localStorage.setItem('cart', cart);
+  console.log(cart);
 }
 
 function createCartItemElement({ sku, name, salePrice }) { // usei
@@ -50,8 +55,29 @@ function createCartItemElement({ sku, name, salePrice }) { // usei
   return li;
 }
 
-function productItemListener(event) { // usei
-  const productId = getSkuFromProductItem(event.target.parentElement);
+let cart;
+
+function renderCartFromStorage() {
+  console.log(localStorage.getItem('cart'));
+
+  const cartItemsOl = document.querySelector('.cart__items');
+  const storageCart = localStorage.getItem('cart');
+  cartItemsOl.innerHTML = storageCart;
+
+  let price = 0;
+  for (let i = 0; i < cartItemsOl.children.length; i += 1) {
+    num = cartItemsOl.children[i].innerText.split('$')[1];
+    price += Number(num);
+    console.log(price);
+    sumValues(price);
+
+    const li = cartItemsOl.children[i];
+    li.addEventListener('click', cartItemClickListener);
+  }
+}
+
+function fetchProduct(id) {
+  const productId = id;
 
   fetch(`https://api.mercadolibre.com/items/${productId}`)
     .then(response => response.json())
@@ -67,7 +93,27 @@ function productItemListener(event) { // usei
 
       const cartItemsOl = document.querySelector('.cart__items');
       cartItemsOl.appendChild(productLi);
+
+      // tentando
+      cart = document.getElementsByClassName('cart__items')[0].innerHTML;
+      // console.log(cart);
+      localStorage.setItem('cart', cart)
+      console.log(localStorage.getItem('cart'));
     });
+}
+
+function productItemListener(event) { // usei
+  const productId = getSkuFromProductItem(event.target.parentElement);
+
+  fetchProduct(productId);
+}
+
+function emptyButtonSetup() {
+  const emptyButton = document.getElementsByClassName('empty-cart')[0];
+
+  emptyButton.addEventListener('click', function () {
+    localStorage.clear();
+  })
 }
 
 window.onload = function onload() { // usei
@@ -87,9 +133,9 @@ window.onload = function onload() { // usei
         productContainer.appendChild(productSection);
 
         productSection.children[3].addEventListener('click', productItemListener);
+
       });
     })
-    .then(() => {
-      // console.log('vou usar depois');
-    });
+  emptyButtonSetup();
+  renderCartFromStorage();
 };
