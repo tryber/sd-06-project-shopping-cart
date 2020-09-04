@@ -27,7 +27,6 @@ function createCustomElement(element, className, innerText) {
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
-  document.querySelector('.loading').innerHTML = '';
   document.querySelector('.cart__items').appendChild(li);
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -74,8 +73,8 @@ function createProductItemElement({ sku, name, image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-async function loading() {
-  await document.querySelector('.cart').appendChild(createCustomElement('span', 'loading', 'loading'));
+function loading() {
+  document.querySelector('.container').appendChild(createCustomElement('span', 'loading', 'loading'));
 }
 
 const apiSearch = () => {
@@ -110,7 +109,10 @@ function setupEventListener() {
 }
 
 window.onload = () => {
-  loading();
+  loading();  
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 2500);
   apiSearch();
   readLocalStorage();
   setupEventListener();
