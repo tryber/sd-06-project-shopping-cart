@@ -12,8 +12,8 @@ function createProductImageElement(imageSource) {
 // transformar promise
 // Soma todo o valor que está dentro do span
 
-async function addValueCar(price) {
-  const allValue = await document.querySelector('.total-price');
+function addValueCar(price) {
+  const allValue = document.querySelector('.total-price');
   allValue.innerHTML = parseFloat(allValue.innerHTML) + price;
 }
 
@@ -108,6 +108,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 const fetchUrl = () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   fetch(url)
+    .then(setTimeout(() => document.querySelector('.loading').remove(), 2000))
     .then(response => response.json())
     .then((data) => {
       data.results.forEach((cpu) => {
@@ -120,7 +121,6 @@ const fetchUrl = () => {
         const productSection = document.querySelector('.items');
         const computadores = createProductItemElement(cpu);// append c/ resultados
         productSection.appendChild(computadores);
-        setTimeout(() => document.querySelector('.loading').remove(), 2000);
       });
     });
 };
