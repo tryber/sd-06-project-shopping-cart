@@ -79,7 +79,6 @@ async function loading() {
 }
 
 const apiSearch = () => {
-  loading();
   fetch('https:api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then((response) => {
@@ -111,6 +110,7 @@ function setupEventListener() {
 }
 
 window.onload = () => {
+  loading();
   apiSearch();
   readLocalStorage();
   setupEventListener();
