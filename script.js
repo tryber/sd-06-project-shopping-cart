@@ -36,7 +36,6 @@ const findTargetIndexInlist = (event) => {
       removedElementIndex = index;
     }
   });
-  console.log(removedElementIndex)
   return removedElementIndex;
 };
 
@@ -48,14 +47,14 @@ const removeItemInStorage = (indexToRemove) => {
 };
 
 const sumCartItemsPrice = () => {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-    let total;
-    if (cartItems !== null) {
-      total = cartItems.reduce((acc, { price }) => acc + Number(price), 0);
-    } else {
-      total = 0;
-    }
-    return parseFloat(total.toFixed(2));
+  const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+  let total;
+  if (cartItems !== null) {
+    total = cartItems.reduce((acc, { price }) => acc + Number(price), 0);
+  } else {
+    total = 0;
+  }
+  return parseFloat(total.toFixed(2));
 };
 
 const createTotalPriceElement = (totalPrice) => {
