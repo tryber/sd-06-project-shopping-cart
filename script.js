@@ -53,37 +53,42 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }, textS
   li.className = 'cart__item';
   if (textSaveCart) {
     li.innerHTML = textSaveCart;
-    sumTotalPrice(textSaveCart);
+    sumTotalPriceItemSave(textSaveCart);
   } else {
     li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-    sumTotalPrice(salePrice);
+    sumTotalPriceAddItem(salePrice);
   }
   saveCart(li.innerHTML);
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
-async function sumTotalPrice(priceItem) {
+async function sumTotalPriceAddItem(priceItem) {
   const tagTotalPrice = document.querySelector('.total-price');
   if (typeof priceItem === "number") {
     const totalPrice = parseFloat(tagTotalPrice.innerText)
     console.log(typeof totalPrice);
     tagTotalPrice.innerText = totalPrice + priceItem;
   } else {
-    const arrayPrice = priceItem.split(' ');
-    const stringPrice = arrayPrice[arrayPrice.length - 1];
-    const priceCompleto = stringPrice.split('')
-    .reduce((total, character, index) => {
-      if (index === 0) {
-        return total;
-      } else {
-        return `${total}${character}`;
-      }
-    }, '');
-    const price = parseFloat(priceCompleto);
-    const totalPrice = parseFloat(tagTotalPrice.innerText);
-    tagTotalPrice.innerText = totalPrice + price;
+    
   }
+}
+
+async function sumTotalPriceItemSave(stringItem) {
+  const tagTotalPrice = document.querySelector('.total-price');
+  const arrayPrice = stringItem.split(' ');
+  const stringPrice = arrayPrice[arrayPrice.length - 1];
+  const priceCompleto = stringPrice.split('')
+  .reduce((total, character, index) => {
+    if (index === 0) {
+      return total;
+    } else {
+      return `${total}${character}`;
+    }
+  }, '');
+  const price = parseFloat(priceCompleto);
+  const totalPrice = parseFloat(tagTotalPrice.innerText);
+  tagTotalPrice.innerText = totalPrice + price;
 }
 
 function createLoading() {
