@@ -20,8 +20,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.createCartItemElement = createCartItemElement;
-
 // requisito #2: mostrar item no carrinho e chamar função para armazenar no LocalStorage
 const ShowCartItem = ({ id, title, price }) => {
   let cartObject = {};
@@ -82,8 +80,6 @@ function createProductItemElement({ sku, name, image }) {
     });
   return section;
 }
-
-window.createProductItemElement = createProductItemElement;
 
 // requisito #1 definir objeto a ser requisitado
 const apiInfo = {
