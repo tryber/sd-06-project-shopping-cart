@@ -93,6 +93,16 @@ async function addItemToCart(product) {
   localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
+function emptyCart() {
+  const cartItemsField = document.querySelector('.cart__items');
+  while (cartItemsField.firstElementChild) {
+    cartItemsField.firstElementChild.remove();
+    showTotalValueOfCart();
+    localStorage.setItem('cartItems', cartItemsField.innerHTML);
+
+  }
+}
+
 async function renderProducts() {
   const productsRetrieved = await getListOfProducts();
   const itemsField = document.querySelector('.items');
@@ -122,19 +132,17 @@ function showStoredCartItems() {
   }
 }
 
-/*
 function setupEventHandlers() {
-  window.addEventListener('beforeunload', () => {
-    const cartItemsElement = document.querySelector('.cart__items');
-    localStorage.setItem('cartItems', cartItemsElement.innerHTML);
-  });
+  // Empty cart
+  const emptyCartButton = document.querySelector('.empty-cart');
+  emptyCartButton.addEventListener('click', emptyCart);
 }
-*/
+
 
 window.onload = async function onload() {
-  // setupEventHandlers();
   await renderProducts();
   showStoredCartItems();
   await getTotalValueOfCart();
   showTotalValueOfCart();
+  setupEventHandlers();
 };
