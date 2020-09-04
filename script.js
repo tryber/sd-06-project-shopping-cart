@@ -155,7 +155,7 @@ function setupEventHandlers() {
 window.onload = async function onload() {
   await renderProducts();
   showStoredCartItems();
-  await getTotalValueOfCart();
+  getTotalValueOfCart();
   updateTotalValueOfCart();
   setupEventHandlers();
 };
