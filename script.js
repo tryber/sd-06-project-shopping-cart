@@ -51,18 +51,6 @@ function cartItemClickListener(event) {
   removeItemFromLocalStorage(event.target.innerHTML.slice(5, 17));
   removeItemFromLocalStorage(event.target.innerHTML.slice(5, 18));
 }
-// Cria os elementos no HTML para a sessão principal onde se mostra os Items.
-function createProductItemElement(sku, name, image) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  button.addEventListener('click', renderCartItem);
-  section.appendChild(button);
-  return section;
-}
 // Pega informação do LocalStorage.
 function getFromLocalStorage() {
   if (Storage) {
@@ -74,6 +62,18 @@ function getFromLocalStorage() {
     });
   }
   getTotalPrice();
+}
+// Cria os elementos no HTML para a sessão principal onde se mostra os Items.
+function createProductItemElement(sku, name, image) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.addEventListener('click', renderCartItem);
+  section.appendChild(button);
+  return section;
 }
 // Cria um elemento do carrinho de compras.
 function createCartItemElement(sku, name, salePrice) {
@@ -116,8 +116,7 @@ function renderCartItem(event) {
   const itemID = event.target.parentNode.children[0].innerText;
   fetchItemsID(itemID);
 }
-// Pega o array de produtos vinda da função fetchItems() e desenha um por um com a 
-// função: createProductItemElement.
+// Pega o array de produtos vinda de fetchItems() e desenha com createProductItemElement(). 
 function listReturned(arrOfProducts) {
   arrOfProducts.forEach((element) => {
     const secItems = document.querySelector('.items');
@@ -125,8 +124,7 @@ function listReturned(arrOfProducts) {
       .appendChild(createProductItemElement(element.id, element.title, element.thumbnail));
   });
 }
-// Faz o fetch na API do ML e usa a função listReturned() para transformar o array 
-//de produtos retornados.
+// Faz o fetch na API do ML e usa a função listReturned() para transformar o array.
 function fetchItems() {
   const productURL = `${apiURL.url}${apiURL.endPointProduct}${apiURL.search}`;
   fetch(productURL)
