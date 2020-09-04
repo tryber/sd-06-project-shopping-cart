@@ -63,9 +63,8 @@ async function sumTotalPriceItemSave(stringItem) {
   .reduce((total, character, index) => {
     if (index === 0) {
       return total;
-    } else {
-      return `${total}${character}`;
     }
+    return `${total}${character}`;
   }, '');
   const price = parseFloat(priceCompleto);
   const totalPrice = parseFloat(tagTotalPrice.innerText);
