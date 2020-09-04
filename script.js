@@ -105,8 +105,8 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 const addProductToCart = (li) => {
-    const ol = document.querySelector('.cart__items');
-    ol.appendChild(li);
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(li);
 };
 
 const generateLoadingItem = () => {
