@@ -114,14 +114,14 @@ const lerProduto = async () => { // funcao que pega a lista de produtos da api e
   await fetch(url + produto) // pegando a url para a requisição
     // se teve uma resposta entre 200 e 299, atribui a um arquivo .json
     .then(resposta => resposta.json())
-    /* se deu certo com o arquivo json, destrinchar o resultado para obter 
+    /* se deu certo com o arquivo json, destrinchar o resultado para obter
     os campos que preciso para o projeto */
     .then((resultado) => {
       resultado.results.forEach((produtos) => { // vamos percorrer todo o objeto
         console.table(produtos); // até aquí tudo bem !!!
         const { id, title, thumbnail } = produtos;  // separando o que eu quero do objeto
         // função que monta o item
-        const item = createProductItemElement({ sku: id, name: title, image: thumbnail }); 
+        const item = createProductItemElement({ sku: id, name: title, image: thumbnail });
         item.addEventListener('click', (event) => { // oque fazer quando clicar
           const idDoProduto = getSkuFromProductItem(event.target.parentElement);
           adicionaAoCarrinho(idDoProduto);
@@ -129,12 +129,12 @@ const lerProduto = async () => { // funcao que pega a lista de produtos da api e
         const sessao = document.querySelector('.items'); // selecionando a tag html
         sessao.appendChild(item); // adicionando
       });
-      document.querySelector('.container').removeChild(document.querySelector('.loading'))
+      document.querySelector('.container').removeChild(document.querySelector('.loading'));
     })
     .catch((error) => { // se der erro
       console.log(msnErroRequisicao); // mensagem malcriada
     })
-}
+};
 
 window.onload = function onload() {
   lerProduto();  // montando a tela com os produtos
