@@ -18,7 +18,7 @@ async function getTotalValueOfCart() {
   return itemsPrices;
 }
 
-async function showTotalValueOfCart() {
+async function updateTotalValueOfCart() {
   const totalValueOfCart = await getTotalValueOfCart();
   const totalValueField = document.querySelector('.total-price');
   totalValueField.innerText = totalValueOfCart;
@@ -50,7 +50,7 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   event.target.remove();
   const cartItemsField = document.querySelector('.cart__items');
-  showTotalValueOfCart();
+  updateTotalValueOfCart();
   localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
@@ -89,7 +89,7 @@ async function addItemToCart(product) {
   const cartItemsField = document.querySelector('.cart__items');
   const cartItemElement = createCartItemElement(mountedCartItem);
   cartItemsField.appendChild(cartItemElement);
-  showTotalValueOfCart();
+  updateTotalValueOfCart();
   localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
@@ -97,7 +97,7 @@ function emptyCart() {
   const cartItemsField = document.querySelector('.cart__items');
   while (cartItemsField.firstElementChild) {
     cartItemsField.firstElementChild.remove();
-    showTotalValueOfCart();
+    updateTotalValueOfCart();
     localStorage.setItem('cartItems', cartItemsField.innerHTML);
 
   }
@@ -143,6 +143,6 @@ window.onload = async function onload() {
   await renderProducts();
   showStoredCartItems();
   await getTotalValueOfCart();
-  showTotalValueOfCart();
+  updateTotalValueOfCart();
   setupEventHandlers();
 };
