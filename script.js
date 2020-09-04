@@ -1,10 +1,10 @@
-//price
+// price
 let save = 0;
 let total = 0;
 function sumPrice(price) {
-  total = total + price;
-  totalText = document.querySelector('.total-price')
-  totalText.innerHTML = total
+  total += price;
+  totalText = document.querySelector('.total-price');
+  totalText.innerHTML = total.toFixed(2);
 }
 // função de erro, caso de erro
 const handleError = (errorMessage) => {
@@ -32,20 +32,20 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener() {
   // coloque seu código aqui
-  let string = event.target.innerText;
-  let xprice = string.split('$');
+  const string = event.target.innerText;
+  const xprice = string.split('$');
   // console.log(xprice);
   event.target.remove();
   localStorage.clear(); // limpa o storage
   localStorageSave();
   // subprice
-  if (save == xprice[1]){
+  if (save === xprice[1]) {
     save = 0;
   } else {
-  save = xprice[1];
-  total = total - parseFloat(xprice[1]);
-  totalText = document.querySelector('.total-price');
-  totalText.innerHTML = total.toFixed(2);
+    save = xprice[1];
+    total -= parseFloat(xprice[1]);
+    totalText = document.querySelector('.total-price');
+    totalText.innerHTML = total.toFixed(2);
   }
 }
 // carrega storage
@@ -75,7 +75,7 @@ const fetchProductId = (id) => {
         throw new Error(object.error);
       } else {
         // price
-        sumPrice(object.price)
+        sumPrice(object.price);
         // console.log(object.price);
         document.querySelector('.cart__items').appendChild(createCartItemElement(object));
         localStorageSave(); // load tem que ficar aqui p/ pegar o primeiro append
@@ -155,8 +155,8 @@ function clearAll() {
   document.querySelector('.cart__items').innerHTML = '';
   // price
   total = 0;
-  totalText = document.querySelector('.total-price')
-  totalText.innerHTML = total
+  totalText = document.querySelector('.total-price');
+  totalText.innerHTML = total;
   // localStorage.clear();
 }
 
