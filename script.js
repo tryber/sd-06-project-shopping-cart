@@ -1,9 +1,5 @@
 /* vai comessar a bagaceira, vou comentar tudo pra ver o balaio de gato que tô fazendo*/
 const produto = 'computador'; // vai que eu queira colocar uma opção de perquisa
-const meuObjeto = {  // definir o padrão do objeto que quero
-  method: 'get',
-  headers: {'accept': 'application/json'}
-};
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q='; // endereço a api
 const msnErroRequisicao = 'Deu merda na requizição do produto'; // mensagem se a requisição de problema
 
@@ -21,7 +17,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-//cria uma secao para cada elemento
+// cria uma secao para cada elemento
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -46,7 +42,6 @@ function somarValores(valor) {
   const localPrice = document.querySelector('.total-price');
   const priceNow = parseFloat(localPrice.innerText);
   const priceParam = parseFloat(valor);
-  //const summedPrice = (priceNow + priceParam).toFixed(2);
   const summedPrice = Math.round(((priceNow + priceParam) * 100) / 100).toFixed(2);
   localPrice.innerText = summedPrice;
 }
@@ -56,7 +51,6 @@ function subTotal(valor) {
   const precoInteiro = parseFloat(preco.innerText);
   const converterValor = valor.split('$');
   const preco = parseFloat(converterValor[1]);
-  //const total = (precoInteiro - preco).toFixed(2);
   const total = Math.round(((precoInteiro - preco) * 100) / 100).toFixed(2);
   precoTexto.innerText = total;
 }
@@ -117,7 +111,7 @@ const adicionaAoCarrinho = async (id) => {
 }
 
 const lerProduto = async () => { // funcao que pega a lista de produtos da api e printa na página
-  await fetch(url+produto, meuObjeto) // pegando a url para a requisição
+  await fetch(url+produto) // pegando a url para a requisição
     .then(resposta => resposta.json()) // se teve uma resposta entre 200 e 299, atribui a um arquivo .json
     .then((resultado) => {  // se deu certo com o arquivo json, destrinchar o resultado para obter os campos que preciso para o projeto
       resultado.results.forEach((produto) => { // vamos percorrer todo o objeto
