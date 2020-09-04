@@ -25,7 +25,6 @@ function getSkuFromProductItem(item) {
 
 const subtrairItensCarrinho = (event) => {
   const preco = event.innerText.split('$')[1];
-  console.log(preco)
   const totalprice = document.querySelector('.total-price');
   totalprice.innerText = Math.round((Number(totalprice.innerText) - Number(preco)) * 100) / 100;
 };
