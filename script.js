@@ -123,7 +123,7 @@ function emptyButtonSetup() {
 window.onload = function onload() { // usei
   const productContainer = document.querySelector('.items');
 
-  const loadingSpan = document.createElement('span')
+  const loadingSpan = document.createElement('span');
   loadingSpan.classList.add('loading');
   loadingSpan.innerText = 'loading...';
   productContainer.appendChild(loadingSpan);
