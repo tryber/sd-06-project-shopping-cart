@@ -78,12 +78,6 @@ function computerRequest() {
     }));
 }
 
-// req 5
-
-function sum() {
-
-}
-
 // req 6
 function clearButton() {
   const clearList = document.querySelector('.cart__items').children;
