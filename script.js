@@ -32,48 +32,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const itensLocais = (item) => {
-  localStorage.setItem('cartItems', item);
-  const localPrice = document.querySelector('.total-price');
-  localStorage.setItem('totalPrice', localPrice.innerText);
-};
-
-function somarValores(valor) {
-  const localPrice = document.querySelector('.total-price');
-  const priceNow = parseFloat(localPrice.innerText);
-  const priceParam = parseFloat(valor);
-  const summedPrice = Math.round(((priceNow + priceParam) * 100) / 100).toFixed(2);
-  localPrice.innerText = summedPrice;
-}
-
-function subTotal(valor) {
-  const precoTexto = document.querySelector('.total_price');
-  const precoInteiro = parseFloat(precoTexto.innerText);
-  const converterValor = valor.split('$');
-  const preco = parseFloat(converterValor[1]);
-  const total = Math.round(((precoInteiro - preco) * 100) / 100).toFixed(2);
-  precoTexto.innerText = total;
-}
-
-function cartItemClickListener(event) {
-  const valor = event.target.innerText;
-  subTotal(valor);
-  event.target.remove();
-  const listaCart = document.querySelector('.cart__items');
-  itensLocais(listaCart.innerHTML);
-}
-
-const limparCarrinho = () => {
-  const btnLimpar = document.querySelector('.empty_cart');
-  btnLimpar.addEventListener('click', () => {
-    const lista = document.querySelector('.cart__items');
-    lista.innerHTML = '';
-    localStorage.clear();
-    const precoTotal = document.querySelector('.total_price');
-    precoTotal.innerText = '0.00';
-  });
-};
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
