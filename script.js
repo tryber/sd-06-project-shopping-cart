@@ -20,6 +20,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+window.createCartItemElement = createCartItemElement;
+
 // requisito #2: mostrar item no carrinho e chamar função para armazenar no LocalStorage
 const ShowCartItem = ({ id, title, price }) => {
   let cartObject = {};
@@ -60,6 +62,11 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// requisito #2: obter ID
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
 // requisitos #1 #2: criar sections para os itens #1. Adiciona evento no button pegar ID #2
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -68,16 +75,15 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-    .addEventListener('click', function (event) {
-      const itemID = event.target.parentElement.firstChild.innerText;
+    .addEventListener('click', function () {
+      const itemID = getSkuFromProductItem(section);
+      // const itemID = event.target.parentElement.firstChild.innerText;|opção sem usar function
       fetchById(itemID);
     });
   return section;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+window.createProductItemElement = createProductItemElement;
 
 // requisito #1 definir objeto a ser requisitado
 const apiInfo = {
@@ -110,14 +116,11 @@ function displayLoading() {
   span.innerText = 'loading...';
   const container = document.querySelector('.container');
   container.appendChild(span);
-  // const loading = document.querySelector('.loading');
-  // console.log(loading);
 }
 
 // requisito #7: excluir elemento usado pra display loading...
 function removeLoading() {
   const loading = document.querySelector('.loading');
-  console.log(loading);
   loading.remove();
 }
 
