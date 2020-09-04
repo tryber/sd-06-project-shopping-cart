@@ -120,8 +120,8 @@ const fetchUrl = () => {
         const productSection = document.querySelector('.items');
         const computadores = createProductItemElement(cpu);// append c/ resultados
         productSection.appendChild(computadores);
-        setTimeout(() => document.querySelector('.loading').remove(),2000)
-        });
+        setTimeout(() => document.querySelector('.loading').remove(), 2000);
+      });
     });
 };
 
