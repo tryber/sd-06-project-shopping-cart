@@ -103,11 +103,31 @@ const showAllResults = (computersArray) => {
   });
 };
 
+// requisito #7: mostrar loading enquanto faz a requisição.
+function displayLoading() {
+  const span = document.createElement('span');
+  span.className = 'loading';
+  span.innerText = 'loading...';
+  const container = document.querySelector('.container');
+  container.appendChild(span);
+  // const loading = document.querySelector('.loading');
+  // console.log(loading);
+}
+
+// requisito #7: excluir elemento usado pra display loading...
+function removeLoading() {
+  const loading = document.querySelector('.loading');
+  console.log(loading);
+  loading.remove();
+}
+
 // requisito #1 requisição, tratamento do resultado e chamar função de mostrar no html
 const fetchComputers = () => {
+  displayLoading();
   fetch(endpoint)
   .then(response => response.json())
     .then((computers) => {
+      removeLoading();
       showAllResults(computers.results);
     });
 };
