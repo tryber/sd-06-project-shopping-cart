@@ -56,7 +56,6 @@ const sumCartItemsPrice = () => {
       total = 0;
     }
     return parseFloat(total.toFixed(2));
-
 };
 
 const createTotalPriceElement = (totalPrice) => {
@@ -103,7 +102,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', (e) => {
     cartItemClickListener(e);
-
   });
   return li;
 }
@@ -148,7 +146,6 @@ const fetchProductItem = async (sku) => {
       addProductToCart(createCartItemElement(response));
       recordOnLocalStorage(response);
       updateOrCreateTotalCartValue();
-
     }
   } catch (error) {
     console.log(error);
@@ -162,7 +159,6 @@ const appendItem = (product) => {
     if (e.target.className === 'item__add') {
       const sku = e.currentTarget.firstChild.innerText;
       fetchProductItem(sku);
-
     }
   });
 };
