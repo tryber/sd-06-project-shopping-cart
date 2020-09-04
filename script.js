@@ -9,15 +9,13 @@ function createCustomElement(element, className, innerText) {
 async function getTotalValueOfCart() {
   const cart = document.querySelector('.cart__items');
   const cartItems = cart.childNodes;
-  const itemsPrices = [];
+  let itemsPrices = 0;
   if (cartItems.length > 0) {
-    cartItems.forEach(((item) => {
-      itemsPrices.push(parseFloat(item.innerText.split('$')[1]));
-    }));
-    const totalValue = itemsPrices.reduce((acc, current) => acc + current);
-    return totalValue;
+    cartItems.forEach((item) => {
+      itemsPrices += parseFloat(item.innerText.split('$')[1]);
+    });
   }
-  return 0;
+  return itemsPrices;
 }
 
 async function showTotalValueOfCart() {
