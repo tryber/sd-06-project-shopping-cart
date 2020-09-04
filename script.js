@@ -117,7 +117,7 @@ function recoverLocalStorage() {
   const cartList = document.querySelector('.cart__items');
   cartList.innerHTML = localStorage.list;
   Array.from(document.getElementsByClassName('cart__item')).forEach((item) => {
-    item.addEventListener('click', cartItemClickListener)
+    item.addEventListener('click', cartItemClickListener);
   });
 }
 
