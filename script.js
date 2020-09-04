@@ -79,6 +79,7 @@ async function addProductToCart(id) {
 
   const response = await fetch(endpoint);
   const product = await response.json();
+  manageLoadingAlert();
   const formattedProduct = createCartItemElement(product);
   const cartContainer = document.querySelector('.cart__items');
   cartContainer.appendChild(formattedProduct);
@@ -92,6 +93,7 @@ function formatListOfProducts(listOfProducts) {
     const productsContainer = document.querySelector('.items');
     product.children[3].addEventListener('click', function () {
       const productId = product.children[0].innerText;
+      manageLoadingAlert();
       addProductToCart(productId);
     });
     productsContainer.appendChild(product);
@@ -104,6 +106,7 @@ async function fetchProducts(query = 'computador') {
   const response = await fetch(endpoint);
   const data = await response.json();
   const results = data.results;
+  manageLoadingAlert();
   formatListOfProducts(results);
 }
 
@@ -128,7 +131,20 @@ function removeAllProductsFromCart() {
   });
 }
 
+function manageLoadingAlert() {
+  if (!document.querySelector('.loading')) {
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'loading';
+    loadingDiv.innerText = 'loading..';
+    const container = document.querySelector('.container');
+    document.body.insertBefore(loadingDiv, container);
+  } else {
+    document.querySelector('.loading').remove();
+  }
+}
+
 window.onload = async function onload() {
+  manageLoadingAlert();
   await fetchProducts();
 
   if (localStorage.shoppingCart) {
