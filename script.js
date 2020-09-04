@@ -20,13 +20,8 @@ async function getTotalValueOfCart() {
 
 async function showTotalValueOfCart() {
   const totalValueOfCart = await getTotalValueOfCart();
-  const totalValueElement = createCustomElement('div', 'total-price', `Preço total: $${totalValueOfCart}`);
-  const cart = document.querySelector('.cart');
-  if (cart.lastChild.className === 'total-price') {
-    document.querySelector('.total-price').innerText = `Preço total: $${totalValueOfCart}`;
-  } else {
-    cart.appendChild(totalValueElement);
-  }
+  const totalValueField = document.querySelector('.total-price');
+  totalValueField.innerText = totalValueOfCart;
 }
 
 function createProductImageElement(imageSource) {
