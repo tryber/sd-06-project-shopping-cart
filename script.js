@@ -1,16 +1,17 @@
-// requisito #4
+// requisito #4: salvar itens do carrinho no LocalStorage
 function localStorageSave() {
   const itemToStorage = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('item', itemToStorage);
 }
 
-// requisitos #3
+// requisitos #3: identifica e exclui o item clicado, atualiza LocalSorage.
 function cartItemClickListener(event) {
   const selectItem = event.target;
   selectItem.remove();
   localStorageSave();
 }
 
+// requisitos #2 e #3: criar elemento que será mostrado no carrinho #2 e adicionar evento #3
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -19,7 +20,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// requisito #2
+// requisito #2: mostrar item no carrinho e chamar função para armazenar no LocalStorage
 const ShowCartItem = ({ id, title, price }) => {
   let cartObject = {};
   cartObject = {
@@ -33,6 +34,7 @@ const ShowCartItem = ({ id, title, price }) => {
   localStorageSave();
 };
 
+// requisito #2: requisição, tratamento do resultado e chamar função de mostrar no html
 const fetchById = (id) => {
   const endpointById = `https://api.mercadolibre.com/items/${id}`;
   fetch(endpointById)
@@ -42,6 +44,7 @@ const fetchById = (id) => {
     });
 };
 
+// requisito #1: criar elemento img usando o parâmetro recebido
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -49,6 +52,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// requisito #1: criar elementos span (sku/name) e button usando os parâmentros recebidos
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -56,6 +60,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// requisitos #1 #2: criar sections para os itens #1. Adiciona evento no button pegar ID #2
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -74,7 +79,7 @@ function createProductItemElement({ sku, name, image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
-// requisito #1
+// requisito #1 definir objeto a ser requisitado
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/',
   endpoint: 'search',
@@ -83,6 +88,7 @@ const apiInfo = {
 const url = `${apiInfo.api}${apiInfo.endpoint}`;
 const endpoint = `${url}?q=computador`;
 
+// requisito #1 mostrar no html todos os itens retornados pela requisição
 const showAllResults = (computersArray) => {
   let objectToShow = {};
   computersArray.forEach((computador) => {
@@ -97,6 +103,7 @@ const showAllResults = (computersArray) => {
   });
 };
 
+// requisito #1 requisição, tratamento do resultado e chamar função de mostrar no html
 const fetchComputers = () => {
   fetch(endpoint)
   .then(response => response.json())
@@ -105,20 +112,32 @@ const fetchComputers = () => {
     });
 };
 
-// requisito #4
+// requisito #4: adicionar evento de clique aos itens recuperados do LocalStorage
 function listenToRetrievedItem(itemsArray) {
   itemsArray.forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
   });
 }
 
+// requisito #4: recuperar itens do LocalStorage, colocar no carrinho e chamar função add evento
 function retrieveLocalStorage() {
   const retrievedItem = localStorage.getItem('item');
-  const retrievedCart = document.querySelector('.cart__items');
-  retrievedCart.innerHTML = retrievedItem;
+  const cartList = document.querySelector('.cart__items');
+  cartList.innerHTML = retrievedItem;
   const CartItems = document.querySelectorAll('.cart__item');
-  console.log(CartItems);
   listenToRetrievedItem(CartItems);
+}
+
+// requisito #5: envaziar carrinho
+function clearCartItems() {
+  const cartList = document.querySelector('.cart__items');
+  cartList.innerHTML = '';
+}
+
+// requisito #5: criar evento para o botão esvaziar carrinho
+function clearButtonEvent() {
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', clearCartItems);
 }
 
 window.onload = function onload() {
@@ -127,4 +146,6 @@ window.onload = function onload() {
   if (localStorage.getItem('item')) {
     retrieveLocalStorage();
   }
+
+  clearButtonEvent();
 };
