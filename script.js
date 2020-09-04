@@ -25,7 +25,7 @@ async function sumCart() {
       await myCart.forEach((item) => {
         sum += parseFloat(item.dataset.price);
       });
-      pricePlacer.innerText = sum.toFixed(2);
+      pricePlacer.innerText = sum;
     } else {
       pricePlacer.innerText = '-';
     }
@@ -34,11 +34,24 @@ async function sumCart() {
   }
 }
 
-let myCartIds = [];
+let storedIds = localStorage.getItem('myCartIds');
+if (storedIds === null) storedIds = [];
+
+function manageCartInStorage(operation, id) {
+  if (operation === 'add') {
+    storedIds.push(id);
+    localStorage.setItem('myCartIds', storedIds.toString());
+  } else if (operation === 'remove') {
+    const indexOfItem = storedIds.indexOf(id);
+    if (indexOfItem > -1) storedIds.splice(indexOfItem, 1);
+    localStorage.setItem('myCartIds', storedIds.toString());
+  } else {
+    throw new Error('invalid operation for managing of local storage cart.');
+  }
+}
 
 function cartItemClickListener(event) {
-  const indexOfItem = myCartIds.indexOf(event.target.id);
-  if (indexOfItem > -1) myCartIds.splice(indexOfItem, 1);
+  manageCartInStorage('remove', event.target.id);
   event.target.remove();
   sumCart()
     .catch(error => console.log(error));
@@ -51,21 +64,20 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.setAttribute('data-price', salePrice);
   li.setAttribute('data-title', name);
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  // li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
 async function addToCart(url, id) {
-  if (myCartIds.find(currId => currId === id)) throw new Error('Item NOT added - in cart already.');
+  if (storedIds && storedIds.find(currId => currId === id)) throw new Error('Item NOT added - in cart already.');
   try {
     const fetchId = await fetch(url);
     const object = await fetchId.json();
     if (object.error) throw new Error(object.error);
     const cartList = document.querySelector('ol.cart__items');
     const cartItem = createCartItemElement(object);
-    cartItem.addEventListener('click', cartItemClickListener);
     cartList.appendChild(cartItem);
-    myCartIds.push(id);
+    manageCartInStorage('add', id);
     sumCart();
   } catch (error) {
     throw new Error(error);
@@ -86,7 +98,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   button.addEventListener('click', itemClickListener);
   section.appendChild(button);
@@ -94,19 +105,26 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-function loadStoredCart(cartItems, itemsArray) {
-  try {
-    const cartList = document.querySelector('ol.cart__items');
-    cartItems.forEach((item) => {
-      cartList.appendChild(createCartItemElement(item));
-    });
+function loadStoredCart(storedCartItems) {
+  const fetchPromises = [];
+  storedCartItems.forEach((item) => {
+    const url = `https://api.mercadolibre.com/items/${item}`;
+    fetchPromises.push(fetch(url)
+      .catch(error => console.log(error)),
+    );
+  });
 
-    myCartIds.push(itemsArray.split(','));
-    sumCart();
-  } catch (error) {
-    throw new Error(error);
-  }
-  return 'Sucess';
+  Promise.all(fetchPromises)
+    .then((promises) => {
+      promises.forEach((item) => {
+        const cartList = document.querySelector('ol.cart__items');
+        const cartItem = createCartItemElement(item);
+        cartList.appendChild(cartItem);
+        manageCartInStorage('add', id);
+        sumCart();
+      });
+    })
+    .catch(error => console.log(error));
 }
 
 function clearCart() {
@@ -116,9 +134,8 @@ function clearCart() {
     cartList.removeChild(cartList.firstChild);
   }
   pricePlacer.innerText = '-';
-  myCartIds = [];
-  localStorage.removeItem('myCart');
-  localStorage.removeItem('myItemsIds');
+  storedIds = [];
+  localStorage.removeItem('myCartIds');
 }
 
 function loaderElement() {
@@ -147,24 +164,9 @@ window.onload = function onload() {
     })
     .catch('deu pau no carregamento dos produtos!');
 
-  const storedCart = JSON.parse(localStorage.getItem('myCart'));
-  const storedIds = localStorage.getItem('myItemsIds');
-  if (storedCart) {
-    loadStoredCart(storedCart, storedIds);
-  }
+  storedIds = localStorage.getItem('myCartIds');
+  if (storedIds.length > 0) loadStoredCart(storedIds);
 
   const clearCartButton = document.querySelector('button.empty-cart');
   clearCartButton.addEventListener('click', clearCart);
 };
-
-window.addEventListener('beforeunload', () => {
-  const itemsArray = [];
-  const cartList = document.querySelectorAll('ol.cart__items li');
-  cartList.forEach((item) => {
-    itemsArray.push({ id: item.id, title: item.dataset.title, price: item.dataset.price });
-  });
-  localStorage.removeItem('myCart');
-  localStorage.removeItem('myItemsIds');
-  localStorage.setItem('myCart', JSON.stringify(itemsArray));
-  localStorage.setItem('myItemsIds', myCartIds.toString());
-});
