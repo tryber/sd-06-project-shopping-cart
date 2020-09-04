@@ -32,7 +32,7 @@ function sumValues(value) {
   const priceSpan = document.getElementById('price');
   let price = Number(priceSpan.innerText);
   price += value;
-  priceSpan.innerText = (Math.round(price * 100) / 100).toFixed(2);
+  priceSpan.innerText = (Math.round(price * 100) / 100);
 }
 
 function cartItemClickListener(event) { // usei
