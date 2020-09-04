@@ -11,7 +11,6 @@ function createProductImageElement(imageSource) {
 }
 // transformar promise
 // Soma todo o valor que está dentro do span
-
 function addValueCar(price) {
   const allValue = document.querySelector('.total-price');
   allValue.innerHTML = parseFloat(allValue.innerHTML) + price;
@@ -131,7 +130,7 @@ const removeAlItems = () => {
   document.querySelector('.total-price').innerHTML = 0;
   storageCar();
 };
-
+// Referência : Álvaro Neto
 function loadFile() {
   const idLoad = document.querySelector('#load');
   idLoad.className = 'loading';
