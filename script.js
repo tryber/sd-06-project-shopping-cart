@@ -29,13 +29,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  event.target.remove();
-  const cartItemsField = document.querySelector('.cart__items');
-  showTotalValueOfCart();
-  localStorage.setItem('cartItems', cartItemsField.innerHTML);
-}
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -66,15 +59,6 @@ async function mountCartItem(product) {
   return cartItem;
 }
 
-async function addItemToCart(product) {
-  const mountedCartItem = await mountCartItem(product);
-  const cartItemsField = document.querySelector('.cart__items');
-  const cartItemElement = createCartItemElement(mountedCartItem);
-  cartItemsField.appendChild(cartItemElement);
-  showTotalValueOfCart();
-  localStorage.setItem('cartItems', cartItemsField.innerHTML);
-}
-
 async function getTotalValueOfCart() {
   const cart = document.querySelector('.cart__items');
   const cartItems = cart.childNodes;
@@ -82,8 +66,8 @@ async function getTotalValueOfCart() {
   if (cartItems.length > 0) {
     cartItems.forEach(((item) => {
       itemsPrices.push(parseFloat(item.innerText.split('$')[1]));
-    }))
-    const totalValue = itemsPrices.reduce((acc, current) => acc += current);
+    }));
+    const totalValue = itemsPrices.reduce((acc, current) => acc + current);
     return totalValue;
   }
   return 0;
@@ -98,6 +82,22 @@ async function showTotalValueOfCart() {
   } else {
     cart.appendChild(totalValueElement);
   }
+}
+
+async function addItemToCart(product) {
+  const mountedCartItem = await mountCartItem(product);
+  const cartItemsField = document.querySelector('.cart__items');
+  const cartItemElement = createCartItemElement(mountedCartItem);
+  cartItemsField.appendChild(cartItemElement);
+  showTotalValueOfCart();
+  localStorage.setItem('cartItems', cartItemsField.innerHTML);
+}
+
+function cartItemClickListener(event) {
+  event.target.remove();
+  const cartItemsField = document.querySelector('.cart__items');
+  showTotalValueOfCart();
+  localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
 async function renderProducts() {
