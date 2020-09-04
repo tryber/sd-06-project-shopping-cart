@@ -8,6 +8,17 @@ const changeLocalStorage = () => {
   localStorage.setItem('Lista de todos os elementos', completeList);
 };
 
+//  const sumAsyncAwait = (salePrice) => {
+//    const completeList = document.querySelector('.cart');
+//    const showPrice = document.createElement('div');
+//    completeList.appendChild(showPrice)
+//    showPrice.classList = 'total-price';
+//    const p = document.createElement('p');
+//    p.classList = 'sum_total_price';
+//    p.innerText = salePrice
+//    showPrice.appendChild(p)
+//  }
+
 function cartItemClickListener(event) {
   const itemDelete = event.target;
   itemDelete.parentNode.removeChild(itemDelete);
@@ -22,6 +33,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   const listOfElement = document.querySelector('.cart__items');
   listOfElement.appendChild(li);
   changeLocalStorage();
+  sumAsyncAwait(salePrice);
 }
 
 const creatObjectFunction = (element, callback) => {
@@ -86,10 +98,28 @@ const handleResults = (results) => {
   });
 };
 
+const messageLoading = () => {
+  const conteiner = document.querySelector('.cart');
+  const message = document.createElement('span');
+  message.classList = 'loading';
+  message.innerText = 'loading...';
+  conteiner.appendChild(message);
+};
+
+const messageLoadingRemove = () => {
+  setTimeout(() => {
+    const conteiner = document.querySelector('.cart');
+    const message = document.querySelector('.loading');
+    conteiner.removeChild(message);
+  }, 1000);
+};
+
 const apiHandlers = (url) => {
+  messageLoading();
   fetch(url)
     .then(response => response.json())
-    .then(object => handleResults(object.results));
+    .then(object => handleResults(object.results))
+    .then(messageLoadingRemove());
 };
 
 const buttonDeleteFunction = () => {
