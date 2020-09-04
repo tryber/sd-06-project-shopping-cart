@@ -51,18 +51,6 @@ function cartItemClickListener(event) {
   removeItemFromLocalStorage(event.target.innerHTML.slice(5, 17));
   removeItemFromLocalStorage(event.target.innerHTML.slice(5, 18));
 }
-// Pega informação do LocalStorage.
-function getFromLocalStorage() {
-  if (Storage) {
-    const getProductCartItems = JSON.parse(localStorage.getItem('cartML'));
-    arrayOfItems = (getProductCartItems === null ? [] : getProductCartItems);
-    arrayOfItems.forEach((element) => {
-      createCartItemElement(element.id, element.title, element.price);
-      createProductItemElement(element.id, element.title, element.price);
-    });
-  }
-  getTotalPrice();
-}
 // Cria os elementos no HTML para a sessão principal onde se mostra os Items.
 function createProductItemElement(sku, name, image) {
   const section = document.createElement('section');
@@ -97,6 +85,17 @@ async function fetchItemsID(itemID) {
     })
     .catch(error => window.alert(error));
 }
+// Pega informação do LocalStorage.
+function getFromLocalStorage() {
+  if (Storage) {
+    const getProductCartItems = JSON.parse(localStorage.getItem('cartML'));
+    arrayOfItems = (getProductCartItems === null ? [] : getProductCartItems);
+    arrayOfItems.forEach((element) => {
+      createCartItemElement(element.id, element.title, element.price);
+    });
+  }
+  getTotalPrice();
+}
 // Cria um elemento customizado no HTML.
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -116,7 +115,7 @@ function renderCartItem(event) {
   const itemID = event.target.parentNode.children[0].innerText;
   fetchItemsID(itemID);
 }
-// Pega o array de produtos vinda de fetchItems() e desenha com createProductItemElement(). 
+// Pega o array de produtos vinda de fetchItems() e desenha com createProductItemElement().
 function listReturned(arrOfProducts) {
   arrOfProducts.forEach((element) => {
     const secItems = document.querySelector('.items');
