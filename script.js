@@ -43,20 +43,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// 1. Listagem de produtos
-// Você deve criar uma listagem de produtos que devem ser consultados através da API
-// do Mercado Livre.
-// Você deve utilizar o endpoint:
-// "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
-// onde $QUERY deve ser o valor da sua busca. Para este trabalho, a busca deve ser o
-// termo computador.
-// O retorno desse endpoint será algo no formato json. Por exemplo, se for pesquisado "computador":
-// A lista de produtos que devem ser exibidos é o array results no JSON acima.
-// Você deve utilizar a função createProductItemElement(product) para criar os
-// componentes HTML referentes a um produto.
-// Adicione o elemento retornado da função createProductItemElement(product) como filho do elemento
-// <section class="items">.
-// Obs: as variáveis sku, no código fornecido, se referem aos campos id retornados pela API.
+// função que adiciona o produto no carrinho
+
+const adicionaAoCarrinho = async (id) => {
+  await fetch(`https://api.mercadolibre.com/items/${id}`)
+  .then(resposta => resposta.json())
+  .then((resposta) => {
+    const { title, price } = resposta;
+    const lista = createCartItemElement({ sku: id, name: title, salePrice: price });
+    const listaCarrinho = document.querySelector('.cart__items');
+    listaCarrinho.appendChild(lista);
+  });
+};
 
 // funcao que pega a lista de produtos da api e printa na página
 const listaDeProdutos = async () => {
@@ -64,9 +62,12 @@ const listaDeProdutos = async () => {
   .then(resposta => resposta.json())
   .then((resultado) => {
     resultado.results.forEach((produtos) => {
-      console.table(produtos); // até aquí tudo bem !!!
       const { id, title, thumbnail } = produtos;  // separando o que eu quero do objeto
       const item = createProductItemElement({ sku: id, name: title, image: thumbnail });
+      item.addEventListener('click', (event) => {
+        const idDoProduto = getSkuFromProductItem(event.target.parentElement);
+        adicionaAoCarrinho(idDoProduto)
+      });
       const sessao = document.querySelector('.items'); // selecionando a tag html
       sessao.appendChild(item); // adicionando
     });
