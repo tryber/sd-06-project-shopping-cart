@@ -109,7 +109,7 @@ function setupEventListener() {
 }
 
 window.onload = () => {
-  loading();  
+  loading();
   setTimeout(() => {
     document.querySelector('.loading').remove();
   }, 2500);
