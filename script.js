@@ -39,7 +39,7 @@ async function totalPrice() {
   }
 
   const total = document.getElementsByClassName('total-price')[0];
-  total.innerText = `TOTAL PRICE: $${sum}`;
+  total.innerText = sum;
 }
 
 function cartItemClickListener(event) {
