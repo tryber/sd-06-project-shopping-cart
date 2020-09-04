@@ -104,7 +104,10 @@ async function getItems() {
 
 window.onload = function onload() {
   const loading = document.querySelector('.loading');
-  getItems().then(() => loading.innerHTML = '')
+  getItems().then(() => {
+    loading.innerHTML = '';
+    return true;
+  });
   const cartItems = document.querySelector('.cart__items');
   const storageItems = localStorage.getItem('storageItems');
   cartItems.innerHTML = storageItems;
