@@ -51,18 +51,6 @@ function cartItemClickListener(event) {
   removeItemFromLocalStorage(event.target.innerHTML.slice(5, 17));
   removeItemFromLocalStorage(event.target.innerHTML.slice(5, 18));
 }
-// Cria os elementos no HTML para a sessão principal onde se mostra os Items.
-function createProductItemElement(sku, name, image) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  button.addEventListener('click', renderCartItem);
-  section.appendChild(button);
-  return section;
-}
 // Cria um elemento do carrinho de compras.
 function createCartItemElement(sku, name, salePrice) {
   const li = document.createElement('li');
@@ -115,6 +103,18 @@ function renderCartItem(event) {
   const itemID = event.target.parentNode.children[0].innerText;
   fetchItemsID(itemID);
 }
+// Cria os elementos no HTML para a sessão principal onde se mostra os Items.
+function createProductItemElement(sku, name, image) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.addEventListener('click', renderCartItem);
+  section.appendChild(button);
+  return section;
+}
 // Pega o array de produtos vinda de fetchItems() e desenha com createProductItemElement().
 function listReturned(arrOfProducts) {
   arrOfProducts.forEach((element) => {
@@ -133,10 +133,6 @@ function fetchItems() {
       listReturned(result);
     })
     .catch(error => window.alert(error));
-}
-// Pega o SKU(ou ID) no HTML do item e o retorna.
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
 }
 
 window.onload = function onload() {
