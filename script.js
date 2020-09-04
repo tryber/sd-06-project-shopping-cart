@@ -32,6 +32,7 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   event.target.remove();
   const cartItemsField = document.querySelector('.cart__items');
+  showTotalValueOfCart();
   localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
@@ -70,14 +71,33 @@ async function addItemToCart(product) {
   const cartItemsField = document.querySelector('.cart__items');
   const cartItemElement = createCartItemElement(mountedCartItem);
   cartItemsField.appendChild(cartItemElement);
+  showTotalValueOfCart();
   localStorage.setItem('cartItems', cartItemsField.innerHTML);
 }
 
-async function getTotal() {
-  const cartItemsField = document.querySelector('.cart__items');
-  const cartItems = cartItemsField.children;
-  const prices = cartItems.forEach(element => element.innerText.split('$')[1]);
-  console.log(prices);
+async function getTotalValueOfCart() {
+  const cart = document.querySelector('.cart__items');
+  const cartItems = cart.childNodes;
+  const itemsPrices = [];
+  if (cartItems.length > 0) {
+    cartItems.forEach(((item) => {
+      itemsPrices.push(parseFloat(item.innerText.split('$')[1]));
+    }))
+    const totalValue = itemsPrices.reduce((acc, current) => acc += current);
+    return totalValue;
+  }
+  return 0;
+}
+
+async function showTotalValueOfCart() {
+  const totalValueOfCart = await getTotalValueOfCart();
+  const totalValueElement = createCustomElement('div', 'total-price', `Preço total: $${totalValueOfCart}`);
+  const cart = document.querySelector('.cart');
+  if (cart.lastChild.className === 'total-price') {
+    document.querySelector('.total-price').innerText = `Preço total: $${totalValueOfCart}`;
+  } else {
+    cart.appendChild(totalValueElement);
+  }
 }
 
 async function renderProducts() {
@@ -121,6 +141,7 @@ function setupEventHandlers() {
 window.onload = async function onload() {
   // setupEventHandlers();
   await renderProducts();
-  await showStoredCartItems();
-  getTotal()
+  showStoredCartItems();
+  await getTotalValueOfCart();
+  showTotalValueOfCart();
 };
