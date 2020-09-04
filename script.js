@@ -66,7 +66,7 @@ const createTotalPriceElement = (totalPrice) => {
 };
 
 const updateOrCreateTotalCartValue = async () => {
-  const totalPrice =  sumCartItemsPrice();
+  const totalPrice = sumCartItemsPrice();
   const totalPriceElement = document.querySelector('.total-price');
   if (totalPriceElement) {
     totalPriceElement.innerText = totalPrice;
