@@ -36,7 +36,8 @@ async function sumCart() {
 
 let storedIds = [];
 
-function manageCartInStorage(operation, item) {
+function manageCartInStorage(operation, { id, title, price }) {
+  const item = { id, title, price };
   storedIds = localStorage.getItem('myCartItems');
   storedIds = (!storedIds) ? [] : JSON.parse(storedIds);
 
@@ -86,11 +87,7 @@ async function addToCart(url, id) {
     const cartList = document.querySelector('ol.cart__items');
     const cartItem = createCartItemElement(object);
     cartList.appendChild(cartItem);
-    const item = {};
-    item.id = object.id;
-    item.title = object.title;
-    item.price = object.price;
-    manageCartInStorage('add', item);
+    manageCartInStorage('add', object);
     sumCart();
   } catch (error) {
     throw new Error(error);
