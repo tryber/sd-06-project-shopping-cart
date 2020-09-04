@@ -29,6 +29,24 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function getPriceOfString(stringItem, multiplier) {
+  const stringPrice = stringItem.split('PRICE: $')[1];
+  return multiplier * parseFloat(stringPrice);
+}
+
+async function sumTotalPriceAddItem(priceItem, multiplier = 1) {
+  const tagTotalPrice = document.querySelector('.total-price');
+  const totalPrice = parseFloat(tagTotalPrice.innerText);
+  if (priceItem === null) {
+    tagTotalPrice.innerText = 0;
+  } else if (typeof priceItem === 'number') {
+    tagTotalPrice.innerText = Math.round((totalPrice + priceItem) * 100) / 100;
+  } else {
+    const numberPrice = getPriceOfString(priceItem, multiplier);
+    tagTotalPrice.innerText = Math.round((totalPrice + numberPrice) * 100) / 100;
+  }
+}
+
 function cartItemClickListener(event) {
   const list = document.querySelector('.cart__items');
   const valor = event.target.innerHTML;
@@ -47,24 +65,6 @@ function saveCart(cartId) {
   } else if (!arrayIdShoppingCart.some(idLocal => idLocal === cartId)) {
     localStorage.setItem('arrayIdShoppingCart', JSON.stringify(arrayIdShoppingCart.concat(arrayId)));
   }
-}
-
-async function sumTotalPriceAddItem(priceItem, multiplier = 1) {
-  const tagTotalPrice = document.querySelector('.total-price');
-  const totalPrice = parseFloat(tagTotalPrice.innerText);
-  if (priceItem === null) {
-    tagTotalPrice.innerText = 0;
-  } else if (typeof(priceItem) === "number") {
-    tagTotalPrice.innerText = Math.round((totalPrice + priceItem) * 100) / 100;
-  } else {
-    const numberPrice = getPriceOfString(priceItem, multiplier);
-    tagTotalPrice.innerText = Math.round((totalPrice + numberPrice) * 100) / 100;
-  }
-}
-
-function getPriceOfString(stringItem, multiplier) {
-  const stringPrice = stringItem.split('PRICE: $')[1];
-  return multiplier * parseFloat(stringPrice);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }, textSaveCart) {
