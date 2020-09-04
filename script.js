@@ -33,10 +33,10 @@ function getSkuFromProductItem(item) {
 }
 
 const itensLocais = (item) => {
-    localStorage.setItem('cartItems', item);
-    const localPrice = document.querySelector('.total-price');
-    localStorage.setItem('totalPrice', localPrice.innerText);
-}
+  localStorage.setItem('cartItems', item);
+  const localPrice = document.querySelector('.total-price');
+  localStorage.setItem('totalPrice', localPrice.innerText);
+};
 
 function somarValores(valor) {
   const localPrice = document.querySelector('.total-price');
@@ -48,7 +48,7 @@ function somarValores(valor) {
 
 function subTotal(valor) {
   const precoTexto = document.querySelector('.total_price');
-  const precoInteiro = parseFloat(preco.innerText);
+  const precoInteiro = parseFloat(precoTexto.innerText);
   const converterValor = valor.split('$');
   const preco = parseFloat(converterValor[1]);
   const total = Math.round(((precoInteiro - preco) * 100) / 100).toFixed(2);
@@ -72,7 +72,7 @@ const limparCarrinho = () => {
     const precoTotal = document.querySelector('.total_price');
     precoTotal.innerText = '0.00';
   });
-}
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -96,7 +96,7 @@ const lendoLocal = () => {
     const localPrice = document.querySelector('.total-price');
     localPrice.innerText = loadPrice;
   }
-}
+};
 
 const adicionaAoCarrinho = async (id) => {
   await fetch(`https://api.mercadolibre.com/items/${id}`)
@@ -108,16 +108,20 @@ const adicionaAoCarrinho = async (id) => {
     listaCarrinho.appendChild(lista);
     itensLocais(listaCarrinho.innerHTML);
   });
-}
+};
 
 const lerProduto = async () => { // funcao que pega a lista de produtos da api e printa na página
-  await fetch(url+produto) // pegando a url para a requisição
-    .then(resposta => resposta.json()) // se teve uma resposta entre 200 e 299, atribui a um arquivo .json
-    .then((resultado) => {  // se deu certo com o arquivo json, destrinchar o resultado para obter os campos que preciso para o projeto
-      resultado.results.forEach((produto) => { // vamos percorrer todo o objeto
-        console.table(produto); // até aquí tudo bem !!!
-        const { id, title, thumbnail} = produto;  // separando o que eu quero do objeto
-        const item = createProductItemElement({ sku: id, name: title, image: thumbnail }); // função que monta o item
+  await fetch(url + produto) // pegando a url para a requisição
+    // se teve uma resposta entre 200 e 299, atribui a um arquivo .json
+    .then(resposta => resposta.json())
+    /* se deu certo com o arquivo json, destrinchar o resultado para obter 
+    os campos que preciso para o projeto */
+    .then((resultado) => {
+      resultado.results.forEach((produtos) => { // vamos percorrer todo o objeto
+        console.table(produtos); // até aquí tudo bem !!!
+        const { id, title, thumbnail } = produtos;  // separando o que eu quero do objeto
+        // função que monta o item
+        const item = createProductItemElement({ sku: id, name: title, image: thumbnail }); 
         item.addEventListener('click', (event) => { // oque fazer quando clicar
           const idDoProduto = getSkuFromProductItem(event.target.parentElement);
           adicionaAoCarrinho(idDoProduto);
@@ -127,7 +131,7 @@ const lerProduto = async () => { // funcao que pega a lista de produtos da api e
       });
       document.querySelector('.container').removeChild(document.querySelector('.loading'))
     })
-    .catch(error => { // se der erro
+    .catch((error) => { // se der erro
       console.log(msnErroRequisicao); // mensagem malcriada
     })
 }
@@ -137,4 +141,3 @@ window.onload = function onload() {
   lendoLocal();
   limparCarrinho();
 };
-
