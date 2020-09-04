@@ -9,11 +9,12 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-
+// transformar promise
 // Soma todo o valor que está dentro do span
-function addValueCar(price) {
-  const allValue = document.querySelector('.total-price');
-  allValue.innerHTML = (parseFloat(allValue.innerHTML) + price);
+
+async function addValueCar(price) {
+  const allValue = await document.querySelector('.total-price');
+  allValue.innerHTML = parseFloat(allValue.innerHTML) + price;
 }
 
 // Referência : https://www.devmedia.com.br/javascript-substring-selecionando-parte-de-uma-string/39232
