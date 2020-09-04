@@ -1,7 +1,3 @@
-window.onload = function onload() {
-  fetchMercadoLivre();
-  cartItemClickListener();
-};
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -81,3 +77,6 @@ function fetchMercadoLivre() {
     });
   });
 }
+window.onload = function onload() {
+  fetchMercadoLivre();
+};
