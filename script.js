@@ -1,3 +1,4 @@
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -43,14 +44,16 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }
 
 function addToCart(event) {
-  const parent = event.target.parentNode;
   const cartItems = document.querySelector('.cart__items');
+  const parent = event.target.parentNode;
   const itemID = getSkuFromProductItem(parent);
   fetch(`https://api.mercadolibre.com/items/${itemID}`)
     .then(r => r.json())
     .then(product => createCartItemElement(product))
     .then(li => cartItems.appendChild(li))
-    .then(() => localStorage.setItem(itemID, itemID));
+    .then(() => {
+      localStorage.setItem('storageItems', cartItems.innerHTML);
+    });
 }
 
 function getItems() {
@@ -73,15 +76,18 @@ function getItems() {
 
 window.onload = function onload() {
   getItems();
-  const keys = Object.keys(localStorage);
   const cartItems = document.querySelector('.cart__items');
-  for (let i = 0; i < keys.length; i += 1) {
-    fetch(`https://api.mercadolibre.com/items/${keys[i]}`)
-    .then(r => r.json())
-    .then(product => createCartItemElement(product))
-    .then(li => cartItems.appendChild(li))
-    .then(() => localStorage.setItem(keys[i], keys[i]));
-  }
+  const storageItems = localStorage.getItem('storageItems');
+  cartItems.innerHTML = storageItems;
+  // const keys = Object.keys(localStorage);
+  // const cartItems = document.querySelector('.cart__items');
+  // for (let i = 0; i < keys.length; i += 1) {
+  //   fetch(`https://api.mercadolibre.com/items/${keys[i]}`)
+  //   .then(r => r.json())
+  //   .then(product => createCartItemElement(product))
+  //   .then(li => cartItems.appendChild(li))
+  //   .then(() => localStorage.setItem(keys[i], keys[i]));
+  // }
 };
 
 // preciso que os items que são adicionados pelo localstorage tenham id
@@ -92,3 +98,7 @@ window.onload = function onload() {
 // e appendchild esse li ao cart_items
 
 // será que eu consigo refatorar o addtocart pra usar no onload
+
+// dando erro da forma acima, apesar de estar salvando os items no local storage
+// não retorna exatamente o item que o teste quer
+// acho que vou salvar em uma lista como era antes
