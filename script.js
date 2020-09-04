@@ -36,6 +36,7 @@ function cartItemClickListener(event) {
   .filter(textCartItem => valor !== textCartItem);
   localStorage.setItem('arrayIdShoppingCart', JSON.stringify(filterLocalStorage));
   list.removeChild(event.target);
+  sumTotalPriceAddItem(valor, -1);
 }
 
 function saveCart(cartId) {
@@ -48,27 +49,22 @@ function saveCart(cartId) {
   }
 }
 
-async function sumTotalPriceAddItem(priceItem) {
+async function sumTotalPriceAddItem(priceItem, multiplier = 1) {
   const tagTotalPrice = document.querySelector('.total-price');
   const totalPrice = parseFloat(tagTotalPrice.innerText);
-  console.log(typeof totalPrice);
-  tagTotalPrice.innerText = totalPrice + priceItem;
+  if (priceItem === null) {
+    tagTotalPrice.innerText = 0;
+  } else if (typeof(priceItem) === "number") {
+    tagTotalPrice.innerText = Math.round((totalPrice + priceItem) * 100) / 100;
+  } else {
+    const numberPrice = getPriceOfString(priceItem, multiplier);
+    tagTotalPrice.innerText = Math.round((totalPrice + numberPrice) * 100) / 100;
+  }
 }
 
-async function sumTotalPriceItemSave(stringItem) {
-  const tagTotalPrice = document.querySelector('.total-price');
-  const arrayPrice = stringItem.split(' ');
-  const stringPrice = arrayPrice[arrayPrice.length - 1];
-  const priceCompleto = stringPrice.split('')
-  .reduce((total, character, index) => {
-    if (index === 0) {
-      return total;
-    }
-    return `${total}${character}`;
-  }, '');
-  const price = parseFloat(priceCompleto);
-  const totalPrice = parseFloat(tagTotalPrice.innerText);
-  tagTotalPrice.innerText = totalPrice + price;
+function getPriceOfString(stringItem, multiplier) {
+  const stringPrice = stringItem.split('PRICE: $')[1];
+  return multiplier * parseFloat(stringPrice);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }, textSaveCart) {
@@ -76,7 +72,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }, textS
   li.className = 'cart__item';
   if (textSaveCart) {
     li.innerHTML = textSaveCart;
-    sumTotalPriceItemSave(textSaveCart);
+    sumTotalPriceAddItem(textSaveCart);
   } else {
     li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
     sumTotalPriceAddItem(salePrice);
@@ -154,6 +150,7 @@ function clearCart() {
       const li = list.children[0];
       list.removeChild(li);
     }
+    sumTotalPriceAddItem(null);
   });
 }
 
@@ -161,5 +158,4 @@ window.onload = function onload() {
   requisitionMercadoLivreItem('computador');
   renderShoppingCartSave();
   clearCart();
-  // document.querySelector('.oi').innerText = [1, 2, 'ola'];
 };
