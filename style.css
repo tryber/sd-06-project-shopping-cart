@@ -29,7 +29,7 @@ body {
 }
 
 .items {
-  background-color: rgb(242 , 242 , 242);
+  background-color: rgb( 242, 242, 242 );
   display: flex;
   flex-basis: 70%;
   flex-wrap: wrap;
@@ -39,7 +39,7 @@ body {
 }
 
 .item {
-  border: 2px solid rgb(103 , 146 , 137);
+  border: 2px solid rgb(103, 146, 137);
   border-radius: 5px;
   box-sizing: border-box;
   color: rgb(0 , 14 , 30);
