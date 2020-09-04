@@ -1,6 +1,14 @@
+// requisito #4
+function localStorageSave() {
+  const itemToStorage = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('item', itemToStorage);
+}
+
+// requisitos #3
 function cartItemClickListener(event) {
   const selectItem = event.target;
   selectItem.remove();
+  localStorageSave();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -22,6 +30,7 @@ const ShowCartItem = ({ id, title, price }) => {
   const productToCart = createCartItemElement(cartObject);
   const cartList = document.querySelector('.cart__items');
   cartList.appendChild(productToCart);
+  localStorageSave();
 };
 
 const fetchById = (id) => {
@@ -96,6 +105,26 @@ const fetchComputers = () => {
     });
 };
 
+// requisito #4
+function listenToRetrievedItem(itemsArray) {
+  itemsArray.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
+}
+
+function retrieveLocalStorage() {
+  const retrievedItem = localStorage.getItem('item');
+  const retrievedCart = document.querySelector('.cart__items');
+  retrievedCart.innerHTML = retrievedItem;
+  const CartItems = document.querySelectorAll('.cart__item');
+  console.log(CartItems);
+  listenToRetrievedItem(CartItems);
+}
+
 window.onload = function onload() {
   fetchComputers();
+
+  if (localStorage.getItem('item')) {
+    retrieveLocalStorage();
+  }
 };
