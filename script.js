@@ -10,7 +10,7 @@ function getTotal() {
   });
   const reduced = totalArray.reduce((item1, item2) => item1 + item2, 0);
   // TypeError: reduce of empty array with no initial value
-  totalContainer.innerHTML = reduced;
+  totalContainer.innerHTML = `Total: ${reduced.toFixed(2)}`;
 }
 
 function createProductImageElement(imageSource) {
