@@ -28,9 +28,9 @@ function getSkuFromProductItem(item) { // usei
   return item.querySelector('span.item__sku').innerText;
 }
 
-function sumValues(value) {
-  const priceSpan = document.getElementById('price');
-  let price = Number(priceSpan.innerText);
+async function sumValues(value) {
+  const priceSpan = await document.getElementById('price');
+  let price = await Number(priceSpan.innerText);
   price += value;
   priceSpan.innerText = (Math.round(price * 100) / 100);
 }
