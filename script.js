@@ -79,6 +79,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  somarValores(salePrice);
   return li;
 }
 
@@ -133,7 +134,7 @@ const lerProduto = async () => { // funcao que pega a lista de produtos da api e
     })
     .catch((error) => { // se der erro
       console.log(msnErroRequisicao); // mensagem malcriada
-    })
+    });
 };
 
 window.onload = function onload() {
