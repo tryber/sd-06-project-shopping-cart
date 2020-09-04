@@ -39,7 +39,7 @@ async function totalPrice() {
   }
 
   const total = document.getElementsByClassName('total-price')[0];
-  total.innerText = sum;
+  total.innerText = sum.toFixed(2);
 }
 
 function cartItemClickListener(event) {
@@ -116,6 +116,9 @@ function loadingMessage() {
 function recoverLocalStorage() {
   const cartList = document.querySelector('.cart__items');
   cartList.innerHTML = localStorage.list;
+  Array.from(document.getElementsByClassName('cart__item')).forEach((item) => {
+    item.addEventListener('click', cartItemClickListener)
+  });
 }
 
 window.onload = function onload() {
