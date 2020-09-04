@@ -44,10 +44,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 // 1. Listagem de produtos
-// Você deve criar uma listagem de produtos que devem ser consultados através da API do Mercado Livre.
+// Você deve criar uma listagem de produtos que devem ser consultados através da API 
+// do Mercado Livre.
 // Você deve utilizar o endpoint:
 // "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
-// onde $QUERY deve ser o valor da sua busca. Para este trabalho, a busca deve ser o termo computador.
+// onde $QUERY deve ser o valor da sua busca. Para este trabalho, a busca deve ser o 
+// termo computador.
 // O retorno desse endpoint será algo no formato json. Por exemplo, se for pesquisado "computador":
 // A lista de produtos que devem ser exibidos é o array results no JSON acima.
 // Você deve utilizar a função createProductItemElement(product) para criar os
@@ -57,7 +59,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 // Obs: as variáveis sku, no código fornecido, se referem aos campos id retornados pela API.
 
 // funcao que pega a lista de produtos da api e printa na página
-const listaDeProdutos = async () => { 
+const listaDeProdutos = async () => {
   await fetch(url + produto)
   .then(resposta => resposta.json())
   .then((resultado) => {
