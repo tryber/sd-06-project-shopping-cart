@@ -22,10 +22,10 @@ async function sumCart() {
     const myCart = document.querySelectorAll('ol.cart__items li');
     if (myCart.length > 0) {
       let sum = 0;
-      await myCart.forEach((item) => {
-        sum += parseFloat(item.dataset.price);
+      myCart.forEach((item) => {
+        sum += Number(item.dataset.price);
       });
-      pricePlacer.innerText = (Number.isInteger(sum)) ? sum : sum.toFixed(2);
+      pricePlacer.innerText = (Number.isInteger(sum)) ? sum : sum.toFixed(1);
     } else {
       pricePlacer.innerText = '-';
     }
