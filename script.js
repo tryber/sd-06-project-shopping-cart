@@ -4,6 +4,39 @@ const api = {
   endpointItem: 'items/',
 };
 
+/* function sum() {
+  const total_price = document.querySelector('.total-price');
+  const children_kart = document.querySelector('.cart__item');
+  const array = [];
+
+  children_kart.forEach(element => {
+    const split = element.innerHTML.split('');
+    array.push(element);
+  })
+
+  let total = 0;
+  children_kart.reduce((acc, currentValue) => {
+    total = acc + currentValue;
+  })
+  total_price.innerHTML = total;
+}*/
+
+function onLoading() {
+  const load = document.createElement('span');
+  load.className = 'loading';
+  load.innerText = 'loading...';
+  const items = document.querySelector('.items');
+  items.appendChild(load);
+}
+
+function removeLoading() {
+  setTimeout(() => {
+    const items = document.querySelector('.items');
+    const load = document.querySelector('.loading');
+    items.removeChild(load);
+  }, 2000);
+}
+
 function localStorageOnLoad() {
   const cartShopping = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart_shopping', cartShopping);
@@ -67,6 +100,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 }*/
 
 function fetchProduct() {
+  onLoading();
   fetch(`${api.url}${api.endpointSearch}computador`)
     .then(response => response.json())
     .then((data) => {
@@ -75,7 +109,8 @@ function fetchProduct() {
         const newProduct = createProductItemElement(product);
         section.appendChild(newProduct);
       });
-    });
+    })
+    .then(removeLoading());
 }
 
 function cleanAll() {
