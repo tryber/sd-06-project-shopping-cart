@@ -5,17 +5,6 @@ const siteId = 'MLB';
 const resourse = 'search?q=';
 const query = 'computador';
 
-function makeQuery (url) {
-    if (url === `${api}${endpoint}/${siteId}/${resourse}${query}`) {
-      fetch(url)
-        .then(response => response.json())
-        .then(response => response.results)
-        .then(results => createProductListing(results));
-    } else {
-      reject(new Error('Endpoint not found'));
-    }
-}
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -60,9 +49,21 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 function createProductListing(listOfProducts) {
   const productDisplay = document.querySelector('.items');
-  listOfProducts.forEach((product) => productDisplay.appendChild(createProductItemElement(product)));
+  listOfProducts
+    .forEach(product => productDisplay.appendChild(createProductItemElement(product)));
 }
 
-window.onload = function onload() { 
+function makeQuery(url) {
+  if (url === `${api}${endpoint}/${siteId}/${resourse}${query}`) {
+    fetch(url)
+      .then(response => response.json())
+      .then(response => response.results)
+      .then(results => createProductListing(results));
+  } else {
+    reject(new Error('Endpoint not found'));
+  }
+}
+
+window.onload = function onload() {
   makeQuery('https://api.mercadolibre.com/sites/MLB/search?q=computador');
 };
