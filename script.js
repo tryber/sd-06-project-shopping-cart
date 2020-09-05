@@ -14,6 +14,21 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// usada para remover algum item do carrinho
+function cartItemClickListener(event) {
+  const deletedKey = document.querySelector('ol').childNodes;
+  let currentIndex = 0;
+  deletedKey.forEach((value, index) => {
+    if (value === event.target) {
+      currentIndex = index;
+    }
+  });
+  const currentLocal = JSON.parse(localStorage.getItem('cartItens'));
+  currentLocal.splice(currentIndex, 1);
+  localStorage.setItem('cartItens', JSON.stringify(currentLocal));
+  event.target.remove();
+}
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -48,23 +63,6 @@ function localStorageGetItem() {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
-// usada para remover algum item do carrinho
-function cartItemClickListener(event) {
-  const deletedKey = document.querySelector('ol').childNodes;
-  let currentIndex = 0;
-  deletedKey.forEach((value, index) => {
-    if (value === event.target) {
-      currentIndex = index;
-    }
-  });
-  const currentLocal = JSON.parse(localStorage.getItem('cartItens'));
-  currentLocal.splice(currentIndex, 1);
-  localStorage.setItem('cartItens', JSON.stringify(currentLocal));
-  event.target.remove();
-}
-
-
 
 // criando requisição - requisito 2 - escutar o click da função createCartItemElement com o id
 function itemRequest(event) {
