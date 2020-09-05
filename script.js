@@ -62,7 +62,7 @@ function addItemToCart(event) {
 
 function handleClickAddItem() {
   const addToCartButtons = document.querySelectorAll('.item__add');
-  addToCartButtons.forEach((button) => button.addEventListener('click', addItemToCart));
+  addToCartButtons.forEach(button => button.addEventListener('click', addItemToCart));
 }
 
 function makeProductQuery(url) {
