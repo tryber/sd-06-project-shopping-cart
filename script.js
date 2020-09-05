@@ -1,10 +1,3 @@
-// const fetch = require('node-fetch');
-const api = 'https://api.mercadolibre.com/';
-const endpoint = 'sites';
-const siteId = 'MLB';
-const resourse = 'search?q=';
-const query = 'computador';
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -63,8 +56,8 @@ function addItemToCart(event) {
   const itemId = getSkuFromProductItem(event.target.parentNode);
   const cartElement = document.querySelector('.cart__items');
   makeItemQuery(itemId)
-    .then((fetchedItem) => createCartItemElement(fetchedItem))
-    .then((newCartItem) => cartElement.appendChild(newCartItem));
+    .then(fetchedItem => createCartItemElement(fetchedItem))
+    .then(newCartItem => cartElement.appendChild(newCartItem));
 }
 
 function handleClickAddItem() {
@@ -74,8 +67,8 @@ function handleClickAddItem() {
 
 function makeProductQuery(url) {
   fetch(url)
-    .then((response) => response.json())
-    .then((responseJson) => createProductListing(responseJson.results))
+    .then(response => response.json())
+    .then(responseJson => createProductListing(responseJson.results))
     .then(() => handleClickAddItem())
     .catch(() => new Error('Endpoint not found'));
 }
