@@ -28,11 +28,31 @@ function lStorage() {
   localStorage.items = localStorageItem;
 }
 
+async function totalValue() {
+  function toBeAssync() {
+    const cartItems = lStorage();
+    const separators = ['$', '<'];
+    const splittedItem = cartItems.split(new RegExp('([' + separators.join('') + '])'));
+    let value = 0;
+    for (let x = 0; 4 + 6 * x < splittedItem.length; x += 1) {
+      contador = 4 + 6 * x;
+      value += parseFloat(splittedItem[contador]);
+    }
+    finalValue = value;
+    const valueHTML = document.querySelector('.value');
+    valueHTML.innerHTML = `Preço total: $${finalValue}`;
+  }
+
+  const totalPrice = await setTimeout(toBeAssync(), 100);
+    // .then((inPut) => inPut);
+}
+
 function cartItemClickListener(event) {
   const selectedItem = event.target;
   const fatherOfProductToClean = document.querySelector('.cart__items');
   fatherOfProductToClean.removeChild(selectedItem);
   lStorage();
+  totalValue();
 }
 
 function keepItens() {
@@ -58,6 +78,7 @@ const sendItemtoCart = (product) => {
   const cartItems = document.querySelector('.cart__items');
   cartItems.appendChild(itemToCart);
   lStorage();
+  totalValue();
 };
 
 const computerObjectSearch = (inPutId) => {
@@ -109,6 +130,7 @@ const cleanCart = (event) => {
   const cleanFather = document.querySelector('.cart__items');
   cleanFather.innerHTML = '';
   lStorage();
+  totalValue();
 };
 
 const setupCleanEvent = () => {
