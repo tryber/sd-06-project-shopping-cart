@@ -13,6 +13,17 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  document.querySelector('.cart__items').appendChild(li);
+
+  li.addEventListener('click', cartItemClickListener);
+  // totalValue(salePrice);
+}
+
 // função localStorage -req 4
 // guardando objeto clicado no local storage
 function localStorageSetItem(cartItem) {
@@ -53,15 +64,7 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  document.querySelector('.cart__items').appendChild(li);
 
-  li.addEventListener('click', cartItemClickListener);
-  // totalValue(salePrice);
-}
 
 // criando requisição - requisito 2 - escutar o click da função createCartItemElement com o id
 function itemRequest(event) {
