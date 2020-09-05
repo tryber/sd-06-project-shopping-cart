@@ -30,9 +30,22 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// JSON PARSE: para ter acesso ao JSON como um objeto JavaScript
+// <https://www.w3schools.com/js/js_json_parse.asp>
+const savedCart = JSON.parse(
+  localStorage.getItem('cartStorage') ? localStorage.getItem('cartStorage') : '[]');
+
 function cartItemClickListener(event) {
   const itemToRemove = event.target;
+  // Uso do spread Operator e indexOf para resgatar o indice dos itens -
+  // para remover usando splice:
+  // <https://stackoverflow.com/a/42692428/577839>
+  const index = [...itemToRemove.parentNode.children].indexOf(itemToRemove);
   itemToRemove.parentNode.removeChild(itemToRemove);
+  savedCart.splice(index, 1);
+  // JSON STRINGFY: transforma o json em uma string :
+  // <https://www.w3schools.com/js/js_json_stringify.asp>
+  localStorage.setItem('cartStorage', JSON.stringify(savedCart));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -59,6 +72,7 @@ function removeAllCartItems() {
     while (cartList.firstChild) {
       cartList.removeChild(cartList.firstChild);
     }
+    localStorage.clear();
   });
 }
 
@@ -73,11 +87,14 @@ function fetchThisProduct(sku) {
       sku: product.id, name: product.title, salePrice: product.price,
     };
     cartList.appendChild(createCartItemElement(productList));
+    savedCart.push(productList);
+    localStorage.setItem('cartStorage', JSON.stringify(savedCart));
     setLoading(false);
   });
 }
 // cria o fetch - requisito1:
 function fetchProduct(term) {
+  const cartList = document.querySelector('.cart__items');
   setLoading(true);
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${term}`)
   .then(response => response.json())
@@ -94,6 +111,7 @@ function fetchProduct(term) {
       ));
     setLoading(false);
   });
+  savedCart.forEach(item => cartList.appendChild(createCartItemElement(item)));
 }
 
 
