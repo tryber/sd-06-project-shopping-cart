@@ -40,7 +40,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 // função localStorage -req 4
-// guardando objeto clicado no local storage
+// função guardando objeto clicado no local storage
 function localStorageSetItem(cartItem) {
   let itens = [];
   const firstItem = JSON.parse(localStorage.getItem('cartItens'));
@@ -51,7 +51,7 @@ function localStorageSetItem(cartItem) {
   localStorage.setItem('cartItens', JSON.stringify(itens));
 }
 
-// acessar o local Storage
+// função acessar o local Storage
 function localStorageGetItem() {
   const cartItensToJson = localStorage.getItem('cartItens');
   const cartItensArray = JSON.parse(cartItensToJson);
