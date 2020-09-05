@@ -34,8 +34,8 @@ async function totalValue() {
     const separators = ['$', '<'];
     const splittedItem = cartItems.split(new RegExp('([' + separators.join('') + '])'));
     let value = 0;
-    for (let x = 0; 4 + 6 * x < splittedItem.length; x += 1) {
-      contador = 4 + 6 * x;
+    for (let x = 0; (x * 6) + 4 < splittedItem.length; x += 1) {
+      contador = (x * 6) + 4;
       value += parseFloat(splittedItem[contador]);
     }
     finalValue = value;
@@ -43,7 +43,7 @@ async function totalValue() {
     valueHTML.innerHTML = `Preço total: $${finalValue}`;
   }
 
-  const totalPrice = await setTimeout(toBeAssync(), 100);
+  await setTimeout(toBeAssync(), 100);
     // .then((inPut) => inPut);
 }
 
