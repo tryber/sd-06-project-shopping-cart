@@ -74,8 +74,8 @@ function handleLocalStorage() {
 }
 
 function subtractCartItem(item) {
-  let sum = parseInt(document.querySelector('.total-price').innerText, 10);
-  const itemPrice = parseInt(item.innerText.split('$')[1], 10);
+  let sum = parseFloat(document.querySelector('.total-price').innerText, 10);
+  const itemPrice = parseFloat(item.innerText.split('$')[1], 10);
   sum -= itemPrice;
   return sum;
 }
@@ -117,7 +117,7 @@ function fetchComputersId(newUrlId) {
 */
 
 function sumEachCartItem(item) {
-  let sum = parseInt(document.querySelector('.total-price').innerText, 10);
+  let sum = parseFloat(document.querySelector('.total-price').innerText, 10);
   sum += item.price;
   return sum;
 }
