@@ -39,7 +39,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -53,17 +53,34 @@ function createProductListing(listOfProducts) {
     .forEach(product => productDisplay.appendChild(createProductItemElement(product)));
 }
 
-function makeQuery(url) {
-  if (url === `${api}${endpoint}/${siteId}/${resourse}${query}`) {
-    fetch(url)
-      .then(response => response.json())
-      .then(response => response.results)
-      .then(results => createProductListing(results));
-  } else {
-    reject(new Error('Endpoint not found'));
-  }
+function makeProductQuery(url) {
+  fetch(url)
+    .then((response) => response.json())
+    .then((responseJson) => responseJson.results)
+    .then((results) => createProductListing(results))
+    .catch(() => new Error('Endpoint not found'));
+}
+
+function makeItemQuery(idToFetch) {
+  fetch(`https://api.mercadolibre.com/items/${idToFetch}`)
+    .then((response) => response.json())
+    .then((result) => result);
+}
+
+function addItemToCart(event) {
+  const itemId = event.target.parentNode.firstElementChild.innerText;
+  const cartElement = document.querySelector('.cart__items');
+  cartElement.appendChild(createCartItemElement({ id: 'MLB1341706310', title: 'o que for', price: 1399}));
+  // makeItemQuery(itemId)
+  //   .then(fetchedItem => alert('worked'));
+}
+
+function handleClickAddItem() {
+  const addToCartButtons = document.querySelectorAll('.item__add');
+  addToCartButtons.forEach(button => button.addEventListener('click', addItemToCart));
 }
 
 window.onload = function onload() {
-  makeQuery('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  makeProductQuery('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  handleClickAddItem();
 };
