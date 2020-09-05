@@ -53,10 +53,24 @@ function handleCartItemObj(item) {
   return computerObj;
 }
 
+function createLoadingH1() {
+  const h1 = document.createElement('h1');
+  h1.innerText = 'Loading...';
+  h1.className = 'loading';
+  console.log(h1);
+  document.querySelector('.items').appendChild(h1);
+}
+
+function removeLoading() {
+  const loading = document.querySelector('.loading');
+  document.querySelector('.items').removeChild(loading);
+}
+
 function fetchComputers() {
   fetch(url)
     .then((response => response.json()))
     .then((object) => {
+      removeLoading();
       object.results.forEach((computer) => {
         document
         .querySelector('.items')
@@ -166,6 +180,7 @@ function onClickClearShoppingCard() {
 }
 
 window.onload = function onload() {
+  createLoadingH1();
   fetchComputers();
   getItemId();
   loadLocalStorage();
