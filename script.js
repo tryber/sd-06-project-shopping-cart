@@ -24,10 +24,18 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function saveStorage() {
+  const itemList = document.querySelectorAll('.cart__item');
+  const array = [];
+  itemList.forEach(el => array.push(el.innerHTML));
+  localStorage.setItem('carrinho', array);
+}
+
 function cartItemClickListener(event) {
   const list = document.querySelector('.cart__items');
   const clickedItem = event.target;
   list.removeChild(clickedItem);
+  saveStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -38,26 +46,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const arraySaveProduct = [];
-
-function saveLocalStorage() {
-  localStorage.setItem('products', JSON.stringify(arraySaveProduct));
-}
 function fetchOneProduct(id) {
   const endpoint = 'https://api.mercadolibre.com/items/';
   fetch(`${endpoint}${id}`)
     .then(response => response.json())
     .then((data) => {
-    // console.log(data);
       const product = createCartItemElement({
         sku: data.id,
         name: data.title,
         salePrice: data.price,
       });
-      arraySaveProduct.push(product.innerText);
-      console.log(arraySaveProduct);
-      saveLocalStorage();
-      return document.querySelector('.cart__items').appendChild(product);
+      document.querySelector('.cart__items').appendChild(product);
+      saveStorage();
     });
 }
 
@@ -86,12 +86,16 @@ const fetchProducts = () => {
 };
 
 function loadStorage() {
-  dataFromStorage = JSON.parse(localStorage.getItem('products'));
-  console.log(dataFromStorage);
-  for (i = 0; i < dataFromStorage.length; i += 1) {
-    const li = document.createElement('li');
-    li.innerText = dataFromStorage[i];
-    document.querySelector('ol').appendChild(li);
+  const data = localStorage.getItem('carrinho');
+  if (data !== null && data.length > 0) {
+    const arrStr = data.split(',');
+    arrStr.forEach(() => {
+      const li = document.createElement('li');
+      li.className = 'cart__item';
+      li.innerText = arrStr[0];
+      li.addEventListener('click', cartItemClickListener);
+      document.querySelector('.cart__items').appendChild(li);
+    });
   }
 }
 
