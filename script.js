@@ -89,8 +89,8 @@ function getSkuFromProductItem(item) {
 
 // criando requisição - requisito 2 - escutar o click da função createCartItemElement com o id
 function itemRequest(event) {
-  const url = 'https://api.mercadolibre.com/items/';
   loadingAPI();
+  const url = 'https://api.mercadolibre.com/items/';
   id = getSkuFromProductItem(event.target.parentNode);
   const urlItem = `${url}${id}`;
   fetch(urlItem)
@@ -115,9 +115,9 @@ function createProductItemElement({ sku, name, image }) {
 }
 // criando requisição - requisito 1
 function computerRequest() {
-  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   loadingAPI();
-  fetch(url)
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+    fetch(url)
     .then(response => response.json())
     .then(response => response.results)
     .then(response => response.forEach((element) => {
