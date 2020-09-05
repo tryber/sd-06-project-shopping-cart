@@ -16,7 +16,7 @@ async function sumTotalPriceOfCart() {
   const totalPrice = document.querySelector('.total-price');
   const totalItems = await Object.values(localStorage);
   const totalOfCart = await totalItems.map(item => Number(item.split('$')[1])).reduce((total, price) => total + price, 0);
-  totalPrice.innerHTML = `Preço total $ ${totalOfCart.toFixed(2)}`;
+  totalPrice.innerHTML = totalOfCart.toFixed(2);
 }
 
 function cartItemClickListener(event, sku) {
