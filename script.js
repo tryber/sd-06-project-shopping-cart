@@ -117,7 +117,7 @@ function createProductItemElement({ sku, name, image }) {
 function computerRequest() {
   loadingAPI();
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
-    fetch(url)
+  fetch(url)
     .then(response => response.json())
     .then(response => response.results)
     .then(response => response.forEach((element) => {
