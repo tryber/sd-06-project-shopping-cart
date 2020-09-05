@@ -14,9 +14,24 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 // função localStorage -req 4
+// guardando objeto clicado no local storage
+function localStorageSetItem(cartItem) {
+  let itens = [];
+  const firstItem = JSON.parse(localStorage.getItem('cartItens'));
+  if (firstItem !== null) {
+    itens = firstItem;
+  }
+  itens.push(cartItem);
+  localStorage.setItem('cartItens', JSON.stringify(itens));
+}
+
+// acessar o local Storage
 function localStorageGetItem() {
-  const itens = document.querySelector('.cart__items');
-  localStorage.getItem(itens);
+  const cartItensToJson = localStorage.getItem('cartItens');
+  const cartItensArray = JSON.parse(cartItensToJson);
+  if (cartItensArray !== null) {
+    cartItensArray.forEach(element => createCartItemElement(element));
+  }
 }
 
 function getSkuFromProductItem(item) {
@@ -25,6 +40,16 @@ function getSkuFromProductItem(item) {
 
 // usada para remover algum item do carrinho
 function cartItemClickListener(event) {
+  const deletedKey = document.querySelector('ol').childNodes;
+  let currentIndex = 0;
+  deletedKey.forEach((value, index) => {
+    if (value === event.target) {
+      currentIndex = index;
+    }
+  });
+  const currentLocal = JSON.parse(localStorage.getItem('cartItens'));
+  currentLocal.splice(currentIndex, 1);
+  localStorage.setItem('cartItens', JSON.stringify(currentLocal));
   event.target.remove();
 }
 
@@ -35,9 +60,9 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   document.querySelector('.cart__items').appendChild(li);
 
   li.addEventListener('click', cartItemClickListener);
-
-  return li;
+  // totalValue(salePrice);
 }
+
 // criando requisição - requisito 2 - escutar o click da função createCartItemElement com o id
 function itemRequest(event) {
   const url = 'https://api.mercadolibre.com/items/';
@@ -47,6 +72,7 @@ function itemRequest(event) {
   .then(response => response.json())
   .then((response) => {
     createCartItemElement(response);
+    localStorageSetItem(response);
   });
 }
 // req 1
@@ -84,6 +110,7 @@ function clearButton() {
   while (clearList.length !== 0) {
     document.querySelector('.cart__items').removeChild(clearList[0]);
   }
+  localStorage.clear();
 }
 
 window.onload = function onload() {
