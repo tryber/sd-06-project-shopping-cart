@@ -22,16 +22,6 @@ function saveItems() {
   // comando pronto para escolher o que salvar
   // setItem serve para salvar e passamos nome e o valor (cart e items);
 }
-
-function cartItemClickListener(event) {
-  const ol = document.querySelector('.cart__items');
-  const item = event.target;
-  ol.removeChild(item);
-  const priceItem = (event.target.innerHTML).split('$')[1] * -1;
-  sumPrices(priceItem)
-  saveItems();
-}
-
 const sumPrices = async (price) => {
   if (!localStorage.price) {
     localStorage.price = price;
@@ -42,6 +32,15 @@ const sumPrices = async (price) => {
   divPrice.innerHTML = localStorage.price;
   saveItems();
 };
+
+function cartItemClickListener(event) {
+  const ol = document.querySelector('.cart__items');
+  const item = event.target;
+  ol.removeChild(item);
+  const priceItem = (event.target.innerHTML).split('$')[1] * -1;
+  sumPrices(priceItem);
+  saveItems();
+}
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
