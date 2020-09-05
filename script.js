@@ -29,6 +29,29 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
+// req 5 - Some o valor total dos itens do carrinho de compras de forma assíncrona async-await
+// function sumItens(priceItem) {
+//   let totalvalue = 0;
+//   if(totalvalue === 0){
+//     totalvalue += priceItem;
+//   }
+//   // somar os preços dos itens
+//    // acumular os preços -> reduce
+//    // alocar os numeros que vem de priceItem em um array
+
+//    // retornar dentro da classe total-price
+//    document.querySelector('.total-price').innerText = totalvalue.toFixed(2);
+// }
+
+// req 7
+function loadingAPI() {
+  const loading = document.createElement('span');
+  const getContainer = document.querySelector('.container');
+  loading.className = 'loading-API';
+  loading.innerText = 'loading...';
+  getContainer.appendChild(loading);
+}
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -36,7 +59,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   document.querySelector('.cart__items').appendChild(li);
 
   li.addEventListener('click', cartItemClickListener);
-  // totalValue(salePrice);
+  // sumItens(salePrice);
 }
 
 // função localStorage -req 4
@@ -67,6 +90,7 @@ function getSkuFromProductItem(item) {
 // criando requisição - requisito 2 - escutar o click da função createCartItemElement com o id
 function itemRequest(event) {
   const url = 'https://api.mercadolibre.com/items/';
+  loadingAPI();
   id = getSkuFromProductItem(event.target.parentNode);
   const urlItem = `${url}${id}`;
   fetch(urlItem)
@@ -92,6 +116,7 @@ function createProductItemElement({ sku, name, image }) {
 // criando requisição - requisito 1
 function computerRequest() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
+  loadingAPI();
   fetch(url)
     .then(response => response.json())
     .then(response => response.results)
