@@ -42,37 +42,36 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// cria URL API:
-const urlML = 'https://api.mercadolibre.com/';
+
 // requisito 2:
 
 function fetchThisProduct(sku) {
-  const cartList = document.querySelector('.cart__items');
-  const endpointItem = `${urlML}/items/${sku}`;
-  fetch(endpointItem)
+  fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
-  .then(product => cartList.appendChild(
-    createCartItemElement({
-      sku: product.id,
-      name: product.title,
-      salePrice: product.price,
-    }),
-  ));
+  .then((product) => {
+    const cartList = document.querySelector('.cart__items');
+    const productList = {
+      sku: product.id, name: product.title, salePrice: product.price,
+    };
+    cartList.appendChild(createCartItemElement(productList));
+  });
 }
 // cria o fetch - requisito1:
 function fetchProduct(term) {
-  const endpointTerm = `${urlML}sites/MLB/search?q=${term}`;
-  const sectionItems = document.querySelector('.items');
-  fetch(endpointTerm).then(response => response.json())
-  .then(query => query.results.forEach(
-    product => sectionItems.appendChild(createProductItemElement({
-      sku: product.id,
-      name: product.title,
-      image: product.thumbnail,
-    })).querySelector('.item__add').addEventListener(
-      'click', () => fetchThisProduct(product.id),
-    ),
-  ));
+  fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${term}`)
+  .then(response => response.json())
+  .then((responseJson) => {
+    const sectionItems = document.querySelector('.items');
+    responseJson.results.forEach(
+      product => sectionItems.appendChild(createProductItemElement({
+        sku: product.id, name: product.title, image: product.thumbnail,
+      })).querySelector('.item__add').addEventListener(
+        'click', (buttonAddToCart) => {
+          const thisProduct = buttonAddToCart.target.parentNode;
+          fetchThisProduct(getSkuFromProductItem(thisProduct));
+        },
+      ));
+  });
 }
 
 
