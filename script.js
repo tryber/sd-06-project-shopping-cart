@@ -44,9 +44,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 function setLoading(loading) {
-  if (loading){
+  if (loading) {
     const whereTo = document.querySelector('.container');
-    return whereTo.appendChild(createCustomElement('div', 'loading', 'loading...'))
+    return whereTo.appendChild(createCustomElement('div', 'loading', 'loading...'));
   }
   const loadingText = document.querySelector('.loading');
   return loadingText.parentNode.removeChild(loadingText);
@@ -56,15 +56,15 @@ function removeAllCartItems() {
   const pressMeToCleanAll = document.querySelector('.empty-cart');
   const cartList = document.querySelector('.cart__items');
   pressMeToCleanAll.addEventListener('click', () => {
-    while (cartList.firstChild){
-      cartList.removeChild(cartList.firstChild)
+    while (cartList.firstChild) {
+      cartList.removeChild(cartList.firstChild);
     }
-  })
+  });
 }
 
 // requisito 2:
 function fetchThisProduct(sku) {
-  setLoading(true)
+  setLoading(true);
   fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
   .then((product) => {
@@ -78,7 +78,7 @@ function fetchThisProduct(sku) {
 }
 // cria o fetch - requisito1:
 function fetchProduct(term) {
-  setLoading(true)
+  setLoading(true);
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${term}`)
   .then(response => response.json())
   .then((responseJson) => {
@@ -92,7 +92,7 @@ function fetchProduct(term) {
           fetchThisProduct(getSkuFromProductItem(thisProduct));
         },
       ));
-    setLoading(false)
+    setLoading(false);
   });
 }
 
