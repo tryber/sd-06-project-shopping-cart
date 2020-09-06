@@ -107,7 +107,7 @@ function listClear() {
 }
 
 window.onload = function onload() {
-  historic();
+  storage();
   price();
   createItemList();
   const buttonListClear = document.querySelector('.empty-cart');
