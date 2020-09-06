@@ -1,11 +1,20 @@
-function createProductImageElement(imageSource) { // Cria a imagem do produto
+function SaveCartOnLocalStorage() { // Salva o carrinho no storage
+  const cartItemStorage = document.getElementsByClassName('cart__items')[0]; // Recebe uma lista com os items do cart
+  localStorage.setItem('CartItems', cartItemStorage.innerHTML);
+}
+
+function cartItemClickListener(event) {
+  event.target.remove();
+  SaveCartOnLocalStorage();
+}
+
+function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 }
 
-// Cria um 'custom html a partir de um element com a class 'className' e conteudo 'innerText'
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -13,73 +22,72 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// Pega id do item
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-// Ao clicar no produto do carrinho, remove-o
-function cartItemClickListener(event) {
-  event.target.remove();
-}
-
-// Cria a lista de items dentro do carrinho
-function createCartItemElement(sku, name, salePrice) {
+function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
+  document.querySelector('.cart__items').appendChild(li);
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
-// Pega os itens da api que serão adicionados no carrinho de compras
-const fetchApiCartProductList = (sku) => {
-  const url = `https://api.mercadolibre.com/items/${sku}`;
-  fetch(url)
+const fetchCartList = (item) => {
+  const url = 'https://api.mercadolibre.com/items/';
+  const endpoint = `${url}${item.sku}`;
+  fetch(endpoint)
   .then(response => response.json())
   .then((response) => {
-    const getCarItemsList = document.querySelector('.cart__items');
-    getCarItemsList.appendChild(createCartItemElement(response.id, response.title, response.price));
+    createCartItemElement({
+      sku: response.id,
+      name: response.title,
+      salePrice: response.price,
+    });
+    SaveCartOnLocalStorage(); // e salva tudo no local storage
   });
 };
 
-// Cria o produto
-function createProductItemElement(sku, name, image) {
+function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const buttonAdd = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  section.appendChild(
+    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', () => {
+      fetchCartList({ sku });
+    });
 
-  buttonAdd.addEventListener('click', cartItemAddClickListener = (event) => {
-    fetchApiCartProductList(getSkuFromProductItem(event.target.parentNode));
+  const cleanAllBtn = document.querySelector('.clean-cart-list');
+  cleanAllBtn.addEventListener('click', () => {
+    document.querySelector('.cart__items').innerHTML = '';
   });
 
-  section.appendChild(buttonAdd);
+  SaveCartOnLocalStorage(); // salva as alterações no cart
   return section;
 }
 
-// Pega os itens da api e cria a listagem de produtos
-const fetchApiProductList = () => {
-  // Query
-  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computadores';
-
-  fetch(url)
-  .then(response => response.json())
-  .then((response) => {
-    // Seleciona section items
-    const getSectionItems = document.querySelector('.items');
-
-    // Cria o produto e faz o append a section items
-    response.results.forEach((product) => {
-      const createProduct = createProductItemElement(product.id, product.title, product.thumbnail);
-      getSectionItems.appendChild(createProduct);
+const fetchProductList = () => {
+  fetch('https:api.mercadolibre.com/sites/MLB/search?q=computador')
+    .then(response => response.json())
+    .then((response) => {
+      response.results.forEach((item) => {
+        const arrayOfItems = createProductItemElement({
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
+        });
+        document.querySelector('.items').appendChild(arrayOfItems);
+      });
     });
-  });
 };
 
-window.onload = function onload() {
-  fetchApiProductList();
+function LoadFromLocalStorage() {
+  const cartItem = localStorage.getItem('CartItems');
+  document.querySelector('.cart__items').innerHTML = cartItem;
+}
+
+window.onload = () => {
+  fetchProductList();
+  LoadFromLocalStorage();
 };
