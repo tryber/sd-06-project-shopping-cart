@@ -12,28 +12,16 @@ function updateTotalPrice(addOrRemove, price) {
   document.querySelector('.total-price').innerHTML = currentValue;
 }
 
-const arrFilter = arr => arr.filter(pos => pos !== '');
-
-function updateLocalStorage(addOrRemove, id) {
-  const data = localStorage.getItem('cartShop');
-  if (addOrRemove === 'add') {
-    const arrData = (data !== null) ? [data, id] : [id];
-    localStorage.setItem('cartShop', arrFilter(arrData));
-  }
-  if (addOrRemove === 'remove') {
-    const arrData = data.split(',');
-    arrData.splice(arrData.findIndex(a => a === id), 1);
-    localStorage.setItem('cartShop', arrFilter(arrData));
-  }
+function updateLocalStorage() {
+  localStorage.cartShop = document.querySelector('.cart__items').innerHTML;
 }
 
 function cartItemClickListener(event) {
   const ol = document.querySelector('.cart__items');
-  const id = event.target.innerHTML.split(' ')[1];
-  const price = parseFloat(event.target.innerHTML.split('$').reverse()[0]);
+  const price = parseFloat(event.target.innerHTML.split('PRICE: $')[1]);
   ol.removeChild(event.target);
   updateTotalPrice('remove', price);
-  updateLocalStorage('remove', id);
+  updateLocalStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -52,7 +40,7 @@ function addCartShop(data) {
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
   updateTotalPrice('add', salePrice);
-  updateLocalStorage('add', sku);
+  updateLocalStorage();
 }
 
 function getSkuFromProductItem(item) {
@@ -116,15 +104,13 @@ function fetchMLB(url) {
 
 function getLocalStorageInfo() {
   if (localStorage.getItem('cartShop') !== null) {
-    const historyProduct = localStorage.getItem('cartShop').split(',');
-    const localStorageItems = arrFilter(historyProduct);
-    if (localStorageItems.length > 0) {
-      localStorage.cartShop = '';
-      localStorageItems.forEach((id) => {
-        fetchItem(id);
-        updateLocalStorage('remove', id);
-      });
-    }
+    const cart = document.querySelector('.cart__items');
+    cart.innerHTML = localStorage.cartShop;
+    cart.childNodes.forEach((element) => {
+      element.addEventListener('click', cartItemClickListener);
+      const price = parseFloat(element.innerHTML.split('PRICE: $')[1]);
+      updateTotalPrice('add', price);
+    });
   }
 }
 
