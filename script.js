@@ -29,6 +29,13 @@ function addItemToCart(item) {
   myCart.appendChild(item);
 }
 
+const fetchSpecificMLItem = (id) => {
+  const specificMLItemEndpoint = `https://api.mercadolibre.com/items/${id}`;
+  fetch(specificMLItemEndpoint)
+    .then(response => response.json())
+    .then(object => addItemToCart(createCartItemElement(object)));
+};
+
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -46,13 +53,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   return section;
 }
-
-const fetchSpecificMLItem = (id) => {
-  const specificMLItemEndpoint = `https://api.mercadolibre.com/items/${id}`;
-  fetch(specificMLItemEndpoint)
-    .then(response => response.json())
-    .then(object => addItemToCart(createCartItemElement(object)));
-};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
