@@ -78,6 +78,7 @@ const requestCartProduct = (itemSku) => {
 
 const handleProductList = (crudeProductList) => {
   const items = document.querySelector('.items');
+  items.innerText = '';
 
   crudeProductList.forEach((product) => {
     const { id: sku, thumbnail: image, title: name } = product;
@@ -110,6 +111,11 @@ const fetchCartFromStorage = () => {
   });
 };
 
+const removeLoading = () => {
+  const items = document.querySelector('.loading');
+  items.classList.remove('loading');
+};
+
 const fetchProducts = () => {
   const api = 'https://api.mercadolibre.com/';
   const endpoint = 'sites/MLB/search?q=';
@@ -120,8 +126,8 @@ const fetchProducts = () => {
     .then(response => response.json())
     .then((data) => {
       handleProductList(data.results);
-
       fetchCartFromStorage();
+      removeLoading();
     });
 };
 
@@ -133,7 +139,14 @@ const handleRemoveAllButton = () => {
   });
 };
 
+const loading = () => {
+  const items = document.querySelector('.items');
+  items.innerText = 'loading...';
+  items.classList.add('loading');
+};
+
 window.onload = () => {
+  loading();
   fetchProducts();
   handleRemoveAllButton();
 };
