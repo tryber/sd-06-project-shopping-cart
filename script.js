@@ -40,14 +40,31 @@ const emptyBtn = () => {
 };
 
 function cartItemClickListener(event) {
+  const li = event.target;
   event.target.remove();
+  const itemPrice = parseFloat(li.innerText.split('$')[1]);
+  const total = document.querySelector('.total-price');
+  const totalPrice = parseFloat(total.innerHTML);
+  const priceResult = totalPrice - itemPrice;
+  total.innerText = priceResult;
+  savedItems();
 }
 
-function createCartItemElement({ id: sku, title: name, productPrice: salePrice }) {
+async function result(list) {
+  const itemPrice = parseFloat(list.innerText.split('$')[1]);
+  const total = document.querySelector('.total-price');
+  const totalPrice = parseFloat(total.innerHTML);
+  const sumResult = totalPrice + itemPrice;
+  total.innerText = sumResult;
+  savedItems();
+}
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   savedItems();
+  result(li);
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -60,7 +77,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')).addEventListener('click', () => {
-    fetch(`https://api.mercadolibre.com/items/${sku}`)
+    const idProduct = sku;
+    fetch(`https://api.mercadolibre.com/items/${idProduct}`)
       .then(response => response.json())
       .then((object) => {
         const createdItem = createCartItemElement(object);
@@ -80,14 +98,14 @@ const apiInfo = {
 
 const url = `${apiInfo.api} ${apiInfo.endpoint}`;
 
-fetchFn = () => {
+function fetchFn() {
   const lookingForProduct = url;
   fetch(lookingForProduct)
     .then(response => response.json())
     .then(object => object.results)
-    .then(result => result
+    .then(results => results
     .forEach((resultProduct => createProductItemElement(resultProduct))));
-};
+}
 
 window.onload = () => {
   loading();
