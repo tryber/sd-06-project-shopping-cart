@@ -12,9 +12,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartLocalStorage() {
+  const list = document.querySelector('.cart__items');
+  localStorage.setItem('list', list.innerHTML);
+}
 
 function cartItemClickListener() {
-  // coloque seu código aqui
+  const list = document.querySelector('.cart__items');
+  const item = event.target;
+  list.removeChild(item);
+  cartLocalStorage();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -37,6 +44,7 @@ function fetchSingleItem(itemID) {
 function addItemToCart(event, sku) {
   if (event.target.className === 'item__add') {
     fetchSingleItem(sku);
+    cartLocalStorage();
   }
 }
 
