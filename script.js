@@ -35,8 +35,8 @@ function restoreLocalStorage() {
   const cart = JSON.parse(localStorage.getItem('cart'));
   if (cart) {
     for (let i = 0; i < cart.length; i += 1) {
-      const searchProduct = createCartItemElement(restore);
       const restore = cart[i];
+      const searchProduct = createCartItemElement(restore);
       const olList = document.querySelector('.cart__items');
       olList.appendChild(searchProduct);
     }
