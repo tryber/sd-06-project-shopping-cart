@@ -32,8 +32,8 @@ const requiredUrl = 'https://api.mercadolibre.com/items/';
 function cartItemClickListener(event) {
   document.querySelector('.cart__items').removeChild(event.target);
   const removeId = event.target;
-  console.log(removeId);
-  localStorage.removeItem(removeId);
+  console.log(removeId.innerText);
+  localStorage.removeItem(removeId.innerText);
 }
 
 const clearCart = () => {
@@ -59,13 +59,27 @@ const api = {
 };
 
 const url = `${api.api}${api.endpoint}`;
+const sumPrices = [];
+let cartPrices = 0;
+
+const allPrices = (item) => {
+  const resultItem = createCartItemElement(item)
+  const newPrice = resultItem.innerText.split('$');
+  sumPrices.push(parseFloat(newPrice[1]));
+  console.log(localStorage.length);
+  cartPrices = sumPrices.reduce((arr, curr) => arr + curr)
+  document.querySelector('.total-price').innerText = cartPrices;
+}
 
 const cartList = (getResponse) => {
   const list = createCartItemElement(getResponse);
   document.querySelector('.cart__items').appendChild(list);
   const localId = list.innerHTML;
   localStorage.setItem(localId, localId);
+  return localId;
 };
+
+
 
 const insertElement = (obj) => {
   obj.forEach((itens) => {
@@ -76,9 +90,10 @@ const insertElement = (obj) => {
       fetch(`${requiredUrl}${endPoint}`)
       .then(response => response.json())
       .then((getResponse) => {
-        cartList(getResponse);
+        console.log(cartList(getResponse));
+        console.log(allPrices(getResponse));
       });
-    });
+      })
   });
 };
 
@@ -88,6 +103,7 @@ const loadLocalStorage = () => {
     const tag = document.createElement('li');
     tag.innerText = storageElement;
     document.querySelector('.cart__items').appendChild(tag);
+    tag.addEventListener('click', cartItemClickListener);
   });
 };
 
@@ -103,6 +119,8 @@ window.onload = function onload() {
   fetchObj();
   clearCart();
   loadLocalStorage();
+  
+  // sumLocalStorage();
   // getStorage();
   // createNewCart(fillingCartWithLocalStorage);
   // localStorage.clear();
