@@ -76,9 +76,31 @@ const requestCartProduct = (itemSku) => {
     .then(data => sendProductToCart(data));
 };
 
+const restoreInitialDOM = () => {
+  const container = document.querySelector('.container');
+  container.innerText = '';
+  const items = document.createElement('section');
+  items.classList.add('items');
+  container.appendChild(items);
+
+  const cart = document.createElement('cart');
+  cart.classList.add('cart');
+  const span = document.createElement('span');
+  span.classList.add('cart__title');
+  const button = document.createElement('button');
+  button.classList.add('empty-cart');
+  const ol = document.createElement('ol');
+  ol.classList.add('cart__items');
+
+  cart.appendChild(span);
+  cart.appendChild(button);
+  cart.appendChild(ol);
+  container.appendChild(cart);
+};
+
 const handleProductList = (crudeProductList) => {
+  restoreInitialDOM();
   const items = document.querySelector('.items');
-  items.innerText = '';
 
   crudeProductList.forEach((product) => {
     const { id: sku, thumbnail: image, title: name } = product;
@@ -115,8 +137,16 @@ const fetchCartFromStorage = () => {
 };
 
 const removeLoading = () => {
-  const items = document.querySelector('.items');
-  items.classList.remove('loading');
+  const container = document.querySelector('.container');
+  container.classList.remove('loading');
+};
+
+const handleRemoveAllButton = () => {
+  document.querySelector('.empty-cart').addEventListener('click', function () {
+    const cartItems = document.querySelector('.cart__items');
+    cartItems.innerHTML = '';
+    localStorage.clear();
+  });
 };
 
 const fetchProducts = () => {
@@ -131,25 +161,17 @@ const fetchProducts = () => {
       handleProductList(data.results);
       fetchCartFromStorage();
       removeLoading();
+      handleRemoveAllButton();
     });
 };
 
-const handleRemoveAllButton = () => {
-  document.querySelector('.empty-cart').addEventListener('click', function () {
-    const cartItems = document.querySelector('.cart__items');
-    cartItems.innerHTML = '';
-    localStorage.clear();
-  });
-};
-
 const loading = () => {
-  const items = document.querySelector('.items');
-  items.innerText = 'loading...';
-  items.classList.add('loading');
+  const container = document.querySelector('.container');
+  container.innerText = 'loading...';
+  container.classList.add('loading');
 };
 
 window.onload = () => {
   loading();
   fetchProducts();
-  handleRemoveAllButton();
 };
