@@ -43,7 +43,7 @@ async function totalValue() {
       value += parseFloat(splittedItem[contador]);
     }
     finalValue = value;
-    const valueHTML = document.querySelector('.value');
+    const valueHTML = document.querySelector('.total-price');
     valueHTML.innerHTML = `Preço total: $${finalValue}`;
     console.log('oi');
   }
