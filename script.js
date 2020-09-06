@@ -61,10 +61,8 @@ const sendProductToCart = (retrievedProduct) => {
   const { id: sku, title: name, price: salePrice } = retrievedProduct;
   const itemGoingToCart = createCartItemElement({ sku, name, salePrice });
   const cartItems = document.querySelector('.cart__items');
-  const cartPosition = localStorage.length;
-
   cartItems.appendChild(itemGoingToCart);
-  localStorage.setItem(cartPosition, sku);
+  localStorage.setItem('storageCart', cartItems.innerHTML);
 };
 
 const requestCartProduct = (itemSku) => {
@@ -96,14 +94,21 @@ const handleProductList = (crudeProductList) => {
 
 const fetchCartFromStorage = () => {
   const skusFromStorage = [];
+  const unrefinedCartItems = localStorage.getItem('storageCart');
+  let cartItems = unrefinedCartItems.split('</li>');
+  
+  cartItems.forEach((item, index) => {
+    cartItems[index] = item.split('>')[1];
+  })
 
-  for (let index = 0; index < localStorage.length; index += 1) {
-    const retrievedSku = localStorage.getItem(index);
-    skusFromStorage.push(retrievedSku);
-  }
+  cartItems.forEach(item => {
+    const itemInfo = item.split(' | ')
+    let id = itemInfo[0].split(':')[1]
+    let title = itemInfo[1].split(':')[1]
+    let price = itemInfo[2].split(':')[1].split('$')[1]
 
-  localStorage.clear();
-  skusFromStorage.forEach(sku => requestCartProduct(sku));
+    sendProductToCart({ id, title, price })
+  })
 };
 
 const fetchProducts = () => {
@@ -116,9 +121,8 @@ const fetchProducts = () => {
     .then(response => response.json())
     .then((data) => {
       handleProductList(data.results);
-      if (localStorage.length > 0) {
-        fetchCartFromStorage();
-      }
+
+      fetchCartFromStorage();
     });
 };
 
