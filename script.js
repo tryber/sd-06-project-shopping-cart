@@ -102,8 +102,8 @@ const fetchCartFromStorage = () => {
 
   cartItems.forEach((item) => {
     const itemInfo = item.split(' | ');
-    const id = itemInfo[0].split(':')[1];
-    const title = itemInfo[1].split(':')[1];
+    const id = itemInfo[0].split(':')[1].substring(1);
+    const title = itemInfo[1].split(':')[1].substring(1);
     const price = itemInfo[2].split(':')[1].split('$')[1];
 
     sendProductToCart({ id, title, price });
