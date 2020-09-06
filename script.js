@@ -93,22 +93,21 @@ const handleProductList = (crudeProductList) => {
 };
 
 const fetchCartFromStorage = () => {
-  const skusFromStorage = [];
   const unrefinedCartItems = localStorage.getItem('storageCart');
-  let cartItems = unrefinedCartItems.split('</li>');
-  
+  const cartItems = unrefinedCartItems.split('</li>');
+
   cartItems.forEach((item, index) => {
     cartItems[index] = item.split('>')[1];
-  })
+  });
 
-  cartItems.forEach(item => {
-    const itemInfo = item.split(' | ')
-    let id = itemInfo[0].split(':')[1]
-    let title = itemInfo[1].split(':')[1]
-    let price = itemInfo[2].split(':')[1].split('$')[1]
+  cartItems.forEach((item) => {
+    const itemInfo = item.split(' | ');
+    const id = itemInfo[0].split(':')[1];
+    const title = itemInfo[1].split(':')[1];
+    const price = itemInfo[2].split(':')[1].split('$')[1];
 
-    sendProductToCart({ id, title, price })
-  })
+    sendProductToCart({ id, title, price });
+  });
 };
 
 const fetchProducts = () => {
