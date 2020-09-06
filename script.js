@@ -44,7 +44,7 @@ async function totalValue() {
     }
     finalValue = value;
     const valueHTML = document.querySelector('.total-price');
-    valueHTML.innerHTML = ${finalValue};
+    valueHTML.innerHTML = finalValue;
     console.log('oi');
   }
 
