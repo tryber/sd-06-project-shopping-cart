@@ -35,7 +35,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-function fetchSpecificMLItem(id) {
+const fetchSpecificMLItem = (id) => {
   const specificMLItemEndpoint = `https://api.mercadolibre.com/items/${id}`;
   fetch(specificMLItemEndpoint)
     .then(response => response.json())
