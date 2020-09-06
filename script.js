@@ -30,11 +30,24 @@ function cartItemClickListener(event) {
   // apagar item do carrinho
 }
 
+
+function eraseAllItems() {
+    const shoppingList = document.querySelector('.cart__items');
+    
+    while (shoppingList.hasChildNodes()) {
+      shoppingList.removeChild(shoppingList.childNodes[0]);
+    }
+    document.querySelector('.empty-cart').addEventListener('click', eraseAllItems)
+  }
+  
+
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  // a lista de compras ja está programada para apagar o item que for clicado
   return li;
 }
 
@@ -79,4 +92,5 @@ function fetchMercadoLivre() {
 }
 window.onload = function onload() {
   fetchMercadoLivre();
+  eraseAllItems()
 };
