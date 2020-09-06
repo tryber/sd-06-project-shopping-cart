@@ -38,8 +38,8 @@ async function totalValue() {
     console.log('oi');
     const splittedItem = cartItems.split(new RegExp(`([${separators.join('')}])`));
     let value = 0;
-    for (let x = 0; 4 + 6 * x < splittedItem.length; x += 1) {
-      contador = 4 + 6 * x;
+    for (let x = 0; 4 + (6 * x) < splittedItem.length; x += 1) {
+      contador = 4 + (6 * x);
       value += parseFloat(splittedItem[contador]);
     }
     finalValue = value;
@@ -49,7 +49,6 @@ async function totalValue() {
   }
 
   await setTimeout(toBeAssync(), 100);
-
 }
 
 function cartItemClickListener(event) {
