@@ -131,7 +131,7 @@ async function getComputerRequest() {
           createProductItemElement(element);
         });
         removeLoadingAPI();
-      }, 3000)
+      }, 3000),
     );
 }
 
