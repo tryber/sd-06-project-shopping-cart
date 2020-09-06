@@ -66,7 +66,6 @@ function fetchMLComputers() {
       document.querySelector('.items')
       .appendChild(createProductItemElement(product))));
 }
-
 // fetchSpecificMLItem('MLB1341706310');
 
 window.onload = function onload() {
