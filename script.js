@@ -29,14 +29,19 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  event.target.parentNode.removeChild(event.target);
+  const cartItem = event.target;
+  cartItem.parentNode.removeChild(cartItem);
+  localStorage.removeItem(cartItem.id);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.id = `${sku}`;
   li.addEventListener('click', cartItemClickListener);
+  localStorage.setItem(sku, { id: sku, title: name, price: salePrice });
+
   return li;
 }
 
@@ -52,12 +57,16 @@ async function makeItemQuery(idToFetch) {
   return result;
 }
 
+function createElementAndAdd(requestedItem) {
+  const cartList = document.querySelector('.cart__items');
+  makeItemQuery(requestedItem)
+    .then(fetchedItem => createCartItemElement(fetchedItem))
+    .then(newCartItem => cartList.appendChild(newCartItem));
+}
+
 function addItemToCart(event) {
   const itemId = getSkuFromProductItem(event.target.parentNode);
-  const cartElement = document.querySelector('.cart__items');
-  makeItemQuery(itemId)
-    .then(fetchedItem => createCartItemElement(fetchedItem))
-    .then(newCartItem => cartElement.appendChild(newCartItem));
+  createElementAndAdd(itemId);
 }
 
 function handleClickAddItem() {
@@ -73,6 +82,16 @@ function makeProductQuery(url) {
     .catch(() => new Error('Endpoint not found'));
 }
 
+function loadPreviousCart () {
+  const cartListContainer = document.querySelector('.cart__items');
+  if (cartListContainer.innerHTML === '') {
+    const cartItems = Object.keys(localStorage).reverse();
+    localStorage.clear();
+    cartItems.forEach(item => createElementAndAdd(item));
+  }
+}
+
 window.onload = function onload() {
   makeProductQuery('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  loadPreviousCart();
 };
