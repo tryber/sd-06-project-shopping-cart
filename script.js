@@ -32,23 +32,23 @@ function lStorage() {
 async function totalValue() {
   function toBeAssync() {
     console.log(lStorage());
-      const cartItems = lStorage();
-      console.log(cartItems);
-      const separators = ['$', '<'];
-      console.log('oi');
-      const splittedItem = cartItems.split(new RegExp(`([${separators.join('')}])`));
-      let value = 0;
-      for (let x = 0; 4 + 6 * x < splittedItem.length; x += 1) {
-          contador = 4 + 6 * x;
-          value += parseFloat(splittedItem[contador]);
-      }
-      finalValue = value;
-      const valueHTML = document.querySelector('.value');
-      valueHTML.innerHTML = `Preço total: $${finalValue}`;
-      console.log('oi');
+    const cartItems = lStorage();
+    console.log(cartItems);
+    const separators = ['$', '<'];
+    console.log('oi');
+    const splittedItem = cartItems.split(new RegExp(`([${separators.join('')}])`));
+    let value = 0;
+    for (let x = 0; 4 + 6 * x < splittedItem.length; x += 1) {
+      contador = 4 + 6 * x;
+      value += parseFloat(splittedItem[contador]);
+    }
+    finalValue = value;
+    const valueHTML = document.querySelector('.value');
+    valueHTML.innerHTML = `Preço total: $${finalValue}`;
+    console.log('oi');
   }
 
-  const totalPrice = await setTimeout(toBeAssync(), 100);
+  await setTimeout(toBeAssync(), 100);
 
 }
 
