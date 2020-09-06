@@ -5,6 +5,17 @@ const api = {
 
 const url = `${api.adress}${api.endpoint}`;
 
+function saveCart() {
+  const saveStorage = document.querySelector('.cart__items').innerHTML;
+  localStorage.cart = saveStorage;
+}
+
+function loadCart() {
+  if (localStorage.cart) {
+    document.querySelector('.cart__items').innerHTML = localStorage.cart;
+  }
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -39,6 +50,7 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   const items = document.querySelector('.cart__items');
   items.removeChild(event.target);
+  saveCart();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -72,7 +84,8 @@ const itemCart = () => {
 // Adicionando a função criada para remoção do item
       cartItem.addEventListener('click', cartItemClickListener);
       // Removendo o elemento de loading através da classe do span, assim que o item é carregado.
-    });
+    })
+    .then(() => saveCart());
 };
 
 // Criando a função que realiza o reset do carrinho
@@ -86,6 +99,7 @@ const clearCart = () => {
   buttonClear.addEventListener('click', function () {
     while (cartItems.firstChild) {
       cartItems.removeChild(cartItems.firstChild);
+      saveCart();
     }
   });
 };
@@ -122,5 +136,6 @@ const connection = () => {
 };
 
 window.onload = function onload() {
+  loadCart();
   connection();
 };
