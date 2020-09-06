@@ -95,24 +95,27 @@ const handleProductList = (crudeProductList) => {
 
 const fetchCartFromStorage = () => {
   const unrefinedCartItems = localStorage.getItem('storageCart');
-  const cartItems = unrefinedCartItems.split('</li>');
 
-  cartItems.forEach((item, index) => {
-    cartItems[index] = item.split('>')[1];
-  });
+  if (unrefinedCartItems) {
+    const cartItems = unrefinedCartItems.split('</li>');
 
-  cartItems.forEach((item) => {
-    const itemInfo = item.split(' | ');
-    const id = itemInfo[0].split(':')[1].substring(1);
-    const title = itemInfo[1].split(':')[1].substring(1);
-    const price = itemInfo[2].split(':')[1].split('$')[1];
+    cartItems.forEach((item, index) => {
+      cartItems[index] = item.split('>')[1];
+    });
 
-    sendProductToCart({ id, title, price });
-  });
+    cartItems.forEach((item) => {
+      const itemInfo = item.split(' | ');
+      const id = itemInfo[0].split(':')[1].substring(1);
+      const title = itemInfo[1].split(':')[1].substring(1);
+      const price = itemInfo[2].split(':')[1].split('$')[1];
+
+      sendProductToCart({ id, title, price });
+    });
+  }
 };
 
 const removeLoading = () => {
-  const items = document.querySelector('.loading');
+  const items = document.querySelector('.items');
   items.classList.remove('loading');
 };
 
