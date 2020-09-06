@@ -82,7 +82,7 @@ function makeProductQuery(url) {
     .catch(() => new Error('Endpoint not found'));
 }
 
-function loadPreviousCart () {
+function loadPreviousCart() {
   const cartListContainer = document.querySelector('.cart__items');
   if (cartListContainer.innerHTML === '') {
     const cartItems = Object.keys(localStorage).reverse();
