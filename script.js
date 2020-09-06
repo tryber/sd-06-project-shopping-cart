@@ -58,7 +58,7 @@ function createProductItemElement({ sku, name, image }) {
       fetchCartList({ sku });
     });
 
-  const cleanAllBtn = document.querySelector('.clean-cart-list');
+  const cleanAllBtn = document.querySelector('#clean-cart-list');
   cleanAllBtn.addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
   });
