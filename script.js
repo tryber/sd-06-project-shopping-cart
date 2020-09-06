@@ -14,7 +14,7 @@ function createCustomElement(element, className, innerText) {
 
 // usada para remover algum item do carrinho
 function cartItemClickListener(event) {
-  const deletedKey = document.querySelector('feBlendol').childNodes;
+  const deletedKey = document.querySelector('ol').childNodes;
   let currentIndex = 0;
   deletedKey.forEach((value, index) => {
     if (value === event.target) {
