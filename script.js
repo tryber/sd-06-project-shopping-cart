@@ -19,7 +19,14 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+  .addEventListener('click', (event) => {
+    console.log('hello');
+    const itemID = event.currentTarget.parentElement.firstChild.innerText;
+    console.log(itemID);
+    fetchSpecificMLItem(itemID);
+  });
+
 
   return section;
 }
@@ -32,7 +39,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -49,6 +56,22 @@ function fetchMLComputers() {
       .appendChild(createProductItemElement(product))));
 }
 
+function fetchSpecificMLItem(id) {
+  const specificMLItemEndpoint = `https://api.mercadolibre.com/items/${id}`;
+  fetch(specificMLItemEndpoint)
+    .then(response => response.json())
+    .then(object => addItemToCart(createCartItemElement(object)));
+}
+// fetchSpecificMLItem('MLB1341706310');
+
+function addItemToCart(item) {
+  const myCart = document.querySelector('.cart__items');
+  myCart.appendChild(item);
+}
+
+function getItemId(event) {
+  
+}
 window.onload = function onload() {
   fetchMLComputers();
 };
