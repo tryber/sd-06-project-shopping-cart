@@ -20,18 +20,59 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event) {
+function saveProductLocalStorage(product) {
+  let cart = localStorage.getItem('cart');
+  if (!cart) {
+    cart = [];
+  } else {
+    cart = JSON.parse(cart);
+  }
+  cart.push(product);
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function restoreLocalStorage() {
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  if (cart) {
+    for (let i = 0; i < cart.length; i += 1) {
+      const restore = cart[i];
+      const searchProduct = createCartItemElement(restore);
+      const olList = document.querySelector('.cart__items');
+      olList.appendChild(searchProduct);
+    }
+  }
+}
+
+function cartItemClickListener(event, sku) {
   // coloque seu código aqui
   const selectedProduct = event.target;
   const listOl = document.querySelector('.cart__items');
   listOl.removeChild(selectedProduct);
+
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  if (cart) {
+    const updatedCart = cart.filter(product => product.sku !== sku);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  }
+  // let cart = JSON.parse(localStorage.getItem('cart'));
+  // if (cart) {
+  //   const newCart = [];
+  //   for (let i = 0; i < cart.length; i += 1) {
+  //     if (cart[i].sku !== sku) {
+  //       newCart.push(cart[i]);
+  //     }
+  //   }
+  //   localStorage.setItem('cart', JSON.stringify(newCart));
+  // }
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', function () {
+    cartItemClickListener(event, sku);
+  });
   return li;
 }
 
@@ -47,13 +88,15 @@ function createProductItemElement({ sku, name, image }) {
       fetch(`https://api.mercadolibre.com/items/${sku}`)
         .then(response => response.json())
         .then((object) => {
-          const chosenProduct = createCartItemElement({
+          const product = {
             sku: object.id,
             name: object.title,
             salePrice: object.price,
-          });
+          };
+          const chosenProduct = createCartItemElement(product);
           const olList = document.querySelector('.cart__items');
           olList.appendChild(chosenProduct);
+          saveProductLocalStorage(product);
         });
     });
   return section;
@@ -80,4 +123,5 @@ const urlfetch = () => {
 
 window.onload = function onload() {
   urlfetch();
+  restoreLocalStorage();
 };
