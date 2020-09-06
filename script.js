@@ -26,7 +26,7 @@ function storeCart() {
 
 function sumTotalPrice(salePrice) {
   let totalPrice = document.querySelector('.cart-price').innerText;
-  totalPrice = (Number(totalPrice) + Number(salePrice)).toFixed(2);
+  totalPrice = Math.round(Number(totalPrice) + Number(salePrice));
 
   return totalPrice;
 }
