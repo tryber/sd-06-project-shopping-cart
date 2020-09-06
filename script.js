@@ -140,8 +140,10 @@ const fetchCartFromStorage = () => {
 };
 
 const removeLoading = () => {
-  const body = document.querySelector('body');
-  body.classList.remove('loading');
+  // const body = document.querySelector('body');
+  // body.classList.remove('loading');
+
+
 };
 
 const handleRemoveAllButton = () => {
@@ -169,9 +171,11 @@ const fetchProducts = () => {
 };
 
 const loading = () => {
-  const body = document.querySelector('body');
-  body.innerText = 'loading...';
-  body.classList.add('loading');
+  const items = document.querySelector('.items');
+  const messageHolder = document.createElement('div');
+  messageHolder.innerText = 'loading...';
+  messageHolder.classList.add('loading');
+  items.appendChild(messageHolder);
 };
 
 window.onload = () => {
