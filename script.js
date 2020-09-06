@@ -41,7 +41,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
     // console.log('hello');
     const itemID = event.currentTarget.parentElement.firstChild.innerText;
     // console.log(itemID);
-    setTimeout(fetchSpecificMLItem(itemID), 1000);
+    fetchSpecificMLItem(itemID);
   });
 
   return section;
