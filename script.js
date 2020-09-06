@@ -29,11 +29,25 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
 const requiredUrl = 'https://api.mercadolibre.com/items/';
 
+const allPrices = () => {
+  let sumOfAllPrices = 0;
+  for (let index = 0; index < localStorage.length; index += 1) {
+    const nome = localStorage.getItem(localStorage.key(index));
+    const nomeSplited = nome.split('$');
+    const newNumber = parseFloat(nomeSplited[1]);
+    sumOfAllPrices += newNumber;
+    document.querySelector('.total-price').innerText = sumOfAllPrices;
+  }
+};
+
 function cartItemClickListener(event) {
   document.querySelector('.cart__items').removeChild(event.target);
   const removeId = event.target;
-  console.log(removeId.innerText);
   localStorage.removeItem(removeId.innerText);
+  if (localStorage.length === 0) {
+    document.querySelector('.total-price').innerText = 0;
+  }
+  allPrices();
 }
 
 const clearCart = () => {
@@ -59,27 +73,14 @@ const api = {
 };
 
 const url = `${api.api}${api.endpoint}`;
-const sumPrices = [];
-let cartPrices = 0;
-
-const allPrices = (item) => {
-  const resultItem = createCartItemElement(item)
-  const newPrice = resultItem.innerText.split('$');
-  sumPrices.push(parseFloat(newPrice[1]));
-  console.log(localStorage.length);
-  cartPrices = sumPrices.reduce((arr, curr) => arr + curr)
-  document.querySelector('.total-price').innerText = cartPrices;
-}
 
 const cartList = (getResponse) => {
   const list = createCartItemElement(getResponse);
   document.querySelector('.cart__items').appendChild(list);
   const localId = list.innerHTML;
   localStorage.setItem(localId, localId);
-  return localId;
+  allPrices();
 };
-
-
 
 const insertElement = (obj) => {
   obj.forEach((itens) => {
@@ -90,10 +91,9 @@ const insertElement = (obj) => {
       fetch(`${requiredUrl}${endPoint}`)
       .then(response => response.json())
       .then((getResponse) => {
-        console.log(cartList(getResponse));
-        console.log(allPrices(getResponse));
+        cartList(getResponse);
       });
-      })
+    });
   });
 };
 
@@ -119,9 +119,4 @@ window.onload = function onload() {
   fetchObj();
   clearCart();
   loadLocalStorage();
-  
-  // sumLocalStorage();
-  // getStorage();
-  // createNewCart(fillingCartWithLocalStorage);
-  // localStorage.clear();
 };
