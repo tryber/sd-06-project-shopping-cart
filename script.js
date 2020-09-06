@@ -26,25 +26,30 @@ function lStorage() {
   const localStorageItem = document.querySelector('.cart__items').innerHTML;
   // console.log(X);
   localStorage.items = localStorageItem;
+  return localStorage.items;
 }
 
 async function totalValue() {
   function toBeAssync() {
-    const cartItems = lStorage();
-    const separators = ['$', '<'];
-    const splittedItem = cartItems.split(new RegExp('([' + separators.join('') + '])'));
-    let value = 0;
-    for (let x = 0; (x * 6) + 4 < splittedItem.length; x += 1) {
-      contador = (x * 6) + 4;
-      value += parseFloat(splittedItem[contador]);
-    }
-    finalValue = value;
-    const valueHTML = document.querySelector('.value');
-    valueHTML.innerHTML = `Preço total: $${finalValue}`;
+    console.log(lStorage());
+      const cartItems = lStorage();
+      console.log(cartItems);
+      const separators = ['$', '<'];
+      console.log('oi');
+      const splittedItem = cartItems.split(new RegExp(`([${separators.join('')}])`));
+      let value = 0;
+      for (let x = 0; 4 + 6 * x < splittedItem.length; x += 1) {
+          contador = 4 + 6 * x;
+          value += parseFloat(splittedItem[contador]);
+      }
+      finalValue = value;
+      const valueHTML = document.querySelector('.value');
+      valueHTML.innerHTML = `Preço total: $${finalValue}`;
+      console.log('oi');
   }
 
-  await setTimeout(toBeAssync(), 100);
-    // .then((inPut) => inPut);
+  const totalPrice = await setTimeout(toBeAssync(), 100);
+
 }
 
 function cartItemClickListener(event) {
