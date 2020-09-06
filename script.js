@@ -15,9 +15,26 @@ function createCustomElement(element, className, innerText) {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
+function localStorage() {
+  const items = document.querySelector('.cart__items').innerHTML;
+  const span = document.querySelector('.total-price').innerHTML;
+  localStorage.cartShop = items;
+  localStorage.totalPrice = span;
+}
 
-function cartItemClickListener() {
-  // coloque seu código aqui
+function getTotalPrice(price) {
+  const span = document.querySelector('.total-price');
+  const totalPrice = Math.round((Number(span.innerText) + price) * 100) / 100;
+  span.innerText = totalPrice;
+}
+
+async function cartItemClickListener() {
+  const selectedItem = event.target;
+  const priceItem = Number(event.path[0].attributes[1].nodeValue);
+  const ol = document.querySelector('.cart__items');
+  ol.removeChild(selectedItem);
+  await getTotalPrice(-priceItem);
+  localStorage();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
