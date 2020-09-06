@@ -32,15 +32,12 @@ function cartItemClickListener(event) {
 
 
 function eraseAllItems() {
-    const shoppingList = document.querySelector('.cart__items');
-    
-    while (shoppingList.hasChildNodes()) {
-      shoppingList.removeChild(shoppingList.childNodes[0]);
-    }
-    document.querySelector('.empty-cart').addEventListener('click', eraseAllItems)
+  const shoppingList = document.querySelector('.cart__items');
+  while (shoppingList.hasChildNodes()) {
+    shoppingList.removeChild(shoppingList.childNodes[0]);
   }
-  
-
+  document.querySelector('.empty-cart').addEventListener('click', eraseAllItems);
+}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -92,5 +89,5 @@ function fetchMercadoLivre() {
 }
 window.onload = function onload() {
   fetchMercadoLivre();
-  eraseAllItems()
+  eraseAllItems();
 };
