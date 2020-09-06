@@ -77,8 +77,11 @@ const requestCartProduct = (itemSku) => {
 };
 
 const restoreInitialDOM = () => {
-  const container = document.querySelector('.container');
-  container.innerText = '';
+  const body = document.querySelector('body');
+  body.innerText = '';
+  const container = document.createElement('section');
+  container.classList.add('container');
+  body.appendChild(container);
   const items = document.createElement('section');
   items.classList.add('items');
   container.appendChild(items);
@@ -137,8 +140,8 @@ const fetchCartFromStorage = () => {
 };
 
 const removeLoading = () => {
-  const container = document.querySelector('.container');
-  container.classList.remove('loading');
+  const body = document.querySelector('body');
+  body.classList.remove('loading');
 };
 
 const handleRemoveAllButton = () => {
@@ -166,9 +169,9 @@ const fetchProducts = () => {
 };
 
 const loading = () => {
-  const container = document.querySelector('.container');
-  container.innerText = 'loading...';
-  container.classList.add('loading');
+  const body = document.querySelector('body');
+  body.innerText = 'loading...';
+  body.classList.add('loading');
 };
 
 window.onload = () => {
