@@ -70,6 +70,13 @@ function createItemList() {
   }));
 }
 
+function listClear() {
+  const listCart = document.querySelector('.cart__items');
+  listCart.innerHTML = '';
+  const buttonListClear = document.querySelector('.empty-cart');
+  buttonListClear.addEventListener('click', listClear);
+}
+
 window.onload = function onload() {
   createItemList();
 };
