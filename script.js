@@ -20,13 +20,13 @@ function getSkuFromProductItem(item) {
 }
 
 function storeCart() {
-  const cartStorage = document.querySelector('.cart__items').innerHTML;
+  const cartStorage = document.querySelector('.cart').innerHTML;
   localStorage.storedCart = cartStorage;
 }
 
 function sumTotalPrice(salePrice) {
   let totalPrice = document.querySelector('.cart-price').innerText;
-  totalPrice = Math.round(Number(totalPrice) + Number(salePrice));
+  totalPrice = (Number(totalPrice) + Number(salePrice)).toFixed(2);
 
   return totalPrice;
 }
@@ -37,16 +37,16 @@ async function renderCartPrice(salePrice) {
   const totalPrice = await sumTotalPrice(salePrice);
 
   cartPrice.innerText = totalPrice;
-
+  storeCart();
   return cartPrice;
 }
 
 function cartItemClickListener(event) {
   const product = event.target;
   const cartList = document.querySelector('.cart__items');
-  const itemPrice = product.price;
-  cartList.removeChild(product);
+  const itemPrice = product.dataset.price;
   renderCartPrice(-itemPrice);
+  cartList.removeChild(product);
   storeCart();
 }
 
@@ -56,9 +56,10 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.id = sku;
-  li.price = salePrice;
+  li.dataset.price = salePrice;
   li.addEventListener('click', cartItemClickListener);
   renderCartPrice(salePrice);
+
   return li;
 }
 
@@ -75,8 +76,9 @@ function createItemEventListener() {
       const productInfo = createCartItemElement(productData);
 
       cartList.appendChild(productInfo);
-      storeCart();
     });
+
+  storeCart();
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -100,6 +102,7 @@ function clearCart() {
     item.parentElement.removeChild(item);
   });
   cartPrice.innerText = '';
+  storeCart();
 }
 
 const fetchApi = (() => {
@@ -126,7 +129,7 @@ const fetchApi = (() => {
 
 function loadLocalStorage() {
   if (localStorage.storedCart) {
-    document.querySelector('.cart__items').innerHTML = localStorage.storedCart;
+    document.querySelector('.cart').innerHTML = localStorage.storedCart;
     document.querySelectorAll('li').forEach((item) => {
       item.addEventListener('click', cartItemClickListener);
     });
