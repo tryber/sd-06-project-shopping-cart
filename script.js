@@ -76,33 +76,7 @@ const requestCartProduct = (itemSku) => {
     .then(data => sendProductToCart(data));
 };
 
-const restoreInitialDOM = () => {
-  const body = document.querySelector('body');
-  body.innerText = '';
-  const container = document.createElement('section');
-  container.classList.add('container');
-  body.appendChild(container);
-  const items = document.createElement('section');
-  items.classList.add('items');
-  container.appendChild(items);
-
-  const cart = document.createElement('cart');
-  cart.classList.add('cart');
-  const span = document.createElement('span');
-  span.classList.add('cart__title');
-  const button = document.createElement('button');
-  button.classList.add('empty-cart');
-  const ol = document.createElement('ol');
-  ol.classList.add('cart__items');
-
-  cart.appendChild(span);
-  cart.appendChild(button);
-  cart.appendChild(ol);
-  container.appendChild(cart);
-};
-
 const handleProductList = (crudeProductList) => {
-  restoreInitialDOM();
   const items = document.querySelector('.items');
 
   crudeProductList.forEach((product) => {
@@ -128,6 +102,8 @@ const fetchCartFromStorage = () => {
       cartItems[index] = item.split('>')[1];
     });
 
+    cartItems.pop();
+
     cartItems.forEach((item) => {
       const itemInfo = item.split(' | ');
       const id = itemInfo[0].split(':')[1].substring(1);
@@ -140,10 +116,8 @@ const fetchCartFromStorage = () => {
 };
 
 const removeLoading = () => {
-  // const body = document.querySelector('body');
-  // body.classList.remove('loading');
-
-
+  const loadingBlock = document.querySelector('.loading');
+  loadingBlock.remove();
 };
 
 const handleRemoveAllButton = () => {
@@ -165,9 +139,9 @@ const fetchProducts = () => {
     .then((data) => {
       handleProductList(data.results);
       fetchCartFromStorage();
-      removeLoading();
       handleRemoveAllButton();
-    });
+    })
+    .finally(() => removeLoading());
 };
 
 const loading = () => {
