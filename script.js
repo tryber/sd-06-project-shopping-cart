@@ -61,9 +61,9 @@ function createItemList() {
       name: computer.title,
       image: computer.thumbnail,
     };
-    const newItem = createCartItemElement(product);
-    const productList = document.querySelector('.items');
+    const newItem = createProductItemElement(product);
     newItem.addEventListener('click', cartItem);
+    const productList = document.querySelector('.items');
     productList.appendChild(newItem);
   }));
 }
