@@ -32,11 +32,11 @@ function saveProductLocalStorage(product) {
 }
 
 function restoreLocalStorage() {
-  let cart = JSON.parse(localStorage.getItem('cart'));
+  const cart = JSON.parse(localStorage.getItem('cart'));
   if (cart) {
     for (let i = 0; i < cart.length; i += 1) {
-      const restore = cart[i];
       const searchProduct = createCartItemElement(restore);
+      const restore = cart[i];
       const olList = document.querySelector('.cart__items');
       olList.appendChild(searchProduct);
     }
@@ -49,7 +49,7 @@ function cartItemClickListener(event, sku) {
   const listOl = document.querySelector('.cart__items');
   listOl.removeChild(selectedProduct);
 
-  let cart = JSON.parse(localStorage.getItem('cart'));
+  const cart = JSON.parse(localStorage.getItem('cart'));
   if (cart) {
     const updatedCart = cart.filter(product => product.sku !== sku);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
