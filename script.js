@@ -13,11 +13,11 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartLocalStorage() {
-  const list = document.querySelector('.cart__items');
-  localStorage.setItem('list', list.innerHTML);
+  const itemsOnCart = document.querySelector('.cart__items');
+  localStorage.cartItems = itemsOnCart.innerHTML;
 }
 
-function cartItemClickListener() {
+function cartItemClickListener(event) {
   const list = document.querySelector('.cart__items');
   const item = event.target;
   list.removeChild(item);
@@ -103,5 +103,6 @@ function removeCartItems() {
 window.onload = function onload() {
   loading();
   fetchList();
+  cartLocalStorage();
   removeCartItems();
 };
