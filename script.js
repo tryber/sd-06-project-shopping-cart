@@ -90,6 +90,7 @@ function addToCartByClicking(allTheItens) {
   });
 }
 
+//funcão que busca na api do mercado livre o resultado da url (endpoint) e retorna um objeto que é traduzido para (json), esse objeto é acessado a propriedade (results) e feito um (forEach) em todos os itens e os passando como parametro para a funcao (createProductItemElement) a qual é encarreada de criar e imprimir os produtos na tela, nessa seção ainda é recupera a seção com a classe (tems) e adicona como filho cada item criado pela função (createProductItemElement), e tambem chama a função (addToCartByClicking) que quando clicar no botão do item irá adicionar o mesmo ao carrinho de compras.
 const fetchSearch = () => {
   const endpoint = `${urlApi}sites/MLB/search?q=COMPUTADOR`;
 
