@@ -3,7 +3,6 @@ const lendoLocal = () => {
   const localDoCarrinho = document.querySelector('.cart__items');
   localDoCarrinho.innerHTML = lendo;
   const listaDeItens = document.querySelector('.cart__item');
-  console.table(listaDeItens);
   listaDeItens.forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
   });
@@ -67,7 +66,7 @@ function subTotal(valor) {
   const converterValor = valor.split('$');
   const preco = parseFloat(converterValor[1]);
   const total = Math.round(((precoInteiro - preco) * 100) / 100).toFixed(2);
-  precoTexto.innerText = total;
+  precoTexto.innerText = total;  console.table(listaDeItens);
 }
 
 function cartItemClickListener(event) {
@@ -90,55 +89,12 @@ const limparCarrinho = () => {
 };
 
 
-2. Adicione o produto ao carrinho de compras
-Cada produto na página HTML possui um botão com o nome Adicionar ao carrinho!.
-
-Ao clicar nesse botão você deve realizar uma requisição para o endpoint:
-
-"https://api.mercadolibre.com/items/$ItemID"
-onde $ItemID deve ser o valor id do item selecionado.
-
-Quando colocado o id MLB1341706310 retorno desse endpoint será algo no formato:
-
-{
-    "id": "MLB1341706310",
-    "site_id": "MLB",
-    "title": "Processador Amd Ryzen 5 2600 6 Núcleos 64 Gb",
-    "subtitle": null,
-    "seller_id": 245718870,
-    "category_id": "MLB1693",
-    "official_store_id": 1929,
-    "price": 879,
-    "base_price": 879,
-    "original_price": null,
-    "currency_id": "BRL",
-    "initial_quantity": 0,
-    "available_quantity": 0,
-    "sold_quantity": 0,
-    ...
-    "warranty": "Garantia de fábrica: 3 anos",
-    "catalog_product_id": "MLB9196241",
-    "domain_id": "MLB-COMPUTER_PROCESSORS",
-    "parent_item_id": null,
-    "differential_pricing": null,
-    "deal_ids": [],
-    "automatic_relist": false,
-    "date_created": "2019-10-15T18:13:00.000Z",
-    "last_updated": "2019-12-20T18:06:54.000Z",
-    "health": null,
-    "catalog_listing": true
-}
-Preste atenção que o JSON deve conter apenas um item.
-
-Você deve utilizar a função createCartItemElement() para criar os componentes HTML referentes a um item do carrinho.
-
-Adicione o elemento retornado da função createCartItemElement(product) como filho do elemento <ol class="cart__items">.
-
-3. Remova o item do carrinho de compras ao clicar nele
-Ao clicar no produto no carrinho de compra, ele deve ser removido da lista. Para isso, uma função (já existente) chamada cartItemClickListener(event) deve ser implementada com a lógica necessária para realizar a remoção.
 
 4. Carregue o carrinho de compras através do LocalStorage ao iniciar a página
-Ao carregar a página, o estado atual do carrinho de compras deve ser carregado do LocalStorage. Para que isso funcione, o carrinho de compras deve ser salvo no LocalStorage, ou seja, todas as adições e remoções devem ser abordadas para que a lista atual seja salva.
+Ao carregar a página, o estado atual do carrinho de compras deve ser carregado 
+do LocalStorage. Para que isso funcione, o carrinho de compras deve ser salvo 
+no LocalStorage, ou seja, todas as adições e remoções devem ser abordadas para 
+que a lista atual seja salva.
 
 5. Some o valor total dos itens do carrinho de compras de forma assíncrona
 Cada vez que se adicionar um item ao carrinho de compras será necessário somar seus valores e apresentá-los na página principal do projeto. Não queremos que essa soma, no entanto, impacte no carregamento da página. Devemos, portanto, fazer essa soma de forma assíncrona. Use async/await para fazer isso. O elemento que tem como filho o preço total dos itens do carrinho deve ter, obrigatóriamente, a classe total-price.

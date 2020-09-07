@@ -43,8 +43,27 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// função que adiciona o produto no carrinho
+// adicionando produtos no localStorage
+const adicionaLocalStorage = (item) => {
+  localStorage.setItem('carrinhoDeCompras', item);
+}
 
+// removendo produtos do localStorage
+const removeLocalSrtorage = (item) => {
+}
+
+// lendo produtos no localStorage
+const lendoLocalStorage = () => {
+  const listaLocalStorage = localStorage.getItem('carrinhoDeCompras');
+  const localDoCarrinho = document.querySelector('.cart__items');
+  localDoCarrinho.innerHTML = listaLocalStorage;
+  const listarNoHtml = document.querySelector('.cart__item');
+  listarNoHtml.forEach((itens) => {
+
+  });
+}
+
+// função que adiciona o produto no carrinho
 const adicionaAoCarrinho = async (id) => {
   await fetch(`https://api.mercadolibre.com/items/${id}`)
   .then(resposta => resposta.json())
@@ -53,8 +72,19 @@ const adicionaAoCarrinho = async (id) => {
     const lista = createCartItemElement({ sku: id, name: title, salePrice: price });
     const listaCarrinho = document.querySelector('.cart__items');
     listaCarrinho.appendChild(lista);
+    adicionaLocalStorage(lista.innerText);
   });
 };
+
+// funcao que limpa o carrinho de compras
+const limparCarrinho = () => {
+  const btnLimpar = document.querySelector('.empty-cart');
+  btnLimpar.addEventListener('click', () => {
+    const areaParaLimpar = document.querySelector('.cart__items');
+    areaParaLimpar.innerHTML = '';
+    localStorage.clear();
+  });
+}
 
 // funcao que pega a lista de produtos da api e printa na página
 const listaDeProdutos = async () => {
