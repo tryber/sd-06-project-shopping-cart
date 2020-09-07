@@ -28,7 +28,6 @@ function cartItemClickListener(event) {
 
 function loadStorage() {
   const innerStorage = document.querySelector('.cart__items');
-  // localStorage.total_price;
   if (localStorage.loadCart) {
     document.querySelector('.cart__items').innerHTML = localStorage.loadCart;
     innerStorage.addEventListener('click', cartItemClickListener);
@@ -51,7 +50,7 @@ async function totalSum() {
     const price = parseFloat(item.innerHTML.split('$')[1]);
     sumTotal += price;
   });
-  sectionTotalprice.innerHTML = `Total do carrinho: ${sumTotal}`;
+  sectionTotalprice.innerHTML = sumTotal;
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
