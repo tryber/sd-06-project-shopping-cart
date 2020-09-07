@@ -105,8 +105,8 @@ function removeCartItems() {
 }
 
 window.onload = function onload() {
+  loadCartLocalStorage();
   loading();
   fetchList();
   removeCartItems();
-  loadCartLocalStorage();
 };
