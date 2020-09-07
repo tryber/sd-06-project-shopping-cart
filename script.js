@@ -8,21 +8,39 @@ const changeLocalStorage = () => {
   localStorage.setItem('Lista de todos os elementos', completeList);
 };
 
-//  const sumAsyncAwait = (salePrice) => {
-//    const completeList = document.querySelector('.cart');
-//    const showPrice = document.createElement('div');
-//    completeList.appendChild(showPrice)
-//    showPrice.classList = 'total-price';
-//    const p = document.createElement('p');
-//    p.classList = 'sum_total_price';
-//    p.innerText = salePrice
-//    showPrice.appendChild(p)
-//  }
+function sumPrice (salePrice) {
+  save += parseFloat(salePrice);
+  return save;
+}
+
+const subtraction = (salePrice) => {
+  save -= parseFloat(salePrice);
+  return save;
+}
+
+let save = 0;
+const sumAsyncAwait = (salePrice) => {
+  const priceContainer =  document.querySelector('.container');
+  const showPrice = document.querySelector('.total-price');
+  sumPrice(salePrice);
+  showPrice.innerHTML = `${save}`;
+  priceContainer.appendChild(showPrice);
+}
+
+const subtractionAsyncAwait = () => {
+  const priceContainer =  document.querySelector('.container');
+  const showPrice = document.querySelector('.total-price');
+  const priceToRemove = parseFloat(event.target.innerHTML.split('PRICE: $')[1]);
+  subtraction(priceToRemove);
+  showPrice.innerHTML = `${save}`;
+  priceContainer.appendChild(showPrice);
+}
 
 function cartItemClickListener(event) {
   const itemDelete = event.target;
   itemDelete.parentNode.removeChild(itemDelete);
   changeLocalStorage();
+  subtractionAsyncAwait();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -138,4 +156,5 @@ window.onload = function onload() {
   loadLocalStorag();
   const buttonDelete = document.querySelector('.empty-cart');
   buttonDelete.addEventListener('click', buttonDeleteFunction);
+  sumAsyncAwait(0);
 };
