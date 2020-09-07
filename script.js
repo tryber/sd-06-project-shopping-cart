@@ -12,6 +12,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// Função que cria a seção onde será inserido os itens vindos da API
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -24,16 +25,20 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+// Função que retorna apenas o id da API requisitada
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-// Salavando o carrinho no LocalStorage
+// Função que salva o carrinho no LocalStorage
 function saveData() {
   const ol = document.querySelector('.cart__items');
   window.localStorage.setItem('myList', ol.innerHTML);
 }
 
+// Função que remove os itens do carrinho
+// Chama a função (saveData) que salvará o carrinho 
+// agora sem o item que foi removido
 function cartItemClickListener(event) {
   const cartItem = event.target;
   const olAddItems = document.querySelector('.cart__items');
@@ -42,14 +47,16 @@ function cartItemClickListener(event) {
   saveData();
 }
 
-// recuperando função de limpar ítem do carrinho ao ser clicado
+// Função que passa pelos elementos do item que ao ser clicado
+// Chama a função que irá removelo do carrinho
 function retrieveClearFunction(item) {
   item.forEach(element =>
     element.addEventListener('click', cartItemClickListener),
   );
 }
 
-// Recuperando carrinho do LocalStorage
+// Função que recupera carrinho salvo no LocalStorage
+// Chama função que remove elemento do carrinho ao ser clicado
 function loadCartFromLocalStorage() {
   const ol = document.querySelector('.cart__items');
   ol.innerHTML = window.localStorage.getItem('myList');
@@ -58,6 +65,8 @@ function loadCartFromLocalStorage() {
   retrieveClearFunction(li);
 }
 
+// Função que cria os elementos que serão adicionados no carrinho
+// Ao clicar no elemento adicionado no carrinho o retira de lá 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -67,8 +76,12 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
+// Corpo da URL que será feita as requisições
 const urlApi = 'https://api.mercadolibre.com/';
 
+// Fução que faz uma requisição a API do mercado livre
+// Adiciona os elementos retornados como filho da (ol)
+// Chama a função (saveData) que salvará o conteudo do carrinho no local storage
 function addToCart(itemId) {
   const endpoint = `${urlApi}items/${itemId}`;
 
@@ -81,6 +94,8 @@ function addToCart(itemId) {
     });
 }
 
+// Funçao que ao clicar no botão do item
+// Chama a função (addToCart) 
 function addToCartByClicking(allTheItens) {
   const buttonClick = allTheItens.querySelector('.item__add');
   const itemId = getSkuFromProductItem(allTheItens);
@@ -109,6 +124,7 @@ const fetchSearch = () => {
     });
 };
 
+// Chama as seguintes funções ao abrir a tela
 window.onload = function onload() {
   fetchSearch();
   loadCartFromLocalStorage();
