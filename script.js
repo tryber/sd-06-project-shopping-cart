@@ -20,7 +20,6 @@ function saveData() {
 function loadCartFromLocalStorage() {
   const ol = document.querySelector('.cart__items');
   ol.innerHTML = window.localStorage.getItem('myList');
-  const li = document.querySelectorAll('li');
 }
 
 function cartItemClickListener() {
@@ -101,7 +100,7 @@ function removeCartItems() {
     while (cartList.firstChild) {
       cartList.removeChild(cartList.firstChild);
     }
-  saveData();
+    saveData();
   });
 }
 
@@ -110,5 +109,5 @@ window.onload = function onload() {
   loading();
   fetchList();
   removeCartItems();
-  loadCartFromLocalStorage()
+  loadCartFromLocalStorage();
 };
