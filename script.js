@@ -16,7 +16,6 @@ function cartItemClickListener() {
   const list = document.querySelector('.cart__items');
   const item = event.target;
   list.removeChild(item);
-  localStorage.removeItem(sku);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
