@@ -46,22 +46,27 @@ function createCartItemElement({ sku, name, salePrice }) {
 // adicionando produtos no localStorage
 const adicionaLocalStorage = (item) => {
   localStorage.setItem('carrinhoDeCompras', item);
-}
+};
 
 // removendo produtos do localStorage
 const removeLocalSrtorage = (item) => {
-}
+};
 
 // lendo produtos no localStorage
 const lendoLocalStorage = () => {
-  const listaLocalStorage = localStorage.getItem('carrinhoDeCompras');
-  const localDoCarrinho = document.querySelector('.cart__items');
-  localDoCarrinho.innerHTML = listaLocalStorage;
-  const listarNoHtml = document.querySelector('.cart__item');
-  listarNoHtml.forEach((itens) => {
-
+  const localStorageToLoad = localStorage.getItem('cartItems');
+  const olCart = document.querySelector('.cart__items');
+  olCart.innerHTML = localStorageToLoad;
+  const listItem = document.querySelectorAll('.cart__item');
+  listItem.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
   });
-}
+  if (localStorage.totalPrice) {
+    const loadPrice = localStorage.getItem('totalPrice');
+    const localPrice = document.querySelector('.total-price');
+    localPrice.innerText = loadPrice;
+  }
+};
 
 // função que adiciona o produto no carrinho
 const adicionaAoCarrinho = async (id) => {
@@ -84,7 +89,7 @@ const limparCarrinho = () => {
     areaParaLimpar.innerHTML = '';
     localStorage.clear();
   });
-}
+};
 
 // funcao que pega a lista de produtos da api e printa na página
 const listaDeProdutos = async () => {
@@ -110,4 +115,5 @@ const listaDeProdutos = async () => {
 
 window.onload = function onload() {
   listaDeProdutos();  // montando a tela com os produtos
+  lendoLocalStorage(); // lendo oque ta quardado
 };
