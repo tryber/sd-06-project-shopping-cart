@@ -1,3 +1,41 @@
+article {
+  margin-top: 7%;
+}
+
+aside {
+  border: dotted;
+  display: inline-flex;
+  justify-content: center;
+  margin-block-end: auto;
+  margin-top: 7%;
+  width: 20%;
+}
+
+header {
+  background: #ececec;
+  border-bottom: 1px solid #ccc;
+  left: 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+}
+
+footer {
+  background-color: #ccc;
+  bottom: 0;
+  text-align: center;
+  left: auto;
+  position: relative;
+  width: 100%;
+}
+
+.total {
+  background-color: green;
+  border: dotted;
+  text-align: center;
+}
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -25,7 +63,7 @@
 
 .items {
   display: flex;
-  flex-basis: 70%;
+  flex-basis: 80%;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -67,6 +105,7 @@
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  width: max-content;
 }
 
 .cart .cart__title {
