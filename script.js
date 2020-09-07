@@ -49,11 +49,11 @@ function totalValueOfItems(price) {
 // }
 function sumTotalFromStore() {
   const cart = JSON.parse(localStorage.getItem('cart'));
-  
+
   let sumItems = 0;
-  
+
   if (cart) {
-    cart.forEach(product => {
+    cart.forEach((product) => {
       sumItems += product.salePrice;
     });
   }
