@@ -49,8 +49,8 @@ const adicionaLocalStorage = (item) => {
 };
 
 // removendo produtos do localStorage
-const removeLocalSrtorage = (item) => {
-};
+// const removeLocalSrtorage = (item) => {
+// };
 
 // lendo produtos no localStorage
 const lendoLocalStorage = () => {
