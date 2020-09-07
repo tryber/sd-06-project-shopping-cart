@@ -41,7 +41,7 @@ function cartItemClickListener(event) {
   sumOfItems();
 }
 
-function removeItemAfterReload () {
+function removeItemAfterReload() {
   const cartItem = document.getElementsByClassName('cart__item');
   cartItem.addEventListener('click', cartItemClickListener);
 }
