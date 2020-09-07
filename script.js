@@ -114,7 +114,7 @@ function loadPreviousCart() {
     const cartItems = Object.keys(localStorage).sort((a, b) => parseFloat(a) - parseFloat(b));
     const cartItemsData = cartItems.map(storageKey => JSON.parse(localStorage.getItem(storageKey)));
     localStorage.clear();
-    cartItemsData.forEach((item) =>{
+    cartItemsData.forEach((item) => {
       const cartItemStored = createCartItemElement(item);
       cartListContainer.appendChild(cartItemStored);
     });
