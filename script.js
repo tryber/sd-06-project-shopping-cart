@@ -47,10 +47,10 @@ async function totalSum() {
   const itensCart = document.querySelectorAll('.cart__item');
   let sumTotal = 0;
   itensCart.forEach((item) => {
-    const price = parseFloat(item.innerHTML.split('$')[1] * 100) / 100;
+    const price = parseFloat(item.innerHTML.split('$')[1]);
     sumTotal += price;
   });
-  sectionTotalprice.innerHTML = sumTotal;
+  sectionTotalprice.innerHTML = Math.round(sumTotal);
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
