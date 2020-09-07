@@ -42,17 +42,18 @@ function cartItemClickListener(event, sku) {
     const updatedCart = cart.filter(product => product.sku !== sku);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   }
-  // let cart = JSON.parse(localStorage.getItem('cart'));
-  // if (cart) {
-  //   const newCart = [];
-  //   for (let i = 0; i < cart.length; i += 1) {
-  //     if (cart[i].sku !== sku) {
-  //       newCart.push(cart[i]);
-  //     }
-  //   }
-  //   localStorage.setItem('cart', JSON.stringify(newCart));
-  // }
+  sumTotal();
 }
+// let cart = JSON.parse(localStorage.getItem('cart'));
+// if (cart) {
+//   const newCart = [];
+//   for (let i = 0; i < cart.length; i += 1) {
+//     if (cart[i].sku !== sku) {
+//       newCart.push(cart[i]);
+//     }
+//   }
+//   localStorage.setItem('cart', JSON.stringify(newCart));
+// }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -61,6 +62,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', function () {
     cartItemClickListener(event, sku);
   });
+  sumTotal();
   return li;
 }
 
@@ -121,7 +123,26 @@ const urlfetch = () => {
     });
 };
 
+function totalValueOfItems(price) {
+  const span = document.querySelector('.total-price');
+  span.innerHTML = `R$: ${price}`;
+}
+
+function sumTotal() {
+  const items = document.querySelectorAll('.cart__item');
+  let sumItems = 0;
+  if (items.length !== 0) {
+    items.forEach((price) => {
+      const itemPrice = parseInt(price.innerHTML.split('$')[1]);
+      sumItems += itemPrice;
+      totalValueOfItems(sumItems);
+    });
+  } else {
+    totalValueOfItems('');
+  }
+};
+
 window.onload = function onload() {
   urlfetch();
   restoreLocalStorage();
-};
+}
