@@ -116,4 +116,5 @@ const listaDeProdutos = async () => {
 window.onload = function onload() {
   listaDeProdutos();  // montando a tela com os produtos
   lendoLocalStorage(); // lendo oque ta quardado
+  limparCarrinho(); // quando o btn limpar for clickado
 };
