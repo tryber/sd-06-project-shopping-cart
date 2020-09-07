@@ -3,6 +3,25 @@ const produto = 'computador'; // vai que eu queira colocar uma opção de perqui
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q='; // endereço a api
 const msnErroRequisicao = 'Deu merda na requizição do produto'; // mensagem se a requisição de problema
 
+// funcao que soma os valores
+function sumPrices(price) {
+  const localPrice = document.querySelector('.total-price');
+  const priceNow = parseFloat(localPrice.innerText);
+  const priceParam = parseFloat(price);
+  const summedPrice = Math.round((priceNow + priceParam) * 100) / 100;
+  localPrice.innerText = summedPrice;
+}
+
+// função que converte o preco no formato desejado
+function subPrices(valor) {
+  const localPrice = document.querySelector('.total-price');
+  const priceNow = parseFloat(localPrice.innerText);
+  const getPrice = valor.split('$');
+  const price = parseFloat(getPrice[1]);
+  const subPrice = Math.round((priceNow - price) * 100) / 100;
+  localPrice.innerText = subPrice;
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -46,25 +65,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   sumPrices(salePrice);
   return li;
-}
-
-// funcao que soma os valores
-function sumPrices(price) {
-  const localPrice = document.querySelector('.total-price');
-  const priceNow = parseFloat(localPrice.innerText);
-  const priceParam = parseFloat(price);
-  const summedPrice = Math.round((priceNow + priceParam) * 100) / 100;
-  localPrice.innerText = summedPrice;
-}
-
-// função que converte o preco no formato desejado
-function subPrices(valor) {
-  const localPrice = document.querySelector('.total-price');
-  const priceNow = parseFloat(localPrice.innerText);
-  const getPrice = valor.split('$');
-  const price = parseFloat(getPrice[1]);
-  const subPrice = Math.round((priceNow - price) * 100) / 100;
-  localPrice.innerText = subPrice;
 }
 
 // adicionando produtos no localStorage
