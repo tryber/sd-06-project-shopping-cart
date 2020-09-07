@@ -37,7 +37,7 @@ function saveData() {
 }
 
 // Função que remove os itens do carrinho
-// Chama a função (saveData) que salvará o carrinho 
+// Chama a função (saveData) que salvará o carrinho
 // agora sem o item que foi removido
 function cartItemClickListener(event) {
   const cartItem = event.target;
@@ -66,7 +66,7 @@ function loadCartFromLocalStorage() {
 }
 
 // Função que cria os elementos que serão adicionados no carrinho
-// Ao clicar no elemento adicionado no carrinho o retira de lá 
+// Ao clicar no elemento adicionado no carrinho o retira de lá
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -95,7 +95,7 @@ function addToCart(itemId) {
 }
 
 // Funçao que ao clicar no botão do item
-// Chama a função (addToCart) 
+// Chama a função (addToCart)
 function addToCartByClicking(allTheItens) {
   const buttonClick = allTheItens.querySelector('.item__add');
   const itemId = getSkuFromProductItem(allTheItens);
