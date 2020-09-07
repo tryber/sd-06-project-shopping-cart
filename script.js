@@ -1,10 +1,25 @@
-window.onload = function onload() { };
+window.onload = function onload() {
+  const endpoint = "https://api.mercadolibre.com/sites/MLB/search?q=$computador";
+  fetchContent(endpoint);
+};
+
+async function fetchContent (endpoint) {
+  const response = await fetch(endpoint);
+  const object = await response.json();
+  object.results.forEach(data => createItem(createProductItemElement(data)));
+}
+
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
+}
+
+function createItem (item) {
+  const containerItem = document.querySelector(".items");
+  containerItem.appendChild(item);
 }
 
 function createCustomElement(element, className, innerText) {
@@ -14,7 +29,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
