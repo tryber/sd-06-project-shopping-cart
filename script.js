@@ -1,3 +1,14 @@
+function saveShoppingCart() {
+  const shoppingCart = document.querySelector('.cart__items').innerHTML;
+  localStorage.shopCart = shoppingCart;
+}
+
+function loadSavedShoppingCart() {
+  if (localStorage.shopCart) {
+    document.querySelector('.cart__items').innerHTML = localStorage.shopCart;
+  }
+}
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -70,17 +81,6 @@ function fetchMLComputers() {
       .appendChild(createProductItemElement(product))));
 }
 // fetchSpecificMLItem('MLB1341706310');
-
-function saveShoppingCart() {
-  const shoppingCart = document.querySelector('.cart__items').innerHTML;
-  localStorage.shopCart = shoppingCart;
-}
-
-function loadSavedShoppingCart() {
-  if(localStorage.shopCart) {
-    document.querySelector('.cart__items').innerHTML = localStorage.shopCart;
-  }
-}
 
 window.onload = function onload() {
   fetchMLComputers();
