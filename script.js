@@ -1,5 +1,3 @@
-
-
 const apiInfo = {
   api: 'https://api.mercadolibre.com/sites/MLB/search?q=',
   endpoint: 'computador',
@@ -8,6 +6,9 @@ const apiInfo = {
 const urlInitial = `${apiInfo.api}${apiInfo.endpoint}`;
 const listItems = document.querySelector('.cart__items');
 
+setTimeout(() => {
+  document.querySelector('.loading').remove();
+}, 1000);
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -23,6 +24,15 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// function checkLocalStorage() {
+//   const listLocalStorage = window.localStorage.getItem()
+// }
+
+function loadCart() {
+  const listStorage = document.querySelector('.cart__items');
+  localStorage.setItem('cartList', listStorage.innerHTML);
+}
+
 function saveCart() {
   const listItems = document.querySelector('.cart__items');
   localStorage.setItem('cartList', listItems.innerHTML);
@@ -32,11 +42,6 @@ function saveCart() {
   });
 }
 
-function loadCart() {
-  const listStorage = localStorage.getItem('cartList', listItems.innerHTML);
-  listItems.innerHTML = listStorage;
-}
-
 function cartItemClickListener(event) {
   const list = document.querySelector('.cart__items');
   list.removeChild(event.target);
@@ -44,11 +49,12 @@ function cartItemClickListener(event) {
 }
 
 function clearCart() {
+  const btnClearCart = document.querySelector('.empty-cart');
   const list = document.querySelector('.cart__items');
   list.innerHTML = '';
+  localStorage.clear();
+  btnClearCart.addEventListener('click', clearCart);
 }
-const btnClearCart = document.querySelector('.empty-cart');
-// btnClearCart.addEventListener('click', clearCart);
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -81,6 +87,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
       });
       const cart = document.querySelector('.cart__items');
       cart.appendChild(item);
+      saveCart();
     });
   });
 
@@ -103,6 +110,7 @@ const fetchCurrency = () => {
 
 
 window.onload = function onload() {
+  document.querySelector('.items').appendChild(createCustomElement('span', 'loading', 'loading...'));
   fetchCurrency();
   // if (localStorage.Item) {
   //   document.querySelector('.cart__items').innerHTML = localStorage.Item;
