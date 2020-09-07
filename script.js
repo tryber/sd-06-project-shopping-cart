@@ -28,18 +28,18 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// Salavando o carrinho no LocalStorage
+function saveData() {
+  const ol = document.querySelector('.cart__items');
+  window.localStorage.setItem('myList', ol.innerHTML);
+}
+
 function cartItemClickListener(event) {
   const cartItem = event.target;
   const olAddItems = document.querySelector('.cart__items');
 
   olAddItems.removeChild(cartItem);
   saveData();
-}
-
-// Salavando o carrinho no LocalStorage
-function saveData() {
-  const ol = document.querySelector('.cart__items');
-  window.localStorage.setItem('myList', ol.innerHTML);
 }
 
 // recuperando função de limpar ítem do carrinho ao ser clicado
