@@ -28,7 +28,7 @@ function cartItemClickListener(event) {
 
 function loadStorage() {
   const innerStorage = document.querySelector('.cart__items');
-  document.querySelector('.total-price').innerHTML = localStorage.total_price
+  document.querySelector('.total-price').innerHTML = localStorage.total_price;
   if (localStorage.loadCart) {
     document.querySelector('.cart__items').innerHTML = localStorage.loadCart;
     innerStorage.addEventListener('click', cartItemClickListener);
