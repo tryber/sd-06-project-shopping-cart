@@ -140,7 +140,7 @@ const urlfetch = () => {
         });
         document.querySelector('.items').appendChild(merchandise);
       });
-      document.getElementById('loading').style.display = 'none';
+      document.getElementById('loading').remove();
     });
 };
 
