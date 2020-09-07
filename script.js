@@ -1,3 +1,9 @@
+async function myCartItemsArray() {
+  let teste = document.querySelectorAll('.cart__item');
+  console.log(teste);
+}
+
+
 function saveShoppingCart() {
   const shoppingCart = document.querySelector('.cart__items').innerHTML;
   localStorage.shopCart = shoppingCart;
@@ -25,8 +31,8 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  localStorage.removeItem(event.target);
-  // saveShoppingCart();
+  // localStorage.removeItem(event.target);
+  saveShoppingCart();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -63,6 +69,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
     const itemID = event.currentTarget.parentElement.firstChild.innerText;
     // console.log(itemID);
     fetchSpecificMLItem(itemID);
+    // saveShoppingCart();
   });
 
   return section;
@@ -86,4 +93,5 @@ window.onload = function onload() {
   fetchMLComputers();
   loadSavedShoppingCart();
   // localStorage.clear();
+  myCartItemsArray();
 };
