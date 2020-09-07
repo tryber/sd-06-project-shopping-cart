@@ -44,11 +44,15 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 // adicionando produtos no localStorage
 const adicionaLocalStorage = (item) => {
-  localStorage.setItem('carrinhoDeCompras', item);
+  let compras = new Array();
+  if ( localStorage.hasOwnProperty('carrinhoDeCompras')) {
+    complas = JSON.parse(localStorage.getItem('compras'))
+  }
+  compras.push(item);
+  localStorage.setItem('carrinhoDeCompras', JSON.stringify(compras))
+  console.log(compras)
 };
 
-// const removeLocalSrtorage = (item) => {
-// };
 
 // lendo produtos no localStorage
 const lendoLocalStorage = () => {
