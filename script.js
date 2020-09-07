@@ -20,7 +20,7 @@ const subtraction = (salePrice) => {
 };
 
 const sumAsyncAwait = (salePrice) => {
-  const priceContainer =  document.querySelector('.container');
+  const priceContainer = document.querySelector('.container');
   const showPrice = document.querySelector('.total-price');
   sumPrice(salePrice);
   showPrice.innerHTML = `${save}`;
