@@ -22,12 +22,25 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+function sumPrices() {
+  const carts = document.querySelectorAll('.cart__item');
+  let sum = 0;
+  carts.forEach((item) => {
+    const cart = item.innerHTML;
+    const value = parseFloat(cart.split('$')[1]);
+    sum += value;
+  });
+  return localStorage.setItem('totalPrices', sum);
+}
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const item = event.target;
   const ol = document.querySelector('.cart__items');
   ol.removeChild(item);
   saveOrDelete();
+  sumPrices();
+  const pagar = document.querySelector('.total-price');
+  pagar.innerHTML = (`Total a pagar: ${localStorage.getItem('totalPrices')}`);
 }
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
@@ -37,6 +50,9 @@ function createCartItemElement({ id, title, price }) {
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
   saveOrDelete();
+  sumPrices();
+  const pagar = document.querySelector('.total-price');
+  pagar.innerHTML = (`Total a pagar: ${localStorage.getItem('totalPrices')}`);
   return li;
 }
 function createProductItemElement({ id, title, thumbnail }) {
@@ -70,14 +86,33 @@ function urlItemOnload() {
 function cleanAll() {
   const ol = document.querySelector('.cart__items');
   const btnClean = document.querySelector('.empty-cart');
+  const pagar = document.querySelector('.total-price');
   btnClean.addEventListener('click', () => {
     ol.innerHTML = '';
+    pagar.innerHTML = '';
   });
 }
+/* function sumPrices() {
+  const carts = document.querySelectorAll('.cart__item');
+  let sum = 0;
+  carts.forEach((item) => {
+    const cart = item.innerHTML;
+    const value = parseFloat(cart.split('$')[1]);
+    sum += value;
+  });
+  return localStorage.setItem('totalPrices', sum);
+} */
 window.onload = function onload() {
   urlItemOnload();
   if (localStorage.Item) {
     document.querySelector('.cart__items').innerHTML = localStorage.Item;
+    const btnClear = document.querySelector('.cart__items');
+    btnClear.addEventListener('click', (event) => {
+      const escolhido = event.target;
+      const ol = document.querySelector('.cart__items');
+      ol.removeChild(escolhido);
+      localStorage.removeItem('Item');
+    });
   }
   cleanAll();
 };
