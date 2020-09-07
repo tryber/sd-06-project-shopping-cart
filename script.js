@@ -30,6 +30,12 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// adicionando produtos no localStorage
+const adicionaLocalStorage = () => {
+  const itens = document.querySelector('.cart__items');
+  localStorage.setItem('carrinhoDeCompras', itens.innerHTML);
+};
+
 function cartItemClickListener(event) {
   event.target.remove();
   adicionaLocalStorage();
@@ -43,20 +49,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// adicionando produtos no localStorage
-const adicionaLocalStorage = () => {
-  const itens = document.querySelector('.cart__items');
-  localStorage.setItem('carrinhoDeCompras', itens.innerHTML);
-};
-
-
 // lendo produtos no localStorage
 const lendoLocalStorage = () => {
   const listaLocal = document.querySelector('.cart__items');
   listaLocal.innerHTML = localStorage.carrinhoDeCompras;
   Array.from(document.getElementsByClassName('cart__item')).forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
-  })
+  });
 };
 
 // função que adiciona o produto no carrinho
