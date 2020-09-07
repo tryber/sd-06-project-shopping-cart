@@ -12,10 +12,20 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// req 5 - soma os itens do carrinho e atualiza no HTML
+function sumItens() {
+  const total = JSON.parse(localStorage.getItem('cartItens'));
+  const totalPrice = total.reduce((acc, { price }) => {
+    return acc + price;
+  }, 0);
+  document.querySelector('.total-price').innerText = totalPrice;
+}
+
 // usada para remover algum item do carrinho
 function cartItemClickListener(event) {
   const deletedKey = document.querySelector('ol').childNodes;
   let currentIndex = 0;
+  // percorre as li's e pega o indice da li que será removida
   deletedKey.forEach((value, index) => {
     if (value === event.target) {
       currentIndex = index;
@@ -25,21 +35,8 @@ function cartItemClickListener(event) {
   currentLocal.splice(currentIndex, 1);
   localStorage.setItem('cartItens', JSON.stringify(currentLocal));
   event.target.remove();
+  sumItens();
 }
-
-// req 5 - Some o valor total dos itens do carrinho de compras de forma assíncrona async-await
-// function sumItens(priceItem) {
-//   let totalvalue = 0;
-//   if(totalvalue === 0){
-//     totalvalue += priceItem;
-//   }
-//   // somar os preços dos itens
-//    // acumular os preços -> reduce
-//    // alocar os numeros que vem de priceItem em um array
-
-//    // retornar dentro da classe total-price
-//    document.querySelector('.total-price').innerText = totalvalue.toFixed(2);
-// }
 
 // req 7
 function createLoadingAPI() {
@@ -61,7 +58,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   document.querySelector('.cart__items').appendChild(li);
 
   li.addEventListener('click', cartItemClickListener);
-  // sumItens(salePrice);
 }
 
 // função localStorage -req 4
@@ -74,6 +70,7 @@ function localStorageSetItem(cartItem) {
   }
   itens.push(cartItem);
   localStorage.setItem('cartItens', JSON.stringify(itens));
+  sumItens();
 }
 
 // função acessar o local Storage
@@ -138,10 +135,11 @@ async function getComputerRequest() {
 // req 6
 function clearButton() {
   const clearList = document.querySelector('.cart__items').children;
-  while (clearList.length !== 0) {
+  while (clearList.length >= 1) {
     document.querySelector('.cart__items').removeChild(clearList[0]);
   }
   localStorage.clear();
+  document.querySelector('.total-price').innerText = '0';
 }
 
 window.onload = function onload() {
