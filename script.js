@@ -47,8 +47,8 @@ async function totalSum() {
   const itensCart = document.querySelectorAll('.cart__item');
   let sumTotal = 0;
   itensCart.forEach((item) => {
-    const price = parseFloat(item.innerHTML.split('$')[1]);
-    sumTotal += price;
+    const price = parseFloat(item.innerHTML.match(/[\d.\d]+$/));
+    sumTotal += (price * 100) / 100;
   });
   sectionTotalprice.innerHTML = Math.round(sumTotal);
 }
