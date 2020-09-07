@@ -42,8 +42,8 @@ function cartItemClickListener(event) {
 }
 
 function removeItemAfterReload() {
-  const cartItem = document.getElementsByClassName('cart__item');
-  cartItem.addEventListener('click', cartItemClickListener);
+  const cartItem = document.querySelectorAll('.cart__item');
+  cartItem.forEach(item => item.addEventListener('click', cartItemClickListener));
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
