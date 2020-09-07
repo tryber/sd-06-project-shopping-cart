@@ -1,22 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
-  </head>
 
-  <body>
-    <section class="container">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Project Shopping Cart</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <section class="container">
+    <header>
+      <h1>SHOPPING DO COMPUTADOR</h1>
+    </header>
+    <nav></nav>
+    <article>
       <section class="items"></section>
+    </article>
+    <aside>
       <section class="cart">
+        <h2 id='loading' class='loading'>loading...</h2>
         <span class="cart__title">Carrinho de compras</span>
-        <button class="empty-cart">Esvaziar carrinho</button>
-        <ol class="cart__items"></ol>
+        <button id="empty-cart" class="empty-cart" onclick="emptyCart()">Esvaziar carrinho</button>
+        <ol id='cart__items' class="cart__items"></ol>
+        <section class="total">
+          <strong>
+            <p> Total da Compra: </p>
+            <span class="total-price"></span>
+          </strong>
+        </section>
       </section>
-    </section>
-  </body>
+    </aside>
+  </section>
+  <footer>
+    Projeto Carrinho de Compras!<br>
+    Curso Trybe #VQV<br>
+    Desenvolvido por Cássio Rubens
+  </footer>
+</body>
+
 </html>
