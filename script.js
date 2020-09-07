@@ -2,7 +2,6 @@
 const produto = 'computador'; // vai que eu queira colocar uma opção de perquisa
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q='; // endereço a api
 const msnErroRequisicao = 'Deu merda na requizição do produto'; // mensagem se a requisição de problema
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -32,11 +31,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  const priceToSub = event.target.innerText;
-  subPrices(priceToSub);
   event.target.remove();
-  const itensDoCarrinho = document.querySelector('.cart__items');
-  localStorageItem(itensDoCarrinho.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -44,7 +39,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  sumPrices(salePrice);
   return li;
 }
 
@@ -52,6 +46,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 const adicionaLocalStorage = (item) => {
   localStorage.setItem('carrinhoDeCompras', item);
 };
+
+// const removeLocalSrtorage = (item) => {
+// };
 
 // lendo produtos no localStorage
 const lendoLocalStorage = () => {
@@ -89,8 +86,6 @@ const limparCarrinho = () => {
     const areaParaLimpar = document.querySelector('.cart__items');
     areaParaLimpar.innerHTML = '';
     localStorage.clear();
-    const localPrice = document.querySelector('.total-price');
-    localPrice.innerText = '0.00';
   });
 };
 
@@ -114,7 +109,6 @@ const listaDeProdutos = async () => {
     console.log(msnErroRequisicao); // mensagem malcriada
   });
 };
-
 
 window.onload = function onload() {
   listaDeProdutos();  // montando a tela com os produtos
