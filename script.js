@@ -110,21 +110,9 @@ const fetchProduct = () => {
     .then((object) => {
       const resultado = object.results;
       renderItem(resultado);
+      const loading = document.querySelector('.loading');
+      document.body.removeChild(loading);
     });
-};
-
-// Requisito 7
-
-document.onreadystatechange = function () {
-  const bodyStyle = document.querySelector('body').style;
-  const loading = document.querySelector('.loading');
-  if (document.readyState !== 'complete') {
-    bodyStyle.visibility = 'hidden';
-    loading.style.visibility = 'visible';
-  } else {
-    document.body.removeChild(loading);
-    bodyStyle.visibility = 'visible';
-  }
 };
 
 window.onload = function onload() {
