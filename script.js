@@ -24,12 +24,29 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+function createTotalPriceStructure() {
+  const priceContainer = document.querySelector('.price-container');
+  priceContainer.innerHTML = '';
+  const priceLabel = document.createElement('h3');
+  priceLabel.innerText = 'Preço total: ';
+  priceLabel.className = 'total-price-label';
+  const priceTag = document.createElement('p');
+  priceTag.className = 'total-price';
+  priceTag.innerHTML = '';
+  priceContainer.appendChild(priceLabel);
+  priceContainer.appendChild(priceTag);
+}
+
 async function sumTotalPrice() {
-  const priceStringArray = setTimeout(() => Object.values(localStorage), 500);
-  const priceArray = await priceStringArray.map(item => parseFloat(item));
-  const totalPrice = await priceArray.reduce((acc, curr) => acc + curr);
-  const pricePlace = document.querySelector('.total-price-tag');
-  pricePlace.innerText = await `${totalPrice}`;
+  if (Object.keys(localStorage) !== 0) {
+    createTotalPriceStructure();
+    const itemsObjects = Object.values(localStorage);
+    const itemsObjectsJson = itemsObjects.map(obj => JSON.parse(obj));
+    const priceArray = itemsObjectsJson.map(dataObj => dataObj.price);
+    const totalPrice = await priceArray.reduce((acc, curr) => acc + curr, 0);
+    const pricePlace = document.querySelector('.total-price');
+    pricePlace.innerText = totalPrice;
+  }
 }
 
 function getSkuFromProductItem(item) {
@@ -49,10 +66,9 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const itemIndex = cartItemsList.length;
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.id = `${sku}`;
+  li.id = `0${itemIndex}`;
   li.addEventListener('click', cartItemClickListener);
   const itemData = { id: sku, title: name, price: salePrice };
-  console.log(JSON.stringify(itemData));
   localStorage.setItem(`0${itemIndex}`, JSON.stringify(itemData));
 
   return li;
@@ -70,29 +86,17 @@ async function makeItemQuery(idToFetch) {
   return result;
 }
 
-function createTotalPriceStructure() {
-  const totalPriceDiv = document.querySelector('.total-price');
-  totalPriceDiv.innerHTML = '';
-  const priceLabel = document.createElement('h3');
-  priceLabel.innerText = 'Preço total: ';
-  priceLabel.className = 'total-price-label';
-  const priceTag = document.createElement('p');
-  priceTag.className = 'total-price-tag';
-  totalPriceDiv.appendChild(priceLabel);
-  totalPriceDiv.appendChild(priceTag);
-}
-
 function createElementAndAdd(requestedItem) {
   const cartList = document.querySelector('.cart__items');
   makeItemQuery(requestedItem)
     .then(fetchedItem => createCartItemElement(fetchedItem))
-    .then(newCartItem => cartList.appendChild(newCartItem));
+    .then(newCartItem => cartList.appendChild(newCartItem))
+    .then(() => sumTotalPrice());
 }
 
 function addItemToCart(event) {
   const itemId = getSkuFromProductItem(event.target.parentNode);
   createElementAndAdd(itemId);
-  sumTotalPrice();
 }
 
 function handleClickAddItem() {
@@ -123,6 +127,8 @@ function loadPreviousCart() {
 
 function emptyCart() {
   const currentCart = document.querySelector('.cart__items');
+  const currentTotalPrice = document.querySelector('.price-container');
+  currentTotalPrice.innerHTML = '';
   currentCart.innerHTML = '';
   localStorage.clear();
 }
@@ -134,7 +140,6 @@ function handleEmptyCartClick() {
 
 window.onload = function onload() {
   makeProductQuery('https://api.mercadolibre.com/sites/MLB/search?q=computador');
-  createTotalPriceStructure();
   loadPreviousCart();
   handleEmptyCartClick();
   sumTotalPrice();
