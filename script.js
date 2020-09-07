@@ -50,7 +50,7 @@ async function totalSum() {
     const price = parseFloat(item.innerHTML.match(/[\d.\d]+$/));
     sumTotal += (price * 100) / 100;
   });
-  sectionTotalprice.innerHTML = Math.round(sumTotal);
+  sectionTotalprice.innerHTML = sumTotal;
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
