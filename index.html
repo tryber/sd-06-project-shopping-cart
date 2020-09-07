@@ -21,10 +21,11 @@
     </article>
     <aside>
       <section class="cart">
+        <!-- <h2 id='loading' class='loading'>Loading the page, sorry...</h2> -->
         <span class="cart__title">Carrinho de compras</span>
-        <button class="empty-cart">Esvaziar carrinho</button>
-        <ol class="cart__items"></ol>
-        <span class="total-price">Valor Total da Compra:</span>
+        <button id="empty-cart" class="empty-cart" onclick="emptyCart()">Esvaziar carrinho</button>
+        <ol id='cart__items' class="cart__items"></ol>
+        Valor Total da Compra: <span class="total-price"></span>
       </section>
     </aside>
     <footer></footer>
