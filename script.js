@@ -32,6 +32,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  adicionaLocalStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -43,31 +44,19 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 // adicionando produtos no localStorage
-const adicionaLocalStorage = (item) => {
-  let compras = new Array();
-  if ( localStorage.hasOwnProperty('carrinhoDeCompras')) {
-    complas = JSON.parse(localStorage.getItem('compras'))
-  }
-  compras.push(item);
-  localStorage.setItem('carrinhoDeCompras', JSON.stringify(compras))
-  console.log(compras)
+const adicionaLocalStorage = () => {
+  const itens = document.querySelector('.cart__items');
+  localStorage.setItem('carrinhoDeCompras', itens.innerHTML);
 };
 
 
 // lendo produtos no localStorage
 const lendoLocalStorage = () => {
-  const localStorageToLoad = localStorage.getItem('cartItems');
-  const olCart = document.querySelector('.cart__items');
-  olCart.innerHTML = localStorageToLoad;
-  const listItem = document.querySelectorAll('.cart__item');
-  listItem.forEach((item) => {
+  const listaLocal = document.querySelector('.cart__items');
+  listaLocal.innerHTML = localStorage.carrinhoDeCompras;
+  Array.from(document.getElementsByClassName('cart__item')).forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
-  });
-  if (localStorage.totalPrice) {
-    const loadPrice = localStorage.getItem('totalPrice');
-    const localPrice = document.querySelector('.total-price');
-    localPrice.innerText = loadPrice;
-  }
+  })
 };
 
 // função que adiciona o produto no carrinho
@@ -93,8 +82,19 @@ const limparCarrinho = () => {
   });
 };
 
+// funcao loading
+function loadingMessage() {
+  const containerItems = document.querySelector('.items');
+  const title = document.createElement('h1');
+  title.className = 'loading';
+  title.innerText = 'loading...';
+  title.style.color = 'red';
+  containerItems.appendChild(title);
+}
+
 // funcao que pega a lista de produtos da api e printa na página
 const listaDeProdutos = async () => {
+  const loadingText = document.querySelector('.loading');
   await fetch(url + produto)
   .then(resposta => resposta.json())
   .then((resultado) => {
@@ -111,10 +111,15 @@ const listaDeProdutos = async () => {
   })
   .catch((error) => { // se der erro
     console.log(msnErroRequisicao); // mensagem malcriada
+  })
+  .finally(() => {
+    const containerItems = document.querySelector('.items');
+    containerItems.removeChild(loadingText);
   });
 };
 
 window.onload = function onload() {
+  loadingMessage();
   listaDeProdutos();  // montando a tela com os produtos
   lendoLocalStorage(); // lendo oque ta quardado
   limparCarrinho(); // quando o btn limpar for clickado
