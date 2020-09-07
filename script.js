@@ -1,3 +1,4 @@
+// Cria as imagens impressas na tela
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -5,6 +6,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+// Cria os itens com os produtos impressos na tela
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -30,6 +32,27 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// Renderizando os valores dos preços no carrinho
+function renderPrice(value) {
+  const div = document.querySelector('.total-price');
+  div.innerHTML = value;
+}
+
+// Realizando a soma dos preços do carrinho
+function totalSum() {
+  const items = document.querySelectorAll('.cart__item');
+  let sum = 0;
+  if (items.length !== 0) {
+    items.forEach((priceTag) => {
+      const price = parseFloat(priceTag.innerHTML.split('$')[1]);
+      sum += price;
+      renderPrice(sum);
+    });
+  } else {
+    renderPrice('');
+  }
+}
+
 // Função que salva o carrinho no LocalStorage
 function saveData() {
   const ol = document.querySelector('.cart__items');
@@ -44,6 +67,7 @@ function cartItemClickListener(event) {
   const olAddItems = document.querySelector('.cart__items');
 
   olAddItems.removeChild(cartItem);
+  totalSum();
   saveData();
 }
 
@@ -61,8 +85,12 @@ function loadCartFromLocalStorage() {
   const ol = document.querySelector('.cart__items');
   ol.innerHTML = window.localStorage.getItem('myList');
   const li = document.querySelectorAll('li');
-
+  totalSum();
   retrieveClearFunction(li);
+}
+
+async function itemsCartPrice(salePrice) {
+  
 }
 
 // Função que cria os elementos que serão adicionados no carrinho
@@ -71,6 +99,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  //itemsCartPrice(salePrice);
   li.addEventListener('click', cartItemClickListener);
 
   return li;
@@ -90,6 +119,7 @@ function addToCart(itemId) {
     .then((objectJson) => {
       const olAddItems = document.querySelector('.cart__items');
       olAddItems.appendChild(createCartItemElement(objectJson));
+      totalSum();
       saveData();
     });
 }
