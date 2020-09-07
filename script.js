@@ -33,7 +33,7 @@ function saveProductLocalStorage(product) {
 
 function totalValueOfItems(price) {
   const span = document.querySelector('.total-price');
-  span.innerHTML = `R$: ${price}`;
+  span.innerHTML = price;
 }
 
 function sumTotal() {
