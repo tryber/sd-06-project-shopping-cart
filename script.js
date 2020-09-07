@@ -8,33 +8,33 @@ const changeLocalStorage = () => {
   localStorage.setItem('Lista de todos os elementos', completeList);
 };
 
-function sumPrice (salePrice) {
+let save = 0;
+const sumPrice = (salePrice) => {
   save += parseFloat(salePrice);
   return save;
-}
+};
 
 const subtraction = (salePrice) => {
   save -= parseFloat(salePrice);
   return save;
-}
+};
 
-let save = 0;
 const sumAsyncAwait = (salePrice) => {
   const priceContainer =  document.querySelector('.container');
   const showPrice = document.querySelector('.total-price');
   sumPrice(salePrice);
   showPrice.innerHTML = `${save}`;
   priceContainer.appendChild(showPrice);
-}
+};
 
 const subtractionAsyncAwait = () => {
-  const priceContainer =  document.querySelector('.container');
+  const priceContainer = document.querySelector('.container');
   const showPrice = document.querySelector('.total-price');
   const priceToRemove = parseFloat(event.target.innerHTML.split('PRICE: $')[1]);
   subtraction(priceToRemove);
   showPrice.innerHTML = `${save}`;
   priceContainer.appendChild(showPrice);
-}
+};
 
 function cartItemClickListener(event) {
   const itemDelete = event.target;
