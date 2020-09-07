@@ -13,11 +13,16 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartLocalStorage() {
-  const itemsOnCart = document.querySelector('.cart__items');
-  localStorage.cartItems = itemsOnCart.innerHTML;
+  const ol = document.querySelector('.cart__items');
+  window.localStorage.setItem('list', ol.innerHTML);
 }
 
-function cartItemClickListener(event) {
+function loadCartLocalStorage() {
+  const ol = document.querySelector('.cart__items');
+  ol.innerHTML = window.localStorage.getItem('list');
+}
+
+function cartItemClickListener() {
   const list = document.querySelector('.cart__items');
   const item = event.target;
   list.removeChild(item);
@@ -96,13 +101,12 @@ function removeCartItems() {
     while (cartList.firstChild) {
       cartList.removeChild(cartList.firstChild);
     }
-    localStorage.clear();
   });
 }
 
 window.onload = function onload() {
   loading();
   fetchList();
-  cartLocalStorage();
   removeCartItems();
+  loadCartLocalStorage();
 };
