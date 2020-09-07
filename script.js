@@ -41,6 +41,11 @@ function cartItemClickListener(event) {
   sumOfItems();
 }
 
+function removeFromCart() {
+  const cartItem = document.querySelectorAll('.cart__item');
+  cartItem.addEventListener('click', cartItemClickListener);
+}
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -116,14 +121,14 @@ const fetchProduct = () => {
 // Requisito 7
 
 document.onreadystatechange = function () {
-  let bodyVisibility = document.querySelector('body').style.visibility;
+  const bodyStyle = document.querySelector('body').style;
   const loading = document.querySelector('.loading').style;
   if (document.readyState !== 'complete') {
-    bodyVisibility = 'hidden';
+    bodyStyle.visibility = 'hidden';
     loading.visibility = 'visible';
   } else {
     loading.display = 'none';
-    bodyVisibility = 'visible';
+    bodyStyle.visibility = 'visible';
   }
 };
 
@@ -132,4 +137,5 @@ window.onload = function onload() {
   document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
   empty();
   sumOfItems();
+  removeFromCart();
 };
