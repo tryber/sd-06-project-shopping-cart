@@ -32,7 +32,11 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  const priceToSub = event.target.innerText;
+  subPrices(priceToSub);
   event.target.remove();
+  const itensDoCarrinho = document.querySelector('.cart__items');
+  localStorageItem(itensDoCarrinho.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,17 +44,35 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  sumPrices(salePrice);
   return li;
+}
+
+// funcao que soma os valores
+function sumPrices(price) {
+  const localPrice = document.querySelector('.total-price');
+  const priceNow = parseFloat(localPrice.innerText);
+  const priceParam = parseFloat(price);
+  const summedPrice = Math.round((priceNow + priceParam) * 100) / 100;
+  localPrice.innerText = summedPrice;
+}
+
+// função que converte o preco no formato desejado
+function subPrices(valor) {
+  const localPrice = document.querySelector('.total-price');
+  const priceNow = parseFloat(localPrice.innerText);
+  const getPrice = valor.split('$');
+  const price = parseFloat(getPrice[1]);
+  const subPrice = Math.round((priceNow - price) * 100) / 100;
+  localPrice.innerText = subPrice;
 }
 
 // adicionando produtos no localStorage
 const adicionaLocalStorage = (item) => {
   localStorage.setItem('carrinhoDeCompras', item);
+  const localPrice = document.querySelector('.total-price');
+  localStorage.setItem('totalPrice', localPrice.innerText);
 };
-
-// removendo produtos do localStorage
-// const removeLocalSrtorage = (item) => {
-// };
 
 // lendo produtos no localStorage
 const lendoLocalStorage = () => {
@@ -88,6 +110,8 @@ const limparCarrinho = () => {
     const areaParaLimpar = document.querySelector('.cart__items');
     areaParaLimpar.innerHTML = '';
     localStorage.clear();
+    const localPrice = document.querySelector('.total-price');
+    localPrice.innerText = '0.00';
   });
 };
 
