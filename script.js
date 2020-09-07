@@ -62,7 +62,6 @@ const renderCartItem = (event) => {
       ol.appendChild(cartItem);
       storage();
       sumOfItems();
-      // sumOfCartItems(parseFloat(object.base_price));
     });
 };
 
@@ -91,8 +90,8 @@ const empty = () => {
     ol.innerHTML = '';
     const totalPrice = document.querySelector('.total-price');
     totalPrice.innerHTML = 0;
+    localStorage.clear();
   });
-  localStorage.clear();
 };
 
 const renderItem = (arrayOfProducts) => {
@@ -112,6 +111,20 @@ const fetchProduct = () => {
       const resultado = object.results;
       renderItem(resultado);
     });
+};
+
+// Requisito 7
+
+document.onreadystatechange = function () {
+  let bodyVisibility = document.querySelector('body').style.visibility;
+  const loading = document.querySelector('.loading').style;
+  if (document.readyState !== 'complete') {
+    bodyVisibility = 'hidden';
+    loading.visibility = 'visible';
+  } else {
+    loading.display = 'none';
+    bodyVisibility = 'visible';
+  }
 };
 
 window.onload = function onload() {
