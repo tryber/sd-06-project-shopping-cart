@@ -15,9 +15,7 @@ function createCustomElement(element, className, innerText) {
 // req 5 - soma os itens do carrinho e atualiza no HTML
 function sumItens() {
   const total = JSON.parse(localStorage.getItem('cartItens'));
-  const totalPrice = total.reduce((acc, { price }) => {
-    return acc + price;
-  }, 0);
+  const totalPrice = total.reduce((acc, element) => acc + element.price, 0);
   document.querySelector('.total-price').innerText = totalPrice;
 }
 
