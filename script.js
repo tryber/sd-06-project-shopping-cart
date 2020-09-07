@@ -41,6 +41,11 @@ function cartItemClickListener(event) {
   sumOfItems();
 }
 
+function removeItemAfterReload () {
+  const cartItem = document.getElementsByClassName('cart__item');
+  cartItem.addEventListener('click', cartItemClickListener);
+}
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -120,4 +125,5 @@ window.onload = function onload() {
   document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
   empty();
   sumOfItems();
+  removeItemAfterReload();
 };
