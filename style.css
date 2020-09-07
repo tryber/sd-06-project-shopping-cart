@@ -74,3 +74,12 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.loading {
+  font-family: -apple-system, sans-serif;
+  font-size: 64px;
+  position: absolute;
+  right: 50%;
+  text-align: center;
+  top: 200px;
+}
