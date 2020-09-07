@@ -55,13 +55,13 @@ function cartItemClickListener(event, sku) {
   const selectedProduct = event.target;
   const listOl = document.querySelector('.cart__items');
   listOl.removeChild(selectedProduct);
+  sumTotal();
 
   const cart = JSON.parse(localStorage.getItem('cart'));
   if (cart) {
     const updatedCart = cart.filter(product => product.sku !== sku);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   }
-  sumTotal();
 }
 // let cart = JSON.parse(localStorage.getItem('cart'));
 // if (cart) {
@@ -118,6 +118,7 @@ function createProductItemElement({ sku, name, image }) {
           const olList = document.querySelector('.cart__items');
           olList.appendChild(chosenProduct);
           saveProductLocalStorage(product);
+          sumTotal();
         });
     });
   return section;
