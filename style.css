@@ -12,8 +12,8 @@ aside {
 }
 
 header {
-  background: #ececec;
-  border-bottom: 1px solid #ccc;
+  background: rgb(236 , 236 , 236);
+  border-bottom: 1px solid rgb(204 , 204 , 204);
   left: 0;
   position: fixed;
   right: 0;
@@ -22,7 +22,7 @@ header {
 }
 
 footer {
-  background-color: #ccc;
+  background-color: rgb(204 , 204 , 204);
   bottom: 0;
   text-align: center;
   left: auto;
