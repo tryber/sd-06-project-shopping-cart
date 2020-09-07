@@ -107,6 +107,5 @@ function removeCartItems() {
 window.onload = function onload() {
   loading();
   fetchList();
-  removeCartItems();
   loadCartLocalStorage();
 };
