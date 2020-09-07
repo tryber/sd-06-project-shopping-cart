@@ -89,10 +89,6 @@ function loadCartFromLocalStorage() {
   retrieveClearFunction(li);
 }
 
-async function itemsCartPrice(salePrice) {
-  
-}
-
 // Função que cria os elementos que serão adicionados no carrinho
 // Ao clicar no elemento adicionado no carrinho o retira de lá
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
