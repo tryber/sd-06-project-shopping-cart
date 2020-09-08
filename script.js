@@ -56,7 +56,7 @@ function parentLoad(loadingElement) {
 }
 
 function apiLoading() {
-  const loadingElement = document.createElement('p');
+  const loadingElement = document.createElement('span');
   loadingElement.className = 'loading';
   loadingElement.innerText = 'loading...';
   parentLoad(loadingElement);
