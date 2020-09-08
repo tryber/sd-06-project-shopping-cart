@@ -86,6 +86,7 @@ function productId(sku) {
 // =========================================================================
 
 function fetchMercadoLivre() {
+  setTimeout(() => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((object) => {
@@ -106,8 +107,10 @@ function fetchMercadoLivre() {
       document.querySelector('.items').appendChild(product);
       // adição ao carrinho
     });
-  });
+  })
+ },1500)
 }
+
 // =========================================================================
 
 function eraseAllItems() {
@@ -116,8 +119,18 @@ function eraseAllItems() {
     // enquanto houver childNodes, remova!
     shoppingList.removeChild(shoppingList.childNodes[0]);
   }
-  // localStorage.clear();
+  localStorage.clear();
   document.querySelector('.empty-cart').addEventListener('click', eraseAllItems);
+}
+// =========================================================================
+
+function loadingMsg() {
+  const loading = document.getElementById('loadMsg');
+  loading.className = 'loading';
+  loading.innerText = 'Loading...';
+  setTimeout(() => {
+    loading.remove();
+  },1400)
 }
 // =========================================================================
 
@@ -125,4 +138,5 @@ window.onload = function onload() {
   fetchMercadoLivre();
   eraseAllItems();
   getLocalStorage();
+  loadingMsg() 
 };
