@@ -37,8 +37,11 @@ function createObjectToCart(data) {
 
 function cartItemClickListener(event) {
   const itemClicked = event.target;
+  const sku = itemClicked.id;
   itemClicked.id = 'clicked';
   const itemToRemove = document.querySelector('#clicked');
+  removeTotalPrice(sku);
+  console.log(totalPrice);
   itemToRemove.remove();
 }
 
@@ -46,6 +49,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.id = `${sku}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -64,16 +68,43 @@ function apiLoading() {
 
 function removeLoading() {
   const removeLoad = document.querySelector('.loading');
-  console.log(removeLoad);
   removeLoad.remove();
 }
 
 function sendToCart(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(data => data.json())
-    .then(jsonCart => createObjectToCart(jsonCart))
+    .then((jsonCart) => {
+      addTotalPrice(jsonCart);
+      return createObjectToCart(jsonCart);
+    })
     .then(dataToCart => createCartItemElement(dataToCart))
     .then(cartFunc => parentCart(cartFunc));
+}
+
+let totalPrice = 0;
+
+function parentPrice(priceSum) {
+  const parentClass = document.querySelector('ol');
+  parentClass.append(priceSum);
+}
+
+function addTotalPrice({ price }) {
+  console.log(price);
+  totalPrice += price;
+  console.log(totalPrice);
+  const priceTag = document.createElement('span');
+  priceTag.class = 'total-price';
+  priceTag.innerText = (`Valor total: R$${totalPrice}`);
+  console.log(priceTag);
+  parentPrice(priceTag);
+}
+
+async function removeTotalPrice(sku) {
+  const data = await fetch(`https://api.mercadolibre.com/items/${sku}`);
+  const jsonPrice = await data.json();
+  const price = jsonPrice.price;
+  totalPrice -= price;
 }
 
 function buttonClick(event) {
@@ -81,6 +112,7 @@ function buttonClick(event) {
   const buttonDetails = retrieveButtonData(clickedButton);
   const buttonSku = getSkuFromProductItem(buttonDetails);
   sendToCart(buttonSku);
+
 }
 
 function parentList(element) {
