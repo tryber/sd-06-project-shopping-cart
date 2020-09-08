@@ -33,14 +33,14 @@ function getSkuFromProductItem(item) {
 }
 
 // Renderizando os valores dos preços no carrinho
-async function renderPrice(value) {
+function renderPrice(value) {
   const div = document.querySelector('.total-price');
   div.innerHTML = `Total: $${value}`;
 }
 
 // Realizando a soma dos preços do carrinho
 // olhei PR de amigo para resolver
-async function totalSum() {
+function totalSum() {
   const items = document.querySelectorAll('.cart__item');
   let sum = 0;
   if (items.length !== 0) {
@@ -62,8 +62,8 @@ function saveData() {
 // Função que remove os itens do carrinho
 // Chama a função (saveData) que salvará o carrinho
 // agora sem o item que foi removido
-async function cartItemClickListener(event) {
-  const cartItem = await event.target;
+function cartItemClickListener(event) {
+  const cartItem = event.target;
   const olAddItems = document.querySelector('.cart__items');
 
   olAddItems.removeChild(cartItem);
@@ -81,7 +81,7 @@ function retrieveClearFunction(item) {
 
 // Função que recupera carrinho salvo no LocalStorage
 // Chama função que remove elemento do carrinho ao ser clicado
-async function loadCartFromLocalStorage() {
+function loadCartFromLocalStorage() {
   const ol = document.querySelector('.cart__items');
   ol.innerHTML = window.localStorage.getItem('myList');
   const li = document.querySelectorAll('li');
