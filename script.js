@@ -25,7 +25,7 @@ async function sumAsyncAwait(salePrice) {
   await sumTotalPrice(salePrice);
   showPrice.innerHTML = `${save}`;
   priceContainer.appendChild(showPrice);
-};
+}
 
 async function subtractionAsyncAwait() {
   const priceContainer = document.querySelector('.container');
@@ -34,7 +34,7 @@ async function subtractionAsyncAwait() {
   await subtractionTotalPrice(priceToRemove);
   showPrice.innerHTML = `${save}`;
   priceContainer.appendChild(showPrice);
-};
+}
 
 function cartItemClickListener(event) {
   const itemDelete = event.target;
