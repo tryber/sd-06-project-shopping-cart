@@ -55,11 +55,30 @@ function buttonClick(event) {
   const buttonDetails = retrieveButtonData(clickedButton);
   const buttonSku = getSkuFromProductItem(buttonDetails);
   sendToCart(buttonSku);
+  apiLoading();
+}
+
+function parentLoad(loadingElement) {
+  const parentClass = document.querySelector('ol');
+  parentClass.appendChild(loadingElement);
+}
+
+function apiLoading() {
+  const loadingElement = document.createElement('p');
+  loadingElement.className = 'loading';
+  loadingElement.innerText = 'loading...';
+  parentLoad(loadingElement);
+}
+
+function removeLoading() {
+  const removeLoad = document.querySelector('.loading');
+  removeLoad.remove();
 }
 
 async function sendToCart(sku) {
   const sendToCart = await fetch(`https://api.mercadolibre.com/items/${sku}`);
   const jsonCart = await sendToCart.json();
+  await removeLoading();
   const dataToCart = createObjectToCart(jsonCart);
   const cartFunc = createCartItemElement(dataToCart);
   parentCart(cartFunc);
