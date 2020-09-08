@@ -8,20 +8,20 @@ function createProductImageElement(imageSource) {
 
 // saving into local storage
 const saveFunction = () => {
-  const items = document.querySelector('.cart__items').innerHTML;
-  localStorage.setItem('cart', items);
+  const items = document.querySelector('.cart__items').innerHTML;// selecting from html
+  localStorage.setItem('cart', items);// saving at local storage
 };
 
 // removing item
 function cartItemClickListener(event) {
   const list = event.target;
-  event.target.remove();// removendo onde esta o mouse
-  const totalPrice = document.querySelector('.total-price');// pegando do html
+  event.target.remove();// removing where the mouse is pointing
+  const total = document.querySelector('.total-price');// taking from html
   const itemPrice = parseFloat(list.innerText.split('$')[1]);
-  const totalPrice = parseFloat(totalPrice.innerHTML);
+  const totalPrice = parseFloat(total.innerHTML);
   const result = totalPrice - itemPrice;
-  totalPrice.innerText = result;
-  functionSave();
+  total.innerText = result;
+  saveFunction();
 }
 
 // fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
