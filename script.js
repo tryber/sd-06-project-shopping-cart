@@ -34,8 +34,9 @@ function getSkuFromProductItem(item) {
 
 // Renderizando os valores dos preços no carrinho
 async function renderPrice(value) {
+  const price = await value;
   const div = document.querySelector('.total-price');
-  div.innerHTML = await `Total: $${value}`;
+  div.innerHTML = `Total: $${price}`;
 }
 
 // Realizando a soma dos preços do carrinho
@@ -44,14 +45,12 @@ async function totalSum() {
   const items = document.querySelectorAll('.cart__item');
   let sum = 0;
   if (items.length !== 0) {
-    await items.forEach((priceTag) => {
+    items.forEach((priceTag) => {
       const price = parseFloat(priceTag.innerHTML.split('$')[1]);
       sum += price;
 
       renderPrice(sum.toFixed(2));
     });
-  } else {
-    renderPrice('0,00');
   }
 }
 
