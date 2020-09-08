@@ -49,7 +49,7 @@ function cartItemClickListener(event) {
   clicked.remove();
   const price = Number(event.target.innerText.split('$')[1]);
   const newPrice = document.querySelector('.total-price');
-  newPrice.innerText = parseFloat(Number(newPrice.innerText) - price).toPrecision(6);
+  newPrice.innerText = parseFloat(Number(newPrice.innerText) - price).toPrecision(4);
   // fazendo o contrario do somatorio, porem transformando o event.target numero, recuperando
   // texto especifico com split
   setLocalStorage();
