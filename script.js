@@ -33,9 +33,9 @@ function getSkuFromProductItem(item) {
 }
 
 // Renderizando os valores dos preços no carrinho
-function renderPrice(value) {
+async function renderPrice(value) {
   const div = document.querySelector('.total-price');
-  div.innerHTML = `Total: $${value}`;
+  div.innerHTML = await `Total: $${value}`;
 }
 
 // Realizando a soma dos preços do carrinho
