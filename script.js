@@ -50,7 +50,7 @@ function addItemToCart(item) {
   myCart.appendChild(item);
 }
 
-const fetchSpecificMLItem = (id) => {
+function fetchSpecificMLItem(id) {
   const specificMLItemEndpoint = `https://api.mercadolibre.com/items/${id}`;
   fetch(specificMLItemEndpoint)
     .then(response => response.json())
