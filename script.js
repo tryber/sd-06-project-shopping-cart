@@ -171,7 +171,6 @@ function fetchProducts() {
     .then(hideLoading());
 }
 
-
 window.onload = function onload() {
   fetchProducts();
   getFromLocalStorage();
