@@ -4,7 +4,6 @@ const apiInfo = {
 };
 
 const urlInitial = `${apiInfo.api}${apiInfo.endpoint}`;
-// const listItems = document.querySelector('.cart__items');
 
 setTimeout(() => {
   document.querySelector('.loading').remove();
@@ -49,11 +48,9 @@ function cartItemClickListener(event) {
 }
 
 function clearCart() {
-  const btnClearCart = document.querySelector('.empty-cart');
   const list = document.querySelector('.cart__items');
   list.innerHTML = '';
   localStorage.clear();
-  btnClearCart.addEventListener('click', clearCart);
 }
 
 function getSkuFromProductItem(item) {
@@ -112,6 +109,9 @@ const fetchCurrency = () => {
 window.onload = function onload() {
   document.querySelector('.items').appendChild(createCustomElement('span', 'loading', 'loading...'));
   fetchCurrency();
+  const btnClearCart = document.querySelector('.empty-cart');
+  const listItems = document.querySelector('.cart__items');
+  btnClearCart.addEventListener('click', clearCart);  
   // if (localStorage.Item) {
   //   document.querySelector('.cart__items').innerHTML = localStorage.Item;
   // }
