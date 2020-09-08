@@ -110,15 +110,14 @@ const urlApi = 'https://api.mercadolibre.com/';
 // Chama a função (saveData) que salvará o conteudo do carrinho no local storage
 async function addToCart(itemId) {
   const endpoint = `${urlApi}items/${itemId}`;
-  await totalSum();
   await fetch(endpoint)
     .then(response => response.json())
     .then((objectJson) => {
       const olAddItems = document.querySelector('.cart__items');
       olAddItems.appendChild(createCartItemElement(objectJson));
-      totalSum();
       saveData();
     });
+    await totalSum();  
 }
 
 // Funçao que ao clicar no botão do item
