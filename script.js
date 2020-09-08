@@ -107,17 +107,11 @@ function sendToCart(sku) {
     .then(cartFunc => parentCart(cartFunc));
 }
 
-function parentPrice(priceSum) {
-  const parentClass = document.querySelector('ol');
-  parentClass.append(priceSum);
-}
-
 function buttonClick(event) {
   const clickedButton = event.target;
   const buttonDetails = retrieveButtonData(clickedButton);
   const buttonSku = getSkuFromProductItem(buttonDetails);
   sendToCart(buttonSku);
-
 }
 
 function parentList(element) {
