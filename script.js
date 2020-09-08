@@ -4,16 +4,11 @@ const saveFunction = () => {
 };
 
 function cartItemClickListener(event) {
-  const li = event.target;
-  event.target.remove();
-  const total = document.querySelector('.total-price');
-  const itemPrice = parseFloat(li.innerText.split('$')[1]);
-  const totalPrice = parseFloat(total.innerHTML);
-  const result = totalPrice - itemPrice;
-  total.innerText = result;
-  saveFunction();
+  const carList = document.querySelector('.cart__items');
+  carList.removeChild(event.target);
+  removePrice(event);
+  storageCart();
 }
-
 
 async function sumAll(li) {
   const total = document.querySelector('.total-price');
@@ -40,7 +35,7 @@ function getInTheCarList(event) {
   fetch(url)
     .then(response => response.json())
     .then((data) => {
-      const addCpuCar = document.querySelector('.cart__items');
+      const addCpuCar = document.querySelector('.cart__items'); 
       addCpuCar.appendChild(createCartItemElement(data));
       storageCart();
     });
