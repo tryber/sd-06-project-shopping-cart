@@ -87,28 +87,28 @@ function productId(sku) {
 
 function fetchMercadoLivre() {
   setTimeout(() => {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-  .then(response => response.json())
-  .then((object) => {
-    object.results.forEach(({ id, title, thumbnail }) => {
-      // results done
-      const product = createProductItemElement({
-        sku: id,
-        name: title,
-        image: thumbnail,
+    fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+    .then(response => response.json())
+    .then((object) => {
+      object.results.forEach(({ id, title, thumbnail }) => {
+        // results done
+        const product = createProductItemElement({
+          sku: id,
+          name: title,
+          image: thumbnail,
+        });
+        // propriedades do elemento
+        product.addEventListener('click', (event) => {
+          if (event.target.className === 'item__add') {
+            productId(getSkuFromProductItem(event.target.parentElement));
+            // função executada para busca do id
+          }
+        });
+        document.querySelector('.items').appendChild(product);
+        // adição ao carrinho
       });
-      // propriedades do elemento
-      product.addEventListener('click', (event) => {
-        if (event.target.className === 'item__add') {
-          productId(getSkuFromProductItem(event.target.parentElement));
-          // função executada para busca do id
-        }
-      });
-      document.querySelector('.items').appendChild(product);
-      // adição ao carrinho
     });
-  });
- }, 1500);
+  }, 1500);
 }
 
 // =========================================================================
