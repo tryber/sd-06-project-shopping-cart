@@ -40,7 +40,7 @@ function renderPrice(value) {
 
 // Realizando a soma dos preços do carrinho
 // olhei PR de amigo para resolver
-function totalSum() {
+async function totalSum() {
   const items = document.querySelectorAll('.cart__item');
   let sum = 0;
   if (items.length !== 0) {
