@@ -32,26 +32,24 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-// Renderizando os valores dos preços no carrinho
-async function renderPrice(value) {
-  const price = await value;
-  const div = document.querySelector('.total-price');
-  div.innerHTML = `Total: $${price}`;
-}
-
 // Realizando a soma dos preços do carrinho
 // olhei PR de amigo para resolver
 async function totalSum() {
-  const items = document.querySelectorAll('.cart__item');
-  let sum = 0;
-  if (items.length !== 0) {
-    items.forEach((priceTag) => {
-      const price = parseFloat(priceTag.innerHTML.split('$')[1]);
-      sum += price;
+  function sumPrice () {
+    const items = document.querySelectorAll('.cart__item');
+    let sum = 0;
+    if (items.length !== 0) {
+      items.forEach(async (priceTag) => {
+        const price = parseFloat(priceTag.innerHTML.split('$')[1]);
+        sum += price;
 
-      renderPrice(sum.toFixed(2));
-    });
+        return sum;
+      });
+    }
+    const div = document.querySelector('.total-price');
+    div.innerHTML = `Total: $${sum.toFixed(2)}`;
   }
+  await setTimeout(sumPrice(), 100);
 }
 
 // Função que salva o carrinho no LocalStorage
@@ -153,7 +151,7 @@ const fetchSearch = () => {
 function clearCart(event) {
   event.addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
-    document.querySelector('.total-price').innerText = 'Total: $0,00';
+    document.querySelector('.total-price').innerText = 'Total: $0.00';
   });
 }
 
