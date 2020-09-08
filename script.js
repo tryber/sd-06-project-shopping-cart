@@ -103,7 +103,7 @@ function createProductItemElement({ sku, name, image }) {
 function fetchProducts() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((result) => {
-      removeLoading()
+      removeLoading();
       return result.json();
     })
     .then(itemsArray => itemsArray.results)
