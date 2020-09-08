@@ -14,6 +14,13 @@ function createCustomElement(element, className, innerText) {
 }
 // =========================================================================
 
+async function sumOfPrices(price) {
+	const newPrice = document.querySelector('.total-price');
+  newPrice.innerText = parseFloat(Number(newPrice.innerText) + price).toPrecision(6);
+}
+
+// =========================================================================
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -37,10 +44,12 @@ function setLocalStorage() {
 // =========================================================================
 
 function cartItemClickListener(event) {
-  event.target.remove();
-  // apagar item do carrinho
-  setLocalStorage();
-  // armazenar que os items do carrinho foram apagados
+const clicked = event.target
+clicked.remove();
+const price = Number(event.target.innerText.split('$')[1])
+const newPrice = document.querySelector('.total-price');
+newPrice.innerText = parseFloat( Number(newPrice.innerText) - price ).toPrecision(6);
+setLocalStorage();
 }
 // =========================================================================
 
@@ -60,7 +69,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  setLocalStorage();
+  // getPriceFromProductItem(li);
   li.addEventListener('click', cartItemClickListener);
+  
+  
   // a lista de compras ja está programada para apagar o item que for clicado
   return li;
 }
@@ -81,6 +94,7 @@ function productId(sku) {
     // do ol no index.html
     (document.querySelector('.cart__items').appendChild(addedProductOnCart));
     setLocalStorage();
+    sumOfPrices(price)
   });
 }
 // =========================================================================
@@ -89,7 +103,7 @@ function fetchMercadoLivre() {
   setTimeout(() => {
     fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
-    .then((object) => {
+    .then((object) => { 
       object.results.forEach(({ id, title, thumbnail }) => {
         // results done
         const product = createProductItemElement({
@@ -107,7 +121,7 @@ function fetchMercadoLivre() {
         document.querySelector('.items').appendChild(product);
         // adição ao carrinho
       });
-    });
+    })
   }, 1500);
 }
 
@@ -121,6 +135,8 @@ function eraseAllItems() {
   }
   localStorage.clear();
   document.querySelector('.empty-cart').addEventListener('click', eraseAllItems);
+  document.querySelector('.total-price').innerText = '0';
+  setLocalStorage();
 }
 // =========================================================================
 
@@ -128,15 +144,18 @@ function loadingMsg() {
   const loading = document.getElementById('loadMsg');
   loading.className = 'loading';
   loading.innerText = 'Loading...';
+  // criação de elementos dentro do html (baseado na função createCustomElements)
   setTimeout(() => {
     loading.remove();
   }, 1400);
+  // timeout para que o html criado seja removido pouco antes da requisição do api
 }
 // =========================================================================
 
 window.onload = function onload() {
+  loadingMsg();
   fetchMercadoLivre();
   eraseAllItems();
   getLocalStorage();
-  loadingMsg();
+  
 };
