@@ -114,20 +114,20 @@ function eventHandlers() {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
-
+async function loading() {
+  const element = document.createElement('h2');
+  element.innerText = 'loading...';
+  element.className = 'loading';
+  element.style.textAlign = 'center';
+  document.body.prepend(element);
+  setTimeout(function () {
+    element.remove();
+  }, 2000);
+}
 
 window.onload = function onload() {
   fetchProductsFromAPI('computador');
   getCartStorage();
   eventHandlers();
-  async function() {
-    const element = document.createElement('h2');
-    element.innerText = 'loading...';
-    element.className = 'loading';
-    element.style.textAlign = 'center';
-    document.body.prepend(element);
-    setTimeout(function () {
-      element.remove();
-    }, 2000);
-  }
+  loading();
 };
