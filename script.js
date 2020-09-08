@@ -84,11 +84,6 @@ function buttonClick(event) {
   sendToCart(buttonSku);
 }
 
-function removeLoading() {
-  const removeLoad = document.querySelector('.loading');
-  removeLoad.remove();
-}
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
