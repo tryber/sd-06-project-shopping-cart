@@ -22,7 +22,7 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-function sumPrices() {
+/* function sumPrices() {
   const carts = document.querySelectorAll('.cart__item');
   let sum = 0;
   carts.forEach((item) => {
@@ -31,7 +31,7 @@ function sumPrices() {
     sum += value;
   });
   return localStorage.setItem('totalPrices', sum);
-}
+} */
 async function cartItemClickListener(event) {
   // coloque seu código aqui
   const item = event.target;
@@ -94,7 +94,7 @@ function cleanAll() {
     localStorage.removeItem('Item');
   });
 }
-/* function sumPrices() {
+function sumPrices() {
   const carts = document.querySelectorAll('.cart__item');
   let sum = 0;
   carts.forEach((item) => {
@@ -103,7 +103,7 @@ function cleanAll() {
     sum += value;
   });
   return localStorage.setItem('totalPrices', sum);
-} */
+}
 window.onload = function onload() {
   urlItemOnload();
   if (localStorage.Item) {
