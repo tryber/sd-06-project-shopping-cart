@@ -50,7 +50,7 @@ async function totalSum() {
     div.innerHTML = `Total: $${sum.toFixed(2)}`;
   }
 
-  await setTimeout(sumPrice(), 100);
+  sumPrice();
 }
 
 // Função que salva o carrinho no LocalStorage
@@ -161,9 +161,17 @@ function clickClearCart() {
   clearCart(buttonClear);
 }
 
+const loadingMessage = () => {
+  setTimeout(() => {
+    const load = document.querySelector('.loading');
+    load.remove();
+  }, 1000);
+};
+
 // Chama as seguintes funções ao abrir a tela
 window.onload = function onload() {
   fetchSearch();
   loadCartFromLocalStorage();
   clickClearCart();
+  loadingMessage();
 };
