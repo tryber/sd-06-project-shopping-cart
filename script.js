@@ -17,12 +17,11 @@ function showTotalPrice(valueToPay) {
     cart.appendChild(priceSession);
   } else if (valueToPay !== 0) {
     cartExist.innerHTML = '';
-    const priceSession = document.querySelector('.total-price');
     const span = document.createElement('span');
     span.innerText = valueToPay;
-    priceSession.appendChild(span);
+    cartExist.appendChild(span);
     const cart = document.querySelector('.cart');
-    cart.appendChild(priceSession);
+    cart.appendChild(cartExist);
   } else {
     cartExist.innerHTML = '';
   }
@@ -32,12 +31,9 @@ function showTotalPrice(valueToPay) {
 function TotalPrice() {
   const cartList = document.querySelectorAll('.cart__item');
   let valueToPay = 0;
-  cartList.forEach((each) => {
-    const element = each.innerText;
-    const position = element.indexOf('$');
-    const string = element.substring(position + 1);
-    const value = parseFloat(string);
-    valueToPay += value;
+  cartList.forEach((eachItem) => {
+    const itemValue = parseFloat(eachItem.innerText.substring(eachItem.innerText.indexOf('$') + 1));
+    valueToPay += itemValue;
   });
   showTotalPrice(valueToPay);
 }
