@@ -96,7 +96,7 @@ function addTotalPrice({ price }) {
     parentPrice(priceTag);
   } else {
     const priceTag = document.querySelector('.total-price');
-    priceTag.innerText = (`Valor total: R$${totalPrice}`);
+    priceTag.innerText = (totalPrice);
     parentPrice(priceTag);
   }
 }
