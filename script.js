@@ -86,6 +86,7 @@ function loadCartFromLocalStorage() {
   const ol = document.querySelector('.cart__items');
   ol.innerHTML = window.localStorage.getItem('myList');
   const li = document.querySelectorAll('li');
+
   totalSum();
   retrieveClearFunction(li);
 }
