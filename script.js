@@ -107,8 +107,8 @@ function fetchMercadoLivre() {
       document.querySelector('.items').appendChild(product);
       // adição ao carrinho
     });
-  })
- },1500)
+  });
+ }, 1500);
 }
 
 // =========================================================================
@@ -130,7 +130,7 @@ function loadingMsg() {
   loading.innerText = 'Loading...';
   setTimeout(() => {
     loading.remove();
-  },1400)
+  }, 1400);
 }
 // =========================================================================
 
@@ -138,5 +138,5 @@ window.onload = function onload() {
   fetchMercadoLivre();
   eraseAllItems();
   getLocalStorage();
-  loadingMsg() 
+  loadingMsg();
 };
