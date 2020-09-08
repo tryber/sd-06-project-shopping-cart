@@ -1,6 +1,5 @@
-
 body {
-  background-color: rgb( 252, 248, 191 );
+  background-color: rgb( 252 , 248 , 191 );
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -62,7 +61,7 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb( 243, 240, 74 );
+  background-color: rgb( 243 , 240 , 74 );
   border: 0;
   color: black;
   cursor: pointer;
@@ -71,7 +70,7 @@ body {
 }
 
 .cart {
-  background-color: rgb( 246, 252, 164 );
+  background-color: rgb( 246 , 252 , 164 );
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
