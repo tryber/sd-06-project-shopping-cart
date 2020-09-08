@@ -1,8 +1,7 @@
-async function myCartItemsArray() {
-  let teste = document.querySelectorAll('.cart__item');
-  console.log(teste);
-}
-
+// async function myCartItemsArray() {
+//   let teste = document.querySelectorAll('.cart__item');
+//   console.log(teste);
+// }
 
 function saveShoppingCart() {
   const shoppingCart = document.querySelector('.cart__items').innerHTML;
@@ -30,9 +29,12 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  event.target.remove();
+  event.target.remove();  
+  // event.target.localStorage.removeItem();
   // localStorage.removeItem(event.target);
   saveShoppingCart();
+  // Essa função faz com que adicionando ao carrinho já n de pra deletar+
+  // loadSavedShoppingCart(); 
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -54,6 +56,7 @@ const fetchSpecificMLItem = (id) => {
     .then(response => response.json())
     .then(object => addItemToCart(createCartItemElement(object)))
     .then(() => saveShoppingCart());
+    // .then(() => loadSavedShoppingCart());
 };
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -69,7 +72,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
     const itemID = event.currentTarget.parentElement.firstChild.innerText;
     // console.log(itemID);
     fetchSpecificMLItem(itemID);
-    // saveShoppingCart();
+    saveShoppingCart();
+    // loadSavedShoppingCart();
   });
 
   return section;
@@ -93,5 +97,13 @@ window.onload = function onload() {
   fetchMLComputers();
   loadSavedShoppingCart();
   // localStorage.clear();
-  myCartItemsArray();
+  // myCartItemsArray();
+
+  const clearButton = document.querySelector('.empty-cart');
+  // console.log(clearButton);
+  clearButton.addEventListener('click', () => {
+    const myCart = document.querySelector('.cart__items');
+    myCart.innerHTML = '';
+    localStorage.clear();
+  });
 };
