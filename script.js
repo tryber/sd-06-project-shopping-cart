@@ -15,8 +15,9 @@ function createCustomElement(element, className, innerText) {
 // =========================================================================
 
 async function sumOfPrices(price) {
-	const newPrice = document.querySelector('.total-price');
+  const newPrice = document.querySelector('.total-price');
   newPrice.innerText = parseFloat(Number(newPrice.innerText) + price).toPrecision(6);
+  // adicionando numeros do somatorio de cart__items dentro da variavel newprice
 }
 
 // =========================================================================
@@ -44,12 +45,14 @@ function setLocalStorage() {
 // =========================================================================
 
 function cartItemClickListener(event) {
-const clicked = event.target
-clicked.remove();
-const price = Number(event.target.innerText.split('$')[1])
-const newPrice = document.querySelector('.total-price');
-newPrice.innerText = parseFloat( Number(newPrice.innerText) - price ).toPrecision(6);
-setLocalStorage();
+  const clicked = event.target;
+  clicked.remove();
+  const price = Number(event.target.innerText.split('$')[1]);
+  const newPrice = document.querySelector('.total-price');
+  newPrice.innerText = parseFloat(Number(newPrice.innerText) - price).toPrecision(6);
+  // fazendo o contrario do somatorio, porem transformando o event.target numero, recuperando
+  // texto especifico com split
+  setLocalStorage();
 }
 // =========================================================================
 
@@ -70,10 +73,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   setLocalStorage();
-  // getPriceFromProductItem(li);
   li.addEventListener('click', cartItemClickListener);
-  
-  
   // a lista de compras ja está programada para apagar o item que for clicado
   return li;
 }
@@ -94,7 +94,7 @@ function productId(sku) {
     // do ol no index.html
     (document.querySelector('.cart__items').appendChild(addedProductOnCart));
     setLocalStorage();
-    sumOfPrices(price)
+    sumOfPrices(price);
   });
 }
 // =========================================================================
@@ -103,7 +103,7 @@ function fetchMercadoLivre() {
   setTimeout(() => {
     fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
-    .then((object) => { 
+    .then((object) => {
       object.results.forEach(({ id, title, thumbnail }) => {
         // results done
         const product = createProductItemElement({
@@ -121,7 +121,7 @@ function fetchMercadoLivre() {
         document.querySelector('.items').appendChild(product);
         // adição ao carrinho
       });
-    })
+    });
   }, 1500);
 }
 // =========================================================================
@@ -157,5 +157,4 @@ window.onload = function onload() {
   fetchMercadoLivre();
   eraseAllItems();
   getLocalStorage();
-  
 };
