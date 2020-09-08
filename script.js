@@ -116,7 +116,7 @@ function eraseAllItems() {
     // enquanto houver childNodes, remova!
     shoppingList.removeChild(shoppingList.childNodes[0]);
   }
-  localStorage.clear();
+  // localStorage.clear();
   document.querySelector('.empty-cart').addEventListener('click', eraseAllItems);
 }
 // =========================================================================
