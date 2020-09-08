@@ -50,9 +50,9 @@ async function createCartItemElement({ id, title, price }) {
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
   saveOrDelete();
-  await sumPrices();
+  const sum = await sumPrices();
   const pagar = document.querySelector('.total-price');
-  pagar.innerHTML = (`Total a pagar: ${localStorage.getItem('totalPrices')}`);
+  pagar.innerHTML = (`${localStorage.getItem('totalPrices')}`);
   return li;
 }
 function createProductItemElement({ id, title, thumbnail }) {
