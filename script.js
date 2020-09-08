@@ -35,7 +35,7 @@ function getSkuFromProductItem(item) {
 // Realizando a soma dos preços do carrinho
 // olhei PR de amigo para resolver
 async function totalSum() {
-  function sumPrice () {
+  function sumPrice() {
     const items = document.querySelectorAll('.cart__item');
     let sum = 0;
     if (items.length !== 0) {
