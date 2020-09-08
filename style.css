@@ -82,6 +82,7 @@
 .loading {
   align-items: center;
   background-image: url( 'img/cart.gif' );
+  background-position-y: 20% !important;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 500px;

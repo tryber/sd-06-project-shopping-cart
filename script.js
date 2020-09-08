@@ -7,7 +7,7 @@ const urlInitial = `${apiInfo.api}${apiInfo.endpoint}`;
 
 setTimeout(() => {
   document.querySelector('.loading').remove();
-}, 1000);
+}, 3000);
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -22,10 +22,6 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
-// function checkLocalStorage() {
-//   const listLocalStorage = window.localStorage.getItem()
-// }
 
 function loadCart() {
   const listStorage = document.querySelector('.cart__items');
@@ -106,13 +102,11 @@ const fetchCurrency = () => {
   });
 };
 
-
 window.onload = function onload() {
   document.querySelector('.items').appendChild(createCustomElement('span', 'loading', 'loading...'));
   fetchCurrency();
   const btnClearCart = document.querySelector('.empty-cart');
-  const listItems = document.querySelector('.cart__items');
-  btnClearCart.addEventListener('click', clearCart);  
+  btnClearCart.addEventListener('click', clearCart);
   if (localStorage.getItem('cartList')) {
     document.querySelector('.cart__items').innerHTML = localStorage.getItem('cartList');
     document.querySelectorAll('cart__item')
