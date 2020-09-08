@@ -50,23 +50,38 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function parentLoad(loadingElement) {
+  const parentClass = document.querySelector('ol');
+  parentClass.appendChild(loadingElement);
+}
+
+function apiLoading() {
+  const loadingElement = document.createElement('p');
+  loadingElement.className = 'loading';
+  loadingElement.innerText = 'loading...';
+  parentLoad(loadingElement);
+}
+
+function buttonClick(event) {
+  apiLoading();
+  const clickedButton = event.target;
+  const buttonDetails = retrieveButtonData(clickedButton);
+  const buttonSku = getSkuFromProductItem(buttonDetails);
+  sendToCart(buttonSku);
+}
+
 function removeLoading() {
   const removeLoad = document.querySelector('.loading');
   removeLoad.remove();
 }
 
-async function sendToCart(sku) {
-  const fetchToCart = await fetch(`https://api.mercadolibre.com/items/${sku}`);
-  const jsonCart = await fetchToCart.json();
-  await removeLoading();
-  const dataToCart = createObjectToCart(jsonCart);
-  const cartFunc = createCartItemElement(dataToCart);
-  parentCart(cartFunc);
-}
-
-function parentLoad(loadingElement) {
-  const parentClass = document.querySelector('ol');
-  parentClass.appendChild(loadingElement);
+function sendToCart(sku) {
+  fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(data => data.json())
+    .then(jsonCart => createObjectToCart(jsonCart))
+    .then(dataToCart => createCartItemElement(dataToCart))
+    .then(cartFunc => parentCart(cartFunc))
+    .then(() => removeLoading());
 }
 
 function apiLoading() {
