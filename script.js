@@ -4,7 +4,7 @@ const apiInfo = {
 };
 
 const urlInitial = `${apiInfo.api}${apiInfo.endpoint}`;
-const listItems = document.querySelector('.cart__items');
+// const listItems = document.querySelector('.cart__items');
 
 setTimeout(() => {
   document.querySelector('.loading').remove();

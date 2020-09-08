@@ -39,7 +39,7 @@
   height: auto;
   margin: 5px;
   width: 200px;
-  box-shadow: 2px 2px 4px 5px rgb(226 , 224 , 224);
+  box-shadow: 2px 2px 4px 5px rgb( 226 , 224 , 224 );
 }
 
 .item .item__sku {
@@ -59,7 +59,7 @@
 }
 
 .item .item__add {
-  background-color: rgb(110 , 111 , 114);
+  background-color: rgb( 110 , 111 , 114 );
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -81,7 +81,7 @@
 
 .loading {
   align-items: center;
-  background-image: url(img/cart.gif);
+  background-image: url( img/cart.gif );
   background-position: center;
   background-repeat: no-repeat;
   background-size: 500px;
@@ -93,16 +93,16 @@
   width: 100%;
 }
 
-li:nth-child(even) {
-  background: rgb(255 , 255 , 255);
+li:nth-child( even ) {
+  background: white;
 }
 
-li:nth-child(odd) {
-  background: rgb(238 , 238 , 238);
+li:nth-child( odd ) {
+  background: rgb( 238 , 238 , 238 );
 }
 
 button {
-  background-color: rgb(110 , 111 , 114);
+  background-color: rgb( 110 , 111 , 114 );
   border-radius: 5px;
   border: 0;
   color: white;
