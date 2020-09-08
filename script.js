@@ -35,6 +35,7 @@ function cartItemClickListener(event) {
   event.addEventListener('click', () => {
     const list = document.querySelector('.cart__items');
     list.removeChild(event);
+    setLocalStorage();
   });
 }
 
@@ -51,6 +52,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener(li));
+ 
   return li;
 }
 function clickButton(event) {
@@ -62,6 +64,7 @@ function clickButton(event) {
       const cartItem = createCartItemElement(object);
       const ol = document.querySelector('.cart__items');
       ol.appendChild(cartItem);
+      setLocalStorage()
     });
 }
 function functionRenderItem(arrayProducts) {
@@ -71,6 +74,28 @@ function functionRenderItem(arrayProducts) {
     section.appendChild(newItem).addEventListener('click', clickButton);
   });
 }
+
+function setLocalStorage() {
+
+  let listSalve = document.querySelector('.cart__items');
+  localStorage.setItem('listSalve', listSalve.innerHTML);
+console.log(listSalve.innerHTML)
+}
+
+function getLocalStorage() {
+
+  let listSalve = document.querySelector('.cart__items');
+  listSalve.innerHTML = localStorage.getItem('listSalve');
+}
+
+function addCartCachedItemsAListener() {
+  let cachedList = document.querySelectorAll('.cart__item');
+  cachedList.forEach((element) => {
+    cartItemClickListener(element)
+  })
+}
+
+
 
 const query = 'computador';
 const apiInfo = {
@@ -90,4 +115,7 @@ const fecthItems = () => {
 window.onload = function onload() {
   fecthItems(url);
   emptyCart();
+  getLocalStorage();
+  addCartCachedItemsAListener()
+
 };
