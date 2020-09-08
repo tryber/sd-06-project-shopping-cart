@@ -30,6 +30,17 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
+function setLocalStorage() {
+  const listSalve = document.querySelector('.cart__items');
+  localStorage.setItem('listSalve', listSalve.innerHTML);
+  console.log(listSalve.innerHTML);
+}
+
+function getLocalStorage() {
+  const listSalve = document.querySelector('.cart__items');
+  listSalve.innerHTML = localStorage.getItem('listSalve');
+}
+
 function cartItemClickListener(event) {
   // event.addEventListener('click',()=> event.remove())
   event.addEventListener('click', () => {
@@ -52,7 +63,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener(li));
- 
   return li;
 }
 function clickButton(event) {
@@ -64,7 +74,7 @@ function clickButton(event) {
       const cartItem = createCartItemElement(object);
       const ol = document.querySelector('.cart__items');
       ol.appendChild(cartItem);
-      setLocalStorage()
+      setLocalStorage();
     });
 }
 function functionRenderItem(arrayProducts) {
@@ -74,29 +84,12 @@ function functionRenderItem(arrayProducts) {
     section.appendChild(newItem).addEventListener('click', clickButton);
   });
 }
-
-function setLocalStorage() {
-
-  let listSalve = document.querySelector('.cart__items');
-  localStorage.setItem('listSalve', listSalve.innerHTML);
-console.log(listSalve.innerHTML)
-}
-
-function getLocalStorage() {
-
-  let listSalve = document.querySelector('.cart__items');
-  listSalve.innerHTML = localStorage.getItem('listSalve');
-}
-
 function addCartCachedItemsAListener() {
-  let cachedList = document.querySelectorAll('.cart__item');
+  const cachedList = document.querySelectorAll('.cart__item');
   cachedList.forEach((element) => {
-    cartItemClickListener(element)
-  })
+    cartItemClickListener(element);
+  });
 }
-
-
-
 const query = 'computador';
 const apiInfo = {
   api: 'https://api.mercadolibre.com/',
@@ -116,6 +109,5 @@ window.onload = function onload() {
   fecthItems(url);
   emptyCart();
   getLocalStorage();
-  addCartCachedItemsAListener()
-
+  addCartCachedItemsAListener();
 };
