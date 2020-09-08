@@ -1,5 +1,4 @@
 const urlEndpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -32,7 +31,7 @@ function cartItemClickListener(event) {
   functionSave();
 }
 
-// Somatorio 
+// Somatorio
 async function sumPrice(li) {
   const total = document.querySelector('.total-price');
   const itemPrice = parseFloat(li.innerText.split('$')[1]);
