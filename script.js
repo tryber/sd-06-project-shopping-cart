@@ -49,10 +49,10 @@ function getInTheCarList(event) {
 }
 
 function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
+  const customE = document.createElement(element);
+  customE.className = className;
+  customE.innerText = innerText;
+  return customE;
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -86,9 +86,20 @@ const removeAlItems = () => {
   storageCar();
 };
 
+function loadLs() {
+  if (localStorage.length > 0) {
+    const cartList = document.querySelector('.cart__items');
+    cartList.addEventListener('click', cartItemClickListener);
+    cartList.innerHTML = localStorage.getItem('cartItens');
+    const fullPrice = document.querySelector('.total-price');
+    fullPrice.innerText = localStorage.getItem('price');
+  }
+}
+
 window.onload = function onload() {
   urlInclude();
   storageList();
+  loadLs();
   const btnRemoveAllItems = document.querySelector('.empty-cart');
   btnRemoveAllItems.addEventListener('click', removeAlItems);
 };
