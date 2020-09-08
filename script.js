@@ -64,19 +64,16 @@ function apiLoading() {
 
 function removeLoading() {
   const removeLoad = document.querySelector('.loading');
+  console.log(removeLoad);
   removeLoad.remove();
 }
 
 function sendToCart(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then((data) => {
-      apiLoading();
-      return data.json();
-    })
+    .then(data => data.json())
     .then(jsonCart => createObjectToCart(jsonCart))
     .then(dataToCart => createCartItemElement(dataToCart))
     .then(cartFunc => parentCart(cartFunc))
-    .then(() => removeLoading());
 }
 
 function buttonClick(event) {
@@ -95,7 +92,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')).addEventListener('click', buttonClick);
 
-  return section;
+  return parentList(section);;
 }
 
 function parentList(element) {
@@ -103,19 +100,21 @@ function parentList(element) {
   parentClass.appendChild(element);
 }
 
-async function fetchProducts() {
-  const result = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
-  const json = await result.json();
-  const itemsArray = json.results;
-  itemsArray.forEach((item) => {
-    const data = {
-      sku: item.id,
-      name: item.title,
-      image: item.thumbnail,
-    };
-    const newItems = createProductItemElement(data);
-    parentList(newItems);
-  });
+function fetchProducts() {
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+    .then(result => result.json())
+    .then(itemsArray => itemsArray.results)
+    .then((data) => {
+      data.forEach((item) => {
+        const object = {
+          sku: item.id,
+          name: item.title,
+          image: item.thumbnail,
+        }
+        createProductItemElement(object);
+      })
+    })
+    .then(removeLoading());
 }
 
 function clearAll() {
@@ -124,6 +123,7 @@ function clearAll() {
 }
 
 window.onload = function onload() {
+  apiLoading();
   fetchProducts();
   const clearAllButton = document.querySelector('.empty-cart');
   clearAllButton.addEventListener('click', clearAll);
