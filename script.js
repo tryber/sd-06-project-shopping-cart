@@ -92,7 +92,7 @@ function addTotalPrice({ price }) {
   if (priceArray.length === 0) {
     const priceTag = document.createElement('span');
     priceTag.className = 'total-price';
-    priceTag.innerText = (`Valor total: R$${totalPrice}`);
+    priceTag.innerText = (totalPrice);
     parentPrice(priceTag);
   } else {
     const priceTag = document.querySelector('.total-price');
