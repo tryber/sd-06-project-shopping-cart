@@ -44,7 +44,7 @@ async function totalSum() {
   const items = document.querySelectorAll('.cart__item');
   let sum = 0;
   if (items.length !== 0) {
-    items.forEach((priceTag) => {
+    await items.forEach((priceTag) => {
       const price = parseFloat(priceTag.innerHTML.split('$')[1]);
       sum += price;
       renderPrice(sum.toFixed(2));
