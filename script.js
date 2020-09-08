@@ -1,3 +1,47 @@
+// requisitos #5: criar elemento pra receber price
+function createTotalPriceSession() {
+  const section = document.createElement('section');
+  section.className = 'total-price';
+  return section;
+}
+
+// requisitos #5: mostrar no elemento criado o preço recebido por parâmetro
+function showTotalPrice(valueToPay) {
+  const cartExist = document.querySelector('.total-price');
+  if (cartExist === null) {
+    const priceSession = createTotalPriceSession();
+    const span = document.createElement('span');
+    span.innerText = valueToPay;
+    priceSession.appendChild(span);
+    const cart = document.querySelector('.cart');
+    cart.appendChild(priceSession);
+  } else if (valueToPay !== 0) {
+    cartExist.innerHTML = '';
+    const priceSession = document.querySelector('.total-price');
+    const span = document.createElement('span');
+    span.innerText = valueToPay;
+    priceSession.appendChild(span);
+    const cart = document.querySelector('.cart');
+    cart.appendChild(priceSession);
+  } else {
+    cartExist.innerHTML = '';
+  }
+}
+
+// requisitos #5: calcular o preço total dos itens do carrinho
+function TotalPrice() {
+  const cartList = document.querySelectorAll('.cart__item');
+  let valueToPay = 0;
+  cartList.forEach((each) => {
+    const element = each.innerText;
+    const position = element.indexOf('$');
+    const string = element.substring(position + 1);
+    const value = parseFloat(string);
+    valueToPay += value;
+  });
+  showTotalPrice(valueToPay);
+}
+
 // requisito #4: salvar itens do carrinho no LocalStorage
 function localStorageSave() {
   const itemToStorage = document.querySelector('.cart__items').innerHTML;
@@ -9,6 +53,7 @@ function cartItemClickListener(event) {
   const selectItem = event.target;
   selectItem.remove();
   localStorageSave();
+  TotalPrice();
 }
 
 // requisitos #2 e #3: criar elemento que será mostrado no carrinho #2 e adicionar evento #3
@@ -19,6 +64,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
 
 // requisito #2: mostrar item no carrinho e chamar função para armazenar no LocalStorage
 const ShowCartItem = ({ id, title, price }) => {
@@ -32,6 +78,7 @@ const ShowCartItem = ({ id, title, price }) => {
   const cartList = document.querySelector('.cart__items');
   cartList.appendChild(productToCart);
   localStorageSave();
+  TotalPrice();
 };
 
 // requisito #2: requisição, tratamento do resultado e chamar função de mostrar no html
@@ -147,13 +194,14 @@ function retrieveLocalStorage() {
   listenToRetrievedItem(CartItems);
 }
 
-// requisito #5: envaziar carrinho
+// requisito #6: esvaziar carrinho
 function clearCartItems() {
   const cartList = document.querySelector('.cart__items');
   cartList.innerHTML = '';
+  TotalPrice();
 }
 
-// requisito #5: criar evento para o botão esvaziar carrinho
+// requisito #6: criar evento para o botão esvaziar carrinho
 function clearButtonEvent() {
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', clearCartItems);
