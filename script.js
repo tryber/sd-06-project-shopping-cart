@@ -15,7 +15,7 @@ function clearCar() {
       const prods = document.querySelector('.cart__items');
       const prod = document.querySelectorAll('.cart__item');
       prod.forEach(elem => prods.removeChild(elem));
-      svCart()
+      svCart();
     });
 }
 
@@ -36,7 +36,6 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const selProd = document.querySelector('.cart__items');
   selProd.removeChild(event.target);
-  const aux = event.target.innerText;
   svCart();
 }
 
