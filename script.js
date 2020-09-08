@@ -14,10 +14,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function saveToLocalStorage () {
+  const cart = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cart', cart);
+};
+
 function cartItemClickListener(event) {
   const capturedItem = event.target;
   const cartContainer = document.querySelector('.cart__items');
   cartContainer.removeChild(capturedItem);
+  saveToLocalStorage();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
