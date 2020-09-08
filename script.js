@@ -41,7 +41,7 @@ async function renderPrice(value) {
 
 // Realizando a soma dos preços do carrinho
 // olhei PR de amigo para resolver
-function totalSum() {
+async function totalSum() {
   const items = document.querySelectorAll('.cart__item');
   let sum = 0;
   if (items.length !== 0) {
@@ -63,12 +63,12 @@ function saveData() {
 // Função que remove os itens do carrinho
 // Chama a função (saveData) que salvará o carrinho
 // agora sem o item que foi removido
-function cartItemClickListener(event) {
+async function cartItemClickListener(event) {
   const cartItem = event.target;
   const olAddItems = document.querySelector('.cart__items');
 
   olAddItems.removeChild(cartItem);
-  totalSum();
+  await totalSum();
   saveData();
 }
 
@@ -82,12 +82,12 @@ function retrieveClearFunction(item) {
 
 // Função que recupera carrinho salvo no LocalStorage
 // Chama função que remove elemento do carrinho ao ser clicado
-function loadCartFromLocalStorage() {
+async function loadCartFromLocalStorage() {
   const ol = document.querySelector('.cart__items');
   ol.innerHTML = window.localStorage.getItem('myList');
   const li = document.querySelectorAll('li');
 
-  totalSum();
+  await totalSum();
   retrieveClearFunction(li);
 }
 
@@ -110,7 +110,7 @@ const urlApi = 'https://api.mercadolibre.com/';
 // Chama a função (saveData) que salvará o conteudo do carrinho no local storage
 async function addToCart(itemId) {
   const endpoint = `${urlApi}items/${itemId}`;
-
+  await totalSum();
   await fetch(endpoint)
     .then(response => response.json())
     .then((objectJson) => {
