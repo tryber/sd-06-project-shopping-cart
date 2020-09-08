@@ -120,7 +120,7 @@ window.onload = function onload() {
   fetchProductsFromAPI('computador');
   getCartStorage();
   eventHandlers();
-  async function loading() {
+  async function () {
     const element = document.createElement('h2');
     element.innerText = 'loading...';
     element.className = 'loading';
@@ -129,5 +129,5 @@ window.onload = function onload() {
     setTimeout(function () {
       element.remove();
     }, 2000);
-  };
+  }
 };
