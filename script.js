@@ -16,7 +16,7 @@ function addPrices(price) {
   const allPrices = document.querySelector('.total-price');
   allPrices.innerHTML = parseFloat(allPrices.innerHTML) + price;
 }
- 
+
 const removeCartElements = () => {
   const cartList = document.querySelector('.cart__items');
   while (cartList.firstChild) {
