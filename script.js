@@ -42,7 +42,7 @@ prices = arrItems =>
 
 async function totalPriceOfItems() {
   const items = document.querySelectorAll('.cart__item');
-  document.querySelector('.total').innerText = `$${await prices([...items])}`;
+  document.querySelector('.total-price').innerText = `$${await prices([...items])}`;
 }
 
 function cartItemClickListener(event) {
