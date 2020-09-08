@@ -35,7 +35,7 @@ function getInTheCarList(event) {
   fetch(url)
     .then(response => response.json())
     .then((data) => {
-      const addCpuCar = document.querySelector('.cart__items'); 
+      const addCpuCar = document.querySelector('.cart__items');
       addCpuCar.appendChild(createCartItemElement(data));
       storageCart();
     });
