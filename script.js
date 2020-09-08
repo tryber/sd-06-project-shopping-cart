@@ -93,7 +93,7 @@ function removeCartItems() {
     localStorage.clear();
   });
 }
-//Solução obtida através do código do digníssimo Cleyton Oliveira, o cara é fera demais!
+//  Solução obtida através do código do digníssimo Cleyton Oliveira, o cara é fera demais!
 function localStorageCartItem() {
   const localStorageKeys = Object.keys(localStorage);
   const localStorageValues = localStorageKeys.forEach((item) => {
