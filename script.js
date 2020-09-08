@@ -1,5 +1,4 @@
 
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,6 +25,15 @@ function cartItemClickListener(event) {
   saveToLocalStorage();
 }
 
+function getCartStorage() {
+  const storedCart = localStorage.getItem('cart');
+  const cart = document.querySelector('.cart__items');
+  if (storedCart === '') console.log('carrinho vazio');
+  cart.innerHTML = storedCart;
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach(item => item.addEventListener('click', cartItemClickListener));
+}
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -34,6 +42,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
   const cartContainer = document.querySelector('.cart__items');
   cartContainer.appendChild(li);
+  saveToLocalStorage();
 
   return li;
 }
@@ -72,13 +81,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
 // mycode
 
-// build event listener to add chart button
-// function addToCartButton() {
-//   const cartButton = document.querySelector('.item__add');
-//   document.addEventListener('click', (event) => {
-//     event.target
-//   })
-// }
 
 // function built to attach product items to the respective container
 // solution created during the monitoring class
@@ -96,7 +98,18 @@ function fetchProductsFromAPI(endpoint) {
   });
 }
 
+function clearAllCart() {
+  const cartContainer = document.querySelector('.cart__items');
+  while (cartContainer.firstChild) {
+    cartContainer.firstChild.remove();
+  }
+  saveToLocalStorage();
+}
 
+function eventHandlers() {
+  const clearCartButton = document.querySelector('.empty-cart');
+  clearCartButton.addEventListener('click', clearAllCart);
+}
 // ///
 
 // function getSkuFromProductItem(item) {
@@ -106,4 +119,6 @@ function fetchProductsFromAPI(endpoint) {
 
 window.onload = function onload() {
   fetchProductsFromAPI('computador');
+  getCartStorage();
+  eventHandlers();
 };
