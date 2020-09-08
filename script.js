@@ -50,6 +50,23 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+async function sendToCart(sku) {
+  const fetchToCart = await fetch(`https://api.mercadolibre.com/items/${sku}`);
+  const jsonCart = await fetchToCart.json();
+  await removeLoading();
+  const dataToCart = createObjectToCart(jsonCart);
+  const cartFunc = createCartItemElement(dataToCart);
+  parentCart(cartFunc);
+}
+
+
+function apiLoading() {
+  const loadingElement = document.createElement('p');
+  loadingElement.className = 'loading';
+  loadingElement.innerText = 'loading...';
+  parentLoad(loadingElement);
+}
+
 function buttonClick(event) {
   const clickedButton = event.target;
   const buttonDetails = retrieveButtonData(clickedButton);
@@ -63,25 +80,9 @@ function parentLoad(loadingElement) {
   parentClass.appendChild(loadingElement);
 }
 
-function apiLoading() {
-  const loadingElement = document.createElement('p');
-  loadingElement.className = 'loading';
-  loadingElement.innerText = 'loading...';
-  parentLoad(loadingElement);
-}
-
 function removeLoading() {
   const removeLoad = document.querySelector('.loading');
   removeLoad.remove();
-}
-
-async function sendToCart(sku) {
-  const sendToCart = await fetch(`https://api.mercadolibre.com/items/${sku}`);
-  const jsonCart = await sendToCart.json();
-  await removeLoading();
-  const dataToCart = createObjectToCart(jsonCart);
-  const cartFunc = createCartItemElement(dataToCart);
-  parentCart(cartFunc);
 }
 
 function createProductItemElement({ sku, name, image }) {
