@@ -81,21 +81,25 @@ function removeLoading() {
 }
 
 function parentPrice(priceSum) {
-  const parentClass = document.querySelector('ol');
+  const parentClass = document.querySelector('.cart');
   parentClass.append(priceSum);
 }
 
 function addTotalPrice({ price }) {
-  console.log(price);
   totalPrice += price;
-  console.log(totalPrice);
-  const priceTag = document.createElement('span');
-  priceTag.class = 'total-price';
-  priceTag.innerText = (`Valor total: R$${totalPrice}`);
-  console.log(priceTag);
-  parentPrice(priceTag);
+  const priceArray = document.querySelectorAll('.total-price');
+  console.log(priceArray);
+  if (priceArray.length === 0) {
+    const priceTag = document.createElement('span');
+    priceTag.className = 'total-price';
+    priceTag.innerText = (`Valor total: R$${totalPrice}`);
+    parentPrice(priceTag);
+  } else {
+    const priceTag = document.querySelector('.total-price');
+    priceTag.innerText = (`Valor total: R$${totalPrice}`);
+    parentPrice(priceTag);
+  }
 }
-
 function sendToCart(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(data => data.json())
