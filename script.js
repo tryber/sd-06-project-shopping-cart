@@ -30,6 +30,12 @@ function getSkuFromProductItem(item) {
 }
 // =========================================================================
 
+function setLocalStorage() {
+  const dataStorage = document.querySelector('.cart__items').innerHTML;
+  localStorage.shoppingCart = dataStorage;
+}
+// =========================================================================
+
 function cartItemClickListener(event) {
   event.target.remove();
   // apagar item do carrinho
@@ -38,18 +44,12 @@ function cartItemClickListener(event) {
 }
 // =========================================================================
 
-function setLocalStorage() {
-  const dataStorage = document.querySelector('.cart__items').innerHTML;
-  localStorage.shoppingCart = dataStorage;
-}
-// =========================================================================
-
 function getLocalStorage() {
   if (localStorage.shoppingCart) {
     document.querySelector('.cart__items').innerHTML = localStorage.shoppingCart;
     document.querySelector('.cart__item').forEach((item) => {
       item.addEventListener('click', cartItemClickListener);
-    })
+    });
   }
   // exibir itens salvos no localstorage
 }
