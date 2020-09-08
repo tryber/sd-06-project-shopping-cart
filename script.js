@@ -25,6 +25,7 @@ function cartItemClickListener(event) {
   saveToLocalStorage();
 }
 
+// function built to fetch data from storage
 function getCartStorage() {
   const storedCart = localStorage.getItem('cart');
   const cart = document.querySelector('.cart__items');
@@ -46,7 +47,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-// mycode
 function addProductToCart() {
   // capture click event
   const target = event.target;
@@ -56,13 +56,10 @@ function addProductToCart() {
   const capturedId = parentNode.firstChild.innerText;
   // extract product infos from a new endpoint
   const newEndPoint = `https://api.mercadolibre.com/items/${capturedId}`;
-
   fetch(newEndPoint)
     .then(response => response.json())
     .then(result => createCartItemElement(result));
 }
-
-// /////
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
@@ -77,9 +74,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   return section;
 }
-
-// mycode
-
 
 // function built to attach product items to the respective container
 // solution created during the monitoring class
@@ -105,7 +99,7 @@ function clearAllCart() {
   saveToLocalStorage();
 }
 
-function eventHandlers() {
+function eventHandler() {
   const clearCartButton = document.querySelector('.empty-cart');
   clearCartButton.addEventListener('click', clearAllCart);
 }
@@ -114,6 +108,8 @@ function eventHandlers() {
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
+
+// idea taken after study with Rafael Gelatti
 async function loading() {
   const element = document.createElement('h2');
   element.innerText = 'loading...';
@@ -128,6 +124,6 @@ async function loading() {
 window.onload = function onload() {
   fetchProductsFromAPI('computador');
   getCartStorage();
-  eventHandlers();
+  eventHandler();
   loading();
 };
