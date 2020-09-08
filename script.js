@@ -51,7 +51,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 function parentLoad(loadingElement) {
-  const parentClass = document.querySelector('ol');
+  const parentClass = document.querySelector('.container');
   parentClass.appendChild(loadingElement);
 }
 
