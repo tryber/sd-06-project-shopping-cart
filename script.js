@@ -9,29 +9,29 @@ const changeLocalStorage = () => {
 };
 
 let save = 0;
-const sumPrice = (salePrice) => {
-  save += parseFloat(salePrice);
+const sumTotalPrice = (salePrice) => {
+  save += salePrice;
   return save;
 };
 
-const subtraction = (salePrice) => {
-  save -= parseFloat(salePrice);
+const subtractionTotalPrice = (salePrice) => {
+  save -= salePrice;
   return save;
 };
 
-const sumAsyncAwait = (salePrice) => {
+async function sumAsyncAwait(salePrice) {
   const priceContainer = document.querySelector('.container');
   const showPrice = document.querySelector('.total-price');
-  sumPrice(salePrice);
+  await sumTotalPrice(salePrice);
   showPrice.innerHTML = `${save}`;
   priceContainer.appendChild(showPrice);
 };
 
-const subtractionAsyncAwait = () => {
+async function subtractionAsyncAwait() {
   const priceContainer = document.querySelector('.container');
   const showPrice = document.querySelector('.total-price');
-  const priceToRemove = parseFloat(event.target.innerHTML.split('PRICE: $')[1]);
-  subtraction(priceToRemove);
+  const priceToRemove = event.target.innerHTML.split('PRICE: $')[1];
+  await subtractionTotalPrice(priceToRemove);
   showPrice.innerHTML = `${save}`;
   priceContainer.appendChild(showPrice);
 };
