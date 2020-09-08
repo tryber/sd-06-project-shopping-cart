@@ -14,6 +14,40 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener() {
+  document.querySelector('.cart__items');
+}
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+
+  const cartContainer = document.querySelector('.cart__items');
+  cartContainer.appendChild(li);
+
+  return li;
+}
+
+// mycode
+function addProductToCart() {
+  // capture click event
+  const target = event.target;
+  // accessing parent element
+  const parentNode = target.parentNode;
+  // searching information about ID
+  const capturedId = parentNode.firstChild.innerText;
+  // extract product infos from a new endpoint
+  const newEndPoint = `https://api.mercadolibre.com/items/${capturedId}`;
+
+  fetch(newEndPoint)
+    .then(response => response.json())
+    .then(result => createCartItemElement(result));
+}
+
+// /////
+
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -23,12 +57,23 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
+  section.addEventListener('click', addProductToCart);
+
   return section;
 }
 
 // mycode
 
+// build event listener to add chart button
+// function addToCartButton() {
+//   const cartButton = document.querySelector('.item__add');
+//   document.addEventListener('click', (event) => {
+//     event.target
+//   })
+// }
+
 // function built to attach product items to the respective container
+// solution created during the monitoring class
 function appendItemToContainer(container, child) {
   container.appendChild(child);
 }
@@ -43,20 +88,11 @@ function fetchProductsFromAPI(endpoint) {
   });
 }
 
+
+// ///
+
 // function getSkuFromProductItem(item) {
 //   return item.querySelector('span.item__sku').innerText;
-// }
-
-// function cartItemClickListener(event) {
-//   // coloque seu código aqui
-// }
-
-// function createCartItemElement({ sku, name, salePrice }) {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
 // }
 
 
