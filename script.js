@@ -33,9 +33,9 @@ function getSkuFromProductItem(item) {
 }
 
 // Renderizando os valores dos preços no carrinho
-async function renderPrice(value) {
+function renderPrice(value) {
   const div = document.querySelector('.total-price');
-  div.innerHTML = await `Total: $${value}`;
+  div.innerHTML = `Total: $${value}`;
 }
 
 // Realizando a soma dos preços do carrinho
@@ -44,7 +44,7 @@ async function totalSum() {
   const items = document.querySelectorAll('.cart__item');
   let sum = 0;
   if (items.length !== 0) {
-    await items.forEach((priceTag) => {
+    items.forEach((priceTag) => {
       const price = parseFloat(priceTag.innerHTML.split('$')[1]);
       sum += price;
       renderPrice(sum.toFixed(2));
@@ -108,10 +108,10 @@ const urlApi = 'https://api.mercadolibre.com/';
 // Fução que faz uma requisição a API do mercado livre
 // Adiciona os elementos retornados como filho da (ol)
 // Chama a função (saveData) que salvará o conteudo do carrinho no local storage
-function addToCart(itemId) {
+async function addToCart(itemId) {
   const endpoint = `${urlApi}items/${itemId}`;
 
-  fetch(endpoint)
+  await fetch(endpoint)
     .then(response => response.json())
     .then((objectJson) => {
       const olAddItems = document.querySelector('.cart__items');
