@@ -49,6 +49,7 @@ async function totalSum() {
     const div = document.querySelector('.total-price');
     div.innerHTML = `Total: $${sum.toFixed(2)}`;
   }
+
   await setTimeout(sumPrice(), 100);
 }
 
