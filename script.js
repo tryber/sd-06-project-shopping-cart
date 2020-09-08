@@ -89,13 +89,20 @@ function appendItemToContainer(container, child) {
 }
 // function built to fetch products from API
 function fetchProductsFromAPI(endpoint) {
+  const items = document.querySelector('.items');
+  const loading = document.createElement('p');
+  loading.className = 'loading';
+  loading.innerHTML = 'Loading...';
+  items.appendChild(loading);
+
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${endpoint}`)
   .then(response => response.json())
   .then(data => data.results)
   .then((products) => {
     products.forEach(product =>
-    appendItemToContainer(document.querySelector('.items'), createProductItemElement(product)));
-  });
+    appendItemToContainer(items, createProductItemElement(product)));
+  })
+  .then(document.querySelector('.loading').remove());
 }
 
 function clearAllCart() {
