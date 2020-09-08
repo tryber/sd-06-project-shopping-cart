@@ -47,6 +47,7 @@ async function totalSum() {
     await items.forEach((priceTag) => {
       const price = parseFloat(priceTag.innerHTML.split('$')[1]);
       sum += price;
+
       renderPrice(sum.toFixed(2));
     });
   } else {
