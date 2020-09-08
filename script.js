@@ -42,7 +42,7 @@ prices = arrItems =>
 
 async function totalPriceOfItems() {
   const items = document.querySelectorAll('.cart__item');
-  document.querySelector('.total').innerText = '$' + await prices([...items]);
+  document.querySelector('.total').innerText = `$${await prices([...items])}`;
 }
 
 function cartItemClickListener(event) {
@@ -64,7 +64,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 function saveState() {
   const cartState = document.querySelector('.cart__items').innerHTML;
   localStorage.cart = cartState;
-  totalPriceOfItems()
+  totalPriceOfItems();
 }
 
 function handleProductClick(id) {
