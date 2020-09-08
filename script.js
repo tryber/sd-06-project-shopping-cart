@@ -14,10 +14,10 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function saveToLocalStorage () {
+function saveToLocalStorage() {
   const cart = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', cart);
-};
+}
 
 function cartItemClickListener(event) {
   const capturedItem = event.target;
