@@ -40,7 +40,7 @@ async function cartItemClickListener(event) {
   saveOrDelete();
   await sumPrices();
   const pagar = document.querySelector('.total-price');
-  pagar.innerHTML = (`Total a pagar: ${localStorage.getItem('totalPrices')}`);
+  pagar.innerHTML = (`${localStorage.getItem('totalPrices')}`);
 }
 async function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
@@ -50,7 +50,7 @@ async function createCartItemElement({ id, title, price }) {
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
   saveOrDelete();
-  const sum = await sumPrices();
+  await sumPrices();
   const pagar = document.querySelector('.total-price');
   pagar.innerHTML = (`${localStorage.getItem('totalPrices')}`);
   return li;
@@ -90,6 +90,8 @@ function cleanAll() {
   btnClean.addEventListener('click', () => {
     ol.innerHTML = '';
     pagar.innerHTML = '';
+    localStorage.removeItem('totalPrices');
+    localStorage.removeItem('Item');
   });
 }
 /* function sumPrices() {
@@ -113,6 +115,10 @@ window.onload = function onload() {
       ol.removeChild(escolhido);
       localStorage.removeItem('Item');
     });
+  }
+  if (localStorage.totalPrices) {
+    const pagar = document.querySelector('.total-price');
+    pagar.innerHTML = (`${localStorage.getItem('totalPrices')}`);
   }
   cleanAll();
 };
