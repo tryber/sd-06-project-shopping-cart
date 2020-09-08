@@ -16,7 +16,7 @@ function createCustomElement(element, className, innerText) {
 
 async function sumOfPrices(price) {
   const newPrice = document.querySelector('.total-price');
-  newPrice.innerText = parseFloat(Number(newPrice.innerText) + price).toPrecision(6);
+  newPrice.innerText = parseFloat((Number(newPrice.innerText) + price));
   // adicionando numeros do somatorio de cart__items dentro da variavel newprice
 }
 
@@ -49,7 +49,7 @@ function cartItemClickListener(event) {
   clicked.remove();
   const price = Number(event.target.innerText.split('$')[1]);
   const newPrice = document.querySelector('.total-price');
-  newPrice.innerText = parseFloat(Number(newPrice.innerText) - price).toPrecision(4);
+  newPrice.innerText = parseFloat(Number(newPrice.innerText) - price);
   // fazendo o contrario do somatorio, porem transformando o event.target numero, recuperando
   // texto especifico com split
   setLocalStorage();
