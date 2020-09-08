@@ -86,20 +86,18 @@ const removeAlItems = () => {
   storageCar();
 };
 
-function loadLs() {
-  if (localStorage.length > 0) {
-    const cartList = document.querySelector('.cart__items');
-    cartList.addEventListener('click', cartItemClickListener);
-    cartList.innerHTML = localStorage.getItem('cartItens');
-    const fullPrice = document.querySelector('.total-price');
-    fullPrice.innerText = localStorage.getItem('price');
-  }
+function clearAllCartItems() {
+  document.querySelector('.cart__items').innerHTML = '';
+  document.querySelector('.total-price').innerText = '0';
+}
+
+function ClickAndClear() {
+  const emptyCartButton = document.querySelector('.empty-cart');
+  emptyCartButton.addEventListener('click', clearAllCartItems);
 }
 
 window.onload = function onload() {
   urlInclude();
   storageList();
-  loadLs();
-  const btnRemoveAllItems = document.querySelector('.empty-cart');
-  btnRemoveAllItems.addEventListener('click', removeAlItems);
+  ClickAndClear();
 };
