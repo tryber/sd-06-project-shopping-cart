@@ -124,7 +124,6 @@ function fetchMercadoLivre() {
     })
   }, 1500);
 }
-
 // =========================================================================
 
 function eraseAllItems() {
@@ -136,6 +135,7 @@ function eraseAllItems() {
   localStorage.clear();
   document.querySelector('.empty-cart').addEventListener('click', eraseAllItems);
   document.querySelector('.total-price').innerText = '0';
+  // hardcoded
   setLocalStorage();
 }
 // =========================================================================
