@@ -33,10 +33,10 @@ function createObjectToCart(data) {
 }
 
 function cartItemClickListener(event) {
-const itemClicked = event.target;
-itemClicked.id = 'clicked';
-const itemToRemove = document.querySelector('#clicked');
-itemToRemove.remove();
+  const itemClicked = event.target;
+  itemClicked.id = 'clicked';
+  const itemToRemove = document.querySelector('#clicked');
+  itemToRemove.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
