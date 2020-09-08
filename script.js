@@ -80,12 +80,6 @@ const urlInclude = () => {
   });
 };
 
-const removeAlItems = () => {
-  const listCar = document.querySelector('.cart__items');
-  listCar.innerHTML = '';
-  storageCar();
-};
-
 function clearAllCartItems() {
   document.querySelector('.cart__items').innerHTML = '';
   document.querySelector('.total-price').innerText = '0';
