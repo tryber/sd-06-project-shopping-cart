@@ -12,18 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-async function buttonClick(event) {
-  const clickedButton = event.target;
-  const buttonSku = retrieveButtonData(clickedButton);
-  const sendToCart = await fetch(`https://api.mercadolibre.com/items/${buttonSku}`)
-  const jsonCart = await sendToCart.json();
-  const dataToCart = await createObjectToCart(jsonCart);
-  const cartFunc = await createCartItemElement(dataToCart);
-  await console.log(jsonCart);
-  await console.log(cartFunc);
-  await parentCart(cartFunc);
-}
-
 function retrieveButtonData(button) {
   const itemsDetails = button.parentElement;
   const skuToFetch = itemsDetails.querySelector('.item__sku').innerText;
@@ -34,9 +22,29 @@ function createObjectToCart(data) {
   const response = {
     sku: data.id,
     name: data.title,
-    salePrice: data.price
+    salePrice: data.price,
   };
   return response;
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+async function buttonClick(event) {
+  const clickedButton = event.target;
+  const buttonSku = retrieveButtonData(clickedButton);
+  const sendToCart = await fetch(`https://api.mercadolibre.com/items/${buttonSku}`);
+  const jsonCart = await sendToCart.json();
+  const dataToCart = await createObjectToCart(jsonCart);
+  const cartFunc = await createCartItemElement(dataToCart);
+  await console.log(jsonCart);
+  await console.log(cartFunc);
+  await parentCart(cartFunc);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -57,14 +65,6 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 }
 
 function parentList(element) {
