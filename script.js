@@ -120,7 +120,7 @@ window.onload = function onload() {
   fetchProductsFromAPI('computador');
   getCartStorage();
   eventHandlers();
-  async function () {
+  async function() {
     const element = document.createElement('h2');
     element.innerText = 'loading...';
     element.className = 'loading';
