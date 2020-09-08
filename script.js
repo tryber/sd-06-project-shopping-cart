@@ -99,6 +99,7 @@ const removeAlItems = () => {
   document.querySelector('.total-price').innerHTML = 0;
   storageCar();
 };
+
 function loadFile() {
   const idLoad = document.querySelector('#load');
   idLoad.className = 'loading';
