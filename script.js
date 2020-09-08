@@ -33,7 +33,10 @@ function createObjectToCart(data) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+const itemClicked = event.target;
+itemClicked.id = 'clicked';
+const itemToRemove = document.querySelector('#clicked');
+itemToRemove.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -49,11 +52,11 @@ async function buttonClick(event) {
   const buttonSku = retrieveButtonData(clickedButton);
   const sendToCart = await fetch(`https://api.mercadolibre.com/items/${buttonSku}`);
   const jsonCart = await sendToCart.json();
-  const dataToCart = await createObjectToCart(jsonCart);
-  const cartFunc = await createCartItemElement(dataToCart);
-  await console.log(jsonCart);
-  await console.log(cartFunc);
-  await parentCart(cartFunc);
+  const dataToCart = createObjectToCart(jsonCart);
+  const cartFunc = createCartItemElement(dataToCart);
+  console.log(jsonCart);
+  console.log(cartFunc);
+  parentCart(cartFunc);
 }
 
 function createProductItemElement({ sku, name, image }) {
