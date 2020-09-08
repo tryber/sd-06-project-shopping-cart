@@ -34,11 +34,23 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+// Lugh <3
+prices = arrItems =>
+  arrItems.reduce((acc, cur) => acc + parseFloat(cur.innerText.split('$')[1]),
+  0);
+
+
+async function totalPriceOfItems() {
+  const items = document.querySelectorAll('.cart__item');
+  document.querySelector('.total').innerText = '$' + await prices([...items]);
+}
+
 function cartItemClickListener(event) {
   // Oliva <3
   const getOl = document.querySelector('.cart__items');
   const li = event.target;
   getOl.removeChild(li);
+  totalPriceOfItems();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -52,6 +64,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 function saveState() {
   const cartState = document.querySelector('.cart__items').innerHTML;
   localStorage.cart = cartState;
+  totalPriceOfItems()
 }
 
 function handleProductClick(id) {
@@ -90,6 +103,7 @@ function clearCartItems() {
     getOl.removeChild(getOl.firstChild);
   }
   localStorage.clear();
+  totalPriceOfItems();
 }
 
 window.onload = function onload() {
@@ -98,4 +112,5 @@ window.onload = function onload() {
   if (localStorage.cart) {
     document.querySelector('.cart__items').innerHTML = localStorage.cart;
   }
+  totalPriceOfItems();
 };
