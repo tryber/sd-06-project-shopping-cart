@@ -32,17 +32,17 @@ function sumPrices() {
   });
   return localStorage.setItem('totalPrices', sum);
 }
-function cartItemClickListener(event) {
+async function cartItemClickListener(event) {
   // coloque seu código aqui
   const item = event.target;
   const ol = document.querySelector('.cart__items');
   ol.removeChild(item);
   saveOrDelete();
-  sumPrices();
+  await sumPrices();
   const pagar = document.querySelector('.total-price');
   pagar.innerHTML = (`Total a pagar: ${localStorage.getItem('totalPrices')}`);
 }
-function createCartItemElement({ id, title, price }) {
+async function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
@@ -50,7 +50,7 @@ function createCartItemElement({ id, title, price }) {
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
   saveOrDelete();
-  sumPrices();
+  await sumPrices();
   const pagar = document.querySelector('.total-price');
   pagar.innerHTML = (`Total a pagar: ${localStorage.getItem('totalPrices')}`);
   return li;
