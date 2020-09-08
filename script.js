@@ -24,6 +24,51 @@ function cartItemClickListener(event) {
   saveFunction();
 }
 
+// Sum of all items
+async function sumPrice(list) {// creating an async function for the list
+  const total = document.querySelector('.total-price');
+  const itemPrice = parseFloat(list.innerText.split('$')[1]);
+  const totalPrice = parseFloat(total.innerHTML);
+  const result = itemPrice + totalPrice;
+  total.innerText = result;
+  saveFunction();
+}
+
+// Creating the selected items from the cart
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const list = document.createElement('li');
+  list.className = 'cart__item';
+  list.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  saveFunction();
+  sumPrice(list);
+  list.addEventListener('click', cartItemClickListener);
+  return list;
+}
+
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  const sectionArea = document.createElement('section');
+  const sectionAreaItems = document.querySelector('.items');
+  sectionArea.className = 'item';
+  sectionArea.appendChild(createCustomElement('span', 'item__sku', sku));
+  sectionArea.appendChild(createCustomElement('span', 'item__title', name));
+  sectionArea.appendChild(createProductImageElement(image));
+  sectionArea.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', () => {
+      const url = sku;
+      fetch(`https://api.mercadolibre.com/items/${url}`)
+        .then(response => response.json())
+        .then((result) => {
+          const createdItem = createCartItemElement(result);
+          const ol = document.querySelector('.cart__items');
+          ol.appendChild(createdItem);
+          saveFunction();
+        });
+    });
+  sectionAreaItems.appendChild(section);
+
+  return sectionArea;
+}
+
 // fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
 // .then(response => response.json())
 // .then((response) => {
