@@ -80,6 +80,11 @@ function removeLoading() {
   removeLoad.remove();
 }
 
+function parentPrice(priceSum) {
+  const parentClass = document.querySelector('ol');
+  parentClass.append(priceSum);
+}
+
 function addTotalPrice({ price }) {
   console.log(price);
   totalPrice += price;
