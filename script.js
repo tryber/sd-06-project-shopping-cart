@@ -36,7 +36,8 @@ function saveCart() {
   const listItems = document.querySelector('.cart__items');
   localStorage.setItem('cartList', listItems.innerHTML);
   const addList = document.querySelectorAll('li');
-  addList.forEach((li) => {
+  addList
+  .forEach((li) => {
     li.addEventListener('click', loadCart);
   });
 }
@@ -112,7 +113,10 @@ window.onload = function onload() {
   const btnClearCart = document.querySelector('.empty-cart');
   const listItems = document.querySelector('.cart__items');
   btnClearCart.addEventListener('click', clearCart);  
-  // if (localStorage.Item) {
-  //   document.querySelector('.cart__items').innerHTML = localStorage.Item;
-  // }
+  if (localStorage.getItem('cartList')) {
+    document.querySelector('.cart__items').innerHTML = localStorage.getItem('cartList');
+    document.querySelectorAll('cart__item')
+    .forEach(item =>
+      item.addEventListener('click', cartItemClickListener));
+  }
 };
