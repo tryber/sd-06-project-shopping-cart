@@ -15,22 +15,6 @@ function cartItemClickListener(event) {
 }
 
 
-function cartItemClickListener(event) {
-  const carList = document.querySelector('.cart__items');
-  carList.removeChild(event.target);
-  removePrice(event);
-  storageCart();
-}
-
-function storageList() {
-  const olList = document.querySelector('.cart__items');
-  olList.innerHTML = window.localStorage.getItem('car_list');
-  const liList = document.querySelectorAll('li');
-  liList.forEach((li) => {
-    li.addEventListener('click', cartItemClickListener);
-  });
-}
-
 async function sumAll(li) {
   const total = document.querySelector('.total-price');
   const itemPrice = parseFloat(li.innerText.split('$')[1]);
@@ -56,7 +40,7 @@ function getInTheCarList(event) {
   fetch(url)
     .then(response => response.json())
     .then((data) => {
-      const addCpuCar = document.querySelector('.cart__items');
+      const addCpuCar = document.querySelector('.cart__items'); 
       addCpuCar.appendChild(createCartItemElement(data));
       storageCart();
     });
@@ -101,7 +85,7 @@ const clear = () => {
     ol.innerHTML = '';
     const total = document.querySelector('.total-price');
     total.innerText = 0;
-    saveStorage();
+    saveFunction();
   });
 };
 
