@@ -12,17 +12,22 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
- async function buttonClick(event) {
+async function buttonClick(event) {
   const clickedButton = event.target;
-  const itemsDetails = clickedButton.parentElement;
-  const skuToFetch = itemsDetails.querySelector('.item__sku').innerText;
-  const sendToCart = await fetch(`https://api.mercadolibre.com/items/${skuToFetch}`)
+  const buttonSku = retrieveButtonData(clickedButton);
+  const sendToCart = await fetch(`https://api.mercadolibre.com/items/${buttonSku}`)
   const jsonCart = await sendToCart.json();
-  const dataToCart = createObjectToCart(jsonCart);
+  const dataToCart = await createObjectToCart(jsonCart);
   const cartFunc = await createCartItemElement(dataToCart);
   await console.log(jsonCart);
   await console.log(cartFunc);
   await parentCart(cartFunc);
+}
+
+function retrieveButtonData(button) {
+  const itemsDetails = button.parentElement;
+  const skuToFetch = itemsDetails.querySelector('.item__sku').innerText;
+  return skuToFetch;
 }
 
 function createObjectToCart(data) {
