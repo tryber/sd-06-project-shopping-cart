@@ -117,7 +117,7 @@ async function addToCart(itemId) {
       olAddItems.appendChild(createCartItemElement(objectJson));
       saveData();
     });
-    await totalSum();  
+    await totalSum();
 }
 
 // Funçao que ao clicar no botão do item
