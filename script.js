@@ -62,14 +62,6 @@ function apiLoading() {
   parentLoad(loadingElement);
 }
 
-function buttonClick(event) {
-  apiLoading();
-  const clickedButton = event.target;
-  const buttonDetails = retrieveButtonData(clickedButton);
-  const buttonSku = getSkuFromProductItem(buttonDetails);
-  sendToCart(buttonSku);
-}
-
 function removeLoading() {
   const removeLoad = document.querySelector('.loading');
   removeLoad.remove();
@@ -84,19 +76,17 @@ function sendToCart(sku) {
     .then(() => removeLoading());
 }
 
-function apiLoading() {
-  const loadingElement = document.createElement('p');
-  loadingElement.className = 'loading';
-  loadingElement.innerText = 'loading...';
-  parentLoad(loadingElement);
-}
-
 function buttonClick(event) {
+  apiLoading();
   const clickedButton = event.target;
   const buttonDetails = retrieveButtonData(clickedButton);
   const buttonSku = getSkuFromProductItem(buttonDetails);
   sendToCart(buttonSku);
-  apiLoading();
+}
+
+function removeLoading() {
+  const removeLoad = document.querySelector('.loading');
+  removeLoad.remove();
 }
 
 function createProductItemElement({ sku, name, image }) {
