@@ -1,17 +1,42 @@
-window.onload = function onload() { };
-fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-.then(response => response.json())
-.then((response) => {
-  console.log(response.results);
-  response.results.forEach((item) => {
-    const product = createProductItemElement({
-      sku: item.id,
-      name: item.title,
-      image: item.thumbnail,
-    });
-    document.querySelector('.items').appendChild(product);
-  });
-});
+// window.onload = function onload() { };
+const Endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  return e;
+}
+
+// saving into local storage
+const saveFunction = () => {
+  const items = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cart', items);
+};
+
+// removing item
+function cartItemClickListener(event) {
+  const list = event.target;
+  event.target.remove();// removendo onde esta o mouse
+  const totalPrice = document.querySelector('.total-price');// pegando do html
+  const itemPrice = parseFloat(list.innerText.split('$')[1]);
+  const totalPrice = parseFloat(totalPrice.innerHTML);
+  const result = totalPrice - itemPrice;
+  totalPrice.innerText = result;
+  functionSave();
+}
+
+// fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+// .then(response => response.json())
+// .then((response) => {
+//   console.log(response.results);
+//   response.results.forEach((item) => {
+//     const product = createProductItemElement({
+//       sku: item.id,
+//       name: item.title,
+//       image: item.thumbnail,
+//     });
+//     document.querySelector('.items').appendChild(product);
+//   });
+// });
 // const fetching = () => {
 //   const endPoint = `https://api.mercadolibre.com/sites/MLB/search?q=$${searchValue}`;
 //   const searchValue = 'computador';
@@ -32,9 +57,7 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
 //   .then(() => document.querySelector('.loading').remove());
 // };
 
-// function createProductImageElement(imageSource) {
-//   const img = document.createElement('img');
-//   img.className = 'item__image';
+
 //   img.src = imageSource;
 //   return img;
 // }
