@@ -29,12 +29,12 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  event.target.remove();  
+  event.target.remove();
   // event.target.localStorage.removeItem();
   // localStorage.removeItem(event.target);
   saveShoppingCart();
   // Essa função faz com que adicionando ao carrinho já n de pra deletar+
-  // loadSavedShoppingCart(); 
+  // loadSavedShoppingCart();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
