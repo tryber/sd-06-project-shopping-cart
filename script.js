@@ -30,24 +30,6 @@ function getSkuFromProductItem(item) {
 }
 // =========================================================================
 
-function setLocalStorage() {
-  const dataStorage = document.querySelector('.cart__items').innerHTML;
-  localStorage.shoppingCart = dataStorage;
-};
-// =========================================================================
-
-function getLocalStorage(){
-  if(localStorage.shoppingCart){
-    document.querySelector('.cart__items').innerHTML = localStorage.shoppingCart;
-    document.querySelector('.cart__item').forEach((item) => {
-      item.addEventListener('click', cartItemClickListener);
-    })
-  }
-  // exibir itens salvos no localstorage
-};
-// codigo baseado no link https://www.w3schools.com/JSREF/tryit.asp?filename=tryjsref_storage_getitem
-// =========================================================================
-
 function cartItemClickListener(event) {
   event.target.remove();
   // apagar item do carrinho
@@ -56,7 +38,23 @@ function cartItemClickListener(event) {
 }
 // =========================================================================
 
+function setLocalStorage() {
+  const dataStorage = document.querySelector('.cart__items').innerHTML;
+  localStorage.shoppingCart = dataStorage;
+}
+// =========================================================================
 
+function getLocalStorage() {
+  if (localStorage.shoppingCart) {
+    document.querySelector('.cart__items').innerHTML = localStorage.shoppingCart;
+    document.querySelector('.cart__item').forEach((item) => {
+      item.addEventListener('click', cartItemClickListener);
+    })
+  }
+  // exibir itens salvos no localstorage
+}
+// codigo baseado no link https://www.w3schools.com/JSREF/tryit.asp?filename=tryjsref_storage_getitem
+// =========================================================================
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -118,7 +116,7 @@ function eraseAllItems() {
     // enquanto houver childNodes, remova!
     shoppingList.removeChild(shoppingList.childNodes[0]);
   }
-  localStorage.clear()
+  localStorage.clear();
   document.querySelector('.empty-cart').addEventListener('click', eraseAllItems);
 }
 // =========================================================================
@@ -127,5 +125,4 @@ window.onload = function onload() {
   fetchMercadoLivre();
   eraseAllItems();
   getLocalStorage();
-  
 };
