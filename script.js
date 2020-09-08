@@ -57,7 +57,7 @@ function fetchSpecificMLItem(id) {
     .then(object => addItemToCart(createCartItemElement(object)))
     .then(() => saveShoppingCart());
     // .then(() => loadSavedShoppingCart());
-};
+}
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
