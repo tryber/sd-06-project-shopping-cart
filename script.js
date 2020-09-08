@@ -35,10 +35,11 @@ function getSkuFromProductItem(item) {
 // Renderizando os valores dos preços no carrinho
 function renderPrice(value) {
   const div = document.querySelector('.total-price');
-  div.innerHTML = value;
+  div.innerHTML = `Total: $${value}`;
 }
 
 // Realizando a soma dos preços do carrinho
+// olhei PR de amigo para resolver
 function totalSum() {
   const items = document.querySelectorAll('.cart__item');
   let sum = 0;
@@ -46,10 +47,10 @@ function totalSum() {
     items.forEach((priceTag) => {
       const price = parseFloat(priceTag.innerHTML.split('$')[1]);
       sum += price;
-      renderPrice(sum);
+      renderPrice(sum.toFixed(2));
     });
   } else {
-    renderPrice('');
+    renderPrice('0,00');
   }
 }
 
@@ -149,8 +150,21 @@ const fetchSearch = () => {
     });
 };
 
+function clearCart(event) {
+  event.addEventListener('click', () => {
+    document.querySelector('.cart__items').innerHTML = '';
+    document.querySelector('.total-price').innerText = 'Total: $0,00';
+  });
+}
+
+function clickClearCart() {
+  const buttonClear = document.querySelector('.empty-cart');
+  clearCart(buttonClear);
+}
+
 // Chama as seguintes funções ao abrir a tela
 window.onload = function onload() {
   fetchSearch();
   loadCartFromLocalStorage();
+  clickClearCart();
 };
