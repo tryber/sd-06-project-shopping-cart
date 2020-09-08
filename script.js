@@ -69,7 +69,10 @@ function removeLoading() {
 
 function sendToCart(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(data => data.json())
+    .then((data) => {
+      apiLoading();
+      data.json()
+    })
     .then(jsonCart => createObjectToCart(jsonCart))
     .then(dataToCart => createCartItemElement(dataToCart))
     .then(cartFunc => parentCart(cartFunc))
@@ -77,7 +80,6 @@ function sendToCart(sku) {
 }
 
 function buttonClick(event) {
-  apiLoading();
   const clickedButton = event.target;
   const buttonDetails = retrieveButtonData(clickedButton);
   const buttonSku = getSkuFromProductItem(buttonDetails);
