@@ -100,14 +100,7 @@ const removeAlItems = () => {
   storageCar();
 };
 
-function loadFile() {
-  const idLoad = document.querySelector('#load');
-  idLoad.className = 'loading';
-  idLoad.innerText = 'loading...';
-}
-
 window.onload = function onload() {
-  loadFile();
   urlInclude();
   storageList();
   const btnRemoveAllItems = document.querySelector('.empty-cart');
