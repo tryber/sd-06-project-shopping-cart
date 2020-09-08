@@ -108,6 +108,7 @@ function loadFile() {
 }
 
 window.onload = function onload() {
+  loadFile();
   urlInclude();
   storageList();
   const btnRemoveAllItems = document.querySelector('.empty-cart');
