@@ -71,7 +71,7 @@ function sendToCart(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then((data) => {
       apiLoading();
-      data.json();
+      return data.json();
     })
     .then(jsonCart => createObjectToCart(jsonCart))
     .then(dataToCart => createCartItemElement(dataToCart))
