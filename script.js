@@ -19,6 +19,19 @@ function createProductImageElement(imageSource) {
 //     });
 //   });
 // }
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  if (element === 'button') {
+    e.addEventListener('click', fetchOnlyItem);
+  }
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
+
+function cartItemClickListener(event) {
+  // remove elemento li
+}
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
@@ -49,7 +62,7 @@ const fetchAllItems = () => {
       if (object.error) {
         throw new Error(object.error);
       } else {
-        objectResult.forEach(data => createProductItemElement(data));
+        objectResult.forEach(data => createProductItemElement(data)); // um objeto
       }
     })
     .catch(error => console.log('errou')); // func que trata error
@@ -73,23 +86,9 @@ const fetchOnlyItem = () => {
     .catch(error => console.log('errou')); // func que trata error
 };
 
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  if (element === 'button') {
-    e.addEventListener('click', fetchOnlyItem);
-  }
-  e.className = className;
-  e.innerText = innerText;
-  return e;
-}
-
 function getSkuFromProductItem(item) {
   document.querySelector('.item');
   return item.querySelector('span.item__sku').innerText; // pega apenas o ID
-}
-
-function cartItemClickListener(event) {
-  // remove elemento li
 }
 
 window.onload = function onload() {
