@@ -1,18 +1,19 @@
-// window.onload = function onload() { };
+//Window.onload = function onload() { };
 const endpointURL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
-  return e;
+  img.src = imageSource;
+  return img;
 }
 
-// saving into local storage
+//Saving into local storage
 const saveFunction = () => {
   const items = document.querySelector('.cart__items').innerHTML;// selecting from html
   localStorage.setItem('cart', items);// saving at local storage
 };
 
-// removing item
+//Removing item
 function cartItemClickListener(event) {
   const list = event.target;
   event.target.remove();// removing where the mouse is pointing
@@ -24,7 +25,7 @@ function cartItemClickListener(event) {
   saveFunction();
 }
 
-// Sum of all items
+//Sum of all items
 async function sumPrice(list) { // creating an async function for the list
   const total = document.querySelector('.total-price');
   const itemPrice = parseFloat(list.innerText.split('$')[1]);
@@ -34,7 +35,7 @@ async function sumPrice(list) { // creating an async function for the list
   saveFunction();
 }
 
-// Creating the selected items from the cart
+//Creating the selected items from the cart
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const list = document.createElement('li');
   list.className = 'cart__item';
@@ -83,7 +84,7 @@ function fetchingFunction() {
       1000);
 }
 
-// Clear button 
+//Clear button
 const clear = () => {
   const button = document.querySelector('.empty-cart');
   button.addEventListener('click', () => {
@@ -95,7 +96,7 @@ const clear = () => {
   });
 };
 
-// Salving at local storage
+//Salving at local storage
 const savingAtLocalStorage = () => {
   if (localStorage.cartShop) document.querySelector('.cart__items').innerHTML = localStorage.cartShop;
 };
@@ -110,7 +111,7 @@ const loadFile = () => {
 window.onload = function onload() {
   fetchingFunction();
   clear();
-  savingAtLocaltorage();
+  savingAtLocalStorage();
   loadFile();
 };
 // fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
