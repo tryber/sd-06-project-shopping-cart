@@ -20,6 +20,10 @@ function createProductImageElement(imageSource) {
 //   });
 // }
 
+function cartItemClickListener(event) {
+  // remove elemento li
+}
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -54,10 +58,6 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
-}
-
-function cartItemClickListener(event) {
-  // remove elemento li
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
