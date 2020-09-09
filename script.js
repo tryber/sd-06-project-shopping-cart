@@ -20,6 +20,26 @@ function createProductImageElement(imageSource) {
 //   });
 // }
 
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const containerItem = document.querySelector('.items');
+  containerItem.appendChild(section);
+  return section;
+}
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
 const fetchAllItems = () => {
   const urlEndpoint = `${endpoint.api}${endpoint.endpointAll}`;
   fetch(urlEndpoint)
@@ -56,23 +76,11 @@ const fetchOnlyItem = () => {
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   if (element === 'button') {
-    e.addEventListener('click', fetchOnlyItem)
+    e.addEventListener('click', fetchOnlyItem);
   }
   e.className = className;
   e.innerText = innerText;
   return e;
-}
-
-function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  const containerItem = document.querySelector('.items');
-  containerItem.appendChild(section);
-  return section;
 }
 
 function getSkuFromProductItem(item) {
@@ -84,13 +92,6 @@ function cartItemClickListener(event) {
   // remove elemento li
 }
 
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
 window.onload = function onload() {
   fetchAllItems();
 };
