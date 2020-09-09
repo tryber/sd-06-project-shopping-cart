@@ -42,7 +42,6 @@ function getLocalStorage() {
 }
 
 function cartItemClickListener(event) {
-  // event.addEventListener('click',()=> event.remove())
   event.addEventListener('click', () => {
     const list = document.querySelector('.cart__items');
     list.removeChild(event);
@@ -97,15 +96,28 @@ const apiInfo = {
 };
 
 const url = `${apiInfo.api}${apiInfo.endpoint}${query}`;
+
+function loadingFetch() {
+  const element = document.createElement('p');
+  element.classList.add('loading');
+  element.innerHTML = 'Loading...';
+  document.querySelector('.container').appendChild(element);
+}
+
 const fecthItems = () => {
   fetch(url)
     .then(response => response.json())
     .then((object) => {
       const resultsArray = object.results;
       functionRenderItem(resultsArray);
+    })
+    .then(() => {
+      const element = document.querySelector('.loading');
+      document.querySelector('.container').removeChild(element);
     });
 };
 window.onload = function onload() {
+  loadingFetch();
   fecthItems(url);
   emptyCart();
   getLocalStorage();
