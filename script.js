@@ -32,8 +32,15 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
+function getSkuFromProductItem() {
+  // document.querySelector('.item');
+  const item = event.target.parentElement // parentElem encontra elemento pai do evento
+  return item.querySelector('span.item__sku').innerText; // elemento pai extrai o filho especificado
+}
+
 const fetchOnlyItem = () => {
-  const urlEndpoint = `${endpoint.api}${endpoint.endpointOnly}${'MLB991366997'}`;
+  const id = getSkuFromProductItem();
+  const urlEndpoint = `${endpoint.api}${endpoint.endpointOnly}${id}`;
   fetch(urlEndpoint)
     .then(response => response.json())
     .then((object) => {
@@ -86,11 +93,6 @@ const fetchAllItems = () => {
     })
     .catch(error => console.log('errou')); // func que trata error
 };
-
-function getSkuFromProductItem(item) {
-  document.querySelector('.item');
-  return item.querySelector('span.item__sku').innerText; // pega apenas o ID
-}
 
 window.onload = function onload() {
   fetchAllItems();
