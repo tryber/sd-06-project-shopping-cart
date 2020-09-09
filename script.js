@@ -34,7 +34,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
 function getSkuFromProductItem() {
   // document.querySelector('.item');
-  const item = event.target.parentElement // parentElem encontra elemento pai do evento
+  const item = event.target.parentElement;// parentElem encontra elemento pai do evento
   return item.querySelector('span.item__sku').innerText; // elemento pai extrai o filho especificado
 }
 
