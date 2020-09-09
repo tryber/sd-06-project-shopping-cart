@@ -21,11 +21,14 @@ function createProductImageElement(imageSource) {
 // }
 
 function cartItemClickListener(event) {
-  // remove elemento li
+  const cartItems = document.querySelector('.cart__items');
+  const elemntoLi = event.target;
+  cartItems.removeChild(elemntoLi);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
+  li.addEventListener('click', cartItemClickListener);
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
