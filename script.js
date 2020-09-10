@@ -6,6 +6,13 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
+
 const saveFunction = () => {
   const items = document.querySelector('.cart__items').innerHTML;// selecting from html
   localStorage.setItem('cart', items);// saving at local storage
