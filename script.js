@@ -86,7 +86,7 @@ function parentPrice(priceSum) {
 }
 
 function addTotalPrice({ price }) {
-  totalPrice += price;
+  totalPrice += parseInt(price);
   const priceArray = document.querySelectorAll('.total-price');
   console.log(priceArray);
   if (priceArray.length === 0) {
