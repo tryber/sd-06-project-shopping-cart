@@ -111,7 +111,20 @@ const fetchAllItems = () => {
     .catch(error => console.log('alguma coisa deu errado')); // func que trata error
 };
 
+function eventClearCart() {
+  const listChild = document.querySelector('.cart__items').childNodes;
+  const listItems = document.querySelector('.cart__items');
+  listChild.forEach(child => listItems.remove(child));
+}
+
+function addEventclearButton() {
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', eventClearCart)
+}
+
+
 window.onload = () => {
   fetchAllItems();
   getLocalStorage();
+  addEventclearButton()
 };
