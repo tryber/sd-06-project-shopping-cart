@@ -27,7 +27,6 @@ function getLocalStorage() {
   if (localStorage) {
     listCart.innerHTML = localStorage.getItem('cartList');
     listCart.addEventListener('click', cartItemClickListener);
-
   }
 }
 
