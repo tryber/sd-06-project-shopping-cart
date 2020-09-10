@@ -26,14 +26,15 @@ function getLocalStorage() {
   const listCart = document.querySelector('.cart__items');
   if (localStorage) {
     listCart.innerHTML = localStorage.getItem('cartList');
-    const elemntoLi = event.target;
-    elemntoLi.addEventListener('click', cartItemClickListener);
+    listCart.addEventListener('click', cartItemClickListener);
+
   }
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const listCart = document.querySelector('.cart__items');
+  listCart.removeEventListener('click', cartItemClickListener);
   const li = document.createElement('li');
-  li.addEventListener('click', cartItemClickListener);
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
@@ -62,7 +63,7 @@ const fetchOnlyItem = () => {
         setLocalStorage();
       }
     })
-    .catch(error => console.log('errou')); // func que trata error
+    .catch(error => console.log('ERROR')); // func que trata error
 };
 
 function createCustomElement(element, className, innerText) {
@@ -99,10 +100,10 @@ const fetchAllItems = () => {
         objectResult.forEach(data => createProductItemElement(data)); // um objeto
       }
     })
-    .catch(error => console.log('errou')); // func que trata error
+    .catch(error => console.log('ERROR')); // func que trata error
 };
 
-window.onload = function onload() {
+window.onload = () => {
   fetchAllItems();
   getLocalStorage();
 };
