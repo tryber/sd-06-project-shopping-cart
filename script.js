@@ -96,6 +96,12 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
+function removeMenssage() {
+  const itemsSection = document.querySelector('.items');
+  const menssageLoading = document.querySelector('span');
+  itemsSection.removeChild(menssageLoading);
+}
+
 const fetchAllItems = () => {
   const urlEndpoint = `${endpoint.api}${endpoint.endpointAll}`;
   fetch(urlEndpoint)
@@ -109,6 +115,15 @@ const fetchAllItems = () => {
       }
     })
     .catch(error => console.log('alguma coisa deu errado')); // func que trata error
+  removeMenssage();
+};
+
+function loading() {
+  const messageLoading = document.createElement('span');
+  messageLoading.innerText = 'loading...';
+  messageLoading.classList.add('loading');
+  const itemsSection = document.querySelector('.items');
+  itemsSection.appendChild(messageLoading);
 };
 
 function eventClearCart() {
@@ -123,6 +138,7 @@ function addEventclearButton() {
 }
 
 window.onload = () => {
+  loading();
   fetchAllItems();
   getLocalStorage();
   addEventclearButton();
