@@ -119,12 +119,12 @@ function eventClearCart() {
 
 function addEventclearButton() {
   const clearButton = document.querySelector('.empty-cart');
-  clearButton.addEventListener('click', eventClearCart)
+  clearButton.addEventListener('click', eventClearCart);
 }
 
 
 window.onload = () => {
   fetchAllItems();
   getLocalStorage();
-  addEventclearButton()
+  addEventclearButton();
 };
