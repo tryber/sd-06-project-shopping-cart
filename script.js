@@ -42,6 +42,9 @@ async function removeTotalPrice(sku) {
   const jsonPrice = await data.json();
   const price = jsonPrice.price;
   totalPrice -= price;
+  const priceTag = document.querySelector('.total-price');
+  priceTag.innerText = (totalPrice);
+  parentPrice(priceTag);
 }
 
 function cartItemClickListener(event) {
@@ -86,7 +89,7 @@ function parentPrice(priceSum) {
 }
 
 function addTotalPrice({ price }) {
-  totalPrice += (parseFloat(price) * 100) / 100;
+  totalPrice += (parseFloat(price) * 100) /  100;
   const priceArray = document.querySelectorAll('.total-price');
   console.log(priceArray);
   if (priceArray.length === 0) {
