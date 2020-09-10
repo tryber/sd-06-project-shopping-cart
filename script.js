@@ -43,7 +43,7 @@ function loadCart() {
   const allLoadedItens = document.querySelectorAll('li');
   allLoadedItens.forEach((li) => {
     li.addEventListener('click', (event) => {
-      totalPrice(event);
+      totalPrice(event.target);
       ol.removeChild(event.target);
       saveFunction();
     });
@@ -65,7 +65,7 @@ async function sumPrice(list) { // creating an async function for the list
   const total = document.querySelector('.total-price');
   const itemPrice = parseFloat(list.innerText.split('$')[1]);
   const totalPrices = parseFloat(total.innerHTML);
-  console.log(total.innerHTML);
+  // console.log(total.innerHTML);
   const result = itemPrice + totalPrices;
   total.innerText = result;
   saveFunction();
