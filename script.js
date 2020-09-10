@@ -98,7 +98,13 @@ const clear = () => {
 };
 
 const savingAtLocalStorage = () => {
-  if (localStorage.cartShop) document.querySelector('.cart__items').innerHTML = localStorage.cartShop;
+  if (localStorage.cartShop) {
+    document.querySelector('.cart__items').innerHTML = localStorage.cartShop;
+    document.querySelectorAll('.cart__item').forEach((item) => {
+      item.addEventListener('click', cartItemClickListener);
+    });
+    document.querySelector('.total-price').innerHTML = localStorage.totalPrice;
+  }
 };
 
 const loadFile = () => {
