@@ -27,9 +27,9 @@ function getLocalStorage() {
   if (localStorage) {
     listCart.innerHTML = localStorage.getItem('cartList');
     const listChild = listCart.childNodes;
-    listChild.forEach(children => {
+    listChild.forEach((children) => {
       children.addEventListener('click', cartItemClickListener);
-    })
+    });
   }
 }
 
@@ -47,8 +47,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   getSumPriceProductItem(salePrice);
   return li;
 }
-
-
 
 function getSkuFromProductItem() {
   // document.querySelector('.item');
