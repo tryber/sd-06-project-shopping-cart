@@ -139,7 +139,9 @@ function addEventclearButton() {
 
 window.onload = () => {
   loading();
-  fetchAllItems();
+  setTimeout(() => {
+    fetchAllItems();
+  }, 2000); 
   getLocalStorage();
   addEventclearButton();
 };
