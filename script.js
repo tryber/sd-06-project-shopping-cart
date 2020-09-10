@@ -55,8 +55,8 @@ function cartItemClickListener(event) {
   event.target.remove();// removing where the mouse is pointing
   const total = document.querySelector('.total-price');// taking from html
   const itemPrice = parseFloat(list.innerText.split('$')[1]);
-  const totalPrice = parseFloat(total.innerHTML);
-  const result = totalPrice - itemPrice;
+  const totalPrices = parseFloat(total.innerHTML);
+  const result = totalPrices - itemPrice;
   total.innerText = result;
   saveFunction();
 }
@@ -64,8 +64,8 @@ function cartItemClickListener(event) {
 async function sumPrice(list) { // creating an async function for the list
   const total = document.querySelector('.total-price');
   const itemPrice = parseFloat(list.innerText.split('$')[1]);
-  const totalPrice = parseFloat(total.innerHTML);
-  const result = itemPrice + totalPrice;
+  const totalPrices = parseFloat(total.innerHTML);
+  const result = itemPrice + totalPrices;
   total.innerText = result;
   saveFunction();
 }
@@ -129,15 +129,15 @@ const clear = () => {
   });
 };
 
-const savingAtLocalStorage = () => {
-  if (localStorage.cartShop) {
-    document.querySelector('.cart__items').innerHTML = localStorage.cartShop;
-    document.querySelectorAll('.cart__item').forEach((item) => {
-      item.addEventListener('click', cartItemClickListener);
-    });
-    document.querySelector('.total-price').innerHTML = localStorage.totalPrice;
-  }
-};
+// const savingAtLocalStorage = () => {
+//   if (localStorage.cartShop) {
+//     document.querySelector('.cart__items').innerHTML = localStorage.cartShop;
+//     document.querySelectorAll('.cart__item').forEach((item) => {
+//       item.addEventListener('click', cartItemClickListener);
+//     });
+//     document.querySelector('.total-price').innerHTML = localStorage.totalPrices;
+//   }
+// };
 
 const loadFile = () => {
   setTimeout(() => {
@@ -147,8 +147,9 @@ const loadFile = () => {
 };
 
 window.onload = function onload() {
+  loadCart();
   fetchingFunction();
   clear();
-  savingAtLocalStorage();
+  // savingAtLocalStorage();
   loadFile();
 };
