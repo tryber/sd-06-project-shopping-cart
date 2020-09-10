@@ -13,10 +13,44 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+//adding totalPrice
+function totalPrice(value) {
+  const totalValue = document.querySelector('.total-price');
+  totalValue.innerText = Math.round((Number(totalValue.innerText) + value) * 100) / 100;
+}
+
+//adding decreasing Value
+function decreasingValue(event) {
+  let totalValue = event.target.innerHTML;
+  totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
+  totalPrice(-totalValue);
+}
+
 const saveFunction = () => {
   const items = document.querySelector('.cart__items').innerHTML;// selecting from html
+  const ol = document.querySelector('ol').innerHTML;
+  const totalValue = document.querySelector('.total-price').innerText;
   localStorage.setItem('cart', items);// saving at local storage
+  localStorage.setItem('cart', ol);
+  localStorage.setItem('price', totalValue);
 };
+
+
+function loadCart() {
+  const itemsOnCart = document.querySelector('ol');
+  itemsOnCart.innerHTML = localStorage.getItem('cart');
+  const totalValue = document.querySelector('.total-price');
+  totalValue.innerHTML = localStorage.getItem('price');
+  const ol = document.querySelector('.cart__items');
+  const allLoadedItens = document.querySelectorAll('li');
+  allLoadedItens.forEach((li) => {
+    li.addEventListener('click', (event) => {
+      decreasingValue(event);
+      ol.removeChild(event.target);
+      saveFunction();
+    });
+  });
+}
 
 function cartItemClickListener(event) {
   const list = event.target;
