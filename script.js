@@ -18,11 +18,11 @@ function totalPrice(value) {
   totalValue.innerText = Math.round((Number(totalValue.innerText) + value) * 100) / 100;
 }
 
-function decreasingValue(event) {
-  let totalValue = event.target.innerHTML;
-  totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
-  totalPrice(-totalValue);
-}
+// function decreasingValue(event) {
+//   let totalValue = event.target.innerHTML;
+//   totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
+//   totalPrice(-totalValue);
+// }
 
 const saveFunction = () => {
   const items = document.querySelector('.cart__items').innerHTML;// selecting from html
@@ -37,10 +37,10 @@ const saveFunction = () => {
 function loadCart() {
   const itemsOnCart = document.querySelector('ol');
   const totalValue = document.querySelector('.total-price');
-  if(itemsOnCart.innerHTML !== undefined) {
+  if (itemsOnCart.innerHTML !== undefined) {
     itemsOnCart.innerHTML = localStorage.getItem('cart');
   }
-  if(totalValue.innerHTML !== undefined) {
+  if (totalValue.innerHTML !== undefined) {
     totalValue.innerHTML = localStorage.getItem('price');
   }
   const ol = document.querySelector('.cart__items');
@@ -155,6 +155,6 @@ window.onload = function onload() {
   loadCart();
   fetchingFunction();
   clear();
-  // savingAtLocalStorage();
+  sumPrice();
   loadFile();
 };
