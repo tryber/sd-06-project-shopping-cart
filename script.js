@@ -11,19 +11,24 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-// function addEventButtonAddCart() {
-//   const buttonAddCart = document.querySelectorAll('.item__add');
-//   buttonAddCart.forEach(button => {
-//     button.addEventListener('click', function () {
-//       fetchOnlyItem();
-//     });
-//   });
-// }
-
 function cartItemClickListener(event) {
   const cartItems = document.querySelector('.cart__items');
   const elemntoLi = event.target;
   cartItems.removeChild(elemntoLi);
+}
+
+function setLocalStorage() {
+  const listCart = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cartList', listCart);
+}
+
+function getLocalStorage() {
+  const listCart = document.querySelector('.cart__items');
+  if (localStorage) {
+    listCart.innerHTML = localStorage.getItem('cartList');
+    const elemntoLi = event.target;
+    elemntoLi.addEventListener('click', cartItemClickListener);
+  }
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -54,7 +59,7 @@ const fetchOnlyItem = () => {
         const elementOl = document.querySelector('.cart__items');
         const elementLi = createCartItemElement(objectResult);
         elementOl.appendChild(elementLi);
-        // salva no local storage; depois
+        setLocalStorage();
       }
     })
     .catch(error => console.log('errou')); // func que trata error
@@ -99,4 +104,5 @@ const fetchAllItems = () => {
 
 window.onload = function onload() {
   fetchAllItems();
+  getLocalStorage();
 };
