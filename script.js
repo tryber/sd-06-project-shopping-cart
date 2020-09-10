@@ -124,7 +124,7 @@ function loading() {
   messageLoading.classList.add('loading');
   const itemsSection = document.querySelector('.items');
   itemsSection.appendChild(messageLoading);
-};
+}
 
 function eventClearCart() {
   const listItems = document.querySelector('.cart__items');
