@@ -18,11 +18,11 @@ function totalPrice(value) {
   totalValue.innerText = Math.round((Number(totalValue.innerText) + value) * 100) / 100;
 }
 
-function decreasingValue(event) {
-  let totalValue = event.target.innerHTML;
-  totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
-  totalPrice(-totalValue);
-}
+// function decreasingValue(event) {
+//   let totalValue = event.target.innerHTML;
+//   totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
+//   totalPrice(-totalValue);
+// }
 
 const saveFunction = () => {
   const items = document.querySelector('.cart__items').innerHTML;// selecting from html
@@ -43,7 +43,7 @@ function loadCart() {
   const allLoadedItens = document.querySelectorAll('li');
   allLoadedItens.forEach((li) => {
     li.addEventListener('click', (event) => {
-      decreasingValue(event);
+      totalPrice(event);
       ol.removeChild(event.target);
       saveFunction();
     });
@@ -65,6 +65,7 @@ async function sumPrice(list) { // creating an async function for the list
   const total = document.querySelector('.total-price');
   const itemPrice = parseFloat(list.innerText.split('$')[1]);
   const totalPrices = parseFloat(total.innerHTML);
+  console.log(total.innerHTML);
   const result = itemPrice + totalPrices;
   total.innerText = result;
   saveFunction();
