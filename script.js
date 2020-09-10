@@ -18,11 +18,11 @@ function totalPrice(value) {
   totalValue.innerText = Math.round((Number(totalValue.innerText) + value) * 100) / 100;
 }
 
-// function decreasingValue(event) {
-//   let totalValue = event.target.innerHTML;
-//   totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
-//   totalPrice(-totalValue);
-// }
+function decreasingValue(event) {
+  let totalValue = event.target.innerHTML;
+  totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
+  totalPrice(-totalValue);
+}
 
 const saveFunction = () => {
   const items = document.querySelector('.cart__items').innerHTML;// selecting from html
@@ -36,9 +36,13 @@ const saveFunction = () => {
 
 function loadCart() {
   const itemsOnCart = document.querySelector('ol');
-  itemsOnCart.innerHTML = localStorage.getItem('cart');
   const totalValue = document.querySelector('.total-price');
-  totalValue.innerHTML = localStorage.getItem('price');
+  if(itemsOnCart.innerHTML !== undefined) {
+    itemsOnCart.innerHTML = localStorage.getItem('cart');
+  }
+  if(totalValue.innerHTML !== undefined) {
+    totalValue.innerHTML = localStorage.getItem('price');
+  }
   const ol = document.querySelector('.cart__items');
   const allLoadedItens = document.querySelectorAll('li');
   allLoadedItens.forEach((li) => {
@@ -76,7 +80,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   list.className = 'cart__item';
   list.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   saveFunction();
-  sumPrice(list);
+  totalPrice(salePrice);
   list.addEventListener('click', cartItemClickListener);
   return list;
 }
