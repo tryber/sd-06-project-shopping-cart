@@ -112,16 +112,15 @@ const fetchAllItems = () => {
 };
 
 function eventClearCart() {
-  const listChild = document.querySelector('.cart__items').childNodes;
   const listItems = document.querySelector('.cart__items');
-  listChild.forEach(child => listItems.remove(child));
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach(child => listItems.removeChild(child));
 }
 
 function addEventclearButton() {
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', eventClearCart);
 }
-
 
 window.onload = () => {
   fetchAllItems();
