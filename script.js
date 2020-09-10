@@ -93,7 +93,7 @@ const clear = () => {
     ol.innerHTML = '';
     const total = document.querySelector('.total-price');
     total.innerText = 0;
-    functionSave();
+    saveFunction();
   });
 };
 
