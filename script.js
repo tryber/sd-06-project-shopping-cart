@@ -36,7 +36,7 @@ function getLocalStorage() {
 async function getSumPriceProductItem(price) {
   const totalPrice = document.querySelector('.total-price');
   const numberTotalPrice = parseFloat(totalPrice.innerText);
-  totalPrice.innerText = Math.round((numberTotalPrice + price)).toFixed(0);
+  totalPrice.innerText = (numberTotalPrice + price).toFixed(2);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
