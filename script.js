@@ -13,13 +13,11 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-//adding totalPrice
 function totalPrice(value) {
   const totalValue = document.querySelector('.total-price');
   totalValue.innerText = Math.round((Number(totalValue.innerText) + value) * 100) / 100;
 }
 
-//adding decreasing Value
 function decreasingValue(event) {
   let totalValue = event.target.innerHTML;
   totalValue = parseFloat(totalValue.substr(totalValue.indexOf('$') + 1));
