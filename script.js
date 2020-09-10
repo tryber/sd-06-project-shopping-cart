@@ -141,7 +141,7 @@ window.onload = () => {
   loading();
   setTimeout(() => {
     fetchAllItems();
-  }, 2000); 
+  }, 2000);
   getLocalStorage();
   addEventclearButton();
 };
