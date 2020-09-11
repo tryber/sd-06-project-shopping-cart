@@ -21,6 +21,10 @@ function appendCart(product) {
   cart.appendChild(product);
 }
 
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -50,10 +54,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(button);
 
   return section;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
 }
 
 function appendProduct(product) {
