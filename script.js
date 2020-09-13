@@ -35,7 +35,7 @@ function cartItemClickListener(event) {
   localStogeRemove(item.id);
   remove.removeChild(item);
 }
-  
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -53,7 +53,7 @@ function apendItem(resultItemElement) {
 }
 
 async function fetchItens(url, endpoint) {
-   innerLoading();
+  innerLoading();
   const response = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   const item = await response.json();
   item.results.forEach(resultItem => apendItem(createProductItemElement(resultItem)));
@@ -71,36 +71,35 @@ async function fetchProductItem(sku) {
   const item = await response.json();
   const productObject = createCartItemElement(item);
   addCar(productObject);
-  localStogeSave(item.id, item.title, item.price)
+  localStogeSave(item.id, item.title, item.price);
 }
 
 function localStogeSave(id, title, price) {
-  if(Storage){
-    const saveItens = JSON.parse(localStorage.getItem('saveCart'))
+  if (Storage) {
+    const saveItens = JSON.parse(localStorage.getItem('saveCart'));
     const items = (saveItens === null)? [] : saveItens;
-    items.push({id, title, price});
+    items.push({ id, title, price });
     localStorage.setItem('saveCart', JSON.stringify(items));
   }
   sumCart();
-  }
+}
 
 function localStogeRecover() {
-  if(Storage){
+  if (Storage) {
     const saveItens = JSON.parse(localStorage.getItem('saveCart'));
-    const items = (saveItens === null)? [] : saveItens;
+    const items = (saveItens === null) ? [] : saveItens;
     items.forEach(item => {
       const product = createCartItemElement(item);
       addCar(product);
-  })
+    });
   sumCart();
-}
+  }
 }
 function localStogeRemove(id) {
-  //console.log(id)
   if(Storage){
     const saveItens = JSON.parse(localStorage.getItem('saveCart'));
-    for(let index = 0; index < saveItens.length; index += 1){
-      if(saveItens[index].id === id){
+    for (let index = 0; index < saveItens.length; index += 1) {
+      if (saveItens[index].id === id) {
         saveItens.splice(index, 1);
         break;
       }
@@ -113,17 +112,17 @@ function localStogeRemove(id) {
 async function sumCart() {
   let sum = 0;
   const saveItens = await JSON.parse(localStorage.getItem('saveCart'));
-  if(saveItens){
-  for(let i = 0; i < saveItens.length; i += 1){
+  if (saveItens) {
+  for (let i = 0; i < saveItens.length; i += 1) {
     sum += saveItens[i].price;
   }
   }
-    showPrice(sum);
+  showPrice(sum);
 }
 
 function showPrice(sum) {
-const total = document.querySelector('.total-price');
-total.innerHTML = sum;
+  const total = document.querySelector('.total-price');
+  total.innerHTML = sum;
 }
 
 function clearCart() {
@@ -145,7 +144,7 @@ function removeLoading() {
   setTimeout(() => {
     const items = document.querySelector('.items')
     items.removeChild(items.firstChild)
-  }, 3000 )
+  }, 3000 );
 }
 
 window.onload = function onload() {
