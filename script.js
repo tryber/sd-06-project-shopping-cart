@@ -5,7 +5,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-const cart = [];
+let cart = [];
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -25,16 +25,22 @@ function appendCart(product) {
 let localCart = [];
 
 function removeItem(item) {
+  let temp = -1;
   for (let i = 0; i < cart.length; i += 1) {
-    if (item === cart[i]) {
-      for (let j = i; j < cart.length - 1; j += 1) {
-        cart[j] = cart[j + 1];
-        localCart[j] = localCart[j + 1];
-      }
-      cart[cart.length - 1] = null;
-      localCart[localCart.length - 1] = null;
+    if (cart[i] === item) {
+      temp = i;
     }
   }
+  if (temp !== -1) {
+    for (let j = temp; j < cart.length - 1; j += 1) {
+      cart[j] = cart[j + 1];
+      localCart[j] = localCart[j + 1];
+    }
+    cart[cart.length - 1] = null;
+    localCart[localCart.length - 1] = null;
+    return
+  }
+  console.log('deu ruim')
 }
 
 function storeCart() {
@@ -102,6 +108,7 @@ function emptyCart() {
     list.removeChild(list.lastChild);
   }
   localCart = [];
+  cart = [];
   localStorage.removeItem('cart');
 }
 
