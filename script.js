@@ -15,8 +15,9 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
-  console.log('ok');
+  const listaCarrinhoParent = document.querySelector('.cart__items');
+  const liClick = event.target;
+  listaCarrinhoParent.removeChild(liClick);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
