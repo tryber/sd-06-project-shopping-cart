@@ -114,10 +114,10 @@ window.onload = function onload() {
   // da API é realizado.
   setTimeout(() => {
     const LoadingAPI = document.querySelector('.loading');
-    document.body.removeChild(LoadingAPI); 
+    document.body.removeChild(LoadingAPI);
     fetchMLComputers();
   }, 1000);
-  
+
   loadSavedShoppingCart();
   removeItemFromCartAfterPageRefresh();
   // Coloquei a função aqui para carregar ao fazer o load da window
