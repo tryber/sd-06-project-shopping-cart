@@ -70,6 +70,15 @@ async function getProducts() {
   });
 }
 
+function emptyCart() {
+  const list = document.getElementById('cart');
+  while (list.firstChild) {
+    list.removeChild(list.lastChild);
+  }
+}
+
 window.onload = function onload() {
   getProducts();
+
+  document.getElementById('empty').addEventListener('click', emptyCart);
 };
