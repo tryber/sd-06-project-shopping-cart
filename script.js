@@ -77,7 +77,7 @@ async function fetchProductItem(sku) {
 function localStogeSave(id, title, price) {
   if (Storage) {
     const saveItens = JSON.parse(localStorage.getItem('saveCart'));
-    const items = (saveItens === null)? [] : saveItens;
+    const items = (saveItens === null) ? [] : saveItens;
     items.push({ id, title, price });
     localStorage.setItem('saveCart', JSON.stringify(items));
   }
@@ -88,7 +88,7 @@ function localStogeRecover() {
   if (Storage) {
     const saveItens = JSON.parse(localStorage.getItem('saveCart'));
     const items = (saveItens === null) ? [] : saveItens;
-    items.forEach(item => {
+    items.forEach((item) => {
       const product = createCartItemElement(item);
       addCar(product);
     });
@@ -114,8 +114,8 @@ async function sumCart() {
   const saveItens = await JSON.parse(localStorage.getItem('saveCart'));
   if (saveItens) {
     for (let i = 0; i < saveItens.length; i += 1) {
-    sum += saveItens[i].price;
-  }
+      sum += saveItens[i].price;
+    }
   }
   showPrice(sum);
 }
@@ -143,7 +143,7 @@ function innerLoading() {
 function removeLoading() {
   setTimeout(() => {
     const items = document.querySelector('.items');
-    items.removeChild(items.firstChild)
+    items.removeChild(items.firstChild);
   }, 3000);
 }
 
