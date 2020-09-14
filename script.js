@@ -1,18 +1,11 @@
 async function cartItemsTotalPrice() {
-  // Selecionei o meu carrinho
   const cartItems = document.querySelectorAll('.cart__item');
-  // Selecionei o preço total do carrinho
   const cartItemsTotalPrices = document.querySelector('.total-price');
-  // Definição de variavel para guardar o valor da soma de cada preço
   let sumOfCartItemsPrice = 0;
-  // Para cada Item do carrinho passei para num. a string selecionada após o $
-  // que é o valor do nosso respectivo item do carrinho
   cartItems.forEach((item) => {
     const itemPrice = parseFloat(item.innerHTML.split('$')[1]);
-    // Adiciona esse valor à nossa soma
     sumOfCartItemsPrice += itemPrice;
   });
-  // Define o valor atual da soma como o valor do nosso preço total do carrinho
   cartItemsTotalPrices.innerHTML = sumOfCartItemsPrice;
 }
 
@@ -44,11 +37,9 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   event.target.remove();
   saveShoppingCart();
-  // Ao remover o item do carrinho já quero que seja calculado o novo valor.
   cartItemsTotalPrice();
 }
 
-// Allow to remove items from cart after refresh page!
 function removeItemFromCartAfterPageRefresh() {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach(item => item.addEventListener('click', cartItemClickListener));
@@ -73,8 +64,6 @@ function fetchSpecificMLItem(id) {
     .then(response => response.json())
     .then(object => addItemToCart(createCartItemElement(object)))
     .then(() => saveShoppingCart())
-    // Aqui ao adicionar meu item ao carrinho rodo a função de fazer a soma pq a cada
-    // item adicionado ao carrinho já temos um novo valor
     .then(() => cartItemsTotalPrice());
 }
 
@@ -109,9 +98,6 @@ function fetchMLComputers() {
 }
 
 window.onload = function onload() {
-  // antes de fazer a requisição da API o setTimeout simula um atraso no pedido
-  // assim aparece a mensagem de loading da página e só depois que o fetch dos produtos
-  // da API é realizado.
   setTimeout(() => {
     const LoadingAPI = document.querySelector('.loading');
     document.body.removeChild(LoadingAPI);
@@ -120,7 +106,6 @@ window.onload = function onload() {
 
   loadSavedShoppingCart();
   removeItemFromCartAfterPageRefresh();
-  // Coloquei a função aqui para carregar ao fazer o load da window
   cartItemsTotalPrice();
 
   const clearButton = document.querySelector('.empty-cart');
