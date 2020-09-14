@@ -1,6 +1,35 @@
-window.onload = function onload() { };
 
-// alteração para primeiro commit
+
+function fetchApi() {
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
+    .then(response => response.json())
+    .then((obj) => {
+      // SEPARO TUDO ISSO EM UMA NOVA FUNÇÃO? QUAL SERÁ O RETORNO
+      // DE FETCH API?
+      const arrayProdutos = obj.results;
+      // trocar map por foreach, e para cada elem chamar a funcao de ciria o produto
+      const objteste = arrayProdutos.map((produto) => ({
+        sku: produto.id,
+        name: produto.title,
+        image: produto.thumbnail,
+      }));
+      console.log(objteste)
+      return objteste;
+  })
+}
+
+function criaObjetoNovo () {
+  fetchApi();
+  const newObject = {
+    sku: obj.results.id,
+    name: obj.results.title,
+    image: obj.results.thumbnail,
+  };
+  console.log(newObject);
+  return newObject
+}
+
+
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -19,7 +48,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -43,3 +71,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+window.onload = function () {
+  fetchApi();
+  console.log('teste');
+};
