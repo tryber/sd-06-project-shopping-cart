@@ -14,7 +14,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function callCreateCartItemElement (event) {
+function callCreateCartItemElement(event) {
   const listaCarrinhoParent = document.querySelector('.cart__items');
   const sectionHTML = event.target.parentNode;
   const itemID = sectionHTML.children[0].innerText;
@@ -24,8 +24,8 @@ function callCreateCartItemElement (event) {
     const paramCreatecarItemElement = {
       sku: obj.id,
       name: obj.title,
-      salePrice: obj.price
-    }
+      salePrice: obj.price,
+    };
     const cartNewItem = createCartItemElement(paramCreatecarItemElement);
     return listaCarrinhoParent.appendChild(cartNewItem);
   });
@@ -52,7 +52,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  console.log('ok')
+  console.log('ok');
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
