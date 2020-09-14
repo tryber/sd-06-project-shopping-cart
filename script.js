@@ -107,8 +107,8 @@ function fetchMLComputers() {
       document.querySelector('.items')
       .appendChild(createProductItemElement(product))));
       // criei uma 'div' loading no index e ao completar a requisição de API ela é deletada
-  const LoadingAPI = document.querySelector('.loading');
-  document.body.removeChild(LoadingAPI);
+  // const LoadingAPI = document.querySelector('.loading');
+  // document.body.removeChild(LoadingAPI);
 }
 
 window.onload = function onload() {
