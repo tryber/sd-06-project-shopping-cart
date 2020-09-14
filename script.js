@@ -92,11 +92,11 @@ function localStogeRecover() {
       const product = createCartItemElement(item);
       addCar(product);
     });
-  sumCart();
+    sumCart();
   }
 }
 function localStogeRemove(id) {
-  if(Storage){
+  if (Storage) {
     const saveItens = JSON.parse(localStorage.getItem('saveCart'));
     for (let index = 0; index < saveItens.length; index += 1) {
       if (saveItens[index].id === id) {
@@ -113,7 +113,7 @@ async function sumCart() {
   let sum = 0;
   const saveItens = await JSON.parse(localStorage.getItem('saveCart'));
   if (saveItens) {
-  for (let i = 0; i < saveItens.length; i += 1) {
+    for (let i = 0; i < saveItens.length; i += 1) {
     sum += saveItens[i].price;
   }
   }
@@ -142,9 +142,9 @@ function innerLoading() {
 
 function removeLoading() {
   setTimeout(() => {
-    const items = document.querySelector('.items')
+    const items = document.querySelector('.items');
     items.removeChild(items.firstChild)
-  }, 3000 );
+  }, 3000);
 }
 
 window.onload = function onload() {
