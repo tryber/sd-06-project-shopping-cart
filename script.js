@@ -31,10 +31,11 @@ function funcaoSeparadaSoPraTirarAComplexidadeDessaDesgracaDeCodeClimate(item) {
       temp = i;
     }
   }
+  return temp;
 }
 
 function removeItem(item) {
-  let temp = funcaoSeparadaSoPraTirarAComplexidadeDessaDesgracaDeCodeClimate(item);
+  const temp = funcaoSeparadaSoPraTirarAComplexidadeDessaDesgracaDeCodeClimate(item);
   if (temp !== -1) {
     for (let j = temp; j < cart.length - 1; j += 1) {
       cart[j] = cart[j + 1];
@@ -42,7 +43,6 @@ function removeItem(item) {
     }
     cart[cart.length - 1] = null;
     localCart[localCart.length - 1] = null;
-    return;
   }
 }
 
