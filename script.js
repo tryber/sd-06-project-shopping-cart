@@ -81,4 +81,8 @@ window.onload = function onload() {
   getProducts();
 
   document.getElementById('empty').addEventListener('click', emptyCart);
+
+  setTimeout(() => {
+    document.getElementById('loading').remove();
+  }, 500);
 };
