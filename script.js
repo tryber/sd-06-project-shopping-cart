@@ -2,7 +2,7 @@ async function cartItemsTotalPrice() {
   // Selecionei o meu carrinho
   const cartItems = document.querySelectorAll('.cart__item');
   // Selecionei o preço total do carrinho
-  const cartItemsTotalPrice = document.querySelector('.total-price');
+  const cartItemsTotalPrices = document.querySelector('.total-price');
   // Definição de variavel para guardar o valor da soma de cada preço
   let sumOfCartItemsPrice = 0;
   // Para cada Item do carrinho passei para num. a string selecionada após o $
@@ -13,7 +13,7 @@ async function cartItemsTotalPrice() {
     sumOfCartItemsPrice += itemPrice;
   });
   // Define o valor atual da soma como o valor do nosso preço total do carrinho
-  cartItemsTotalPrice.innerHTML = sumOfCartItemsPrice;
+  cartItemsTotalPrices.innerHTML = sumOfCartItemsPrice;
 }
 
 function saveShoppingCart() {
@@ -45,7 +45,7 @@ function cartItemClickListener(event) {
   event.target.remove();
   saveShoppingCart();
   // Ao remover o item do carrinho já quero que seja calculado o novo valor.
-  cartItemsTotalPrice()
+  cartItemsTotalPrice();
 }
 
 // Allow to remove items from cart after refresh page!
