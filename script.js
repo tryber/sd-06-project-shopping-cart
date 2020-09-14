@@ -24,13 +24,17 @@ function appendCart(product) {
 
 let localCart = [];
 
-function removeItem(item) {
-  let temp = -1;
+function funcaoSeparadaSoPraTirarAComplexidadeDessaDesgracaDeCodeClimate(item) {
+  let temp;
   for (let i = 0; i < cart.length; i += 1) {
     if (cart[i] === item) {
       temp = i;
     }
   }
+}
+
+function removeItem(item) {
+  let temp = funcaoSeparadaSoPraTirarAComplexidadeDessaDesgracaDeCodeClimate(item);
   if (temp !== -1) {
     for (let j = temp; j < cart.length - 1; j += 1) {
       cart[j] = cart[j + 1];
@@ -38,9 +42,8 @@ function removeItem(item) {
     }
     cart[cart.length - 1] = null;
     localCart[localCart.length - 1] = null;
-    return
+    return;
   }
-  console.log('deu ruim')
 }
 
 function storeCart() {
