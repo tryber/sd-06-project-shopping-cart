@@ -1,8 +1,3 @@
-// async function myCartItemsArray() {
-//   let teste = document.querySelectorAll('.cart__item');
-//   console.log(teste);
-// }
-
 function saveShoppingCart() {
   const shoppingCart = document.querySelector('.cart__items').innerHTML;
   localStorage.shopCart = shoppingCart;
@@ -30,11 +25,13 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  // event.target.localStorage.removeItem();
-  // localStorage.removeItem(event.target);
   saveShoppingCart();
-  // Essa função faz com que adicionando ao carrinho já n de pra deletar+
-  // loadSavedShoppingCart();
+}
+
+// Allow to remove items from cart after refresh page!
+function removeItemFromCartAfterPageRefresh() {
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach(item => item.addEventListener('click', cartItemClickListener));
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -56,7 +53,6 @@ function fetchSpecificMLItem(id) {
     .then(response => response.json())
     .then(object => addItemToCart(createCartItemElement(object)))
     .then(() => saveShoppingCart());
-    // .then(() => loadSavedShoppingCart());
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -68,12 +64,9 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
   .addEventListener('click', (event) => {
-    // console.log('hello');
     const itemID = event.currentTarget.parentElement.firstChild.innerText;
-    // console.log(itemID);
     fetchSpecificMLItem(itemID);
     saveShoppingCart();
-    // loadSavedShoppingCart();
   });
 
   return section;
@@ -91,16 +84,13 @@ function fetchMLComputers() {
       document.querySelector('.items')
       .appendChild(createProductItemElement(product))));
 }
-// fetchSpecificMLItem('MLB1341706310');
 
 window.onload = function onload() {
   fetchMLComputers();
   loadSavedShoppingCart();
-  // localStorage.clear();
-  // myCartItemsArray();
+  removeItemFromCartAfterPageRefresh();
 
   const clearButton = document.querySelector('.empty-cart');
-  // console.log(clearButton);
   clearButton.addEventListener('click', () => {
     const myCart = document.querySelector('.cart__items');
     myCart.innerHTML = '';
