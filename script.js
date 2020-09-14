@@ -1,5 +1,4 @@
 
-
 function fetchApi() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then(response => response.json())
@@ -8,17 +7,17 @@ function fetchApi() {
       // DE FETCH API?
       const arrayProdutos = obj.results;
       // trocar map por foreach, e para cada elem chamar a funcao de ciria o produto
-      const objteste = arrayProdutos.map((produto) => ({
+      const objteste = arrayProdutos.map(produto => ({
         sku: produto.id,
         name: produto.title,
         image: produto.thumbnail,
       }));
-      console.log(objteste)
+      console.log(objteste);
       return objteste;
-  })
+    });
 }
 
-function criaObjetoNovo () {
+function criaObjetoNovo() {
   fetchApi();
   const newObject = {
     sku: obj.results.id,
@@ -26,10 +25,8 @@ function criaObjetoNovo () {
     image: obj.results.thumbnail,
   };
   console.log(newObject);
-  return newObject
+  return newObject;
 }
-
-
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
