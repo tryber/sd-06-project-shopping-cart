@@ -1,3 +1,21 @@
+async function cartItemsTotalPrice() {
+  // Selecionei o meu carrinho
+  const cartItems = document.querySelectorAll('.cart__item');
+  // Selecionei o preço total do carrinho
+  const cartItemsTotalPrice = document.querySelector('.total-price');
+  // Definição de variavel para guardar o valor da soma de cada preço
+  let sumOfCartItemsPrice = 0;
+  // Para cada Item do carrinho passei para num. a string selecionada após o $
+  // que é o valor do nosso respectivo item do carrinho
+  cartItems.forEach((item) => {
+    const itemPrice = parseFloat(item.innerHTML.split('$')[1]);
+    // Adiciona esse valor à nossa soma
+    sumOfCartItemsPrice += itemPrice;
+  });
+  // Define o valor atual da soma como o valor do nosso preço total do carrinho
+  cartItemsTotalPrice.innerHTML = sumOfCartItemsPrice;
+}
+
 function saveShoppingCart() {
   const shoppingCart = document.querySelector('.cart__items').innerHTML;
   localStorage.shopCart = shoppingCart;
@@ -26,6 +44,8 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   event.target.remove();
   saveShoppingCart();
+  // Ao remover o item do carrinho já quero que seja calculado o novo valor.
+  cartItemsTotalPrice()
 }
 
 // Allow to remove items from cart after refresh page!
@@ -52,7 +72,10 @@ function fetchSpecificMLItem(id) {
   fetch(specificMLItemEndpoint)
     .then(response => response.json())
     .then(object => addItemToCart(createCartItemElement(object)))
-    .then(() => saveShoppingCart());
+    .then(() => saveShoppingCart())
+    // Aqui ao adicionar meu item ao carrinho rodo a função de fazer a soma pq a cada
+    // item adicionado ao carrinho já temos um novo valor
+    .then(() => cartItemsTotalPrice());
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -89,6 +112,8 @@ window.onload = function onload() {
   fetchMLComputers();
   loadSavedShoppingCart();
   removeItemFromCartAfterPageRefresh();
+  // Coloquei a função aqui para carregar ao fazer o load da window
+  cartItemsTotalPrice();
 
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', () => {
