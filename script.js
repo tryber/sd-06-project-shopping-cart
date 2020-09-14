@@ -5,7 +5,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-let cart = [];
+const cart = [];
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -19,8 +19,7 @@ function getSkuFromProductItem(item) {
 }
 
 function appendCart(product) {
-  const cart = document.getElementById('cart');
-  cart.appendChild(product);
+  document.getElementById('cart').appendChild(product);
 }
 
 let localCart = [];
@@ -38,6 +37,11 @@ function removeItem(item) {
   }
 }
 
+function storeCart() {
+  localStorage.removeItem('cart');
+  localStorage.setItem('cart', localCart);
+}
+
 function cartItemClickListener(event) {
   document.getElementById('cart').removeChild(event.target);
   removeItem(event.target);
@@ -48,15 +52,9 @@ function createCartItemElement(sku, name, salePrice) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.title = 
   li.addEventListener('click', cartItemClickListener);
   cart.push(li);
   return li;
-}
-
-function storeCart() {
-  localStorage.removeItem('cart');
-  localStorage.setItem('cart', localCart);
 }
 
 async function addProductToCart(item) {
@@ -108,21 +106,23 @@ function emptyCart() {
 }
 
 async function addProductFromSKU(sku) {
-  if (sku !== null && sku !== "") {
+  if (sku !== null && sku !== '') {
     const url = `https://api.mercadolibre.com/items/${sku}`;
     const result = await fetch(url);
     const dataSheet = await result.json();
     appendCart(createCartItemElement(dataSheet.id, dataSheet.title, dataSheet.price));
+    localCart.push(dataSheet.id);
   }
 }
 
 function restoreCart() {
+  let tempCart = [];
   if (localStorage.length) {
-    localCart = localStorage.getItem('cart').split(',');
+    tempCart = localStorage.getItem('cart').split(',');
   }
-  if (localCart.length !== 0) {
-    for (let i = 0; i < localCart.length; i += 1) {
-      addProductFromSKU(localCart[i]);
+  if (tempCart.length !== 0) {
+    for (let i = 0; i < tempCart.length; i += 1) {
+      addProductFromSKU(tempCart[i]);
     }
   }
 }
