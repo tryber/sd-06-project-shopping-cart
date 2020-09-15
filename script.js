@@ -11,9 +11,15 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+function deleteChild() {
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach(cartItem => cartItem.remove());
+  }
 
-function cartItemClickListener(event) {
-
+function cartItemClickListener() {
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', deleteChild)
+  
 }
 
 function createCartItemElement(item) {
@@ -21,7 +27,7 @@ function createCartItemElement(item) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${item.id} | NAME: ${item.title} | PRICE: $${item.price}`;
   const cartItems = document.querySelector('.cart__items').appendChild(li);
-  li.addEventListener('click', cartItemClickListener());
+  //li.addEventListener('click', cartItemClickListener());
   return cartItems;
 }
 
@@ -78,4 +84,5 @@ const fetchMlApi = () => {
 window.onload = function onload() {
   fetchMlApi();
   renderCart();
+  cartItemClickListener();
 };
