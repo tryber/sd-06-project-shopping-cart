@@ -66,7 +66,7 @@ async function sumCart() {
   if (totalSum.length !== 0) {
     sum = totalSum.reduce(reducer);
   }
-  document.getElementById('total-price').innerText = `Total Price: $${sum.toFixed(2)}`;
+  document.getElementById('total-price').innerText = sum;
 }
 
 function storeCart() {
@@ -169,6 +169,7 @@ function restoreCart() {
   //   }
   // }
   document.getElementById('cart').innerHTML = localStorage.getItem('cart');
+  sumCart();
 }
 
 window.onload = function onload() {
