@@ -77,5 +77,7 @@ const fetchMlApi = () => {
 
 window.onload = function onload() {
   fetchMlApi();
+  createProductItemElement();
   renderCart();
+  createCartItemElement();
 };
