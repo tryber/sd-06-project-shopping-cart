@@ -55,10 +55,16 @@ async function getPriceFromSKU(sku) {
 
 async function sumCart() {
   let sum = 0;
+  let totalSum = [];
   for (let i = 0; i < localCart.length; i += 1) {
     if (localCart[i] !== null && localCart[i] !== '') {
-      sum += await getPriceFromSKU(localCart[i]);
+      totalSum[i] = getPriceFromSKU(localCart[i]);
     }
+  }
+  totalSum = await Promise.all(totalSum);
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  if (totalSum.length) {
+    sum = totalSum.reduce(reducer);
   }
   document.getElementById('total-price').innerHTML = `$${sum}`;
 }
@@ -142,6 +148,7 @@ async function addProductFromSKU(sku) {
     appendCart(createCartItemElement(dataSheet.id, dataSheet.title, dataSheet.price));
     localCart.push(dataSheet.id);
   }
+  await sumCart();
 }
 
 function restoreCart() {
@@ -166,6 +173,4 @@ window.onload = function onload() {
   }, 500);
 
   restoreCart();
-
-  sumCart();
 };
