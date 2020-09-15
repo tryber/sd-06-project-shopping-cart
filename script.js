@@ -142,23 +142,26 @@ function emptyCart() {
   localStorage.removeItem('cart');
 }
 
-async function addProductFromSKU(sku) {
-  if (sku !== null && sku !== '') {
-    const url = `https://api.mercadolibre.com/items/${sku}`;
-    const result = await fetch(url);
-    const dataSheet = await result.json();
-    appendCart(createCartItemElement(dataSheet.id, dataSheet.title, dataSheet.price));
-    localCart.push(dataSheet.id);
-  }
-  await sumCart();
-}
+// async function addProductFromSKU(sku) {
+//   if (sku !== null && sku !== '') {
+//     const url = `https://api.mercadolibre.com/items/${sku}`;
+//     const result = await fetch(url);
+//     const dataSheet = await result.json();
+//     appendCart(createCartItemElement(dataSheet.id, dataSheet.title, dataSheet.price));
+//     localCart.push(dataSheet.id);
+//   }
+//   await sumCart();
+// }
 
 function restoreCart() {
   let tempCart = [];
   if (localStorage.length) {
     tempCart = localStorage.getItem('cartIds').split(',');
   }
-  tempCart.forEach(sku => { localCart.push(sku) });
+  tempCart.forEach(sku => {
+    if (sku !== null && sku !== '') {
+      localCart.push(sku);
+    }});
   // if (tempCart.length !== 0) {
   //   for (let i = 0; i < tempCart.length; i += 1) {
   //     addProductFromSKU(tempCart[i]);
