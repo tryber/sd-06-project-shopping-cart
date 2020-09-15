@@ -158,10 +158,11 @@ function restoreCart() {
   if (localStorage.length) {
     tempCart = localStorage.getItem('cartIds').split(',');
   }
-  tempCart.forEach(sku => {
+  tempCart.forEach((sku) => {
     if (sku !== null && sku !== '') {
       localCart.push(sku);
-    }});
+    }
+  });
   // if (tempCart.length !== 0) {
   //   for (let i = 0; i < tempCart.length; i += 1) {
   //     addProductFromSKU(tempCart[i]);
