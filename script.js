@@ -66,7 +66,7 @@ async function sumCart() {
   if (totalSum.length) {
     sum = totalSum.reduce(reducer);
   }
-  document.getElementById('total-price').innerHTML = `$${sum}`;
+  document.getElementById('total-price').innerHTML = sum;
 }
 
 function storeCart() {
