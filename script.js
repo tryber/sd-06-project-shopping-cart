@@ -58,15 +58,15 @@ async function sumCart() {
   let totalSum = [];
   for (let i = 0; i < localCart.length; i += 1) {
     if (localCart[i] !== null && localCart[i] !== '') {
-      totalSum[i] = getPriceFromSKU(localCart[i]);
+      totalSum.push(getPriceFromSKU(localCart[i]));
     }
   }
   totalSum = await Promise.all(totalSum);
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  if (totalSum.length) {
+  if (totalSum.length !== 0) {
     sum = totalSum.reduce(reducer);
   }
-  document.getElementById('total-price').innerHTML = sum;
+  document.getElementById('total-price').innerHTML = `Total Price: $${sum.toFixed(2)}`;
 }
 
 function storeCart() {
