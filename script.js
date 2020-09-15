@@ -12,6 +12,10 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener(event) {
+
+}
+
 function createCartItemElement(item) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -48,9 +52,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-
-}
 function renderCart() {
   const getProduct = document.querySelector('.items');
   getProduct.addEventListener('click', (event) => {
@@ -78,4 +79,3 @@ window.onload = function onload() {
   fetchMlApi();
   renderCart();
 };
-
