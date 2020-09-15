@@ -41,7 +41,7 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createProductImageElement(thumbnail));
   const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   section.appendChild(createButton);
-  createButton.addEventListener('click', () => {
+  createButton.addEventListener('dbclick', () => {
     fetchMlApiAddCart(id);
   });
 
@@ -78,5 +78,4 @@ const fetchMlApi = () => {
 window.onload = function onload() {
   fetchMlApi();
   renderCart();
-  fetchMlApiAddCart();
 };
