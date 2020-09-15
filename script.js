@@ -1,5 +1,3 @@
-
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -34,10 +32,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-
-
-}
+function cartItemClickListener(event) {}
 
 function createCartItemElement({ id, title, salePrice }) {
   const li = document.createElement('li');
@@ -48,28 +43,26 @@ function createCartItemElement({ id, title, salePrice }) {
 }
 
 const fetchMlApi = () => {
-  const urlApi = "https://api.mercadolibre.com/sites/MLB/search?q=computador";
-    return fetch (urlApi)
-    .then(response => response.json())
-    .then(response => {
-      response.results.forEach(result => {
-       const product = createProductItemElement(result);
-       document.querySelector('.items').appendChild(product);
-      })
-      
+  const urlApi = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  return fetch(urlApi)
+  .then(response => response.json())
+  .then((response) => {
+    response.results.forEach((result) => {
+      const product = createProductItemElement(result);
+      document.querySelector('.items').appendChild(product);
     })
-}
+  })
+};
 
 const fetchMlApiAddCart = id => {  
   const urlApiCart = `https://api.mercadolibre.com/items/${id}`;
-    return fetch (urlApiCart)
-    .then(response => response.json())
-    .then(response => {
-      console.log(response)
-      
-      
-    })
-}
+  return fetch(urlApiCart)
+  .then((response) => response.json())
+  .then((response) => {
+    console.log(response);
+  })
+};
+
 window.onload = function onload() {
   fetchMlApi();
 };
