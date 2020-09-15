@@ -71,7 +71,9 @@ async function sumCart() {
 
 function storeCart() {
   localStorage.removeItem('cart');
-  localStorage.setItem('cart', localCart);
+  const cartText = document.getElementById('cart').innerHTML;
+  localStorage.setItem('cart', cartText);
+  localStorage.setItem('cartIds', localCart);
   sumCart();
 }
 
@@ -154,13 +156,15 @@ async function addProductFromSKU(sku) {
 function restoreCart() {
   let tempCart = [];
   if (localStorage.length) {
-    tempCart = localStorage.getItem('cart').split(',');
+    tempCart = localStorage.getItem('cartIds').split(',');
   }
-  if (tempCart.length !== 0) {
-    for (let i = 0; i < tempCart.length; i += 1) {
-      addProductFromSKU(tempCart[i]);
-    }
-  }
+  tempCart.forEach(sku => { localCart.push(sku) });
+  // if (tempCart.length !== 0) {
+  //   for (let i = 0; i < tempCart.length; i += 1) {
+  //     addProductFromSKU(tempCart[i]);
+  //   }
+  // }
+  document.getElementById('cart').innerHTML = localStorage.getItem('cart');
 }
 
 window.onload = function onload() {
