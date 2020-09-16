@@ -11,10 +11,20 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+async function getSubtraPriceProductItem(event) {
+  let price = event.target;
+  price = price.innerText.split('$')[1];
+  const totalPrice = document.querySelector('.total-price');
+  const numberTotalPrice = Number(totalPrice.innerText);
+  totalPrice.innerText = (numberTotalPrice - price);
+  console.log(price);
+}
+
 function cartItemClickListener(event) {
   const cartItems = document.querySelector('.cart__items');
   const elemntoLi = event.target;
   cartItems.removeChild(elemntoLi);
+  getSubtraPriceProductItem(event);
 }
 
 function setLocalStorage() {
@@ -33,19 +43,10 @@ function getLocalStorage() {
   }
 }
 
-async function getSumPriceProductItem() {
-  const cartItems = document.querySelectorAll('.cart__item');
-  let totalPrice = 0;
-
-  cartItems.forEach((item) => {
-    const itemInfo = item.innerText;
-    const price = Number(itemInfo.split('$')[1]);
-
-    totalPrice += price;
-  });
-
-  const totalPriceElement = document.querySelector('.total-price');
-  totalPriceElement.innerText = totalPrice;
+async function getSumPriceProductItem(price) {
+  const totalPrice = document.querySelector('.total-price');
+  const numberTotalPrice = Number(totalPrice.innerText);
+  totalPrice.innerText = (numberTotalPrice + price);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -53,6 +54,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  getSumPriceProductItem(salePrice);
   return li;
 }
 
@@ -75,7 +77,6 @@ const fetchOnlyItem = () => {
         const elementOl = document.querySelector('.cart__items');
         const elementLi = createCartItemElement(objectResult);
         elementOl.appendChild(elementLi);
-        getSumPriceProductItem();
         setLocalStorage();
         return objectResult;
       }
@@ -157,3 +158,6 @@ window.onload = () => {
   getLocalStorage();
   addEventclearButton();
 };
+
+
+console.log("5tr1ng0".split("").filter(n => (Number(n) || n == 0)).join(""));
