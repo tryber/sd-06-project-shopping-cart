@@ -158,6 +158,3 @@ window.onload = () => {
   getLocalStorage();
   addEventclearButton();
 };
-
-
-console.log("5tr1ng0".split("").filter(n => (Number(n) || n == 0)).join(""));
