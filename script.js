@@ -4,6 +4,10 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
+function cartItemClickListener(event) {
+  fetch(`https://api.mercadolibre.com/items/${sku}`)
+  .then(data => console.log('testando'));
+}
 
 function createCartItemElement({ sku, name, price }) {
   const li = document.createElement('li');
@@ -31,10 +35,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-    .addEventListener('click', () => {
-      fetch(`https://api.mercadolibre.com/items/${sku}`)
-        .then(data => console.log('testando'));
-    });
+    .addEventListener('click', (cartItemClickListener));
 
   return section;
 }
@@ -69,6 +70,4 @@ window.onload = function onload() {
   fetchList(url);
 };
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+
