@@ -35,8 +35,8 @@ function getLocalStorage() {
 
 async function getSumPriceProductItem(price) {
   const totalPrice = document.querySelector('.total-price');
-  const numberTotalPrice = parseFloat(totalPrice.innerText);
-  totalPrice.innerText = (numberTotalPrice + price);
+  const numberTotalPrice = Number(totalPrice.innerText);
+  totalPrice.innerText = (numberTotalPrice + price).toFixed(2);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -103,19 +103,21 @@ function removeMenssage() {
 }
 
 const fetchAllItems = () => {
-  const urlEndpoint = `${endpoint.api}${endpoint.endpointAll}`;
-  fetch(urlEndpoint)
-    .then(response => response.json())
-    .then((object) => {
-      const objectResult = object.results;
-      if (object.error) {
-        throw new Error(object.error);
-      } else {
-        objectResult.forEach(data => createProductItemElement(data)); // um objeto
-      }
-    })
-    .catch(error => console.log('alguma coisa deu errado')); // func que trata error
-  removeMenssage();
+  setTimeout(() => {
+    const urlEndpoint = `${endpoint.api}${endpoint.endpointAll}`;
+    fetch(urlEndpoint)
+      .then(response => response.json())
+      .then((object) => {
+        const objectResult = object.results;
+        if (object.error) {
+          throw new Error(object.error);
+        } else {
+          objectResult.forEach(data => createProductItemElement(data)); // um objeto
+        }
+      })
+      .catch(error => console.log('alguma coisa deu errado')); // func que trata error
+    removeMenssage();
+  }, 1000);
 };
 
 function loading() {
@@ -139,9 +141,7 @@ function addEventclearButton() {
 
 window.onload = () => {
   loading();
-  setTimeout(() => {
-    fetchAllItems();
-  }, 2000);
+  fetchAllItems();
   getLocalStorage();
   addEventclearButton();
 };
