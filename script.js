@@ -45,7 +45,7 @@ function appendElementInSectionItems(element) {
   const itemSection = document.querySelector('.items');
   itemSection.appendChild(element);
 }
-//requisição para buscar produtos
+// requisição para buscar produtos
 function fetchList(url) {
   fetch(url)
     .then(response => response.json())
