@@ -6,7 +6,7 @@ function createProductImageElement(imageSource) {
 }
 function cartItemClickListener(event) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
-  .then(data => console.log('testando'));
+  .then(console.log('testando'));
 }
 
 function createCartItemElement({ sku, name, price }) {
@@ -69,5 +69,3 @@ const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 window.onload = function onload() {
   fetchList(url);
 };
-
-
