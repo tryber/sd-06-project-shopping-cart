@@ -15,7 +15,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
- 
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -35,7 +34,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, Title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -48,7 +47,6 @@ function renderItems(arrayResults) {
     const newItem = createCartItemElement(element);
     const section = document.querySelector('.items');
     section.appendChild(newItem).addEventListener;
-    
   });
 }
 
@@ -58,10 +56,9 @@ const fetchProductList = () => {
     .then((object) => {
       const result = object.results;
       renderItems(result);
-    }
+    })
     
-}
-
+};
 
 window.onload = function onload() {
   fetchProductList(url);
