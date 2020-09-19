@@ -113,4 +113,4 @@ window.onload = function onload() {
   loadCartSaved();
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', cleanCart);
-}
+};
