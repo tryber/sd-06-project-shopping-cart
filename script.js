@@ -5,6 +5,13 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -48,12 +55,6 @@ fetchApi();
   return newObject;
 } */
 
-function createProductImageElement(imageSource) {
-  const img = document.createElement('img');
-  img.className = 'item__image';
-  img.src = imageSource;
-  return img;
-}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
