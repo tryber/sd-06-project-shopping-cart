@@ -3,21 +3,23 @@ function fetchApi() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then(response => response.json())
     .then((obj) => {
-      // SEPARO TUDO ISSO EM UMA NOVA FUNÇÃO? QUAL SERÁ O RETORNO
-      // DE FETCH API?
       const arrayProdutos = obj.results;
-      // trocar map por foreach, e para cada elem chamar a funcao de ciria o produto
-      const objteste = arrayProdutos.map(produto => ({
+      // console.log(arrayProdutos);
+      const arrayOficial = arrayProdutos.map(produto => ({
         sku: produto.id,
         name: produto.title,
         image: produto.thumbnail,
       }));
-      console.log(objteste);
-      return objteste;
+      const printaNaTela = arrayOficial.forEach((produto) => {
+        createProductItemElement(produto);
+      });
+      return printaNaTela;
     });
 }
 
-function criaObjetoNovo() {
+fetchApi();
+
+/* function criaObjetoNovo() {
   fetchApi();
   const newObject = {
     sku: obj.results.id,
@@ -26,7 +28,7 @@ function criaObjetoNovo() {
   };
   console.log(newObject);
   return newObject;
-}
+} */
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -49,8 +51,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const items = document.getElementsByClassName('items')[0];
 
-  return section;
+  return items.appendChild(section);;
 }
 
 function getSkuFromProductItem(item) {
