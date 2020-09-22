@@ -3,7 +3,7 @@ function saveLocalStorage(key, item) {
 }
 
 function removeLocalStorage(liItem) {
-  const sectionHTML = liItem.parentNode
+  const sectionHTML = liItem.parentNode;
   const textAPI = sectionHTML.children[0].innerText;
   const itemID = textAPI.substr(5, 13);
   localStorage.removeItem(itemID);
@@ -87,6 +87,12 @@ const fetchFunction = () => {
   });
 };
 
+function emptyCartItems() {
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.innerHTML = '';
+  localStorage.clear();
+}
+
 function retriveStorage() {
   const listaCarrinhoParent = document.querySelector('.cart__items');
   const arrei = Object.keys(localStorage);
@@ -111,4 +117,7 @@ window.onload = function onload() {
   if(localStorage !== 0) {
     retriveStorage();
   }
+
+  const buttonClearCart = document.querySelector('.empty-cart');
+  buttonClearCart.addEventListener('click', emptyCartItems);
 };
