@@ -1,4 +1,13 @@
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+function saveLocalStorage(key, item) {
+  localStorage.setItem(key, item);
+}
+
+function removeLocalStorage(liItem) {
+  const sectionHTML = liItem.parentNode
+  const textAPI = sectionHTML.children[0].innerText;
+  const itemID = textAPI.substr(5, 13);
+  localStorage.removeItem(itemID);
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -17,6 +26,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const listaCarrinhoParent = document.querySelector('.cart__items');
   const liClick = event.target;
+  removeLocalStorage(liClick);
   listaCarrinhoParent.removeChild(liClick);
 }
 
@@ -41,6 +51,7 @@ function callCreateCartItemElement(event) {
       salePrice: obj.price,
     };
     const cartNewItem = createCartItemElement(paramCreatecarItemElement);
+    saveLocalStorage(itemID, cartNewItem);
     return listaCarrinhoParent.appendChild(cartNewItem);
   });
 }
@@ -64,6 +75,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const fetchFunction = () => {
   fetch(url)
   .then(response => response.json())
@@ -75,6 +87,28 @@ const fetchFunction = () => {
   });
 };
 
+function retriveStorage() {
+  const listaCarrinhoParent = document.querySelector('.cart__items');
+  const arrei = Object.keys(localStorage);
+  arrei.forEach((item) => {
+    fetch(`https://api.mercadolibre.com/items/${item}`)
+    .then(response => response.json())
+    .then((obj) => {
+      const paramCreatecarItemElement = {
+        sku: obj.id,
+        name: obj.title,
+        salePrice: obj.price,
+      };
+      const cartNewItem = createCartItemElement(paramCreatecarItemElement);
+      return listaCarrinhoParent.appendChild(cartNewItem);
+    });
+  });
+}
+
 window.onload = function onload() {
   fetchFunction();
+
+  if(localStorage !== 0) {
+    retriveStorage();
+  }
 };
