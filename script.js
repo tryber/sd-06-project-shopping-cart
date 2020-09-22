@@ -114,7 +114,7 @@ function retriveStorage() {
 window.onload = function onload() {
   fetchFunction();
 
-  if(localStorage !== 0) {
+  if (localStorage !== 0) {
     retriveStorage();
   }
 
