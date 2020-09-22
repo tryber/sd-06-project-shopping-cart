@@ -24,8 +24,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  const carrinho = document.querySelector('ol.cart__items');
-  carrinho.appendChild(li);
   li.addEventListener('click', cartItemClickListener(li));
   return li;
 }
@@ -55,6 +53,8 @@ function createProductItemElement({ sku, name, image }) {
   const botao = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   botao.addEventListener('click', novaRequisicao);
   section.appendChild(botao);
+  const carrinho = document.querySelector('ol.cart__items');
+  carrinho.appendChild(li);
   const items = document.getElementsByClassName('items')[0];
   return items.appendChild(section);
 }
