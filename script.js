@@ -18,11 +18,29 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const botao = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  botao.addEventListener('click', novaRequisicao)
+  section.appendChild(botao);
   const items = document.getElementsByClassName('items')[0];
-
   return items.appendChild(section);
 }
+
+function novaRequisicao(event) {
+  const id = getSkuFromProductItem(event.target.parentNode);
+  const url = `https://api.mercadolibre.com/items/${id}`;
+  fetch(url)
+    .then(response => response.json())
+    .then((product) => {
+      const dadosProduto = {
+        sku: product.id,
+        name: product.title,
+        salePrice: product.base_price,
+      }
+      console.log(dadosProduto);
+      return createCartItemElement(dadosProduto);
+    });
+}
+
 
 function fetchApi() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
@@ -41,44 +59,24 @@ function fetchApi() {
     });
 }
 
-function criaItem() {
-  const newElement = document.createElement('li');
-  newElement.innerHTML = 'texto de teste';
-  const lista = document.querySelector('ol.cart__items');
-  lista.appendChild(newElement);
-  return lista;
-}
-
-function chamaItem() {
-  return document.getElementById('teste').addEventListener('click', criaItem);
-}
-
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
 function cartItemClickListener(event) {
-  const clicado = document.getElementsByClassName('cart__item')[0];
-  const carrinho = document.querySelector('ol.cart__items');
-  carrinho.appendChild(clicado);
-  return carrinho;
-  /* console.log(event.target);
-  const url = `https://api.mercadolibre.com/items/$${event.target.value.sku}`
-  fetch(url)
-    .then(response => response.json())
-    .then((newObject) => console.log(newObject)); */
+  // algum código
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  const carrinho = document.querySelector('ol.cart__items');
+  carrinho.appendChild(li);
   li.addEventListener('click', cartItemClickListener(li));
   return li;
 }
 
 window.onload = function () {
   fetchApi();
-  console.log('teste');
-};
+}
