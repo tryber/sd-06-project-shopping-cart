@@ -17,10 +17,13 @@ function hideLoading() {
 function saveLocalStorage(key, item) {
   if (localStorage !== 0) {
     const arrei = Object.keys(localStorage);
-    arrei.forEach((chave) => {if (chave === key) {
+    arrei.forEach((chave) => 
+    { if (chave === key) 
+      {
       const completaKey = Math.random() * 100;
       localStorage.setItem(`${key}//${completaKey}`, item);
-    }});
+      }
+    });
   }
   localStorage.setItem(key, item);
 }
@@ -29,14 +32,14 @@ function saveLocalStorage(key, item) {
 function removeLocalStorage(liItem) {
   const sectionHTML = liItem.parentNode;
   const textAPI = sectionHTML.children[0].innerText;
-  const arreiParteDakey = textAPI.split(" ");
+  const arreiParteDakey = textAPI.split(' ');
   const itemID = arreiParteDakey[1];
   const tamanhoDoID = itemID.length;
   const arrei = Object.keys(localStorage);
-  const keyArrei = arrei.filter((item) => item.substr(0, tamanhoDoID) === itemID);
+  const keyArrei = arrei.filter(item => item.substr(0, tamanhoDoID) === itemID);
   keyArrei.sort();
   keyArrei.reverse();
-  const keyRemove = keyArrei.find((item) => item.substr(0, tamanhoDoID) === itemID);
+  const keyRemove = keyArrei.find(item => item.substr(0, tamanhoDoID) === itemID);
   localStorage.removeItem(keyRemove);
 }
 
@@ -61,11 +64,10 @@ async function sumCart(price) {
 
 async function subCart(liClick) {
   const textdoli = liClick.innerText;
-  const arrei = textdoli.split("$");
-  const price = Number(arrei[1])
+  const arrei = textdoli.split('$');
+  const price = Number(arrei[1]);
   const totalCart = document.querySelector('.total-price');
   totalCart.innerText = (Number(totalCart.innerText) - price);
-
 }
 
 async function clearPrice() {
@@ -144,8 +146,8 @@ const fetchFunction = () => {
 function retriveStorage() {
   const listaCarrinhoParent = document.querySelector('.cart__items');
   const arrei = Object.keys(localStorage);
-  const keysBruto = arrei.map((item) => item.split("//"));
-  const keysOriginals = keysBruto.map((miniArrei) => miniArrei[0]);
+  const keysBruto = arrei.map(item => item.split('//'));
+  const keysOriginals = keysBruto.map(miniArrei => miniArrei[0]);
   keysOriginals.forEach((item) => {
     fetch(`https://api.mercadolibre.com/items/${item}`)
     .then(response => response.json())
