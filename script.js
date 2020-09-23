@@ -28,7 +28,7 @@ function sum(priceItem) {
   totalPrice = priceItem + totalPrice;
   document.querySelector(".total-price").innerHTML=totalPrice;
 }
-
+//.parseFloat e .toFixed(2)
 let gambiarra = 0
 function sub(subPrice) {
   if (gambiarra === 0) {
