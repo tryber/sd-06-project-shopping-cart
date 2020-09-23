@@ -19,8 +19,8 @@ function saveLocalStorage(key, item) {
     const arrei = Object.keys(localStorage);
     arrei.forEach((chave) => {
       if (chave === key) {
-      const completaKey = Math.random() * 100;
-      localStorage.setItem(`${key}//${completaKey}`, item);
+        const completaKey = Math.random() * 100;
+        localStorage.setItem(`${key}//${completaKey}`, item);
       }
     });
   }
