@@ -17,6 +17,7 @@ function saveLocalStorage() {
   localStorage.setItem('myStorage', cartStorage);
 }
 
+let totalPrice = 0;
 let gambiarra = 0;
 function sub(subPrice) {
   if (gambiarra === 0) {
@@ -24,7 +25,7 @@ function sub(subPrice) {
     totalPrice -= subt;
     document.querySelector('.total-price').innerHTML = totalPrice;
     gambiarra = 1;
-  } else { gambiarra = 0 };
+  } else { gambiarra = 0; }
 }
 
 function cartItemClickListener(event) {
@@ -41,7 +42,7 @@ function recoverStorage() {
   document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
 }
 
-let totalPrice = 0;
+
 function sum(priceItem) {
   totalPrice += priceItem;
   document.querySelector('.total-price').innerHTML = totalPrice;
