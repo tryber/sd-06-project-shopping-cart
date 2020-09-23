@@ -12,14 +12,27 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function saveLocalStorage() {
+  const cartStorage = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('myStorage', cartStorage);
+}
+
+function localStorage() {
+
+}
 function deleteChild() {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach(cartItem => cartItem.remove());
 }
 
-function cartItemClickListener() {
+function cartButtonClickListener() {
   const clearButton = document.querySelector('.empty-cart');
   clearButton.addEventListener('click', deleteChild);
+}
+
+function cartItemClickListener(event) {
+  const deleteItem = event.target;
+  deleteItem.remove();
 }
 
 function createCartItemElement(item) {
@@ -27,6 +40,8 @@ function createCartItemElement(item) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${item.id} | NAME: ${item.title} | PRICE: $${item.price}`;
   const cartItems = document.querySelector('.cart__items').appendChild(li);
+  li.addEventListener('click', cartItemClickListener);
+  saveLocalStorage();
   return cartItems;
 }
 
@@ -46,7 +61,7 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createProductImageElement(thumbnail));
   const createButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   section.appendChild(createButton);
-  createButton.addEventListener('dbclick', () => {
+  createButton.addEventListener('click', () => {
     fetchMlApiAddCart(id);
   });
 
@@ -68,7 +83,19 @@ function renderCart() {
   });
 }
 
+function killLoading() {
+  const kill = document.querySelector('.loading');
+  kill.remove();
+}
+
+function elementLoading() {
+  const h1Load = document.createElement('h1');
+  h1Load.className = 'loading';
+  h1Load.innerText = "loading...";
+  document.body.appendChild(h1Load);
+}
 const fetchMlApi = () => {
+  elementLoading();
   const urlApi = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   return fetch(urlApi)
   .then(response => response.json())
@@ -77,11 +104,13 @@ const fetchMlApi = () => {
       const product = createProductItemElement(result);
       document.querySelector('.items').appendChild(product);
     });
+    killLoading();
   });
 };
 
 window.onload = function onload() {
   fetchMlApi();
-  renderCart();
-  cartItemClickListener();
+  //renderCart();
+  localStorage();
+  cartButtonClickListener();
 };
