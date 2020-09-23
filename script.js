@@ -21,7 +21,7 @@ let gambiarra = 0;
 function sub(subPrice) {
   if (gambiarra === 0) {
     const subt = subPrice.split('$')[1];
-    totalPrice = totalPrice - subt;
+    totalPrice -= subt;
     document.querySelector('.total-price').innerHTML = totalPrice;
     gambiarra = 1;
   } else { gambiarra = 0 };
@@ -43,7 +43,7 @@ function recoverStorage() {
 
 let totalPrice = 0;
 function sum(priceItem) {
-  totalPrice = priceItem + totalPrice;
+  totalPrice += priceItem;
   document.querySelector('.total-price').innerHTML = totalPrice;
 }
 // .parseFloat e .toFixed(2)
@@ -73,8 +73,8 @@ const fetchMlApiAddCart = (id) => {
   const urlApiCart = `https://api.mercadolibre.com/items/${id}`;
   fetch(urlApiCart)
   .then(response => response.json())
-  .then(response => { 
-    createCartItemElement(response)
+  .then((response) => {
+    createCartItemElement(response);
     saveLocalStorage();
   });
 };
