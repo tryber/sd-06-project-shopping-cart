@@ -1,3 +1,8 @@
+function purchasesHistoric() {
+  const cartList = document.querySelector('.cart__items');
+  localStorage.setItem('list', cartList.innerHTML);
+}
+
 function showLoading() {
   const loading = document.createElement('span');
   loading.className = 'loading';
@@ -12,34 +17,6 @@ function hideLoading() {
     const parent = document.querySelector('.items');
     parent.removeChild(parent.firstChild);
   }, 1500);
-}
-
-function saveLocalStorage(key, item) {
-  if (localStorage !== 0) {
-    const arrei = Object.keys(localStorage);
-    arrei.forEach((chave) => {
-      if (chave === key) {
-        const completaKey = Math.random() * 100;
-        localStorage.setItem(`${key}//${completaKey}`, item);
-      }
-    });
-  }
-  localStorage.setItem(key, item);
-}
-
-
-function removeLocalStorage(liItem) {
-  const sectionHTML = liItem.parentNode;
-  const textAPI = sectionHTML.children[0].innerText;
-  const arreiParteDakey = textAPI.split(' ');
-  const itemID = arreiParteDakey[1];
-  const tamanhoDoID = itemID.length;
-  const arrei = Object.keys(localStorage);
-  const keyArrei = arrei.filter(item => item.substr(0, tamanhoDoID) === itemID);
-  keyArrei.sort();
-  keyArrei.reverse();
-  const keyRemove = keyArrei.find(item => item.substr(0, tamanhoDoID) === itemID);
-  localStorage.removeItem(keyRemove);
 }
 
 function createProductImageElement(imageSource) {
@@ -77,9 +54,9 @@ async function clearPrice() {
 function cartItemClickListener(event) {
   const listaCarrinhoParent = document.querySelector('.cart__items');
   const liClick = event.target;
-  removeLocalStorage(liClick);
   subCart(liClick);
   listaCarrinhoParent.removeChild(liClick);
+  purchasesHistoric();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -104,8 +81,8 @@ function callCreateCartItemElement(event) {
       salePrice: obj.price,
     };
     const cartNewItem = createCartItemElement(paramCreatecarItemElement);
-    saveLocalStorage(itemID, cartNewItem);
-    return listaCarrinhoParent.appendChild(cartNewItem);
+    listaCarrinhoParent.appendChild(cartNewItem);
+    purchasesHistoric();
   });
 }
 
@@ -142,26 +119,6 @@ const fetchFunction = () => {
   .then(hideLoading());
 };
 
-function retriveStorage() {
-  const listaCarrinhoParent = document.querySelector('.cart__items');
-  const arrei = Object.keys(localStorage);
-  const keysBruto = arrei.map(item => item.split('//'));
-  const keysOriginals = keysBruto.map(miniArrei => miniArrei[0]);
-  keysOriginals.forEach((item) => {
-    fetch(`https://api.mercadolibre.com/items/${item}`)
-    .then(response => response.json())
-    .then((obj) => {
-      const paramCreatecarItemElement = {
-        sku: obj.id,
-        name: obj.title,
-        salePrice: obj.price,
-      };
-      const cartNewItem = createCartItemElement(paramCreatecarItemElement);
-      return listaCarrinhoParent.appendChild(cartNewItem);
-    });
-  });
-}
-
 function emptyCartItems() {
   const cartItems = document.querySelector('.cart__items');
   cartItems.innerHTML = '';
@@ -169,12 +126,36 @@ function emptyCartItems() {
   clearPrice();
 }
 
+function recoverLocalStorage() {
+  const cartList = document.querySelector('.cart__items');
+  cartList.innerHTML = localStorage.list;
+  const superString = cartList.innerText;
+  const arreiSeparado = superString.split(' ');
+  const arreiComPreçoBruto = arreiSeparado.filter(item => item[0] === '$');
+  const arreiComSifrao = arreiComPreçoBruto.map((item) => {
+    if(item.substr(-4) === 'SKU:') {
+      const meio = item.split('SKU:');
+      const primeiroItem = meio[0];
+      tamanho = (primeiroItem.length)-1;
+      const retorno = primeiroItem.substr(0, tamanho);
+      return retorno
+    }
+    return item
+  });
+  const arreidePreços = arreiComSifrao.map((item) => {
+    const tamanho = item.length;
+    const stringPreco = item.substr(1, tamanho);
+    const numberPreco = Number(stringPreco);
+    return numberPreco;
+  });
+  const price = arreidePreços.reduce((acc, value) => acc + value, 0);
+  sumCart(price);
+}
+
 window.onload = function onload() {
   fetchFunction();
 
-  if (localStorage !== 0) {
-    retriveStorage();
-  }
+  recoverLocalStorage();
 
   const buttonClearCart = document.querySelector('.empty-cart');
   buttonClearCart.addEventListener('click', emptyCartItems);
