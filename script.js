@@ -92,7 +92,6 @@ function createProductItemElement({ id, title, thumbnail }) {
   createButton.addEventListener('click', () => {
     fetchMlApiAddCart(id);
   });
-
   return section;
 }
 
