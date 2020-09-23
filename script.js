@@ -17,6 +17,12 @@ function saveLocalStorage() {
   localStorage.setItem('myStorage', cartStorage);
 }
 
+function recoverStorage() {
+  const recoverItemStorage = localStorage.getItem('myStorage');
+  document.querySelector('.cart__items').innerHTML = recoverItemStorage;
+  document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
+}
+
 let totalPrice = 0
 function sum(priceItem) {
   totalPrice = priceItem + totalPrice;
@@ -25,6 +31,7 @@ function sum(priceItem) {
 function deleteChild() {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach(cartItem => cartItem.remove());
+  localStorage.clear();
 }
 
 function cartButtonClickListener() {
@@ -35,6 +42,8 @@ function cartButtonClickListener() {
 function cartItemClickListener(event) {
   const deleteItem = event.target;
   deleteItem.remove();
+  localStorage.clear();
+  saveLocalStorage();
 }
 
 function createCartItemElement(item) {
@@ -51,7 +60,8 @@ const fetchMlApiAddCart = (id) => {
   const urlApiCart = `https://api.mercadolibre.com/items/${id}`;
    fetch(urlApiCart)
   .then(response => response.json())
-  .then(response => createCartItemElement(response));
+  .then(response => {createCartItemElement(response)
+    saveLocalStorage();});
 };
 
 function createProductItemElement({ id, title, thumbnail }) {
@@ -65,7 +75,6 @@ function createProductItemElement({ id, title, thumbnail }) {
   section.appendChild(createButton);
   createButton.addEventListener('click', () => {
     fetchMlApiAddCart(id);
-    saveLocalStorage();
   });
 
   return section;
@@ -102,5 +111,6 @@ const fetchMlApi = () => {
 
 window.onload = function onload() {
   fetchMlApi();
+  recoverStorage();
   cartButtonClickListener();
 };
