@@ -12,14 +12,15 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function saveLocalStorage() {
-  const cartStorage = document.querySelector('.cart__items').innerHTML;
-  localStorage.setItem('myStorage', cartStorage);
-}
+// function saveLocalStorage() {
+//   const cartStorage = document.querySelector('.cart__items').innerHTML;
+//   localStorage.setItem('myStorage', cartStorage);
+// }
 
 function localStorage() {
 
 }
+
 function deleteChild() {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach(cartItem => cartItem.remove());
@@ -72,17 +73,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function renderCart() {
-  const getProduct = document.querySelector('.items');
-  getProduct.addEventListener('click', (event) => {
-    if (event.target.type === 'submit') {
-      const item = event.target.parentNode;
-      const id = item.querySelector('.item__sku').innerHTML;
-      fetchMlApiAddCart(id);
-    }
-  });
-}
-
 function killLoading() {
   const kill = document.querySelector('.loading');
   kill.remove();
@@ -91,7 +81,7 @@ function killLoading() {
 function elementLoading() {
   const h1Load = document.createElement('h1');
   h1Load.className = 'loading';
-  h1Load.innerText = "loading...";
+  h1Load.innerText = 'loading...';
   document.body.appendChild(h1Load);
 }
 const fetchMlApi = () => {
@@ -110,7 +100,6 @@ const fetchMlApi = () => {
 
 window.onload = function onload() {
   fetchMlApi();
-  //renderCart();
   localStorage();
   cartButtonClickListener();
 };
