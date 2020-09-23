@@ -17,9 +17,8 @@ function hideLoading() {
 function saveLocalStorage(key, item) {
   if (localStorage !== 0) {
     const arrei = Object.keys(localStorage);
-    arrei.forEach((chave) => 
-    { if (chave === key) 
-      {
+    arrei.forEach((chave) => {
+      if (chave === key) {
       const completaKey = Math.random() * 100;
       localStorage.setItem(`${key}//${completaKey}`, item);
       }
