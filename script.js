@@ -133,14 +133,14 @@ function recoverLocalStorage() {
   const arreiSeparado = superString.split(' ');
   const arreiComPreçoBruto = arreiSeparado.filter(item => item[0] === '$');
   const arreiComSifrao = arreiComPreçoBruto.map((item) => {
-    if(item.substr(-4) === 'SKU:') {
+    if (item.substr(-4) === 'SKU:') {
       const meio = item.split('SKU:');
       const primeiroItem = meio[0];
-      tamanho = (primeiroItem.length)-1;
+      tamanho = (primeiroItem.length) - 1;
       const retorno = primeiroItem.substr(0, tamanho);
-      return retorno
+      return retorno;
     }
-    return item
+    return item;
   });
   const arreidePreços = arreiComSifrao.map((item) => {
     const tamanho = item.length;
