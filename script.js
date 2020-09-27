@@ -24,9 +24,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  const carrinho = document.querySelector('ol.cart__items');
+  /* const carrinho = document.querySelector('ol.cart__items');
   carrinho.appendChild(li);
-  return li.addEventListener('click', cartItemClickListener(li));
+  li.addEventListener('click', cartItemClickListener(li)); */
+  return li;
 }
 
 // ADICIONAR O PRODUTO AO CARRINHO NA FUNÇÃO CERTA (ACIMA ESTÁ ERRADO)
@@ -44,7 +45,9 @@ function novaRequisicao(event) {
         salePrice: product.base_price,
       };
       console.log(dadosProduto);
-      return createCartItemElement(dadosProduto);
+      const produtoClicado = createCartItemElement(dadosProduto);
+      const carrinho = document.querySelector('ol.cart__items');
+      return carrinho.appendChild(produtoClicado);
     });
 }
 
