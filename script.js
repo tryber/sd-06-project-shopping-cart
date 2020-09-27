@@ -24,9 +24,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener(li));
-  return li;
+  const carrinho = document.querySelector('ol.cart__items');
+  carrinho.appendChild(li);
+  return li.addEventListener('click', cartItemClickListener(li));;
 }
+
+// ADICIONAR O PRODUTO AO CARRINHO NA FUNÇÃO CERTA (ACIMA ESTÁ ERRADO)
+// NAO ESQUECER DE RECUPERAR O ITEM DA LISTA
 
 function novaRequisicao(event) {
   const id = getSkuFromProductItem(event.target.parentNode);
@@ -53,8 +57,6 @@ function createProductItemElement({ sku, name, image }) {
   const botao = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   botao.addEventListener('click', novaRequisicao);
   section.appendChild(botao);
-  const carrinho = document.querySelector('ol.cart__items');
-  carrinho.appendChild(li);
   const items = document.getElementsByClassName('items')[0];
   return items.appendChild(section);
 }
