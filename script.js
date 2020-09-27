@@ -26,7 +26,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   const carrinho = document.querySelector('ol.cart__items');
   carrinho.appendChild(li);
-  return li.addEventListener('click', cartItemClickListener(li));;
+  return li.addEventListener('click', cartItemClickListener(li));
 }
 
 // ADICIONAR O PRODUTO AO CARRINHO NA FUNÇÃO CERTA (ACIMA ESTÁ ERRADO)
