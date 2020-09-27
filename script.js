@@ -24,9 +24,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  /* const carrinho = document.querySelector('ol.cart__items');
-  carrinho.appendChild(li);
-  li.addEventListener('click', cartItemClickListener(li)); */
+  li.addEventListener('click', cartItemClickListener(li));
   return li;
 }
 
@@ -44,7 +42,6 @@ function novaRequisicao(event) {
         name: product.title,
         salePrice: product.base_price,
       };
-      console.log(dadosProduto);
       const produtoClicado = createCartItemElement(dadosProduto);
       const carrinho = document.querySelector('ol.cart__items');
       return carrinho.appendChild(produtoClicado);
