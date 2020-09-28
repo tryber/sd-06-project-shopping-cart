@@ -6,7 +6,7 @@ function createProductImageElement(imageSource) {
 }
 function cartItemClickListener(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
-  .then(console.log(sku))
+  .then(console.log(sku));
 }
 
 
