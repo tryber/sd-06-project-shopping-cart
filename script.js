@@ -98,7 +98,16 @@ function fetchApi() {
     });
 }
 
+function loading() {
+  const loading = document.createElement('h3');
+  loading.innerHTML = 'loading';
+  loading.className = 'loading';
+  const body = document.querySelector('body');
+  return body.appendChild(loading);
+}
+
 window.onload = function () {
+  loading();
   fetchApi();
   limpaCarrinho();
 };
