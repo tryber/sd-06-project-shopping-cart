@@ -99,11 +99,11 @@ function fetchApi() {
 }
 
 function loading() {
-  const loading = document.createElement('h3');
-  loading.innerHTML = 'loading';
-  loading.className = 'loading';
+  const loadingText = document.createElement('h3');
+  loadingText.innerHTML = 'loading';
+  loadingText.className = 'loading';
   const body = document.querySelector('body');
-  return body.appendChild(loading);
+  return body.appendChild(loadingText);
 }
 
 window.onload = function () {
