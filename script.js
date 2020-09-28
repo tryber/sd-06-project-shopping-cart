@@ -17,7 +17,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // algum código
+  console.log('clicou no item');
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -28,8 +28,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// ADICIONAR O PRODUTO AO CARRINHO NA FUNÇÃO CERTA (ACIMA ESTÁ ERRADO)
-// NAO ESQUECER DE RECUPERAR O ITEM DA LISTA
 
 function novaRequisicao(event) {
   const id = getSkuFromProductItem(event.target.parentNode);
@@ -41,10 +39,10 @@ function novaRequisicao(event) {
         sku: product.id,
         name: product.title,
         salePrice: product.base_price,
-      };
+      }
       const produtoClicado = createCartItemElement(dadosProduto);
       const carrinho = document.querySelector('ol.cart__items');
-      return carrinho.appendChild(produtoClicado);
+      carrinho.appendChild(produtoClicado);
     });
 }
 
