@@ -106,8 +106,14 @@ function loading() {
   return body.appendChild(loadingText);
 }
 
+function apagaLoading() {
+  const loading = document.querySelector('loading');
+  return loading.parentNode.removeChild(loading);
+}
+
 window.onload = function () {
   loading();
   fetchApi();
+  apagaLoading();
   limpaCarrinho();
 };
