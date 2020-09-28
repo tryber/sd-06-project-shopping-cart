@@ -39,7 +39,7 @@ function novaRequisicao(event) {
         sku: product.id,
         name: product.title,
         salePrice: product.base_price,
-      }
+      };
       const produtoClicado = createCartItemElement(dadosProduto);
       const carrinho = document.querySelector('ol.cart__items');
       carrinho.appendChild(produtoClicado);
