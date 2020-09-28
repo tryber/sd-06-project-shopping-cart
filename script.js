@@ -98,22 +98,22 @@ function fetchApi() {
     });
 }
 
+function apagaLoading() {
+  const loadingText = document.querySelector('h3.loading');
+  return loadingText.parentNode.removeChild(loadingText);
+}
+
 function loading() {
   const loadingText = document.createElement('h3');
   loadingText.innerHTML = 'loading';
   loadingText.className = 'loading';
   const body = document.querySelector('body');
+  setTimeout(apagaLoading(), 3000);
   return body.appendChild(loadingText);
-}
-
-function apagaLoading() {
-  const loadingText = document.querySelector('loading');
-  return loadingText.parentNode.removeChild(loadingText);
 }
 
 window.onload = function () {
   loading();
   fetchApi();
-  apagaLoading();
   limpaCarrinho();
 };
