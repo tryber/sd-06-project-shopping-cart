@@ -38,7 +38,7 @@ function novaRequisicao(event) {
       const dadosProduto = {
         sku: product.id,
         name: product.title,
-        salePrice: product.base_price,
+        salePrice: product.price,
       };
       const produtoClicado = createCartItemElement(dadosProduto);
       const carrinho = document.querySelector('ol.cart__items');
