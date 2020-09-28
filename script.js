@@ -43,12 +43,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 localStorage(); */
 
 function limpaCarrinho() {
-  const  botaoLimpar = document.querySelector('button.empty-cart');
+  const botaoLimpar = document.querySelector('button.empty-cart');
   const carrinho = document.querySelector('ol.cart__items');
   return botaoLimpar.addEventListener('click', () => {
-    carrinho.innerHTML = "";
+    carrinho.innerHTML = '';
     localStorage.clear();
-  })
+  });
 }
 
 function novaRequisicao(event) {
@@ -100,5 +100,5 @@ function fetchApi() {
 
 window.onload = function () {
   fetchApi();
-  limpaCarrinho()
+  limpaCarrinho();
 };
