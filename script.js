@@ -17,14 +17,17 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  console.log('clicou no item');
+  console.log(event.target);
+  const itemRemover = event.target;
+  const carrinho = document.querySelector('ol.cart__items');
+  carrinho.removeChild(itemRemover);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener(li));
+  li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
