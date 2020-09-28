@@ -107,8 +107,8 @@ function loading() {
 }
 
 function apagaLoading() {
-  const loading = document.querySelector('loading');
-  return loading.parentNode.removeChild(loading);
+  const loadingText = document.querySelector('loading');
+  return loadingText.parentNode.removeChild(loadingText);
 }
 
 window.onload = function () {
