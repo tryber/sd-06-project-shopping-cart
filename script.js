@@ -113,14 +113,8 @@ function loading() {
   return body.appendChild(loadingText);
 }
 
-// const section = document.getElementsByClassName('items')[0];
-
 window.onload = function () {
   loading();
-  // setTimeout(fetchApi(), 5000);
-  // setTimeout(apagaLoading(), 5000)
   fetchApi();
-  // section.childNodes === undefined ? loading() : fetchApi()
-  // if (!fetchApi()) loading();
   limpaCarrinho();
 };
