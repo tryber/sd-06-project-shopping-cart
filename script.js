@@ -98,23 +98,27 @@ function fetchApi() {
     });
 }
 
-// function apagaLoading() {
-//   const loadingText = document.querySelector('h3.loading');
-//   return loadingText.parentNode.removeChild(loadingText);
-// }
+function apagaLoading() {
+  const loadingText = document.querySelector('span.loading');
+  return loadingText.parentNode.removeChild(loadingText);
+}
 
 function loading() {
   const loadingText = document.createElement('span');
   loadingText.innerHTML = 'loading';
   loadingText.className = 'loading';
   const body = document.querySelector('body');
-  // setTimeout(apagaLoading(), 3000);
   return body.appendChild(loadingText);
 }
 
+// const section = document.getElementsByClassName('items')[0];
+
 window.onload = function () {
   loading();
-  if (!fetchApi) loading();
+  // setTimeout(fetchApi(), 5000);
+  setTimeout(apagaLoading(), 5000)
   fetchApi();
+  // section.childNodes === undefined ? loading() : fetchApi()
+  // if (!fetchApi()) loading();
   limpaCarrinho();
 };
