@@ -81,6 +81,11 @@ function createProductItemElement({ sku, name, image }) {
   return items.appendChild(section);
 }
 
+function apagaLoading() {
+  const loadingText = document.querySelector('.loading');
+  return loadingText.parentNode.removeChild(loadingText);
+}
+
 function fetchApi() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
     .then(response => response.json())
@@ -94,14 +99,11 @@ function fetchApi() {
       const printaNaTela = arrayOficial.forEach((produto) => {
         createProductItemElement(produto);
       });
+      apagaLoading();
       return printaNaTela;
     });
 }
 
-function apagaLoading() {
-  const loadingText = document.querySelector('span.loading');
-  return loadingText.parentNode.removeChild(loadingText);
-}
 
 function loading() {
   const loadingText = document.createElement('span');
@@ -116,7 +118,7 @@ function loading() {
 window.onload = function () {
   loading();
   // setTimeout(fetchApi(), 5000);
-  setTimeout(apagaLoading(), 5000)
+  // setTimeout(apagaLoading(), 5000)
   fetchApi();
   // section.childNodes === undefined ? loading() : fetchApi()
   // if (!fetchApi()) loading();
