@@ -5,7 +5,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 function cartItemClickListener(event) {
-  //event.target.remove();
+  // event.target.remove();
 }
 
 function fetchProductCar(sku) {
