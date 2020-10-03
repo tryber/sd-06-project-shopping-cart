@@ -16,9 +16,25 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function somaProdutos() {
+  const spanPreco = document.getElementsByClassName('total-price')[0];
+  const carrinho = document.getElementById('carrinho');
+  const filhosCarrinho = carrinho.children;
+  const arrayPrecos = [];
+  for (let i = 0; i < filhosCarrinho.length; i += 1) {
+    const arrayInfosProduto = filhosCarrinho[i].innerHTML.split(' ');
+    const precoString = arrayInfosProduto[arrayInfosProduto.length -1];
+    const precoNumber = Number(precoString.substring(1));
+    arrayPrecos.push(precoNumber);
+  }
+  const precoTotal = arrayPrecos.reduce((acc, current) => acc + current, 0);
+  spanPreco.innerHTML = precoTotal;
+}
+
 function salvaItens() {
   const todosItens = document.querySelector('ol');
   localStorage.setItem('todos os itens', todosItens.innerHTML);
+  somaProdutos();
 }
 
 function cartItemClickListener(event) {
@@ -28,7 +44,6 @@ function cartItemClickListener(event) {
   salvaItens();
 }
 
-// cria o li no carrinho
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -40,12 +55,13 @@ function createCartItemElement({ sku, name, salePrice }) {
 function recuperaItens() {
   const carrinho = document.getElementById('carrinho');
   carrinho.innerHTML = localStorage.getItem('todos os itens');
+  somaProdutos();
 }
 
 function apagaItensLista() {
-  const carrinho = document.getElementById('carrinho');
   carrinho.innerHTML = '';
   salvaItens();
+  somaProdutos();
 }
 
 function limpaCarrinho() {
@@ -53,6 +69,7 @@ function limpaCarrinho() {
   botaoLimpar.addEventListener('click', () => {
     apagaItensLista();
     localStorage.clear();
+    somaProdutos();
   });
 }
 
@@ -71,6 +88,7 @@ function novaRequisicao(event) {
       const carrinho = document.querySelector('ol.cart__items');
       carrinho.appendChild(produtoClicado);
       salvaItens();
+      somaProdutos();
     });
 }
 
@@ -109,7 +127,6 @@ function fetchApi() {
       return printaNaTela;
     });
 }
-
 
 function loading() {
   const loadingText = document.createElement('span');
