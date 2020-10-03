@@ -43,7 +43,8 @@ function recuperaItens() {
 
 function apagaItensLista() {
   const carrinho = document.getElementById('carrinho');
-  return carrinho.innerHTML = '';
+  const removeItens = carrinho.innerHTML = '';
+  return removeItens;
 }
 
 function limpaCarrinho() {
