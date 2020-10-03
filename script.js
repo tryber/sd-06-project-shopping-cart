@@ -23,7 +23,7 @@ function somaProdutos() {
   const arrayPrecos = [];
   for (let i = 0; i < filhosCarrinho.length; i += 1) {
     const arrayInfosProduto = filhosCarrinho[i].innerHTML.split(' ');
-    const precoString = arrayInfosProduto[arrayInfosProduto.length -1];
+    const precoString = arrayInfosProduto[arrayInfosProduto.length - 1];
     const precoNumber = Number(precoString.substring(1));
     arrayPrecos.push(precoNumber);
   }
