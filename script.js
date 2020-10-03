@@ -17,12 +17,12 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  console.log(event.target);
   const itemRemover = event.target;
   const carrinho = document.querySelector('ol.cart__items');
   carrinho.removeChild(itemRemover);
 }
 
+// cria o li no carrinho
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -31,24 +31,20 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-/* function localStorage() {
-  const carrinho = document.querySelector('ol.cart__items');
-  const itens = carrinho.childNodes;
-
-  console.log(itens);
-  localStorage.setItem('itens', carrinho);
-  localStorage.getItem(itens);
+function salvaItens() {
+  const todosItens = document.querySelector('ol');
+  localStorage.setItem('todos os itens', todosItens.innerHTML);
 }
 
-localStorage(); */
+function recuperaItens() {
+  const carrinho = document.getElementById('carrinho');
+  carrinho.innerHTML = localStorage.getItem('todos os itens');
+}
 
 function limpaCarrinho() {
-  const botaoLimpar = document.querySelector('button.empty-cart');
-  const carrinho = document.querySelector('ol.cart__items');
-  return botaoLimpar.addEventListener('click', () => {
-    carrinho.innerHTML = '';
-    localStorage.clear();
-  });
+  const botaoLimpar = document.getElementsByClassName('empty-cart')[0];
+  const carrinho = document.getElementById('carrinho');
+  botaoLimpar.addEventListener('click', () => carrinho.innerHTML = '');
 }
 
 function novaRequisicao(event) {
@@ -65,6 +61,7 @@ function novaRequisicao(event) {
       const produtoClicado = createCartItemElement(dadosProduto);
       const carrinho = document.querySelector('ol.cart__items');
       carrinho.appendChild(produtoClicado);
+      salvaItens();
     });
 }
 
@@ -113,8 +110,18 @@ function loading() {
   return body.appendChild(loadingText);
 }
 
+function clickItemLocalStorage () {
+  let carrinho = document.getElementById('carrinho');
+  let itens = carrinho.children.length;
+  for (let i = 0; i < itens; i += 1) {
+    carrinho.children[i].addEventListener('click', cartItemClickListener)
+  }
+}
+
 window.onload = function () {
   loading();
   fetchApi();
+  recuperaItens();
+  clickItemLocalStorage();
   limpaCarrinho();
 };
