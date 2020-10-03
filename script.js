@@ -41,10 +41,14 @@ function recuperaItens() {
   carrinho.innerHTML = localStorage.getItem('todos os itens');
 }
 
+function apagaItensLista() {
+  const carrinho = document.getElementById('carrinho');
+  return carrinho.innerHTML = '';
+}
+
 function limpaCarrinho() {
   const botaoLimpar = document.getElementsByClassName('empty-cart')[0];
-  const carrinho = document.getElementById('carrinho');
-  botaoLimpar.addEventListener('click', () => carrinho.innerHTML = '');
+  botaoLimpar.addEventListener('click', apagaItensLista);
 }
 
 function novaRequisicao(event) {
@@ -110,11 +114,11 @@ function loading() {
   return body.appendChild(loadingText);
 }
 
-function clickItemLocalStorage () {
-  let carrinho = document.getElementById('carrinho');
-  let itens = carrinho.children.length;
+function clickItemLocalStorage() {
+  const carrinho = document.getElementById('carrinho');
+  const itens = carrinho.children.length;
   for (let i = 0; i < itens; i += 1) {
-    carrinho.children[i].addEventListener('click', cartItemClickListener)
+    carrinho.children[i].addEventListener('click', cartItemClickListener);
   }
 }
 
