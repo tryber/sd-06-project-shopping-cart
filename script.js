@@ -51,8 +51,7 @@ function apagaItensLista() {
 function limpaCarrinho() {
   const botaoLimpar = document.getElementsByClassName('empty-cart')[0];
   botaoLimpar.addEventListener('click', () => {
-    // salvaItens(),
-    apagaItensLista(),
+    apagaItensLista()
     localStorage.clear()
   });
 }
