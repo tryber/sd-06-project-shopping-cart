@@ -16,6 +16,13 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+/* HONESTIDADE ACADÊMICA:
+Ao longo do projeto tive várias dúvidas que foram esclarecidas nos
+dias em que o fiz, graças à Le, Ícaro e Alberto. Obrigada! Além de
+pesquisar na internet e slack, é claro.
+Mas neste requisito de soma do preço dos produtos travei bastante e
+consegui fazê-lo graças à gravação de um plantão do Ícaro. */
+
 function somaProdutos() {
   const spanPreco = document.getElementsByClassName('total-price')[0];
   const carrinho = document.getElementById('carrinho');
