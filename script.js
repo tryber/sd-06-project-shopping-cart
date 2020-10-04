@@ -4,15 +4,14 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-function cartItemClickListener(event) {
+/* function cartItemClickListener(event) {
   // event.target.remove();
-}
+} */
 
 function fetchProductCar(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
-  .then((response) => response.json())
-  .then((result) =>  createCartItemElement(result.id, result.title, result.price));
-
+  .then(response => response.json())
+  .then(result => createCartItemElement(result.id, result.title, result.price));
 }
 
 function createCartItemElement(sku, name, price) {
