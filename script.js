@@ -62,7 +62,8 @@ function appendElementInSectionItems(element) {
   itemSection.appendChild(element);
 }
 // requisição para buscar produtos
-function fetchList(url) {
+function fetchList() {
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   fetch(url)
     .then(response => response.json())
     .then((object) => {
@@ -78,9 +79,8 @@ function fetchList(url) {
     });
 }
 
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 window.onload = function onload() {
-  setTimeout(() => { document.getElementsByClassName('.loading')[0].remove(); }, 300);
-  fetchList(url);
+  setTimeout(() => { document.getElementsByClassName('.loading').remove()}, 3000);
+  fetchList();
   setStore();
 };
