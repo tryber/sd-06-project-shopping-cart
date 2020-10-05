@@ -80,7 +80,7 @@ function fetchList() {
 }
 
 window.onload = function onload() {
-  setTimeout(() => { document.getElementsByClassName('.loading').remove()}, 3000);
+  setTimeout(() => { document.getElementsByClassName('.loading')[0].remove()}, 3000);
   fetchList();
   setStore();
 };
