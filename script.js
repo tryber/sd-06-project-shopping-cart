@@ -4,22 +4,25 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-/* function cartItemClickListener(event) {
-  // event.target.remove();
-} */
+function cartItemClickListener(event) {
+  event.target.remove();
+}
 
 function createCartItemElement(sku, name, price) {
   const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
+  const totalPrice = document.querySelector('.total-price');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${price}`;
+  // const total = totalPrice(price);
+  li.totalPrice = 'total-price';
   li.addEventListener('click', cartItemClickListener);
   return ol.appendChild(li);
 }
 
-function getSkuFromProductItem(item) {
+/* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
+} */
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -45,7 +48,15 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// bloco
+function setStore() {
+  const itemList = document.querySelector('.cart_items');
+  totalPrice = document.querySelector('.total-price');
+  localStorage.setItem('cart_items:', itemList.innerHTML);
+  localStorage.setItem('total-price:', totalPrice.innerHTML);
+  console.log(totalPrice);
+}
+/* function getStore() {
+} */
 
 function appendElementInSectionItems(element) {
   const itemSection = document.querySelector('.items');
@@ -68,8 +79,9 @@ function fetchList(url) {
     });
 }
 
-
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 window.onload = function onload() {
+  setTimeout(() => { document.getElementsByClassName('.loading')[0].remove() }, 300)
   fetchList(url);
+  setStore();
 };
