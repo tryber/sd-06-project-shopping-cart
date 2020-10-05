@@ -11,10 +11,10 @@ function cartItemClickListener(event) {
 function createCartItemElement(sku, name, price) {
   const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
- /*  const totalPrice = document.querySelector('.total-price'); */
+  // const totalPrice = document.querySelector('.total-price');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${price}`;
- /*  const total = totalPrice(price); */
+  // const total = totalPrice(price);
   li.addEventListener('click', cartItemClickListener);
   return ol.appendChild(li);
 }
