@@ -73,6 +73,10 @@ function appendElementInSectionItems(element) {
 
 // requisição para buscar produtos
 function fetchList() {
+  const loading = document.createElement('section');
+  const title = document.querySelector('.cart__title');
+  loading.innerHTML ="loading....";
+  console.log(loading);
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   fetch(url)
     .then(response => response.json())
