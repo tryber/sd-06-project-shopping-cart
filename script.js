@@ -12,15 +12,13 @@ function createCustomElement(element, className, innerText) {
 }
 listCartCar = [];
 function setLocalStorage(result) {
-  const cartList = document.querySelector('.cart__items');
   listCartCar = [...listCartCar, result.innerHTML];
   localStorage.setItem('carts', JSON.stringify(listCartCar));
 }
 function getLocalStorage() {
   localStorage.getItem('carts', JSON.parse(result));
-  console.log(cartList, 'cartList-get');
+  console.log(listCartCar, 'cartList-get');
 }
-
 /* async function totalPrice() {
   let sum = 0;
   sumPrices.forEach((index) => results[index].price )
