@@ -13,7 +13,7 @@ function createCustomElement(element, className, innerText) {
 listCartCar = [];
 function setLocalStorage(result) {
   const cartList = document.querySelector('.cart__items');
-  listCartCar = [... listCartCar, result.innerHTML]
+  listCartCar = [...listCartCar, result.innerHTML];
   localStorage.setItem('carts', JSON.stringify(listCartCar));
 }
 function getLocalStorage() {
@@ -21,15 +21,14 @@ function getLocalStorage() {
   console.log(cartList, 'cartList-get');
 }
 
-async function totalPrice() {
-  const items = document.getElementsByClassName('cart_item');
+/* async function totalPrice() {
   let sum = 0;
-  sumPrices.forEach(index => sum += results[index].price);
+  sumPrices.forEach((index) => results[index].price )
   sum = (Math.around((sumPrices / 100)* 100));
   forTotalPrice = document.getElementsByClassName('total-price')[0];
   forTotalPrice.innerText = parseFloat(sum.toFixed(2));
   console.log(forTotalPrice, 'total price', 'cart__item');
-}
+} */
 function cartItemClickListener(event) {
   const productList = document.querySelector('.cart__items');
   cartItemSelected = event.target;
@@ -92,13 +91,13 @@ function fetchList() {
     });
 }
 function loading() {
-  const loading = document.createElement('span');
+  loading = document.createElement('span');
   loading.innerHTML = 'loading...';
 }
 window.onload = function onload() {
   loading();
   setTimeout(() => {
     fetchList()
-  }, 3000)
+  }, 3000);
   getLocalStorage();
 };
