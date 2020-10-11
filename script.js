@@ -30,7 +30,16 @@ function getLocalStorage() {
 function cartItemClickListener(event) {
   const productList = document.querySelector('.cart__item');
   cartItemSelected = event.target;
-  productList.remove(cartItemSelected);
+  removeItemOrCar(cartItemSelected);
+}
+
+function cartItemDelete() {
+  const productList = document.querySelector('.cart__items');
+  removeItemOrCar(productList);
+}
+
+function removeItemOrCar(productList) {
+  productList.remove();
   localStorage.clear();// verificar com removeItem
   setLocalStorage();
   // totalPrice();
