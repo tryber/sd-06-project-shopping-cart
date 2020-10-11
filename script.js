@@ -27,6 +27,11 @@ function getLocalStorage() {
   forTotalPrice.innerText = parseFloat(sum.toFixed(2));
   console.log(forTotalPrice, 'total price', 'cart__item');
 } */
+function removeItemOrCar(productList) {
+  productList.remove();
+  localStorage.clear();// verificar com removeItem
+  setLocalStorage();
+}
 function cartItemClickListener(event) {
   const productList = document.querySelector('.cart__item');
   cartItemSelected = event.target;
@@ -38,12 +43,6 @@ function cartItemDelete() {
   removeItemOrCar(productList);
 }
 
-function removeItemOrCar(productList) {
-  productList.remove();
-  localStorage.clear();// verificar com removeItem
-  setLocalStorage();
-  // totalPrice();
-}
 function createCartItemElement(sku, name, price) {
   const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
