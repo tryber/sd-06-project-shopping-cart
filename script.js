@@ -14,26 +14,26 @@ listCartCar = [];
 function setLocalStorage(result) {
   listCartCar = [...listCartCar, result.innerHTML];
   localStorage.setItem('carts', JSON.stringify(listCartCar));
-}
+}// indica
 function getLocalStorage() {
   localStorage.getItem('carts', JSON.parse(result));
   console.log(listCartCar, 'cartList-get');
-}
+}// retorna
 /* async function totalPrice() {
   let sum = 0;
-  sumPrices.forEach((index) => results[index].price )
+  sumPrices.forEach((index) => results[index].price );
   sum = (Math.around((sumPrices / 100)* 100));
   forTotalPrice = document.getElementsByClassName('total-price')[0];
   forTotalPrice.innerText = parseFloat(sum.toFixed(2));
   console.log(forTotalPrice, 'total price', 'cart__item');
 } */
 function cartItemClickListener(event) {
-  const productList = document.querySelector('.cart__items');
+  const productList = document.querySelector('.cart__item');
   cartItemSelected = event.target;
   productList.remove(cartItemSelected);
-  // aqui remove tudo e da erro
-  totalPrice();
-  setLocalStorage(cartItemSelected);
+  localStorage.clear();// verificar com removeItem
+  setLocalStorage();
+  // totalPrice();
 }
 function createCartItemElement(sku, name, price) {
   const ol = document.querySelector('.cart__items');
@@ -70,6 +70,10 @@ function appendElementInSectionItems(element) {
   const itemSection = document.querySelector('.items');
   itemSection.appendChild(element);
 }
+function removeLoading() {
+  const killloading = document.querySelector('.loading');
+  killloading.remove();
+}
 
 // requisição para buscar produtos
 function fetchList() {
@@ -86,16 +90,17 @@ function fetchList() {
         const elementResp = createProductItemElement(data);
         appendElementInSectionItems(elementResp);
       });
+      removeLoading();
     });
 }
 function loading() {
-  loading = document.createElement('span');
-  loading.innerHTML = 'loading...';
+  const iniciando = document.createElement('span');
+  iniciando.className = 'loading';
+  iniciando.innerHTML = 'loading...';
+  document.body.appendChild(iniciando);
 }
 window.onload = function onload() {
   loading();
-  setTimeout(() => {
-    fetchList()
-  }, 3000);
+  fetchList();
   getLocalStorage();
 };
