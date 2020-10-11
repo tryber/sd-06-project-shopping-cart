@@ -1,0 +1,11 @@
+{
+  "name": "sd-06-project-shopping-cart",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/tryber/sd-06-project-shopping-cart.git",
+  "author": "vapatty6848 <vapatty@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^26.4.2"
+    }
+}
