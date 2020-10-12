@@ -85,13 +85,13 @@ function fetchList() {
     .then(response => response.json())
     .then((object) => {
       object.results.forEach((element) => {
-        const data = {
+        const data = createProductItemElement({
           sku: element.id,
           name: element.title,
           image: element.thumbnail,
-        };
-        const elementResp = createProductItemElement(data);
-        appendElementInSectionItems(elementResp);
+        });
+        // const elementResp = createProductItemElement(data);
+        appendElementInSectionItems(data);
       });
       removeLoading();
     });
