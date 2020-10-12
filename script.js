@@ -14,26 +14,22 @@ listCartCar = [];
 function setLocalStorage(result) {
   listCartCar = [...listCartCar, result.innerHTML];
   localStorage.setItem('carts', JSON.stringify(listCartCar));
+  totalPrice(result.price);
 }// indica
 function getLocalStorage() {
   localStorage.getItem('carts', JSON.parse(result));
   console.log(listCartCar, 'cartList-get');
 }// retorna
-/* async function totalPrice() {
-  let sum = 0;
-  sumPrices.forEach((index) => results[index].price );
-  sum = (Math.around((sumPrices / 100)* 100));
-  forTotalPrice = document.getElementsByClassName('total-price')[0];
-  forTotalPrice.innerText = parseFloat(sum.toFixed(2));
-  console.log(forTotalPrice, 'total price', 'cart__item');
+/* function totalPrice(itemPrice) {
+
 } */
 function removeItemOrCar(productList) {
   productList.remove();
   localStorage.clear();// verificar com removeItem
+  totalPrice(price);
   setLocalStorage();
 }
 function cartItemClickListener(event) {
-  // const productList = document.querySelector('.cart__item');
   cartItemSelected = event.target;
   removeItemOrCar(cartItemSelected);
 }
@@ -46,7 +42,6 @@ function cartItemDelete() {
 function createCartItemElement(sku, name, price) {
   const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
-  forTotalPrice = document.querySelector('.total-price');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
