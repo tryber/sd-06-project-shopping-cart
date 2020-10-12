@@ -33,7 +33,7 @@ function removeItemOrCar(productList) {
   setLocalStorage();
 }
 function cartItemClickListener(event) {
-  const productList = document.querySelector('.cart__item');
+  // const productList = document.querySelector('.cart__item');
   cartItemSelected = event.target;
   removeItemOrCar(cartItemSelected);
 }
