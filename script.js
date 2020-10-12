@@ -51,7 +51,7 @@ function createCartItemElement(sku, name, price) {
 function fetchProductCar(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
-  .then(result => createCartItemElement(result.id, result.title, result.price))
+  .then(result => createCartItemElement(result.id, result.title, result.price));
   // .then(result => setLocalStorage(result));
 }
 function createProductItemElement({ sku, name, image }) {
