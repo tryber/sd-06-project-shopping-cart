@@ -23,20 +23,19 @@ function getLocalStorage() {
 /* function totalPrice(itemPrice) {
 
 } */
-function removeItemOrCar(productList) {
+/* function removeItemOrCar(productList) {
   productList.remove();
   localStorage.clear();// verificar com removeItem
   // setLocalStorage();
-}
+} */
 function cartItemClickListener(event) {
   cartItemSelected = event.target;
-  // removeItemOrCar(cartItemSelected);
   cartItemSelected.remove();
 }
 
 function cartItemDelete() {
   const productList = document.querySelector('.cart__items');
-  removeItemOrCar(productList);
+  productList.remove();
 }
 
 function createCartItemElement(sku, name, price) {
