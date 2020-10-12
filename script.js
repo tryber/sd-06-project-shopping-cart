@@ -10,7 +10,7 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-listCartCar = [];
+/* listCartCar = [];
 function setLocalStorage(result) {
   listCartCar = [...listCartCar, result.innerHTML];
   localStorage.setItem('carts', JSON.stringify(listCartCar));
@@ -19,14 +19,13 @@ function setLocalStorage(result) {
 function getLocalStorage() {
   localStorage.getItem('carts', JSON.parse(result));
   console.log(listCartCar, 'cartList-get');
-}// retorna
+} */// retorna
 /* function totalPrice(itemPrice) {
 
 } */
 function removeItemOrCar(productList) {
   productList.remove();
   localStorage.clear();// verificar com removeItem
-  totalPrice(price);
   setLocalStorage();
 }
 function cartItemClickListener(event) {
@@ -90,6 +89,7 @@ function fetchList() {
           name: element.title,
           image: element.thumbnail,
         });
+        console.log(data);
         // const elementResp = createProductItemElement(data);
         appendElementInSectionItems(data);
       });
@@ -105,5 +105,5 @@ function loading() {
 window.onload = function onload() {
   loading();
   fetchList();
-  getLocalStorage();
+  // getLocalStorage();
 };
