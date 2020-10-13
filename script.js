@@ -36,7 +36,7 @@ function cartItemClickListener(event) {
 function cartDelete() {
   productList = document.querySelector('.cart__items');
   productList.innerHTML = '';
-};
+}
 
 function createCartItemElement(sku, name, price) {
   const ol = document.querySelector('.cart__items');
