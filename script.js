@@ -10,27 +10,20 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-/* listCartCar = [];
-function setLocalStorage(result) {
-  listCartCar = [...listCartCar, result.innerHTML];
-  localStorage.setItem('carts', JSON.stringify(listCartCar));
-  totalPrice(result.price);
-}// indica
-function getLocalStorage() {
-  localStorage.getItem('carts', JSON.parse(result));
-  console.log(listCartCar, 'cartList-get');
-} */// retorna
-/* function totalPrice(itemPrice) {
 
-} */
-/* function removeItemOrCar(productList) {
-  productList.remove();
-  localStorage.clear();// verificar com removeItem
-  // setLocalStorage();
-} */
+function setLocalStorage() {
+ let listStorage = document.querySelector('.cart__items').innerHTML;
+ localStorage.setItem('listStorage', listStorage);
+}
+
+function getLocalStorage() {
+ document.querySelector('.cart__items').innerHTML = localStorage.list;
+}
+
 function cartItemClickListener(event) {
   cartItemSelected = event.target;
   cartItemSelected.remove();
+  // setLocalStorage();
 }
 
 function cartItemDelete() {
@@ -44,14 +37,15 @@ function createCartItemElement(sku, name, price) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
+  setLocalStorage();
   return ol.appendChild(li);
 }
 
 function fetchProductCar(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
-  .then(result => createCartItemElement(result.id, result.title, result.price));
-  // .then(result => setLocalStorage(result));
+  .then(result => createCartItemElement(result.id, result.title, result.price))
+  .then(result => setLocalStorage(result));
 }
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -90,7 +84,6 @@ function fetchList() {
           image: element.thumbnail,
         });
         console.log(data);
-        // const elementResp = createProductItemElement(data);
         appendElementInSectionItems(data);
       });
       removeLoading();
@@ -105,5 +98,5 @@ function loading() {
 window.onload = function onload() {
   loading();
   fetchList();
-  // getLocalStorage();
+  setLocalStorage();
 };
