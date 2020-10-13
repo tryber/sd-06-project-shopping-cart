@@ -33,10 +33,10 @@ function cartItemClickListener(event) {
   cartItemSelected.remove();
 }
 
-function cartItemDelete() {
-  const productList = document.querySelector('.cart__items');
-  productList.remove();
-}
+function cartDelete() {
+  productList = document.querySelector('.cart__items');
+  productList.innerHTML = '';
+};
 
 function createCartItemElement(sku, name, price) {
   const ol = document.querySelector('.cart__items');
