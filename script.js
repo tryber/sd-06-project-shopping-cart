@@ -12,12 +12,12 @@ function createCustomElement(element, className, innerText) {
 }
 
 function setLocalStorage() {
- let listStorage = document.querySelector('.cart__items').innerHTML;
- localStorage.setItem('listStorage', listStorage);
+  const listStorage = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('listStorage', listStorage);
 }
 
 function getLocalStorage() {
- document.querySelector('.cart__items').innerHTML = localStorage.list;
+  document.querySelector('.cart__items').innerHTML = localStorage.list;
 }
 
 function cartItemClickListener(event) {
