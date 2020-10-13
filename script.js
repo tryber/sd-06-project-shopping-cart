@@ -12,13 +12,13 @@ function createCustomElement(element, className, innerText) {
 }
 
 function setLocalStorage() {
-  const listStorage = document.querySelector('.cart__items').innerHTML
+  const listStorage = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('listStorage', listStorage);
   console.log(localStorage.getItem('listStorage'));
 } // input de valor
 
 function getLocalStorage() {
-  document.querySelector('.cart__items').innerHTML= localStorage.listStorage;
+  document.querySelector('.cart__items').innerHTML = localStorage.listStorage;
 }// valor salvo pra usar
 
 function cartItemClickListener(event) {
@@ -99,8 +99,7 @@ function loading() {
 window.onload = function onload() {
   loading();
   fetchList();
-  if(localStorage.getItem('listStorage')) {
+  if (localStorage.getItem('listStorage')) {
     getLocalStorage();
-  };
-
+  }
 };
