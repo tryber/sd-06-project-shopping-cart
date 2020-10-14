@@ -20,8 +20,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  console.log(event.target.innerHTML);
-  console.log(typeof event.target.innerHTML);
   event.target.remove();
   localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML);
 }
@@ -50,7 +48,6 @@ function getSkuFromProductItem(item) {
 
 function fetchItemList(event) {
   const item = event.target.parentElement;
-  console.log(item);
   const id = getSkuFromProductItem(item);
   const url = `https://api.mercadolibre.com/items/${id}`;
 
