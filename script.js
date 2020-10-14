@@ -12,9 +12,10 @@ function createCustomElement(element, className, innerText) {
 }
 
 function priceCartTotal(price) {
-  let priceTotal = document.querySelector('.price-total').innerHTML;
-  priceTotal = Math.around(Number(priceTotal) + Number(price));
-  priceTotal.innerHTML = ('.price-total');
+  const total = Number(localStorage.getItem('sum'));
+  const sum = total + price;
+  localStorage.setItem('sum', sum);
+  document.querySelector('.total-price').innerText = sum;
 }
 function setLocalStorage() {
   const listStorage = document.querySelector('.cart__items').innerHTML;
@@ -27,6 +28,8 @@ function getLocalStorage() {
 
 function cartItemClickListener(event) {
   cartItemSelected = event.target;
+  const subtCart = parseFloat(event.target.innerText.split('$')[1]) * (-1);
+  priceCartTotal(subtCart);
   cartItemSelected.remove();
   setLocalStorage();
 }
@@ -34,6 +37,8 @@ function cartItemClickListener(event) {
 function cartItemDelete() {
   productList = document.querySelector('.cart__items');
   productList.innerHTML = '';
+  localStorage.setItem('sum', 0);
+  document.querySelector('.total-price').innerText = 0;
   setLocalStorage();
 }
 
@@ -49,10 +54,14 @@ function createCartItemElement(sku, name, price) {
 function fetchProductCar(sku) {
   fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
-  .then(result => createCartItemElement(result.id, result.title, result.price))
-  .then(result => setLocalStorage(result))
-  .then(result => priceCartTotal(result.price));
+  .then((result) => {
+    const itens = createCartItemElement(result.id, result.title, result.price);
+    priceCartTotal(result.price);
+    return itens;
+  })
+  .then(itens => setLocalStorage(itens));
 }
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -89,7 +98,6 @@ function fetchList() {
           name: element.title,
           image: element.thumbnail,
         });
-        console.log(data);
         appendElementInSectionItems(data);
       });
       removeLoading();
