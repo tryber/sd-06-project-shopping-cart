@@ -10,8 +10,10 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+
 function priceCartTotal(price) {
-  const priceTotal = Math.around(Number(priceTotal) + Number(price));
+  let priceTotal = document.querySelector('.price-total').innerHTML;
+  priceTotal = Math.around(Number(priceTotal) + Number(price));
   priceTotal.innerHTML = ('.price-total');
 }
 function setLocalStorage() {
