@@ -48,6 +48,7 @@ function renderItems(item) {
   item.addEventListener('click', (event) => {
     if (event.target.className === 'item_add') {
       const sku = event.currentTarget.firstChild.innerText;
+      fetchProductsItems(sku);
     }
   });
 }
@@ -64,4 +65,4 @@ function fetchApi() {
 // Chama as principais funções após a página ser carregada
 window.onload = function onload() {
   fetchApi();
-}
+};
