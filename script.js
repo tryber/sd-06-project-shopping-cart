@@ -49,20 +49,19 @@ function renderItems(item) {
     if (event.target.className === 'item_add') {
       const sku = event.currentTarget.firstChild.innerText;
     }
-  })
+  });
 }
 
 // Busca na Api
-function fetchApi () {
+function fetchApi() {
   fetch(url)
     .then(response => response.json())
       .then(data => data.results.forEach((product) => {
         const createProduct = createProductItemElement(product);
         renderItems(createProduct);
-      }))
-        
+      }));
 }
 // Chama as principais funções após a página ser carregada
-window.onload = function onload() { 
+window.onload = function onload() {
   fetchApi();
 }
