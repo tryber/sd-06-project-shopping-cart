@@ -14,11 +14,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-//function fetchProductToCart(sku) {
-  //fetch(`http`)
-//}
-
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -26,7 +22,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 }
 
@@ -46,15 +41,28 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function fetchList() {
-  fetch(url)
-    .then(response => response.json())
-    .then(object => object.results)
-    .then (results => results.forEach((product) => {
-        const data = createCartItemElement(product)
-    }))
+// Adiciona os produtos criados na tela
+function renderItems(item) {
+  const product = document.querySelector('.items');
+  product.appendChild(item);
+  item.addEventListener('click', (event) => {
+    if (event.target.className === 'item_add') {
+      const sku = event.currentTarget.firstChild.innerText;
+    }
+  })
 }
 
+// Busca na Api
+function fetchApi () {
+  fetch(url)
+    .then(response => response.json())
+      .then(data => data.results.forEach((product) => {
+        const createProduct = createProductItemElement(product);
+        renderItems(createProduct);
+      }))
+        
+}
+// Chama as principais funções após a página ser carregada
 window.onload = function onload() { 
-  fetchList();
-};
+  fetchApi();
+}
