@@ -7,23 +7,37 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+async function totalSum() {
+  const sectionTotalprice = document.querySelector('.total-price');
+  const itensCart = document.querySelectorAll('.cart__item');
+  let sumTotal = 0;
+  itensCart.forEach((item) => {
+    const price = Number(((item.innerHTML.split('$')[1]) * 100) / 100);
+    sumTotal += price;
+  });
+  sectionTotalprice.innerHTML = sumTotal;
+}
+
 function saveLocalStorage() {
-  const ol = document.querySelector('ol').innerHTML;
-  localStorage.setItem('cart', ol);
+  const cartItems = document.querySelector('.cart__items').innerHTML;
+  const totalValue = document.querySelector('.total-price').innerHTML;
+  localStorage.loadCart = cartItems;
+  localStorage.total_price = totalValue;
+}
+
+function cartItemClickListener(event) {
+  event.target.remove();
+  saveLocalStorage();
+  totalSum();
 }
 
 function loadSavedCart() {
-  const itemsOnCart = document.querySelector('ol');
-  itemsOnCart.innerHTML = localStorage.getItem('cart');
-  const ol = document.querySelector('.cart__items');
-  const allLoadedItens = document.querySelectorAll('li');
-  allLoadedItens.forEach((li) => {
-    li.addEventListener('click', (event) => {
-      decreaseValue(event);
-      ol.removeChild(event.target);
-      saveLocalStorage();
-    });
-  });
+  const innerStorage = document.querySelector('.cart__items');
+  document.querySelector('.total-price').innerHTML = localStorage.total_price;
+  if (localStorage.loadCart) {
+    document.querySelector('.cart__items').innerHTML = localStorage.loadCart;
+      innerStorage.addEventListener('click', cartItemClickListener);
+    }
 }
 
 function createCustomElement(element, className, innerText) {
@@ -31,10 +45,6 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
-}
-
-function cartItemClickListener(event) {
-  event.target.remove();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
