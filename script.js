@@ -81,7 +81,7 @@ function fetchApi() {
         document.querySelector('.items').appendChild(product);
       });
     })
-    .then(() => loadSavedCart())
+    .then(() => loadSavedCart());
 }
 // Chama as principais funções após a página ser carregada
 window.onload = function onload() {
