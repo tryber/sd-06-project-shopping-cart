@@ -7,6 +7,25 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function saveLocalStorage() {
+  const ol = document.querySelector('ol').innerHTML;
+  localStorage.setItem('cart', ol);
+}
+
+function loadSavedCart() {
+  const itemsOnCart = document.querySelector('ol');
+  itemsOnCart.innerHTML = localStorage.getItem('cart');
+  const ol = document.querySelector('.cart__items');
+  const allLoadedItens = document.querySelectorAll('li');
+  allLoadedItens.forEach((li) => {
+    li.addEventListener('click', (event) => {
+      decreaseValue(event);
+      ol.removeChild(event.target);
+      saveCart();
+    });
+  });
+}
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
