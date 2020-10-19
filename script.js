@@ -21,7 +21,7 @@ function loadSavedCart() {
     li.addEventListener('click', (event) => {
       decreaseValue(event);
       ol.removeChild(event.target);
-      saveCart();
+      saveLocalStorage();
     });
   });
 }
@@ -80,7 +80,8 @@ function fetchApi() {
         const product = createProductItemElement(item);
         document.querySelector('.items').appendChild(product);
       });
-    });
+    })
+    .then(() => loadSavedCart())
 }
 // Chama as principais funções após a página ser carregada
 window.onload = function onload() {
