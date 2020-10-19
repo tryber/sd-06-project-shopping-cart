@@ -64,6 +64,11 @@ window.onload = function onload() {
       ol.children[i].addEventListener('click', cartItemClickListener);
     }
   }
+  const botao = document.querySelector('.empty-cart');
+  botao.addEventListener('click', () => {
+    ol.innerHTML = '';
+    localStorage.setItem('carrinho', ol.innerHTML);
+  });
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then(dados => dados.results.forEach(produto =>
