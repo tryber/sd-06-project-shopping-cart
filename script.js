@@ -154,3 +154,4 @@ window.onload = function onload() {
   const clear = document.querySelector('.empty-cart');
   clear.addEventListener('click', clearCart);
 };
+// corrigir code climate
