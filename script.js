@@ -96,18 +96,16 @@ function localStogeRecover() {
   }
 }
 function localStogeRemove(id) {
-  if (Storage) {
-    const saveItens = JSON.parse(localStorage.getItem('saveCart'));
-    for (let index = 0; index < saveItens.length; index += 1) {
-      if (saveItens[index].id === id) {
-        saveItens.splice(index, 1);
-        break;
-      }
+  const saveItens = JSON.parse(localStorage.getItem('saveCart'));
+  for (let index = 0; index < saveItens.length; index += 1) {
+    if (saveItens[index].id === id) {
+      saveItens.splice(index, 1);
+      break;
     }
-    localStorage.setItem('saveCart', JSON.stringify(saveItens));
   }
+  localStorage.setItem('saveCart', JSON.stringify(saveItens));
   sumCart();
-}
+} 
 
 async function sumCart() {
   let sum = 0;
